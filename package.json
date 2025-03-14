@@ -44,10 +44,10 @@
     "typescript-eslint": "^8.26.1"
   },
   "overrides": {
-    "@xmldom/xmldom": "^0.7.0",
+    "@xmldom/xmldom": "^0.7.13",
     "canvg": "^4.0.3",
     "dompurify": "^3.2.4",
-    "jspdf": "^2.0.0",
+    "jspdf": "^2.5.2",
     "request": "^2.88.2",
     "mermaid": "^10.9.3",
     "tough-cookie": "^5.1.1"
