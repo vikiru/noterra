@@ -1,3 +1,6 @@
 node_modules/
 .github/
-package-lock.json
+*.json
+.next
+public
+build
