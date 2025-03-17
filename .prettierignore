@@ -4,16 +4,9 @@
 node_modules/
 .github/
 .husky/
+.next/
 LICENSE
-*.json
 .next
 public
 build
-*.ico
-*.css
-*.json
-*.md
-*.css
-*.xml
-*.html
 *.ico
