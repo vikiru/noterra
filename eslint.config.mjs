@@ -37,6 +37,7 @@ const ignoreConfig = defineConfig(
         '.github/**/*',
         'public/**/*',
         'src/globals.css',
+        '*.json',
         'src/**/*.css',
         '.env',
         '.env.sample',
