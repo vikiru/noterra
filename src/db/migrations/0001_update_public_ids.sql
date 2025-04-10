@@ -1,0 +1,4 @@
+ALTER TABLE "flashcards" ADD COLUMN "public_author_id" uuid;--> statement-breakpoint
+ALTER TABLE "flashcards" ADD COLUMN "public_note_id" uuid;--> statement-breakpoint
+ALTER TABLE "flashcards" ADD CONSTRAINT "flashcards_public_author_id_users_public_id_fk" FOREIGN KEY ("public_author_id") REFERENCES "public"."users"("public_id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "flashcards" ADD CONSTRAINT "flashcards_public_note_id_notes_public_note_id_fk" FOREIGN KEY ("public_note_id") REFERENCES "public"."notes"("public_note_id") ON DELETE no action ON UPDATE no action;

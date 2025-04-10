@@ -15,6 +15,7 @@ const eslintConfig = [
 
 export default [
     ...eslintConfig,
+    ...compat.extends('plugin:drizzle/all'),
     {
         rules: {
             '@typescript-eslint/no-require-imports': 'off',
