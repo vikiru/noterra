@@ -1,5 +1,3 @@
-import 'module-alias/register';
-
 import { z } from 'zod';
 const path = require('path');
 const dotenv = require('dotenv');
@@ -13,12 +11,27 @@ const envSchema = z.object({
         .union([z.literal('development'), z.literal('production')])
         .optional()
         .default('development'),
+    DATABASE_URL: z.string().url(),
 });
 
-const env = envSchema.parse(process.env);
-const geminiApiKey = env.GEMINI_API_KEY;
-const googleBooksApiKey = env.GOOGLE_BOOKS_API_KEY;
-const youtubeDataApiKey = env.YOUTUBE_DATA_API_KEY;
-const nodeEnv = env.NODE_ENV;
+const env = envSchema.safeParse(process.env);
 
-export { geminiApiKey, googleBooksApiKey, youtubeDataApiKey, nodeEnv };
+if (env.success === false) {
+    console.error('Invalid environment variables', env.error.format());
+    throw new Error('Invalid environment variables');
+}
+
+const validatedEnv = env.data;
+const geminiApiKey = validatedEnv.GEMINI_API_KEY;
+const googleBooksApiKey = validatedEnv.GOOGLE_BOOKS_API_KEY;
+const youtubeDataApiKey = validatedEnv.YOUTUBE_DATA_API_KEY;
+const nodeEnv = validatedEnv.NODE_ENV;
+const databaseUrl = validatedEnv.DATABASE_URL;
+
+export {
+    geminiApiKey,
+    googleBooksApiKey,
+    youtubeDataApiKey,
+    nodeEnv,
+    databaseUrl,
+};
