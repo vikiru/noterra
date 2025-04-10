@@ -14,7 +14,6 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import newData from '@/gemini/newPromptData.json';
 
 const data = {
     note_contents: [
@@ -197,7 +196,7 @@ const keywords = [
 // TODO: add google books + youtube data, maybe medium api and some api for course data
 // TODO: create utils for combining, sanitizing, updating toc, convert md -> html, html -> md, json -> html, etc
 // TODO: create a simple server action for gemini (add auth later).
-// TODO: zod schemas -> types, hold off on prisma a bit. Auth with clerk later as well.
+// TODO: Auth with clerk later as well.
 // TODO: setup tip tap full page editor, user should be able to edit content, title, any other relevant data.
 // TODO: setup full page note view, flashcard view per note, with edit/add forms, delete action with alert + toasts
 // TODO: flashcard quizlike component? (optional)
@@ -255,7 +254,7 @@ function updateTOC(ref: RefObject<HTMLElement | null>) {
 
 export default function Page() {
     const noteSection = useRef<HTMLElement>(null);
-    const safeHtml = combineAndSanitizeNoteContent(newData.note_contents || []);
+    const safeHtml = combineAndSanitizeNoteContent(data.note_contents || []);
 
     useEffect(() => {
         if (noteSection !== null) {
