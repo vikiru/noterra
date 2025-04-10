@@ -1,3 +1,4 @@
+import { geminiApiKey } from '@/config';
 import { geminiPrompt } from '@/gemini/prompt';
 import {
     GoogleGenerativeAI,
@@ -5,15 +6,14 @@ import {
     HarmCategory,
 } from '@google/generative-ai';
 
-const apiKey = process.env.GEMINI_API_KEY;
-const genAI = new GoogleGenerativeAI(apiKey);
+const genAI = new GoogleGenerativeAI(geminiApiKey);
 
-const safetySettings = Object.values(HarmCategory).map((category) => {
-    return {
+const safetySettings = Object.values(HarmCategory)
+    .filter((category) => category !== HarmCategory.HARM_CATEGORY_UNSPECIFIED)
+    .map((category) => ({
         category: category,
         threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-    };
-});
+    }));
 
 const generationConfig = {
     temperature: 0.5,
@@ -32,3 +32,7 @@ const model = genAI.getGenerativeModel({
 });
 
 export { model };
+
+// todo: cleanup prompt, update mermaid diagram handling, build a simple tiptap editor component just to preview this
+// add google books and yt data api for 5-10 books/videos relevant to the topic for books `Title (Year Released) - Author(s)`.
+// videos: `Video Title (hyperlinked) - (channel name)`
