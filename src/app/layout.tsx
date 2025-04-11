@@ -4,6 +4,16 @@ import { Geist, Geist_Mono } from 'next/font/google';
 
 import './globals.css';
 import ThemeProvider from '@/components/ThemeProvider';
+import {
+    ClerkProvider,
+    SignInButton,
+    SignUpButton,
+    SignedIn,
+    SignedOut,
+} from '@clerk/nextjs';
+import UserButton from '@/components/UserButton';
+import { LucideUser } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const geistSans = Geist({
     variable: '--font-geist-sans',
@@ -26,19 +36,37 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" suppressHydrationWarning>
-            <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-            >
-                <ThemeProvider
-                    attribute="class"
-                    defaultTheme="system"
-                    enableSystem
-                    disableTransitionOnChange
+        <ClerkProvider>
+            <html lang="en" suppressHydrationWarning>
+                <body
+                    className={`${geistSans.variable} ${geistMono.variable} antialiased`}
                 >
-                    {children}
-                </ThemeProvider>
-            </body>
-        </html>
+                    <ThemeProvider
+                        attribute="class"
+                        defaultTheme="system"
+                        enableSystem
+                        disableTransitionOnChange
+                    >
+                        <header className="flex h-16 items-center justify-end gap-4 p-4">
+                            <SignedOut>
+                                <SignInButton>
+                                    <Button
+                                        variant={'outline'}
+                                        size={'lg'}
+                                        className="hover:cursor-pointer"
+                                    >
+                                        Login
+                                    </Button>
+                                </SignInButton>
+                            </SignedOut>
+                            <SignedIn>
+                                <UserButton />
+                            </SignedIn>
+                        </header>
+                        {children}
+                    </ThemeProvider>
+                </body>
+            </html>
+        </ClerkProvider>
     );
 }
