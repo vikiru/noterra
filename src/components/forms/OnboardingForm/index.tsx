@@ -15,23 +15,16 @@ import {
     FormLabel,
     FormMessage,
 } from '@/components/ui/form';
+import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 
 const formSchema = z.object({
-    question: z
-        .string()
-        .min(1, { message: 'Question is required' })
-        .max(200, { message: 'Question cannot be longer than 200 characters' })
-        .trim(),
-    answer: z
-        .string()
-        .min(1, { message: 'Answer is required' })
-        .max(500, { message: 'Answer cannot be longer than 500 characters' })
-        .trim(),
+    bio: z.string().min(10).max(300),
+    country: z.string().min(1).min(1).max(100),
 });
 
 // TODO: split this into hooks, schema dir, add on submit, update placecholder, etc as needed
-export default function FlashcardForm() {
+export default function OnboardingForm() {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
     });
@@ -60,15 +53,19 @@ export default function FlashcardForm() {
             >
                 <FormField
                     control={form.control}
-                    name="question"
+                    name="bio"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Question</FormLabel>
+                            <FormLabel>Bio</FormLabel>
                             <FormControl>
-                                <Input placeholder="" type="text" {...field} />
+                                <Textarea
+                                    placeholder="e.g., I love coding and exploring new technologies."
+                                    className="resize-none"
+                                    {...field}
+                                />
                             </FormControl>
                             <FormDescription>
-                                Enter the question or topic.
+                                Tell us a little about yourself.
                             </FormDescription>
                             <FormMessage />
                         </FormItem>
@@ -77,14 +74,20 @@ export default function FlashcardForm() {
 
                 <FormField
                     control={form.control}
-                    name="answer"
+                    name="country"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Answer</FormLabel>
+                            <FormLabel>Country</FormLabel>
                             <FormControl>
-                                <Input placeholder="" type="text" {...field} />
+                                <Input
+                                    placeholder="e.g., Canada"
+                                    type=""
+                                    {...field}
+                                />
                             </FormControl>
-                            <FormDescription>Enter the answer.</FormDescription>
+                            <FormDescription>
+                                Enter your country of residence.
+                            </FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
