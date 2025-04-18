@@ -29,6 +29,20 @@
       "when": 1744269701156,
       "tag": "0003_update_not_null",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1745014600277,
+      "tag": "0004_add_cols",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1745014744287,
+      "tag": "0005_update_keywords_type",
+      "breakpoints": true
     }
   ]
 }

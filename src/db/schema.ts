@@ -12,8 +12,11 @@ export const usersTable = pgTable('users', {
     clerkId: text('id').primaryKey(),
     publicId: uuid('public_id').notNull().defaultRandom().unique(),
     name: text('name').notNull(),
+    username: text('username').notNull().unique(),
     email: text('email').notNull().unique(),
-    password: text('password').notNull(),
+    profileImage: text('profile_image').notNull(),
+    bio: text('bio').notNull().default(''),
+    country: text('country').notNull().default(''),
     createdAt: timestamp('created_at', { withTimezone: true })
         .notNull()
         .defaultNow(),
@@ -34,9 +37,12 @@ export const notesTable = pgTable(
             .references(() => usersTable.publicId)
             .notNull(),
         title: text('title').notNull().unique(),
+        summary: text('summary').notNull(),
+        keywords: text('keywords').notNull(),
         content: text('content').notNull(),
-        keywords: text('keywords').array(10).notNull(),
-        public: boolean().notNull().default(false),
+        shared: boolean('shared').notNull().default(false),
+        public: boolean('public').notNull().default(false),
+        shareToken: uuid('share_token').notNull().defaultRandom().unique(),
         createdAt: timestamp('created_at', { withTimezone: true })
             .notNull()
             .defaultNow(),
@@ -44,15 +50,13 @@ export const notesTable = pgTable(
             .notNull()
             .defaultNow(),
     },
-    (table) => ({
-        authorIdIndex: index('public_author_index').on(table.authorId),
-        authorPublicNoteIndex: index('author_public_note_index').on(
-            table.authorId,
-            table.public,
-        ),
-        keywordIndex: index('keyword_index').on(table.keywords),
-        titleIndex: index('title_index').on(table.title),
-    }),
+    (table) => [
+        index('public_author_index').on(table.authorId),
+        index('author_public_note_index').on(table.authorId, table.public),
+        index('author_shared_note_index').on(table.authorId, table.shared),
+        index('keyword_index').on(table.keywords),
+        index('title_index').on(table.title),
+    ],
 );
 
 export const flashcardsTable = pgTable(
@@ -85,17 +89,11 @@ export const flashcardsTable = pgTable(
             .notNull()
             .defaultNow(),
     },
-    (table) => ({
-        authorNoteIndex: index('author_note_index').on(
-            table.authorId,
-            table.noteId,
-        ),
-        authorPublicFlashcardIndex: index('author_public_card_index').on(
-            table.authorId,
-            table.public,
-        ),
-        publicIndex: index('public_index').on(table.public),
-    }),
+    (table) => [
+        index('author_note_index').on(table.authorId, table.noteId),
+        index('author_public_card_index').on(table.authorId, table.public),
+        index('public_index').on(table.public),
+    ],
 );
 
 export const userRelations = relations(usersTable, ({ many }) => ({
