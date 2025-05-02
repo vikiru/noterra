@@ -14,6 +14,7 @@ import {
 import UserButton from '@/components/UserButton';
 import { LucideUser } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Toaster } from 'sonner';
 
 const geistSans = Geist({
     variable: '--font-geist-sans',
@@ -41,6 +42,7 @@ export default function RootLayout({
                 <body
                     className={`${geistSans.variable} ${geistMono.variable} debug-screens antialiased`}
                 >
+                    <Toaster richColors position="top-right" />
                     <ThemeProvider
                         attribute="class"
                         defaultTheme="system"

@@ -266,8 +266,7 @@ json
     {
       "title": "Table of Contents",
       "heading_level": 1,
-      "content": "<section id=\\"toc\\"><h2>Table of Contents</h2><ol><li><a href=\\"#prerequisites\\">Prerequisite Knowledge</a></li><li><a href=\\"#related-topics\\">Related Topics/Subtopics</a></li><li><a href=\\"#introduction\\">Introduction to Topic</a></li><li><a href=\\"#mindmap\\">Mindmap Overview</a></li><li><a href=\\"#summary\\">Summary</a></li><li><a href=\\"#challenge-questions\\">Challenge Questions</a></li><li><a href=\\"#section-1\\">Title of Section 1</a></li><li><a href=\\"#section-2\\">Title of Section 2</a></li><li><a href=\\"#analogies\\">Analogies</a></li><li><a href=\\"#glossary\\">Glossary</a></li><li><a href=\\"#further-reading\\">Further Reading</a></li></ol></section>",
-      "includes_diagram": false
+      "content": \`<section id=\\"toc\\"><h2>Table of Contents</h2><ol><li><a href=\\"#prerequisites\\">Prerequisite Knowledge</a></li><li><a href=\\"#related-topics\\">Related Topics/Subtopics</a></li><li><a href=\\"#introduction\\">Introduction to Topic</a></li><li><a href=\\"#mindmap\\">Mindmap Overview</a></li><li><a href=\\"#summary\\">Summary</a></li><li><a href=\\"#challenge-questions\\">Challenge Questions</a></li><li><a href=\\"#section-1\\">Title of Section 1</a></li><li><a href=\\"#section-2\\">Title of Section 2</a></li><li><a href=\\"#analogies\\">Analogies</a></li><li><a href=\\"#glossary\\">Glossary</a></li><li><a href=\\"#further-reading\\">Further Reading</a></li></ol></section>\`,
       "diagram_type":  // Specify the type of diagram as a string if includes_diagram is true, otherwise return "N/A"
     },
     // ... other sections ...
