@@ -1,11 +1,11 @@
 import { db } from '@/db';
 import { notesTable } from '@/db/schema';
 import { noteSchema } from '@/schema';
-import { NoteCreate, NoteUpdate } from '@/types/note';
+import { Note, NoteCreate, NoteUpdate } from '@/types/note';
 import { and, eq } from 'drizzle-orm';
 import { z } from 'zod';
 
-export async function createNote(note: NoteCreate) {
+export async function createNote(note: NoteCreate): Promise<Note> {
     try {
         const result = noteSchema.insert.safeParse(note);
         if (!result.success) {
@@ -33,7 +33,7 @@ export async function createNote(note: NoteCreate) {
     }
 }
 
-export async function updateNote(updatedNote: NoteUpdate) {
+export async function updateNote(updatedNote: NoteUpdate): Promise<Note> {
     try {
         const result = noteSchema.update.safeParse(updatedNote);
         if (!result.success) {
@@ -61,7 +61,7 @@ export async function updateNote(updatedNote: NoteUpdate) {
     }
 }
 
-export async function deleteNote(id: string) {
+export async function deleteNote(id: string): Promise<Note> {
     try {
         const result = z.string().uuid().safeParse(id);
         if (!result.success) {
@@ -83,7 +83,9 @@ export async function deleteNote(id: string) {
     }
 }
 
-export async function getNotesByUserId(publicAuthorId: string) {
+export async function retrieveNotesByUserId(
+    publicAuthorId: string,
+): Promise<Note[]> {
     try {
         const result = z.string().uuid().safeParse(publicAuthorId);
         if (!result.success) {
@@ -107,7 +109,9 @@ export async function getNotesByUserId(publicAuthorId: string) {
     }
 }
 
-export async function getPublicNotesByUserId(publicAuthorId: string) {
+export async function retrievePublicNotesByUserId(
+    publicAuthorId: string,
+): Promise<Note[]> {
     try {
         const result = z.string().uuid().safeParse(publicAuthorId);
         if (!result.success) {
@@ -136,7 +140,7 @@ export async function getPublicNotesByUserId(publicAuthorId: string) {
     }
 }
 
-export async function getNoteById(publicNoteId: string) {
+export async function retrieveNoteById(publicNoteId: string): Promise<Note> {
     try {
         const result = z.string().uuid().safeParse(publicNoteId);
         if (!result.success) {
@@ -145,12 +149,19 @@ export async function getNoteById(publicNoteId: string) {
                 'Invalid note id provided. Please try again with a valid id.',
             );
         }
+
         const data = result.data;
         const note = await db
             .select()
             .from(notesTable)
-            .where(eq(notesTable.id, data));
-        return note;
+            .where(eq(notesTable.id, data))
+            .limit(1);
+
+        if (!note[0]) {
+            throw new Error(`No note found with id: ${data}`);
+        }
+
+        return note[0];
     } catch (error) {
         console.error(`Error getting note with id ${publicNoteId}:`, error);
         throw error;

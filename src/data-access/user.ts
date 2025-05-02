@@ -1,11 +1,13 @@
-import { User, UserCreate, UserUpdate } from '@/types/user';
+import { UserCreate, UserUpdate, User } from '@/types/user';
 import { db } from '@/db';
 import * as z from 'zod';
 import { flashcardsTable, notesTable, usersTable } from '@/db/schema';
 import { userSchema } from '@/schema';
 import { and, eq, gte, sql } from 'drizzle-orm';
+import { ActivityOverview } from '@/types/activityOverview';
+import { TotalCreations } from '@/types/totalCreations';
 
-export async function createUser(user: UserCreate) {
+export async function createUser(user: UserCreate): Promise<User> {
     try {
         const result = userSchema.insert.safeParse(user);
         if (!result.success) {
@@ -34,9 +36,9 @@ export async function createUser(user: UserCreate) {
     }
 }
 
-export async function updateUser(updatedUser: UserUpdate) {
+export async function updateUser(user: UserUpdate): Promise<User> {
     try {
-        const result = userSchema.update.safeParse(updatedUser);
+        const result = userSchema.update.safeParse(user);
         if (!result.success) {
             console.error(result.error);
             throw new Error(
@@ -44,7 +46,7 @@ export async function updateUser(updatedUser: UserUpdate) {
             );
         }
         const data = result.data;
-        const updated = await db
+        const updatedData = await db
             .update(usersTable)
             .set({
                 name: data.name,
@@ -54,15 +56,15 @@ export async function updateUser(updatedUser: UserUpdate) {
             })
             .where(eq(usersTable.clerkId, data.clerkId))
             .returning();
-        const user = updated[0];
-        return user;
+        const updatedUser = updatedData[0];
+        return updatedUser;
     } catch (error) {
         console.error(error);
         throw error;
     }
 }
 
-export async function getUserById(id: string) {
+export async function retrieveUserById(id: string): Promise<User> {
     try {
         const result = z.string().uuid().safeParse(id);
         if (!result.success) {
@@ -83,7 +85,9 @@ export async function getUserById(id: string) {
     }
 }
 
-export async function getUserActivityOverview(id: string) {
+export async function retrieveUserActivityOverview(
+    id: string,
+): Promise<ActivityOverview[]> {
     try {
         const result = z.string().uuid().safeParse(id);
         if (!result.success) {
@@ -123,7 +127,9 @@ export async function getUserActivityOverview(id: string) {
     }
 }
 
-export async function getTotalCreations(id: string) {
+export async function retrieveTotalCreations(
+    id: string,
+): Promise<TotalCreations> {
     try {
         const result = z.string().uuid().safeParse(id);
         if (!result.success) {
