@@ -1,6 +1,6 @@
-import { GeminiNoteContent } from '@/types/geminiResponse';
 import DOMPurify from 'isomorphic-dompurify';
 import { JSDOM } from 'jsdom';
+import type { GeminiNoteContent } from '@/types/geminiResponse';
 
 export function combineHTML(notesContents: GeminiNoteContent[]): string {
     let combinedHTML = '';

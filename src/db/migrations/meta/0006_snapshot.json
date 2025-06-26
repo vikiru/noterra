@@ -1,6 +1,6 @@
 {
-	"id": "973bcb24-6ef1-4fdd-8c79-e96485bcb8cf",
-	"prevId": "bdd50837-007e-4718-8cb5-98ff69fc25ae",
+	"id": "39517101-8007-4543-b389-c4ba4d73070a",
+	"prevId": "081602e2-08ad-49d4-8257-0a73d7fe4a77",
 	"version": "7",
 	"dialect": "postgresql",
 	"tables": {
@@ -23,25 +23,6 @@
 				},
 				"note_id": {
 					"name": "note_id",
-					"type": "uuid",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"public_flashcard_id": {
-					"name": "public_flashcard_id",
-					"type": "uuid",
-					"primaryKey": false,
-					"notNull": true,
-					"default": "gen_random_uuid()"
-				},
-				"public_author_id": {
-					"name": "public_author_id",
-					"type": "uuid",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"public_note_id": {
-					"name": "public_note_id",
 					"type": "uuid",
 					"primaryKey": false,
 					"notNull": true
@@ -157,34 +138,10 @@
 					"columnsTo": ["id"],
 					"onDelete": "cascade",
 					"onUpdate": "no action"
-				},
-				"flashcards_public_author_id_users_public_id_fk": {
-					"name": "flashcards_public_author_id_users_public_id_fk",
-					"tableFrom": "flashcards",
-					"tableTo": "users",
-					"columnsFrom": ["public_author_id"],
-					"columnsTo": ["public_id"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				},
-				"flashcards_public_note_id_notes_public_note_id_fk": {
-					"name": "flashcards_public_note_id_notes_public_note_id_fk",
-					"tableFrom": "flashcards",
-					"tableTo": "notes",
-					"columnsFrom": ["public_note_id"],
-					"columnsTo": ["public_note_id"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
 				}
 			},
 			"compositePrimaryKeys": {},
-			"uniqueConstraints": {
-				"flashcards_public_flashcard_id_unique": {
-					"name": "flashcards_public_flashcard_id_unique",
-					"nullsNotDistinct": false,
-					"columns": ["public_flashcard_id"]
-				}
-			},
+			"uniqueConstraints": {},
 			"policies": {},
 			"checkConstraints": {},
 			"isRLSEnabled": false
@@ -206,21 +163,20 @@
 					"primaryKey": false,
 					"notNull": true
 				},
-				"public_note_id": {
-					"name": "public_note_id",
-					"type": "uuid",
-					"primaryKey": false,
-					"notNull": true,
-					"default": "gen_random_uuid()"
-				},
-				"public_author_id": {
-					"name": "public_author_id",
-					"type": "uuid",
+				"title": {
+					"name": "title",
+					"type": "text",
 					"primaryKey": false,
 					"notNull": true
 				},
-				"title": {
-					"name": "title",
+				"summary": {
+					"name": "summary",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"keywords": {
+					"name": "keywords",
 					"type": "text",
 					"primaryKey": false,
 					"notNull": true
@@ -231,11 +187,12 @@
 					"primaryKey": false,
 					"notNull": true
 				},
-				"keywords": {
-					"name": "keywords",
-					"type": "text[10]",
+				"shared": {
+					"name": "shared",
+					"type": "boolean",
 					"primaryKey": false,
-					"notNull": true
+					"notNull": true,
+					"default": false
 				},
 				"public": {
 					"name": "public",
@@ -243,6 +200,13 @@
 					"primaryKey": false,
 					"notNull": true,
 					"default": false
+				},
+				"share_token": {
+					"name": "share_token",
+					"type": "uuid",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "gen_random_uuid()"
 				},
 				"created_at": {
 					"name": "created_at",
@@ -260,21 +224,6 @@
 				}
 			},
 			"indexes": {
-				"public_author_index": {
-					"name": "public_author_index",
-					"columns": [
-						{
-							"expression": "author_id",
-							"isExpression": false,
-							"asc": true,
-							"nulls": "last"
-						}
-					],
-					"isUnique": false,
-					"concurrently": false,
-					"method": "btree",
-					"with": {}
-				},
 				"author_public_note_index": {
 					"name": "author_public_note_index",
 					"columns": [
@@ -286,6 +235,27 @@
 						},
 						{
 							"expression": "public",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last"
+						}
+					],
+					"isUnique": false,
+					"concurrently": false,
+					"method": "btree",
+					"with": {}
+				},
+				"author_shared_note_index": {
+					"name": "author_shared_note_index",
+					"columns": [
+						{
+							"expression": "author_id",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last"
+						},
+						{
+							"expression": "shared",
 							"isExpression": false,
 							"asc": true,
 							"nulls": "last"
@@ -336,28 +306,19 @@
 					"columnsTo": ["id"],
 					"onDelete": "cascade",
 					"onUpdate": "no action"
-				},
-				"notes_public_author_id_users_public_id_fk": {
-					"name": "notes_public_author_id_users_public_id_fk",
-					"tableFrom": "notes",
-					"tableTo": "users",
-					"columnsFrom": ["public_author_id"],
-					"columnsTo": ["public_id"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
 				}
 			},
 			"compositePrimaryKeys": {},
 			"uniqueConstraints": {
-				"notes_public_note_id_unique": {
-					"name": "notes_public_note_id_unique",
-					"nullsNotDistinct": false,
-					"columns": ["public_note_id"]
-				},
 				"notes_title_unique": {
 					"name": "notes_title_unique",
 					"nullsNotDistinct": false,
 					"columns": ["title"]
+				},
+				"notes_share_token_unique": {
+					"name": "notes_share_token_unique",
+					"nullsNotDistinct": false,
+					"columns": ["share_token"]
 				}
 			},
 			"policies": {},
@@ -374,15 +335,8 @@
 					"primaryKey": true,
 					"notNull": true
 				},
-				"public_id": {
-					"name": "public_id",
-					"type": "uuid",
-					"primaryKey": false,
-					"notNull": true,
-					"default": "gen_random_uuid()"
-				},
-				"name": {
-					"name": "name",
+				"username": {
+					"name": "username",
 					"type": "text",
 					"primaryKey": false,
 					"notNull": true
@@ -393,11 +347,37 @@
 					"primaryKey": false,
 					"notNull": true
 				},
-				"password": {
-					"name": "password",
+				"first_name": {
+					"name": "first_name",
 					"type": "text",
 					"primaryKey": false,
 					"notNull": true
+				},
+				"last_name": {
+					"name": "last_name",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"profile_image": {
+					"name": "profile_image",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"bio": {
+					"name": "bio",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "''"
+				},
+				"country": {
+					"name": "country",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "''"
 				},
 				"created_at": {
 					"name": "created_at",
@@ -418,10 +398,10 @@
 			"foreignKeys": {},
 			"compositePrimaryKeys": {},
 			"uniqueConstraints": {
-				"users_public_id_unique": {
-					"name": "users_public_id_unique",
+				"users_username_unique": {
+					"name": "users_username_unique",
 					"nullsNotDistinct": false,
-					"columns": ["public_id"]
+					"columns": ["username"]
 				},
 				"users_email_unique": {
 					"name": "users_email_unique",

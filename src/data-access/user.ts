@@ -1,11 +1,11 @@
-import { UserCreate, UserUpdate, User } from '@/types/user';
-import { db } from '@/db';
+import { and, eq, gte, sql } from 'drizzle-orm';
 import * as z from 'zod';
+import { db } from '@/db';
 import { flashcardsTable, notesTable, usersTable } from '@/db/schema';
 import { userSchema } from '@/schema';
-import { and, eq, gte, sql } from 'drizzle-orm';
-import { ActivityOverview } from '@/types/activityOverview';
-import { TotalCreations } from '@/types/totalCreations';
+import type { ActivityOverview } from '@/types/activityOverview';
+import type { TotalCreations } from '@/types/totalCreations';
+import type { User, UserCreate, UserUpdate } from '@/types/user';
 
 export async function createUser(user: UserCreate): Promise<User> {
     try {
@@ -21,10 +21,10 @@ export async function createUser(user: UserCreate): Promise<User> {
             .insert(usersTable)
             .values({
                 clerkId: data.clerkId,
-                name: data.name,
-                profileImage: data.profileImage,
                 username: data.username,
                 email: data.email,
+                firstName: data.firstName,
+                lastName: data.lastName,
                 bio: data.bio,
                 country: data.country,
             })
@@ -49,8 +49,8 @@ export async function updateUser(user: UserUpdate): Promise<User> {
         const updatedData = await db
             .update(usersTable)
             .set({
-                name: data.name,
-                profileImage: data.profileImage,
+                firstName: data.firstName,
+                lastName: data.lastName,
                 bio: data.bio,
                 country: data.country,
             })
@@ -113,7 +113,7 @@ export async function retrieveUserActivityOverview(
                 sql`${flashcardsTable.noteId} = ${notesTable.id}`,
             )
             .where(
-                sql`${notesTable.publicAuthorId} = ${userId} AND ${notesTable.createdAt} >= ${startDate}`,
+                sql`${notesTable.authorId} = ${userId} AND ${notesTable.createdAt} >= ${startDate}`,
             )
             .groupBy(sql`DATE(${notesTable.createdAt})`)
             .orderBy(sql`DATE(${notesTable.createdAt})`);
@@ -149,7 +149,7 @@ export async function retrieveTotalCreations(
                 flashcardsTable,
                 sql`${flashcardsTable.noteId} = ${notesTable.id}`,
             )
-            .where(sql`${notesTable.publicAuthorId} = ${userId}`);
+            .where(sql`${notesTable.authorId} = ${userId}`);
         return total.length > 0 ? total[0] : { notes: 0, flashcards: 0 };
     } catch (error) {
         console.error(`Error getting total creations with id ${id}:`, error);

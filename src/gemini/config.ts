@@ -1,11 +1,11 @@
-import { geminiApiKey } from '@/config';
-import { geminiPrompt } from '@/gemini/prompt';
 import {
     GoogleGenAI,
     HarmBlockThreshold,
     HarmCategory,
     Type,
 } from '@google/genai';
+import { geminiApiKey } from '@/config';
+import { geminiPrompt } from '@/gemini/prompt';
 
 const genAI = new GoogleGenAI({ apiKey: geminiApiKey });
 const model = 'gemini-2.0-flash';

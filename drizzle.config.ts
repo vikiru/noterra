@@ -1,5 +1,5 @@
-import { databaseUrl } from '@/config';
 import { defineConfig } from 'drizzle-kit';
+import { databaseUrl } from '@/config';
 
 export default defineConfig({
     out: './src/db/migrations',

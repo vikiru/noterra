@@ -1,16 +1,17 @@
-import { db } from '@/db';
-import { notesTable, usersTable, flashcardsTable } from '@/db/schema';
 import { faker } from '@faker-js/faker';
+import { db } from '@/db';
+import { flashcardsTable, notesTable, usersTable } from '@/db/schema';
 
 async function createRandomUser() {
     const user = await db
         .insert(usersTable)
         .values({
             clerkId: faker.string.uuid(),
-            name: faker.person.fullName(),
             profileImage: faker.image.url(),
             username: faker.internet.username(),
             email: faker.internet.email(),
+            firstName: faker.person.firstName(),
+            lastName: faker.person.lastName(),
             bio: faker.person.bio(),
             country: faker.location.country(),
         })
@@ -44,12 +45,11 @@ function generateFakeNoteHTML() {
   `;
 }
 
-async function createRandomNote(authorId: string, publicAuthorId: string) {
+async function createRandomNote(authorId: string) {
     const note = db
         .insert(notesTable)
         .values({
             authorId,
-            publicAuthorId,
             title: faker.lorem.sentence(4).replace('.', ''),
             summary: faker.lorem.sentence(10),
             keywords: faker.lorem.words(10).replace('.', ''),
@@ -59,19 +59,12 @@ async function createRandomNote(authorId: string, publicAuthorId: string) {
     return note;
 }
 
-async function createRandomFlashcard(
-    authorId: string,
-    noteId: string,
-    publicAuthorId: string,
-    publicNoteId: string,
-) {
+async function createRandomFlashcard(authorId: string, noteId: string) {
     const flashcard = db
         .insert(flashcardsTable)
         .values({
             authorId,
-            publicAuthorId,
             noteId,
-            publicNoteId,
             question: faker.lorem.sentence(4).replace('.', ''),
             answer: faker.lorem.sentence(4).replace('.', ''),
         })

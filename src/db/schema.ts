@@ -5,16 +5,19 @@ import {
     pgTable,
     text,
     timestamp,
+    unique,
     uuid,
 } from 'drizzle-orm/pg-core';
 
+// TODO: add user logs / activity table. For now track note/flashcard create/update/delete. Ideally keep track of 7d activity only.
+// TODO: keep track of daily prompt usage through this
+
 export const usersTable = pgTable('users', {
     clerkId: text('id').primaryKey(),
-    publicId: uuid('public_id').notNull().defaultRandom().unique(),
-    name: text('name').notNull(),
     username: text('username').notNull().unique(),
     email: text('email').notNull().unique(),
-    profileImage: text('profile_image').notNull(),
+    firstName: text('first_name').notNull(),
+    lastName: text('last_name').notNull(),
     bio: text('bio').notNull().default(''),
     country: text('country').notNull().default(''),
     createdAt: timestamp('created_at', { withTimezone: true })
@@ -32,11 +35,7 @@ export const notesTable = pgTable(
         authorId: text('author_id')
             .notNull()
             .references(() => usersTable.clerkId, { onDelete: 'cascade' }),
-        publicNoteId: uuid('public_note_id').notNull().defaultRandom().unique(),
-        publicAuthorId: uuid('public_author_id')
-            .references(() => usersTable.publicId)
-            .notNull(),
-        title: text('title').notNull().unique(),
+        title: text('title').notNull(),
         summary: text('summary').notNull(),
         keywords: text('keywords').notNull(),
         content: text('content').notNull(),
@@ -51,7 +50,7 @@ export const notesTable = pgTable(
             .defaultNow(),
     },
     (table) => [
-        index('public_author_index').on(table.authorId),
+        unique('author_title_unique').on(table.authorId, table.title),
         index('author_public_note_index').on(table.authorId, table.public),
         index('author_shared_note_index').on(table.authorId, table.shared),
         index('keyword_index').on(table.keywords),
@@ -69,16 +68,6 @@ export const flashcardsTable = pgTable(
         noteId: uuid('note_id')
             .notNull()
             .references(() => notesTable.id, { onDelete: 'cascade' }),
-        publicFlashcardId: uuid('public_flashcard_id')
-            .notNull()
-            .defaultRandom()
-            .unique(),
-        publicAuthorId: uuid('public_author_id')
-            .references(() => usersTable.publicId)
-            .notNull(),
-        publicNoteId: uuid('public_note_id')
-            .references(() => notesTable.publicNoteId)
-            .notNull(),
         question: text('question').notNull(),
         answer: text('answer').notNull(),
         public: boolean('public').notNull().default(false),

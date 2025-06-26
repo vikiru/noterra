@@ -2,9 +2,9 @@
 
 import parse from 'html-react-parser';
 import DOMPurify from 'isomorphic-dompurify';
-import { RefObject, useEffect, useRef } from 'react';
 import mermaid from 'mermaid';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { type RefObject, useEffect, useRef } from 'react';
+import { Badge } from '@/components/ui/badge';
 import {
     Card,
     CardContent,
@@ -13,7 +13,7 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 const data = {
     note_contents: [

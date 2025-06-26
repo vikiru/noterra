@@ -10,17 +10,9 @@ async function seedData() {
         const user = userData[0];
 
         for (let j = 0; j < 20; j++) {
-            const noteData = await createRandomNote(
-                user.clerkId,
-                user.publicId,
-            );
+            const noteData = await createRandomNote(user.clerkId);
             const note = noteData[0];
-            await createRandomFlashcard(
-                user.clerkId,
-                note.id,
-                user.publicId,
-                note.publicNoteId,
-            );
+            await createRandomFlashcard(user.clerkId, note.id);
         }
     }
 }

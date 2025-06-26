@@ -1,7 +1,7 @@
-import { Flashcard } from '@/types/flashcard';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
+import type { Flashcard } from '@/types/flashcard';
 
 type FlashcardState = {
     flashcards: Flashcard[];
