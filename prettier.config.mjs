@@ -10,7 +10,7 @@ export default {
     arrowParens: 'always',
     endOfLine: 'auto',
     singleAttributePerLine: false,
-    plugins: ['prettier-plugin-tailwindcss'],
+    plugins: ['prettier-plugin-tailwindcss', 'prettier-plugin-packagejson'],
     overrides: [
         {
             files: ['*.ts', '*.tsx'],

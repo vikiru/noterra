@@ -1,5 +1,5 @@
-import { z } from 'zod';
-import { flashcardSchema } from '@/schema';
+import type * as z from 'zod/v4';
+import type { flashcardSchema } from '@/schema';
 
 export type Flashcard = Omit<
     z.infer<typeof flashcardSchema.select>,

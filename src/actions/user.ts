@@ -1,5 +1,7 @@
 'use server';
 
+import { auth } from '@clerk/nextjs/server';
+import { redirect } from 'next/navigation';
 import {
     createUser,
     retrieveTotalCreations,
@@ -7,11 +9,9 @@ import {
     retrieveUserById,
     updateUser,
 } from '@/data-access/user';
-import { ActivityOverview } from '@/types/activityOverview';
-import { TotalCreations } from '@/types/totalCreations';
-import { User, UserCreate, UserUpdate } from '@/types/user';
-import { auth } from '@clerk/nextjs/server';
-import { redirect } from 'next/navigation';
+import type { ActivityOverview } from '@/types/activityOverview';
+import type { TotalCreations } from '@/types/totalCreations';
+import type { User, UserCreate, UserUpdate } from '@/types/user';
 
 export async function addUser(user: UserCreate): Promise<User> {
     try {

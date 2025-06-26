@@ -1,5 +1,7 @@
 'use server';
 
+import { auth } from '@clerk/nextjs/server';
+import { redirect } from 'next/navigation';
 import {
     createNote,
     deleteNote,
@@ -8,9 +10,7 @@ import {
     retrievePublicNotesByUserId,
     updateNote,
 } from '@/data-access/note';
-import { Note, NoteCreate, NoteUpdate } from '@/types/note';
-import { auth } from '@clerk/nextjs/server';
-import { redirect } from 'next/navigation';
+import type { Note, NoteCreate, NoteUpdate } from '@/types/note';
 
 export async function fetchNotesByUserId(): Promise<Note[]> {
     try {

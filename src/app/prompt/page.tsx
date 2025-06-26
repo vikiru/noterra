@@ -1,15 +1,15 @@
 'use client';
 
+import { Loader2, WandSparkles } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { toast } from 'sonner';
+import { generateGeminiNote } from '@/actions/generateGeminiNote';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Loader2, WandSparkles } from 'lucide-react';
-import { useState } from 'react';
-import { generateGeminiNote } from '@/actions/generateGeminiNote';
 import { promptSchema } from '@/schema/promptSchema';
 import { combineHTML } from '@/utils/combineHTML';
 import { updateTOC } from '@/utils/updateTOC';
-import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
 
 export default function PromptPage() {
     const [prompt, setPrompt] = useState<string>('');

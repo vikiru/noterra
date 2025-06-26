@@ -1,29 +1,30 @@
-import { flashcardsTable, notesTable, usersTable } from '@/db/schema';
 import {
     createInsertSchema,
     createSelectSchema,
     createUpdateSchema,
 } from 'drizzle-zod';
-import { z } from 'zod';
+import * as z from 'zod/v4';
+import { flashcardsTable, notesTable, usersTable } from '@/db/schema';
 
 export const userSchema = {
     select: createSelectSchema(usersTable),
     update: createUpdateSchema(usersTable)
         .pick({
-            name: true,
-            profileImage: true,
+            firstName: true,
+            lastName: true,
             bio: true,
             country: true,
         })
         .extend({
-            clerkId: z.string().uuid(),
-            publicId: z.string().uuid(),
+            clerkId: z.uuid(),
         }),
     insert: createInsertSchema(usersTable).omit({
         createdAt: true,
         updatedAt: true,
     }),
 };
+
+// TODO: Redo these schemas, fix ts errors.
 
 export const noteSchema = {
     select: createSelectSchema(notesTable),
@@ -37,11 +38,9 @@ export const noteSchema = {
             summary: true,
         })
         .extend({
-            id: z.string().uuid(),
-            authorId: z.string().uuid(),
-            publicNoteId: z.string().uuid(),
-            publicAuthorId: z.string().uuid(),
-            shareToken: z.string().uuid(),
+            id: z.uuid(),
+            authorId: z.uuid(),
+            shareToken: z.uuid(),
         }),
     insert: createInsertSchema(notesTable).omit({
         id: true,
@@ -61,11 +60,9 @@ export const flashcardSchema = {
             public: true,
         })
         .extend({
-            id: z.string().uuid(),
-            authorId: z.string().uuid(),
-            noteId: z.string().uuid(),
-            publicAuthorId: z.string().uuid(),
-            publicNoteId: z.string().uuid(),
+            id: z.uuid(),
+            authorId: z.uuid(),
+            noteId: z.uuid(),
         }),
     insert: createInsertSchema(flashcardsTable).omit({
         id: true,

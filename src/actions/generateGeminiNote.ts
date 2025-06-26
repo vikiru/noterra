@@ -1,10 +1,10 @@
 'use server';
 
-import { model, genAI, generationConfig } from '@/gemini/config';
-import { promptSchema } from '@/schema/promptSchema';
-import { GeminiResponse } from '@/types/geminiResponse';
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
+import { genAI, generationConfig, model } from '@/gemini/config';
+import { promptSchema } from '@/schema/promptSchema';
+import type { GeminiResponse } from '@/types/geminiResponse';
 
 export async function generateGeminiNote(prompt: string) {
     const { userId } = await auth();

@@ -1,5 +1,5 @@
-import { z } from 'zod';
-import { userSchema } from '@/schema';
+import type * as z from 'zod/v4-mini';
+import type { userSchema } from '@/schema';
 
 export type User = Omit<
     z.infer<typeof userSchema.select>,

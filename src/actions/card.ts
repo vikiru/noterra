@@ -1,5 +1,7 @@
 'use server';
 
+import { auth } from '@clerk/nextjs/server';
+import { redirect } from 'next/navigation';
 import {
     createCard,
     createMultipleCards,
@@ -11,9 +13,11 @@ import {
     retrievePublicCardsByUserId,
     updateCard,
 } from '@/data-access/card';
-import { Flashcard, FlashcardCreate, FlashcardUpdate } from '@/types/flashcard';
-import { auth } from '@clerk/nextjs/server';
-import { redirect } from 'next/navigation';
+import type {
+    Flashcard,
+    FlashcardCreate,
+    FlashcardUpdate,
+} from '@/types/flashcard';
 
 export async function addCard(card: FlashcardCreate): Promise<Flashcard> {
     try {

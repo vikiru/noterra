@@ -1,9 +1,9 @@
+import { and, eq } from 'drizzle-orm';
+import { z } from 'zod';
 import { db } from '@/db';
 import { notesTable } from '@/db/schema';
 import { noteSchema } from '@/schema';
-import { Note, NoteCreate, NoteUpdate } from '@/types/note';
-import { and, eq } from 'drizzle-orm';
-import { z } from 'zod';
+import type { Note, NoteCreate, NoteUpdate } from '@/types/note';
 
 export async function createNote(note: NoteCreate): Promise<Note> {
     try {

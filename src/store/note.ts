@@ -1,7 +1,7 @@
-import { Note } from '@/types/note';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
+import type { Note } from '@/types/note';
 
 type NoteState = {
     notes: Note[];

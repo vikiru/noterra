@@ -1,9 +1,13 @@
+import { and, eq } from 'drizzle-orm';
+import { z } from 'zod';
 import { db } from '@/db';
 import { flashcardsTable } from '@/db/schema';
 import { flashcardSchema } from '@/schema';
-import { Flashcard, FlashcardCreate, FlashcardUpdate } from '@/types/flashcard';
-import { and, eq } from 'drizzle-orm';
-import { z } from 'zod';
+import type {
+    Flashcard,
+    FlashcardCreate,
+    FlashcardUpdate,
+} from '@/types/flashcard';
 
 export async function createCard(card: FlashcardCreate): Promise<Flashcard> {
     try {
