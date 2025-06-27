@@ -1,9 +1,6 @@
-export type GeminiNoteContent = {
-    title: string;
-    heading_level: number;
-    content: string;
-    includes_diagram: boolean;
-    diagram_type: string;
+export type GeminiFlashcard = {
+    question: string;
+    answer: string;
 };
 
 export type GeminiMetadata = {
@@ -12,9 +9,12 @@ export type GeminiMetadata = {
     summary: string;
 };
 
-export type GeminiFlashcard = {
-    question: string;
-    answer: string;
+export type GeminiNoteContent = {
+    title: string;
+    heading_level: number;
+    content: string;
+    includes_diagram: boolean;
+    diagram_type: string;
 };
 
 export type GeminiResponse = {
