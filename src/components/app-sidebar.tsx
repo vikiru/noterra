@@ -1,5 +1,7 @@
 'use client';
 
+import type * as React from 'react';
+
 import {
     IconCamera,
     IconChartBar,
@@ -17,7 +19,6 @@ import {
     IconSettings,
     IconUsers,
 } from '@tabler/icons-react';
-import type * as React from 'react';
 
 import { NavDocuments } from '@/components/nav-documents';
 import { NavMain } from '@/components/nav-main';
@@ -173,7 +174,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarContent>
                 <NavMain items={data.navMain} />
                 <NavDocuments items={data.documents} />
-                <NavSecondary items={data.navSecondary} className="mt-auto" />
+                <NavSecondary className="mt-auto" items={data.navSecondary} />
             </SidebarContent>
             <SidebarFooter>
                 <NavUser user={data.user} />

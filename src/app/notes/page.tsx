@@ -4,6 +4,7 @@ import parse from 'html-react-parser';
 import DOMPurify from 'isomorphic-dompurify';
 import mermaid from 'mermaid';
 import { type RefObject, useEffect, useRef } from 'react';
+
 import { Badge } from '@/components/ui/badge';
 import {
     Card,
@@ -193,6 +194,415 @@ const keywords = [
     'Stack',
     'Algorithm',
 ];
+export default function Page() {
+    const noteSection = useRef<HTMLElement>(null);
+    const safeHtml = combineAndSanitizeNoteContent(data.note_contents || []);
+
+    useEffect(() => {
+        if (noteSection !== null) {
+            mermaid.initialize({ startOnLoad: true });
+            mermaid.contentLoaded();
+
+            const mermaidElements = document.querySelectorAll('.mermaid');
+            mermaidElements.forEach((element) => {
+                const parent = element.parentElement;
+                parent?.classList.add('not-prose');
+            });
+
+            updateTOC(noteSection);
+        }
+    }, [safeHtml]);
+
+    return (
+        <div className="flex min-h-screen grow flex-col overflow-hidden rounded-lg bg-white p-6 text-black shadow-lg">
+            <div>
+                <h3 className="">Notes</h3>
+            </div>
+
+            <div className="flex justify-between">
+                <div className="rounded-lg bg-gray-300 sm:w-1/4 lg:flex lg:w-1/4">
+                    <ScrollArea className="h-[90vh] w-full overflow-x-auto overflow-y-auto rounded-lg bg-gray-300 p-4 shadow-inner">
+                        <div className="flex flex-col gap-1">
+                            {/* Recursion (unstyled) */}
+                            <Card className="prose w-full">
+                                <CardHeader>
+                                    <CardTitle className="text-lg">
+                                        Recursion
+                                    </CardTitle>
+                                    <CardDescription>
+                                        Understanding the concept of functions
+                                        calling themselves.
+                                    </CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="-mt-4 flex w-full flex-wrap gap-1">
+                                        {keywords.map((keyword, index) => {
+                                            return (
+                                                <Badge
+                                                    className="capitalize"
+                                                    key={index}
+                                                >
+                                                    {keyword}
+                                                </Badge>
+                                            );
+                                        })}
+                                    </div>
+                                </CardContent>
+                            </Card>
+
+                            <Card className="prose w-full dark:bg-gray-100">
+                                <CardHeader>
+                                    <CardTitle className="text-lg text-black">
+                                        Base Case
+                                    </CardTitle>
+                                    <CardDescription>
+                                        The termination condition for a
+                                        recursive function.
+                                    </CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="-mt-4 flex w-full flex-wrap gap-1">
+                                        {[
+                                            'termination',
+                                            'condition',
+                                            'stopping',
+                                            'exit',
+                                            'end',
+                                            'base case',
+                                        ].map((keyword, index) => {
+                                            return (
+                                                <Badge
+                                                    className="capitalize"
+                                                    key={index}
+                                                >
+                                                    {keyword}
+                                                </Badge>
+                                            );
+                                        })}
+                                    </div>
+                                </CardContent>
+                            </Card>
+
+                            <Card className="prose w-full">
+                                <CardHeader>
+                                    <CardTitle className="text-lg">
+                                        Recursive Call
+                                    </CardTitle>
+                                    <CardDescription>
+                                        When a function calls itself to solve a
+                                        smaller instance of the problem.
+                                    </CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="-mt-4 flex w-full flex-wrap gap-1">
+                                        {[
+                                            'self-call',
+                                            'problem',
+                                            'solution',
+                                            'recursive',
+                                            'function',
+                                            'stack',
+                                        ].map((keyword, index) => {
+                                            return (
+                                                <Badge
+                                                    className="capitalize"
+                                                    key={index}
+                                                >
+                                                    {keyword}
+                                                </Badge>
+                                            );
+                                        })}
+                                    </div>
+                                </CardContent>
+                            </Card>
+
+                            <Card className="prose w-full">
+                                <CardHeader>
+                                    <CardTitle className="text-lg">
+                                        Recursion Depth
+                                    </CardTitle>
+                                    <CardDescription>
+                                        The level of nested recursive calls made
+                                        by a function.
+                                    </CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="-mt-4 flex w-full flex-wrap gap-1">
+                                        {[
+                                            'depth',
+                                            'call-stack',
+                                            'nested',
+                                            'recursion',
+                                            'level',
+                                            'performance',
+                                        ].map((keyword, index) => {
+                                            return (
+                                                <Badge
+                                                    className="capitalize"
+                                                    key={index}
+                                                >
+                                                    {keyword}
+                                                </Badge>
+                                            );
+                                        })}
+                                    </div>
+                                </CardContent>
+                            </Card>
+
+                            <Card className="prose w-full">
+                                <CardHeader>
+                                    <CardTitle className="text-lg">
+                                        Infinite Recursion
+                                    </CardTitle>
+                                    <CardDescription>
+                                        When a recursive function fails to reach
+                                        the base case, leading to an infinite
+                                        loop.
+                                    </CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="-mt-4 flex w-full flex-wrap gap-1">
+                                        {[
+                                            'infinite',
+                                            'loop',
+                                            'failure',
+                                            'stack overflow',
+                                            'endless',
+                                            'base case',
+                                        ].map((keyword, index) => {
+                                            return (
+                                                <Badge
+                                                    className="capitalize"
+                                                    key={index}
+                                                >
+                                                    {keyword}
+                                                </Badge>
+                                            );
+                                        })}
+                                    </div>
+                                </CardContent>
+                            </Card>
+
+                            <Card className="prose w-full">
+                                <CardHeader>
+                                    <CardTitle className="text-lg">
+                                        Tail Recursion
+                                    </CardTitle>
+                                    <CardDescription>
+                                        A form of recursion where the recursive
+                                        call is the last operation in the
+                                        function.
+                                    </CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="-mt-4 flex w-full flex-wrap gap-1">
+                                        {[
+                                            'tail call',
+                                            'optimization',
+                                            'last call',
+                                            'efficiency',
+                                            'memory',
+                                            'function',
+                                        ].map((keyword, index) => {
+                                            return (
+                                                <Badge
+                                                    className="capitalize"
+                                                    key={index}
+                                                >
+                                                    {keyword}
+                                                </Badge>
+                                            );
+                                        })}
+                                    </div>
+                                </CardContent>
+                            </Card>
+
+                            <Card className="prose w-full">
+                                <CardHeader>
+                                    <CardTitle className="text-lg">
+                                        Recursion Tree
+                                    </CardTitle>
+                                    <CardDescription>
+                                        A diagram that visualizes the recursive
+                                        calls made by a function.
+                                    </CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="-mt-4 flex w-full flex-wrap gap-1">
+                                        {[
+                                            'tree',
+                                            'visualization',
+                                            'calls',
+                                            'branches',
+                                            'diagram',
+                                            'structure',
+                                        ].map((keyword, index) => {
+                                            return (
+                                                <Badge
+                                                    className="capitalize"
+                                                    key={index}
+                                                >
+                                                    {keyword}
+                                                </Badge>
+                                            );
+                                        })}
+                                    </div>
+                                </CardContent>
+                            </Card>
+
+                            <Card className="prose w-full">
+                                <CardHeader>
+                                    <CardTitle className="text-lg">
+                                        Recursion vs Iteration
+                                    </CardTitle>
+                                    <CardDescription>
+                                        Comparing recursion with looping
+                                        techniques like for/while loops for
+                                        solving problems.
+                                    </CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="-mt-4 flex w-full flex-wrap gap-1">
+                                        {[
+                                            'iteration',
+                                            'looping',
+                                            'comparison',
+                                            'efficiency',
+                                            'stack',
+                                            'recursive',
+                                        ].map((keyword, index) => {
+                                            return (
+                                                <Badge
+                                                    className="capitalize"
+                                                    key={index}
+                                                >
+                                                    {keyword}
+                                                </Badge>
+                                            );
+                                        })}
+                                    </div>
+                                </CardContent>
+                            </Card>
+
+                            <Card className="prose w-full">
+                                <CardHeader>
+                                    <CardTitle className="text-lg">
+                                        Divide and Conquer
+                                    </CardTitle>
+                                    <CardDescription>
+                                        A strategy where recursion is used to
+                                        break down problems into smaller
+                                        subproblems.
+                                    </CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="-mt-4 flex w-full flex-wrap gap-1">
+                                        {[
+                                            'divide',
+                                            'conquer',
+                                            'subproblems',
+                                            'recursive',
+                                            'algorithm',
+                                            'merge',
+                                        ].map((keyword, index) => {
+                                            return (
+                                                <Badge
+                                                    className="capitalize"
+                                                    key={index}
+                                                >
+                                                    {keyword}
+                                                </Badge>
+                                            );
+                                        })}
+                                    </div>
+                                </CardContent>
+                            </Card>
+
+                            <Card className="prose w-full">
+                                <CardHeader>
+                                    <CardTitle className="text-lg">
+                                        Memoization
+                                    </CardTitle>
+                                    <CardDescription>
+                                        A technique used to optimize recursive
+                                        functions by storing results of
+                                        expensive function calls.
+                                    </CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="-mt-4 flex w-full flex-wrap gap-1">
+                                        {[
+                                            'optimization',
+                                            'caching',
+                                            'performance',
+                                            'memo',
+                                            'recursion',
+                                            'lookup',
+                                        ].map((keyword, index) => {
+                                            return (
+                                                <Badge
+                                                    className="capitalize"
+                                                    key={index}
+                                                >
+                                                    {keyword}
+                                                </Badge>
+                                            );
+                                        })}
+                                    </div>
+                                </CardContent>
+                            </Card>
+
+                            <Card className="prose w-full">
+                                <CardHeader>
+                                    <CardTitle className="text-lg">
+                                        Recursive Data Structures
+                                    </CardTitle>
+                                    <CardDescription>
+                                        Data structures like trees and graphs
+                                        that are inherently recursive in nature.
+                                    </CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="-mt-4 flex w-full flex-wrap gap-1">
+                                        {[
+                                            'data structures',
+                                            'tree',
+                                            'graph',
+                                            'recursive',
+                                            'nodes',
+                                            'edges',
+                                        ].map((keyword, index) => {
+                                            return (
+                                                <Badge
+                                                    className="capitalize"
+                                                    key={index}
+                                                >
+                                                    {keyword}
+                                                </Badge>
+                                            );
+                                        })}
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </div>
+                    </ScrollArea>
+                </div>
+                <div className="flex justify-end overflow-hidden rounded-lg bg-gray-300 lg:w-3/4">
+                    <ScrollArea className="h-[90vh] w-full overflow-x-auto overflow-y-auto rounded-lg bg-gray-50 p-4 shadow-inner">
+                        <section
+                            className="container-xl prose sm:prose-sm md:prose-base lg:prose-lg mx-4 w-full 2xl:max-w-[95%]"
+                            id="note"
+                            ref={noteSection}
+                        >
+                            {parse(safeHtml)}
+                        </section>
+                    </ScrollArea>
+                </div>
+            </div>
+        </div>
+    );
+}
+
 // TODO: finish prompt cleanup
 // TODO: add google books + youtube data, maybe medium api and some api for course data
 // TODO: create utils for combining, sanitizing, updating toc, convert md -> html, html -> md, json -> html, etc
@@ -251,413 +661,4 @@ function updateTOC(ref: RefObject<HTMLElement | null>) {
     if (tocList) {
         tocList.innerHTML = toc;
     }
-}
-
-export default function Page() {
-    const noteSection = useRef<HTMLElement>(null);
-    const safeHtml = combineAndSanitizeNoteContent(data.note_contents || []);
-
-    useEffect(() => {
-        if (noteSection !== null) {
-            mermaid.initialize({ startOnLoad: true });
-            mermaid.contentLoaded();
-
-            const mermaidElements = document.querySelectorAll('.mermaid');
-            mermaidElements.forEach((element) => {
-                const parent = element.parentElement;
-                parent?.classList.add('not-prose');
-            });
-
-            updateTOC(noteSection);
-        }
-    }, [safeHtml]);
-
-    return (
-        <div className="flex min-h-screen grow flex-col overflow-hidden rounded-lg bg-white p-6 text-black shadow-lg">
-            <div>
-                <h3 className="">Notes</h3>
-            </div>
-
-            <div className="flex justify-between">
-                <div className="rounded-lg bg-gray-300 sm:w-1/4 lg:flex lg:w-1/4">
-                    <ScrollArea className="h-[90vh] w-full overflow-x-auto overflow-y-auto rounded-lg bg-gray-300 p-4 shadow-inner">
-                        <div className="flex flex-col gap-1">
-                            {/* Recursion (unstyled) */}
-                            <Card className="prose w-full">
-                                <CardHeader>
-                                    <CardTitle className="text-lg">
-                                        Recursion
-                                    </CardTitle>
-                                    <CardDescription>
-                                        Understanding the concept of functions
-                                        calling themselves.
-                                    </CardDescription>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="-mt-4 flex w-full flex-wrap gap-1">
-                                        {keywords.map((keyword, index) => {
-                                            return (
-                                                <Badge
-                                                    key={index}
-                                                    className="capitalize"
-                                                >
-                                                    {keyword}
-                                                </Badge>
-                                            );
-                                        })}
-                                    </div>
-                                </CardContent>
-                            </Card>
-
-                            <Card className="prose w-full dark:bg-gray-100">
-                                <CardHeader>
-                                    <CardTitle className="text-lg text-black">
-                                        Base Case
-                                    </CardTitle>
-                                    <CardDescription>
-                                        The termination condition for a
-                                        recursive function.
-                                    </CardDescription>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="-mt-4 flex w-full flex-wrap gap-1">
-                                        {[
-                                            'termination',
-                                            'condition',
-                                            'stopping',
-                                            'exit',
-                                            'end',
-                                            'base case',
-                                        ].map((keyword, index) => {
-                                            return (
-                                                <Badge
-                                                    key={index}
-                                                    className="capitalize"
-                                                >
-                                                    {keyword}
-                                                </Badge>
-                                            );
-                                        })}
-                                    </div>
-                                </CardContent>
-                            </Card>
-
-                            <Card className="prose w-full">
-                                <CardHeader>
-                                    <CardTitle className="text-lg">
-                                        Recursive Call
-                                    </CardTitle>
-                                    <CardDescription>
-                                        When a function calls itself to solve a
-                                        smaller instance of the problem.
-                                    </CardDescription>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="-mt-4 flex w-full flex-wrap gap-1">
-                                        {[
-                                            'self-call',
-                                            'problem',
-                                            'solution',
-                                            'recursive',
-                                            'function',
-                                            'stack',
-                                        ].map((keyword, index) => {
-                                            return (
-                                                <Badge
-                                                    key={index}
-                                                    className="capitalize"
-                                                >
-                                                    {keyword}
-                                                </Badge>
-                                            );
-                                        })}
-                                    </div>
-                                </CardContent>
-                            </Card>
-
-                            <Card className="prose w-full">
-                                <CardHeader>
-                                    <CardTitle className="text-lg">
-                                        Recursion Depth
-                                    </CardTitle>
-                                    <CardDescription>
-                                        The level of nested recursive calls made
-                                        by a function.
-                                    </CardDescription>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="-mt-4 flex w-full flex-wrap gap-1">
-                                        {[
-                                            'depth',
-                                            'call-stack',
-                                            'nested',
-                                            'recursion',
-                                            'level',
-                                            'performance',
-                                        ].map((keyword, index) => {
-                                            return (
-                                                <Badge
-                                                    key={index}
-                                                    className="capitalize"
-                                                >
-                                                    {keyword}
-                                                </Badge>
-                                            );
-                                        })}
-                                    </div>
-                                </CardContent>
-                            </Card>
-
-                            <Card className="prose w-full">
-                                <CardHeader>
-                                    <CardTitle className="text-lg">
-                                        Infinite Recursion
-                                    </CardTitle>
-                                    <CardDescription>
-                                        When a recursive function fails to reach
-                                        the base case, leading to an infinite
-                                        loop.
-                                    </CardDescription>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="-mt-4 flex w-full flex-wrap gap-1">
-                                        {[
-                                            'infinite',
-                                            'loop',
-                                            'failure',
-                                            'stack overflow',
-                                            'endless',
-                                            'base case',
-                                        ].map((keyword, index) => {
-                                            return (
-                                                <Badge
-                                                    key={index}
-                                                    className="capitalize"
-                                                >
-                                                    {keyword}
-                                                </Badge>
-                                            );
-                                        })}
-                                    </div>
-                                </CardContent>
-                            </Card>
-
-                            <Card className="prose w-full">
-                                <CardHeader>
-                                    <CardTitle className="text-lg">
-                                        Tail Recursion
-                                    </CardTitle>
-                                    <CardDescription>
-                                        A form of recursion where the recursive
-                                        call is the last operation in the
-                                        function.
-                                    </CardDescription>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="-mt-4 flex w-full flex-wrap gap-1">
-                                        {[
-                                            'tail call',
-                                            'optimization',
-                                            'last call',
-                                            'efficiency',
-                                            'memory',
-                                            'function',
-                                        ].map((keyword, index) => {
-                                            return (
-                                                <Badge
-                                                    key={index}
-                                                    className="capitalize"
-                                                >
-                                                    {keyword}
-                                                </Badge>
-                                            );
-                                        })}
-                                    </div>
-                                </CardContent>
-                            </Card>
-
-                            <Card className="prose w-full">
-                                <CardHeader>
-                                    <CardTitle className="text-lg">
-                                        Recursion Tree
-                                    </CardTitle>
-                                    <CardDescription>
-                                        A diagram that visualizes the recursive
-                                        calls made by a function.
-                                    </CardDescription>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="-mt-4 flex w-full flex-wrap gap-1">
-                                        {[
-                                            'tree',
-                                            'visualization',
-                                            'calls',
-                                            'branches',
-                                            'diagram',
-                                            'structure',
-                                        ].map((keyword, index) => {
-                                            return (
-                                                <Badge
-                                                    key={index}
-                                                    className="capitalize"
-                                                >
-                                                    {keyword}
-                                                </Badge>
-                                            );
-                                        })}
-                                    </div>
-                                </CardContent>
-                            </Card>
-
-                            <Card className="prose w-full">
-                                <CardHeader>
-                                    <CardTitle className="text-lg">
-                                        Recursion vs Iteration
-                                    </CardTitle>
-                                    <CardDescription>
-                                        Comparing recursion with looping
-                                        techniques like for/while loops for
-                                        solving problems.
-                                    </CardDescription>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="-mt-4 flex w-full flex-wrap gap-1">
-                                        {[
-                                            'iteration',
-                                            'looping',
-                                            'comparison',
-                                            'efficiency',
-                                            'stack',
-                                            'recursive',
-                                        ].map((keyword, index) => {
-                                            return (
-                                                <Badge
-                                                    key={index}
-                                                    className="capitalize"
-                                                >
-                                                    {keyword}
-                                                </Badge>
-                                            );
-                                        })}
-                                    </div>
-                                </CardContent>
-                            </Card>
-
-                            <Card className="prose w-full">
-                                <CardHeader>
-                                    <CardTitle className="text-lg">
-                                        Divide and Conquer
-                                    </CardTitle>
-                                    <CardDescription>
-                                        A strategy where recursion is used to
-                                        break down problems into smaller
-                                        subproblems.
-                                    </CardDescription>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="-mt-4 flex w-full flex-wrap gap-1">
-                                        {[
-                                            'divide',
-                                            'conquer',
-                                            'subproblems',
-                                            'recursive',
-                                            'algorithm',
-                                            'merge',
-                                        ].map((keyword, index) => {
-                                            return (
-                                                <Badge
-                                                    key={index}
-                                                    className="capitalize"
-                                                >
-                                                    {keyword}
-                                                </Badge>
-                                            );
-                                        })}
-                                    </div>
-                                </CardContent>
-                            </Card>
-
-                            <Card className="prose w-full">
-                                <CardHeader>
-                                    <CardTitle className="text-lg">
-                                        Memoization
-                                    </CardTitle>
-                                    <CardDescription>
-                                        A technique used to optimize recursive
-                                        functions by storing results of
-                                        expensive function calls.
-                                    </CardDescription>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="-mt-4 flex w-full flex-wrap gap-1">
-                                        {[
-                                            'optimization',
-                                            'caching',
-                                            'performance',
-                                            'memo',
-                                            'recursion',
-                                            'lookup',
-                                        ].map((keyword, index) => {
-                                            return (
-                                                <Badge
-                                                    key={index}
-                                                    className="capitalize"
-                                                >
-                                                    {keyword}
-                                                </Badge>
-                                            );
-                                        })}
-                                    </div>
-                                </CardContent>
-                            </Card>
-
-                            <Card className="prose w-full">
-                                <CardHeader>
-                                    <CardTitle className="text-lg">
-                                        Recursive Data Structures
-                                    </CardTitle>
-                                    <CardDescription>
-                                        Data structures like trees and graphs
-                                        that are inherently recursive in nature.
-                                    </CardDescription>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="-mt-4 flex w-full flex-wrap gap-1">
-                                        {[
-                                            'data structures',
-                                            'tree',
-                                            'graph',
-                                            'recursive',
-                                            'nodes',
-                                            'edges',
-                                        ].map((keyword, index) => {
-                                            return (
-                                                <Badge
-                                                    key={index}
-                                                    className="capitalize"
-                                                >
-                                                    {keyword}
-                                                </Badge>
-                                            );
-                                        })}
-                                    </div>
-                                </CardContent>
-                            </Card>
-                        </div>
-                    </ScrollArea>
-                </div>
-                <div className="flex justify-end overflow-hidden rounded-lg bg-gray-300 lg:w-3/4">
-                    <ScrollArea className="h-[90vh] w-full overflow-x-auto overflow-y-auto rounded-lg bg-gray-50 p-4 shadow-inner">
-                        <section
-                            id="note"
-                            ref={noteSection}
-                            className="container-xl prose sm:prose-sm md:prose-base lg:prose-lg mx-4 w-full 2xl:max-w-[95%]"
-                        >
-                            {parse(safeHtml)}
-                        </section>
-                    </ScrollArea>
-                </div>
-            </div>
-        </div>
-    );
 }

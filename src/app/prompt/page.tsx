@@ -4,13 +4,16 @@ import { Loader2, WandSparkles } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'sonner';
+
 import { generateGeminiNote } from '@/actions/generateGeminiNote';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { NOTES_ROUTE } from '@/constants/route';
 import { promptSchema } from '@/schema/promptSchema';
 import { combineHTML } from '@/utils/combineHTML';
 import { updateTOC } from '@/utils/updateTOC';
 
+// TODO: clean this up. Split into hooks/etc, improve error/status msgs. Properly store note into state etc.
 export default function PromptPage() {
     const [prompt, setPrompt] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
@@ -20,8 +23,8 @@ export default function PromptPage() {
 
     const handleSubmit = async (
         e:
-            | React.MouseEvent<HTMLButtonElement>
-            | React.KeyboardEvent<HTMLInputElement>,
+            | React.KeyboardEvent<HTMLInputElement>
+            | React.MouseEvent<HTMLButtonElement>,
     ) => {
         e.preventDefault();
         const validatedPrompt = promptSchema.safeParse({ prompt });
@@ -47,7 +50,7 @@ export default function PromptPage() {
             const flashcards = response.flashcards;
             setLoading(false);
             toast.success('Note generated successfully!');
-            router.push(`/notes`);
+            router.push(NOTES_ROUTE);
         } catch (err) {
             console.error(err);
             setError('Something went wrong. Please try again.');
@@ -57,8 +60,8 @@ export default function PromptPage() {
 
     return (
         <section
-            id="prompt-page"
             className="flex min-h-screen flex-col items-center justify-center overflow-hidden dark:bg-zinc-900"
+            id="prompt-page"
         >
             <div className="-mt-20 flex flex-col items-center justify-center">
                 <h2 className="my-4 bg-gradient-to-tr from-rose-500 via-orange-400 to-yellow-300 bg-clip-text py-2 tracking-tight text-transparent sm:text-5xl lg:text-6xl">
@@ -71,23 +74,23 @@ export default function PromptPage() {
 
             <div className="flex w-full items-center space-x-2 py-2 sm:max-w-xl lg:max-w-4xl">
                 <Input
-                    type="text"
-                    placeholder="Enter a topic here"
                     className={`${prompt ? 'lowercase' : ''} lg:h-10 lg:text-lg`}
-                    value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') {
                             handleSubmit(e);
                         }
                     }}
+                    placeholder="Enter a topic here"
+                    type="text"
+                    value={prompt}
                 />
                 <Button
-                    type="submit"
                     className="hover:cursor-pointer lg:text-base"
-                    size={'lg'}
-                    onClick={handleSubmit}
                     disabled={loading}
+                    onClick={handleSubmit}
+                    size={'lg'}
+                    type="submit"
                 >
                     {loading ? 'Generating...' : 'Generate'}
                     {loading ? (
@@ -106,28 +109,28 @@ export default function PromptPage() {
             <div className="mx-4 mt-4 flex flex-wrap justify-center gap-2">
                 <div className="mx-4 mt-4 flex flex-wrap justify-center gap-2">
                     <button
-                        onClick={() => setPrompt('Explain Recursion')}
                         className="text-md rounded-lg bg-zinc-800 px-6 py-2 hover:cursor-pointer sm:px-3 sm:py-2 sm:text-base"
+                        onClick={() => setPrompt('Explain Recursion')}
                     >
                         <h5>Explain Recursion</h5>
                     </button>
                     <button
-                        onClick={() => setPrompt('Explain Photosynthesis')}
                         className="rounded-lg bg-zinc-800 px-6 py-2 hover:cursor-pointer sm:px-3 sm:py-2 sm:text-base"
+                        onClick={() => setPrompt('Explain Photosynthesis')}
                     >
                         <h5>Explain Photosynthesis</h5>
                     </button>
                     <button
+                        className="rounded-lg bg-zinc-800 px-6 py-2 hover:cursor-pointer sm:px-3 sm:py-2 sm:text-base"
                         onClick={() =>
                             setPrompt('Explain the History of the Internet')
                         }
-                        className="rounded-lg bg-zinc-800 px-6 py-2 hover:cursor-pointer sm:px-3 sm:py-2 sm:text-base"
                     >
                         <h5>Explain the History of the Internet</h5>
                     </button>
                     <button
-                        onClick={() => setPrompt('Explain Supply and Demand')}
                         className="rounded-lg bg-zinc-800 px-6 py-2 hover:cursor-pointer sm:px-3 sm:py-2 sm:text-base"
+                        onClick={() => setPrompt('Explain Supply and Demand')}
                     >
                         <h5>Explain Supply and Demand</h5>
                     </button>

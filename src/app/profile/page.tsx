@@ -2,6 +2,7 @@
 
 import { useUser } from '@clerk/nextjs';
 import { Book, Columns2, Dot, Notebook, Tag } from 'lucide-react';
+
 import { ExampleChart } from '@/components/ExampleChart';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -27,16 +28,16 @@ export default function PublicProfilePage() {
 
     return (
         <section
-            id="profile"
             className="bg-background flex sm:flex-col lg:flex-row"
+            id="profile"
         >
             <div className="sm:w-full lg:w-1/3">
                 <Card className="w-full dark:bg-gray-100">
                     <CardHeader>
                         <div className="">
                             <img
-                                src={user?.imageUrl}
                                 className="h-32 w-32 rounded-full"
+                                src={user?.imageUrl}
                             />
                         </div>
                         <CardTitle className="text-2xl 2xl:text-3xl dark:text-zinc-900">
@@ -59,18 +60,18 @@ export default function PublicProfilePage() {
                 </Card>
             </div>
             <div className="sm:mx-auto sm:mt-2 sm:w-full lg:mx-4 lg:mt-0 lg:w-2/3">
-                <Tabs defaultValue="account" className="w-full">
+                <Tabs className="w-full" defaultValue="account">
                     <TabsList className="grid w-full grid-cols-2">
                         <TabsTrigger
-                            value="overview"
                             className="dark:text-foreground data-[state=active]:text-white dark:data-[state=active]:text-white"
+                            value="overview"
                         >
                             <Columns2 size={15} />
                             Overview
                         </TabsTrigger>
                         <TabsTrigger
-                            value="notes"
                             className="flex items-center data-[state=active]:text-white dark:text-white dark:data-[state=active]:text-white"
+                            value="notes"
                         >
                             <Notebook size={15} />
                             Notes
@@ -79,7 +80,7 @@ export default function PublicProfilePage() {
                     <TabsContent value="overview">
                         <ExampleChart />
                     </TabsContent>
-                    <TabsContent value="notes" className="mx-2">
+                    <TabsContent className="mx-2" value="notes">
                         <ScrollArea className="flex w-full rounded-md border sm:h-[40vh] lg:h-[79vh] 2xl:h-[85vh]">
                             <div className="flex flex-col gap-1">
                                 <Card>
@@ -110,16 +111,16 @@ export default function PublicProfilePage() {
                                         <div className="flex flex-row items-center gap-2">
                                             <div className="jusify-between flex items-center gap-1">
                                                 <Book
-                                                    size={15}
                                                     className="lg:text-lg"
+                                                    size={15}
                                                 />
                                                 <span className="text-xs text-zinc-400 lg:text-sm">
                                                     20
                                                 </span>
                                             </div>
                                             <Dot
-                                                size={15}
                                                 className="-mx-2 lg:-mx-1"
+                                                size={15}
                                             />
                                             <p className="text-xs text-zinc-400 lg:text-sm">
                                                 Updated on April 12, 2025
@@ -159,16 +160,16 @@ export default function PublicProfilePage() {
                                         <div className="flex flex-row items-center gap-2">
                                             <div className="jusify-between flex items-center gap-1">
                                                 <Book
-                                                    size={15}
                                                     className="lg:text-lg"
+                                                    size={15}
                                                 />
                                                 <span className="text-xs text-zinc-400 lg:text-sm">
                                                     15
                                                 </span>
                                             </div>
                                             <Dot
-                                                size={15}
                                                 className="-mx-2 lg:-mx-1"
+                                                size={15}
                                             />
                                             <p className="text-xs text-zinc-400 lg:text-sm">
                                                 Updated on April 6, 2025
@@ -204,16 +205,16 @@ export default function PublicProfilePage() {
                                         <div className="flex flex-row items-center gap-2">
                                             <div className="jusify-between flex items-center gap-1">
                                                 <Book
-                                                    size={15}
                                                     className="lg:text-lg"
+                                                    size={15}
                                                 />
                                                 <span className="text-xs text-zinc-400 lg:text-sm">
                                                     18
                                                 </span>
                                             </div>
                                             <Dot
-                                                size={15}
                                                 className="-mx-2 lg:-mx-1"
+                                                size={15}
                                             />
                                             <p className="text-xs text-zinc-400 lg:text-sm">
                                                 Updated on April 1, 2025
@@ -248,16 +249,16 @@ export default function PublicProfilePage() {
                                         <div className="flex flex-row items-center gap-2">
                                             <div className="jusify-between flex items-center gap-1">
                                                 <Book
-                                                    size={15}
                                                     className="lg:text-lg"
+                                                    size={15}
                                                 />
                                                 <span className="text-xs text-zinc-400 lg:text-sm">
                                                     25
                                                 </span>
                                             </div>
                                             <Dot
-                                                size={15}
                                                 className="-mx-2 lg:-mx-1"
+                                                size={15}
                                             />
                                             <p className="text-xs text-zinc-400 lg:text-sm">
                                                 Updated on March 30, 2025
@@ -294,16 +295,16 @@ export default function PublicProfilePage() {
                                         <div className="flex flex-row items-center gap-2">
                                             <div className="jusify-between flex items-center gap-1">
                                                 <Book
-                                                    size={15}
                                                     className="lg:text-lg"
+                                                    size={15}
                                                 />
                                                 <span className="text-xs text-zinc-400 lg:text-sm">
                                                     10
                                                 </span>
                                             </div>
                                             <Dot
-                                                size={15}
                                                 className="-mx-2 lg:-mx-1"
+                                                size={15}
                                             />
                                             <p className="text-xs text-zinc-400 lg:text-sm">
                                                 Updated on March 25, 2025

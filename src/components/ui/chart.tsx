@@ -13,8 +13,8 @@ export type ChartConfig = {
         label?: React.ReactNode;
         icon?: React.ComponentType;
     } & (
-        | { color?: string; theme?: never }
         | { color?: never; theme: Record<keyof typeof THEMES, string> }
+        | { color?: string; theme?: never }
     );
 };
 
@@ -23,16 +23,6 @@ type ChartContextProps = {
 };
 
 const ChartContext = React.createContext<ChartContextProps | null>(null);
-
-function useChart() {
-    const context = React.useContext(ChartContext);
-
-    if (!context) {
-        throw new Error('useChart must be used within a <ChartContainer />');
-    }
-
-    return context;
-}
 
 function ChartContainer({
     id,
@@ -52,21 +42,31 @@ function ChartContainer({
     return (
         <ChartContext.Provider value={{ config }}>
             <div
-                data-slot="chart"
-                data-chart={chartId}
                 className={cn(
                     "[&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_[stroke='#ccc']]:stroke-border flex aspect-video justify-center text-xs [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-hidden [&_.recharts-sector]:outline-hidden [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-surface]:outline-hidden",
                     className,
                 )}
+                data-chart={chartId}
+                data-slot="chart"
                 {...props}
             >
-                <ChartStyle id={chartId} config={config} />
+                <ChartStyle config={config} id={chartId} />
                 <RechartsPrimitive.ResponsiveContainer>
                     {children}
                 </RechartsPrimitive.ResponsiveContainer>
             </div>
         </ChartContext.Provider>
     );
+}
+
+function useChart() {
+    const context = React.useContext(ChartContext);
+
+    if (!context) {
+        throw new Error('useChart must be used within a <ChartContainer />');
+    }
+
+    return context;
 }
 
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
@@ -118,11 +118,11 @@ function ChartTooltipContent({
     color,
     nameKey,
     labelKey,
-}: React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
-    React.ComponentProps<'div'> & {
+}: React.ComponentProps<'div'> &
+    React.ComponentProps<typeof RechartsPrimitive.Tooltip> & {
         hideLabel?: boolean;
         hideIndicator?: boolean;
-        indicator?: 'line' | 'dot' | 'dashed';
+        indicator?: 'dashed' | 'dot' | 'line';
         nameKey?: string;
         labelKey?: string;
     }) {
@@ -138,7 +138,7 @@ function ChartTooltipContent({
         const itemConfig = getPayloadConfigFromPayload(config, item, key);
         const value =
             !labelKey && typeof label === 'string'
-                ? config[label as keyof typeof config]?.label || label
+                ? config[label]?.label || label
                 : itemConfig?.label;
 
         if (labelFormatter) {
@@ -191,11 +191,11 @@ function ChartTooltipContent({
 
                     return (
                         <div
-                            key={item.dataKey}
                             className={cn(
                                 'flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:text-neutral-500 dark:[&>svg]:text-neutral-400',
                                 indicator === 'dot' && 'items-center',
                             )}
+                            key={item.dataKey}
                         >
                             {formatter &&
                             item?.value !== undefined &&
@@ -280,8 +280,8 @@ function ChartLegendContent({
     payload,
     verticalAlign = 'bottom',
     nameKey,
-}: React.ComponentProps<'div'> &
-    Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign'> & {
+}: Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign'> &
+    React.ComponentProps<'div'> & {
         hideIcon?: boolean;
         nameKey?: string;
     }) {
@@ -309,10 +309,10 @@ function ChartLegendContent({
 
                 return (
                     <div
-                        key={item.value}
                         className={cn(
                             'flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-neutral-500 dark:[&>svg]:text-neutral-400',
                         )}
+                        key={item.value}
                     >
                         {itemConfig?.icon && !hideIcon ? (
                             <itemConfig.icon />
@@ -366,16 +366,14 @@ function getPayloadConfigFromPayload(
         ] as string;
     }
 
-    return configLabelKey in config
-        ? config[configLabelKey]
-        : config[key as keyof typeof config];
+    return configLabelKey in config ? config[configLabelKey] : config[key];
 }
 
 export {
     ChartContainer,
-    ChartTooltip,
-    ChartTooltipContent,
     ChartLegend,
     ChartLegendContent,
     ChartStyle,
+    ChartTooltip,
+    ChartTooltipContent,
 };

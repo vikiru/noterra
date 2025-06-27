@@ -1,3 +1,5 @@
+import { useRouter } from 'next/navigation';
+
 // TODO: finish gemini prompt page (save notes and cards to db - toc update later)
 // TODO: once this is done - check if any other backend needs work. if no, work on note zustand and server handling
 // TODO: design notes page and each note is a card with brief metadata, flashcard count, etc. opens in new page
@@ -6,7 +8,6 @@
 import OnboardingForm from '@/components/forms/OnboardingForm';
 import { DASHBOARD_ROUTE } from '@/constants/route';
 import { UserState, useUserStore } from '@/store/user';
-import { useRouter } from 'next/navigation';
 
 export default function OnboardingPage() {
     const user = useUserStore((state: UserState) => state.user);
