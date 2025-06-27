@@ -2,6 +2,7 @@ import { relations } from 'drizzle-orm';
 import {
     boolean,
     index,
+    pgEnum,
     pgTable,
     text,
     timestamp,
@@ -9,8 +10,8 @@ import {
     uuid,
 } from 'drizzle-orm/pg-core';
 
-// TODO: add user logs / activity table. For now track note/flashcard create/update/delete. Ideally keep track of 7d activity only.
-// TODO: keep track of daily prompt usage through this
+// TODO: Perform migration with existing changes - activity creation (migration name). THEN ->
+// TODO: Flashcards should be public/private from notes schema not flashcard.
 
 export const usersTable = pgTable('users', {
     clerkId: text('id').primaryKey(),
@@ -27,6 +28,38 @@ export const usersTable = pgTable('users', {
         .notNull()
         .defaultNow(),
 });
+
+const activityAction = pgEnum('activity_action', [
+    'create',
+    'update',
+    'delete',
+]);
+const activityType = pgEnum('activity_type', ['note', 'flashcard']);
+
+export type ActivityAction = 'create' | 'delete' | 'update';
+export type ActivityType = 'flashcard' | 'note';
+
+export const userActivityTable = pgTable(
+    'user_activity',
+    {
+        id: uuid('id').primaryKey().defaultRandom(),
+        userId: text('user_id')
+            .notNull()
+            .references(() => usersTable.clerkId, { onDelete: 'cascade' }),
+        action: activityAction('action').notNull(),
+        type: activityType('type').notNull(),
+        entityId: text('entity_id').notNull(),
+        createdAt: timestamp('created_at', { withTimezone: true })
+            .notNull()
+            .defaultNow(),
+    },
+    (table) => {
+        return [
+            index('user_action_index').on(table.userId, table.action),
+            index('user_time_index').on(table.userId, table.createdAt),
+        ];
+    },
+);
 
 export const notesTable = pgTable(
     'notes',
@@ -54,7 +87,6 @@ export const notesTable = pgTable(
         index('author_public_note_index').on(table.authorId, table.public),
         index('author_shared_note_index').on(table.authorId, table.shared),
         index('keyword_index').on(table.keywords),
-        index('title_index').on(table.title),
     ],
 );
 
@@ -88,6 +120,7 @@ export const flashcardsTable = pgTable(
 export const userRelations = relations(usersTable, ({ many }) => ({
     notes: many(notesTable),
     flashcards: many(flashcardsTable),
+    activity: many(userActivityTable),
 }));
 
 export const noteRelations = relations(notesTable, ({ one, many }) => ({

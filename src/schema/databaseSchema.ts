@@ -3,8 +3,14 @@ import {
     createSelectSchema,
     createUpdateSchema,
 } from 'drizzle-zod';
-import * as z from 'zod/v4';
-import { flashcardsTable, notesTable, usersTable } from '@/db/schema';
+import * as z from 'zod';
+
+import {
+    flashcardsTable,
+    notesTable,
+    userActivityTable,
+    usersTable,
+} from '@/db/schema';
 
 export const userSchema = {
     select: createSelectSchema(usersTable),
@@ -15,8 +21,9 @@ export const userSchema = {
             bio: true,
             country: true,
         })
+        .partial()
         .extend({
-            clerkId: z.uuid(),
+            clerkId: z.string().uuid(),
         }),
     insert: createInsertSchema(usersTable).omit({
         createdAt: true,
@@ -24,7 +31,14 @@ export const userSchema = {
     }),
 };
 
-// TODO: Redo these schemas, fix ts errors.
+export const activitySchema = {
+    select: createSelectSchema(userActivityTable),
+    update: createUpdateSchema(userActivityTable),
+    insert: createInsertSchema(userActivityTable).omit({
+        id: true,
+        createdAt: true,
+    }),
+};
 
 export const noteSchema = {
     select: createSelectSchema(notesTable),
@@ -37,14 +51,13 @@ export const noteSchema = {
             keywords: true,
             summary: true,
         })
+        .partial()
         .extend({
-            id: z.uuid(),
-            authorId: z.uuid(),
-            shareToken: z.uuid(),
+            id: z.string().uuid(),
+            authorId: z.string().uuid(),
         }),
     insert: createInsertSchema(notesTable).omit({
         id: true,
-        publicNoteId: true,
         createdAt: true,
         updatedAt: true,
         shareToken: true,
@@ -59,14 +72,13 @@ export const flashcardSchema = {
             answer: true,
             public: true,
         })
+        .partial()
         .extend({
-            id: z.uuid(),
-            authorId: z.uuid(),
-            noteId: z.uuid(),
+            id: z.string().uuid(),
+            noteId: z.string().uuid(),
         }),
     insert: createInsertSchema(flashcardsTable).omit({
         id: true,
-        publicFlashcardId: true,
         createdAt: true,
         updatedAt: true,
     }),
