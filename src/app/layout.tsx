@@ -1,8 +1,5 @@
 import type { Metadata } from 'next';
 
-import { Geist, Geist_Mono } from 'next/font/google';
-
-import './globals.css';
 import {
     ClerkProvider,
     SignedIn,
@@ -10,11 +7,15 @@ import {
     SignInButton,
     SignUpButton,
 } from '@clerk/nextjs';
+
+import './globals.css';
 import { LucideUser } from 'lucide-react';
+import { Geist, Geist_Mono } from 'next/font/google';
 import { Toaster } from 'sonner';
+
 import ThemeProvider from '@/components/ThemeProvider';
-import UserButton from '@/components/UserButton';
 import { Button } from '@/components/ui/button';
+import UserButton from '@/components/UserButton';
 
 const geistSans = Geist({
     variable: '--font-geist-sans',
@@ -42,20 +43,20 @@ export default function RootLayout({
                 <body
                     className={`${geistSans.variable} ${geistMono.variable} debug-screens antialiased`}
                 >
-                    <Toaster richColors position="top-right" />
+                    <Toaster position="top-right" richColors />
                     <ThemeProvider
                         attribute="class"
                         defaultTheme="system"
-                        enableSystem
                         disableTransitionOnChange
+                        enableSystem
                     >
                         <header className="flex h-16 items-center justify-end gap-4 p-4">
                             <SignedOut>
                                 <SignInButton>
                                     <Button
-                                        variant={'outline'}
-                                        size={'lg'}
                                         className="hover:cursor-pointer"
+                                        size={'lg'}
+                                        variant={'outline'}
                                     >
                                         Login
                                     </Button>

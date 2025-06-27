@@ -8,19 +8,19 @@ export default function UserButton() {
         <ClerkButton>
             <ClerkButton.MenuItems>
                 <ClerkButton.Link
+                    href="/dashboard"
                     label="Dashboard"
                     labelIcon={<House size={15} />}
-                    href="/dashboard"
                 />
                 <ClerkButton.Link
+                    href="/profile"
                     label="Profile"
                     labelIcon={<LucideUser size={15} />}
-                    href="/profile"
                 />
                 <ClerkButton.Link
+                    href="/notes"
                     label="Notes"
                     labelIcon={<Notebook size={15} />}
-                    href="/notes"
                 />
                 <ClerkButton.Action label="manageAccount" />
             </ClerkButton.MenuItems>

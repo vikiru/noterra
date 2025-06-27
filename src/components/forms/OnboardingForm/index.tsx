@@ -1,9 +1,11 @@
 'use client';
 import { useUser } from '@clerk/nextjs';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import * as z from 'zod/v4';
+
 import { addUser } from '@/actions/user';
 import { Button } from '@/components/ui/button';
 import {
@@ -17,11 +19,10 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { onboardingSchema } from '@/schema/onboardingSchema';
-import { UserCreate } from '@/types/user';
-import { useRouter } from 'next/navigation';
 import { DASHBOARD_ROUTE } from '@/constants/route';
+import { onboardingSchema } from '@/schema/onboardingSchema';
 import { useUserStore } from '@/store/user';
+import { UserCreate } from '@/types/user';
 
 // TODO: split this into hooks, schema dir, add on submit, update placecholder, etc as needed
 
@@ -66,8 +67,8 @@ export default function OnboardingForm() {
                 Complete your profile
             </h1>
             <form
-                onSubmit={form.handleSubmit(onSubmit)}
                 className="mx-auto max-w-3xl space-y-8 py-10"
+                onSubmit={form.handleSubmit(onSubmit)}
             >
                 {/* First Name Field */}
                 <FormField
@@ -117,8 +118,8 @@ export default function OnboardingForm() {
                             </FormDescription>
                             <FormControl>
                                 <Textarea
-                                    placeholder="e.g., I love coding and exploring new technologies."
                                     className="resize-none"
+                                    placeholder="e.g., I love coding and exploring new technologies."
                                     {...field}
                                 />
                             </FormControl>{' '}
@@ -144,7 +145,7 @@ export default function OnboardingForm() {
                         </FormItem>
                     )}
                 />
-                <Button type="submit" className="cursor-pointer">
+                <Button className="cursor-pointer" type="submit">
                     Submit
                 </Button>
             </form>

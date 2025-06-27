@@ -51,17 +51,17 @@ export function NavDocuments({
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <SidebarMenuAction
-                                    showOnHover
                                     className="rounded-sm data-[state=open]:bg-neutral-100 dark:data-[state=open]:bg-neutral-800"
+                                    showOnHover
                                 >
                                     <IconDots />
                                     <span className="sr-only">More</span>
                                 </SidebarMenuAction>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent
+                                align={isMobile ? 'end' : 'start'}
                                 className="w-24 rounded-lg"
                                 side={isMobile ? 'bottom' : 'right'}
-                                align={isMobile ? 'end' : 'start'}
                             >
                                 <DropdownMenuItem>
                                     <IconFolder />
