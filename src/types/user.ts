@@ -1,10 +1,16 @@
-import type * as z from 'zod/v4-mini';
-import type { userSchema } from '@/schema';
+export type User = {
+    clerkId: string;
+    username: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    bio: string;
+    country: string;
+    createdAt: Date;
+    updatedAt: Date;
+};
 
-export type User = Omit<
-    z.infer<typeof userSchema.select>,
-    'clerkId' | 'password'
+export type UserCreate = Omit<User, 'createdAt' | 'updatedAt'>;
+export type UserUpdate = Partial<
+    Pick<User, 'bio' | 'country' | 'firstName' | 'lastName'>
 >;
-
-export type UserCreate = z.infer<typeof userSchema.insert>;
-export type UserUpdate = z.infer<typeof userSchema.update>;

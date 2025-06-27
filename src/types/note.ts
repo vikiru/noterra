@@ -1,6 +1,23 @@
-import type * as z from 'zod/v4-mini';
-import type { noteSchema } from '@/schema';
+export type Note = {
+    id: string;
+    title: string;
+    summary: string;
+    keywords: string;
+    content: string;
+    shared: boolean;
+    public: boolean;
+    shareToken: string;
+    createdAt: Date;
+    updatedAt: Date;
+};
 
-export type Note = Omit<z.infer<typeof noteSchema.select>, 'id' | 'authorId'>;
-export type NoteCreate = z.infer<typeof noteSchema.insert>;
-export type NoteUpdate = z.infer<typeof noteSchema.update>;
+export type NoteCreate = Omit<
+    Note,
+    'createdAt' | 'id' | 'shareToken' | 'updatedAt'
+>;
+export type NoteUpdate = Partial<
+    Pick<
+        Note,
+        'content' | 'keywords' | 'public' | 'shared' | 'summary' | 'title'
+    >
+>;
