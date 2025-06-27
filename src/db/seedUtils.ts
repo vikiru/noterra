@@ -1,6 +1,35 @@
 import { faker } from '@faker-js/faker';
+
 import { db } from '@/db';
 import { flashcardsTable, notesTable, usersTable } from '@/db/schema';
+
+async function createRandomFlashcard(authorId: string, noteId: string) {
+    const flashcard = db
+        .insert(flashcardsTable)
+        .values({
+            authorId,
+            noteId,
+            question: faker.lorem.sentence(4).replace('.', ''),
+            answer: faker.lorem.sentence(4).replace('.', ''),
+        })
+        .returning();
+    console.log('Flashcard\n', flashcard);
+    return flashcard;
+}
+
+async function createRandomNote(authorId: string) {
+    const note = db
+        .insert(notesTable)
+        .values({
+            authorId,
+            title: faker.lorem.sentence(4).replace('.', ''),
+            summary: faker.lorem.sentence(10),
+            keywords: faker.lorem.words(10).replace('.', ''),
+            content: generateFakeNoteHTML(),
+        })
+        .returning();
+    return note;
+}
 
 async function createRandomUser() {
     const user = await db
@@ -45,32 +74,4 @@ function generateFakeNoteHTML() {
   `;
 }
 
-async function createRandomNote(authorId: string) {
-    const note = db
-        .insert(notesTable)
-        .values({
-            authorId,
-            title: faker.lorem.sentence(4).replace('.', ''),
-            summary: faker.lorem.sentence(10),
-            keywords: faker.lorem.words(10).replace('.', ''),
-            content: generateFakeNoteHTML(),
-        })
-        .returning();
-    return note;
-}
-
-async function createRandomFlashcard(authorId: string, noteId: string) {
-    const flashcard = db
-        .insert(flashcardsTable)
-        .values({
-            authorId,
-            noteId,
-            question: faker.lorem.sentence(4).replace('.', ''),
-            answer: faker.lorem.sentence(4).replace('.', ''),
-        })
-        .returning();
-    console.log('Flashcard\n', flashcard);
-    return flashcard;
-}
-
-export { createRandomUser, createRandomNote, createRandomFlashcard };
+export { createRandomFlashcard, createRandomNote, createRandomUser };
