@@ -2,9 +2,11 @@
 
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
+
+import type { GeminiResponse } from '@/types/geminiResponse';
+
 import { genAI, generationConfig, model } from '@/gemini/config';
 import { promptSchema } from '@/schema/promptSchema';
-import type { GeminiResponse } from '@/types/geminiResponse';
 
 export async function generateGeminiNote(prompt: string) {
     const { userId } = await auth();

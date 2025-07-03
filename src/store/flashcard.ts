@@ -1,7 +1,10 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
+
 import type { Flashcard } from '@/types/flashcard';
+
+// TODO: switch to Map, figure out how to seralize/deserialize.
 
 type FlashcardState = {
     flashcards: Flashcard[];

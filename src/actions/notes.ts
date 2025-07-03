@@ -2,6 +2,9 @@
 
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
+
+import type { Note, NoteCreate, NoteUpdate } from '@/types/note';
+
 import {
     createNote,
     deleteNote,
@@ -10,7 +13,34 @@ import {
     retrievePublicNotesByUserId,
     updateNote,
 } from '@/data-access/note';
-import type { Note, NoteCreate, NoteUpdate } from '@/types/note';
+
+export async function addNote(note: NoteCreate): Promise<Note> {
+    try {
+        const { userId } = await auth();
+        if (!userId) {
+            redirect('/auth/login');
+        }
+        const newNote = await createNote(note);
+        return newNote;
+    } catch (error) {
+        console.error('Error adding note:', error);
+        throw error;
+    }
+}
+
+export async function fetchNoteById(id: string): Promise<Note> {
+    try {
+        const { userId } = await auth();
+        if (!userId) {
+            redirect('/auth/login');
+        }
+        const note = await retrieveNoteById(id);
+        return note;
+    } catch (error) {
+        console.error(`Error fetching note by id, for id ${id}:`, error);
+        throw error;
+    }
+}
 
 export async function fetchNotesByUserId(): Promise<Note[]> {
     try {
@@ -36,34 +66,6 @@ export async function fetchPublicNotesByUserId(): Promise<Note[]> {
         return notes;
     } catch (error) {
         console.error('Error fetching public notes:', error);
-        throw error;
-    }
-}
-
-export async function fetchNoteById(id: string): Promise<Note> {
-    try {
-        const { userId } = await auth();
-        if (!userId) {
-            redirect('/auth/login');
-        }
-        const note = await retrieveNoteById(id);
-        return note;
-    } catch (error) {
-        console.error(`Error fetching note by id, for id ${id}:`, error);
-        throw error;
-    }
-}
-
-export async function addNote(note: NoteCreate): Promise<Note> {
-    try {
-        const { userId } = await auth();
-        if (!userId) {
-            redirect('/auth/login');
-        }
-        const newNote = await createNote(note);
-        return newNote;
-    } catch (error) {
-        console.error('Error adding note:', error);
         throw error;
     }
 }

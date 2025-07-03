@@ -1,4 +1,4 @@
-export default {
+const config = {
     printWidth: 80,
     tabWidth: 4,
     useTabs: false,
@@ -18,3 +18,5 @@ export default {
         },
     ],
 };
+
+export default config;

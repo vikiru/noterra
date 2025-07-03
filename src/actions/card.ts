@@ -2,6 +2,13 @@
 
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
+
+import type {
+    Flashcard,
+    FlashcardCreate,
+    FlashcardUpdate,
+} from '@/types/flashcard';
+
 import {
     createCard,
     createMultipleCards,
@@ -13,11 +20,6 @@ import {
     retrievePublicCardsByUserId,
     updateCard,
 } from '@/data-access/card';
-import type {
-    Flashcard,
-    FlashcardCreate,
-    FlashcardUpdate,
-} from '@/types/flashcard';
 
 export async function addCard(card: FlashcardCreate): Promise<Flashcard> {
     try {
@@ -49,6 +51,76 @@ export async function addMultipleCards(
     }
 }
 
+export async function fetchCardById(id: string): Promise<Flashcard> {
+    try {
+        const { userId } = await auth();
+        if (!userId) {
+            redirect('/auth/login');
+        }
+        const card = await retrieveCardById(id);
+        return card;
+    } catch (error) {
+        console.error('Error fetching card by id:', error);
+        throw error;
+    }
+}
+
+export async function fetchCardsByNoteId(id: string) {
+    try {
+        const { userId } = await auth();
+        if (!userId) {
+            redirect('/auth/login');
+        }
+        const cards = await retrieveCardsByNoteId(id);
+        return cards;
+    } catch (error) {
+        console.error('Error fetching cards by note id:', error);
+        throw error;
+    }
+}
+
+export async function fetchCardsByUserId(id: string): Promise<Flashcard[]> {
+    try {
+        const { userId } = await auth();
+        if (!userId) {
+            redirect('/auth/login');
+        }
+        const cards = await retrieveCardsByUserId(id);
+        return cards;
+    } catch (error) {
+        console.error('Error fetching cards by user id:', error);
+        throw error;
+    }
+}
+
+export async function fetchPublicCardsByNoteId(id: string) {
+    try {
+        const { userId } = await auth();
+        if (!userId) {
+            redirect('/auth/login');
+        }
+        const cards = await retrievePublicCardsByNoteId(id);
+        return cards;
+    } catch (error) {
+        console.error('Error fetching public cards by note id:', error);
+        throw error;
+    }
+}
+
+export async function fetchPublicCardsByUserId() {
+    try {
+        const { userId } = await auth();
+        if (!userId) {
+            redirect('/auth/login');
+        }
+        const cards = await retrievePublicCardsByUserId(userId);
+        return cards;
+    } catch (error) {
+        console.error('Error fetching public cards by user id:', error);
+        throw error;
+    }
+}
+
 export async function modifyCard(card: FlashcardUpdate): Promise<Flashcard> {
     try {
         const { userId } = await auth();
@@ -73,76 +145,6 @@ export async function removeCard(id: string) {
         return deletedCard;
     } catch (error) {
         console.error('Error removing card:', error);
-        throw error;
-    }
-}
-
-export async function fetchCardById(id: string): Promise<Flashcard> {
-    try {
-        const { userId } = await auth();
-        if (!userId) {
-            redirect('/auth/login');
-        }
-        const card = await retrieveCardById(id);
-        return card;
-    } catch (error) {
-        console.error('Error fetching card by id:', error);
-        throw error;
-    }
-}
-
-export async function fetchCardsByUserId(id: string): Promise<Flashcard[]> {
-    try {
-        const { userId } = await auth();
-        if (!userId) {
-            redirect('/auth/login');
-        }
-        const cards = await retrieveCardsByUserId(id);
-        return cards;
-    } catch (error) {
-        console.error('Error fetching cards by user id:', error);
-        throw error;
-    }
-}
-
-export async function fetchCardsByNoteId(id: string) {
-    try {
-        const { userId } = await auth();
-        if (!userId) {
-            redirect('/auth/login');
-        }
-        const cards = await retrieveCardsByNoteId(id);
-        return cards;
-    } catch (error) {
-        console.error('Error fetching cards by note id:', error);
-        throw error;
-    }
-}
-
-export async function fetchPublicCardsByUserId() {
-    try {
-        const { userId } = await auth();
-        if (!userId) {
-            redirect('/auth/login');
-        }
-        const cards = await retrievePublicCardsByUserId(userId);
-        return cards;
-    } catch (error) {
-        console.error('Error fetching public cards by user id:', error);
-        throw error;
-    }
-}
-
-export async function fetchPublicCardsByNoteId(id: string) {
-    try {
-        const { userId } = await auth();
-        if (!userId) {
-            redirect('/auth/login');
-        }
-        const cards = await retrievePublicCardsByNoteId(id);
-        return cards;
-    } catch (error) {
-        console.error('Error fetching public cards by note id:', error);
         throw error;
     }
 }
