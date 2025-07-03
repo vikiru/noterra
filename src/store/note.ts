@@ -1,7 +1,10 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
-import type { Note } from '@/types/note';
+
+import { Note } from '@/types/note';
+
+// TODO: update store to use maps, create custom storage in sep PR for all -> convert to arr using JSON.stringify.
 
 type NoteState = {
     notes: Note[];
@@ -10,7 +13,7 @@ type NoteState = {
     getNotesByUserId: (publicAuthorId: string) => Note[];
     getPublicNotesByUserId: (publicAuthorId: string) => Note[];
     setNotes: (notes: Note[]) => void;
-    addNote: (note: Note | any) => void;
+    addNote: (note: any | Note) => void;
     removeNote: (publicNoteId: string) => void;
     updateNote: (note: Note) => void;
     resetNotes: () => void;
@@ -21,8 +24,8 @@ export const useNoteStore = create<NoteState>()(
         immer((set, get) => ({
             notes: [],
             getNotes: () => get().notes,
-            getNoteById: (publicNoteId) =>
-                get().notes.find((note) => note.publicNoteId === publicNoteId),
+            getNoteById: (noteId: string) =>
+                get().notes.find((note: Note) => note.id === noteId),
             getNotesByUserId: (publicAuthorId) =>
                 get().notes.filter(
                     (note) => note.publicAuthorId === publicAuthorId,

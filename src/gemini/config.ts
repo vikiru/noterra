@@ -4,6 +4,7 @@ import {
     HarmCategory,
     Type,
 } from '@google/genai';
+
 import { geminiApiKey } from '@/config';
 import { geminiPrompt } from '@/gemini/prompt';
 
@@ -97,7 +98,7 @@ const generationConfig = {
     ],
 };
 
-export { genAI, model, generationConfig };
+export { genAI, generationConfig, model };
 
 // todo: cleanup prompt, update mermaid diagram handling, build a simple tiptap editor component just to preview this
 // add google books and yt data api for 5-10 books/videos relevant to the topic for books `Title (Year Released) - Author(s)`.

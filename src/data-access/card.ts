@@ -1,22 +1,28 @@
 import { and, eq } from 'drizzle-orm';
-import { z } from 'zod';
-import { db } from '@/db';
-import { flashcardsTable } from '@/db/schema';
-import { flashcardSchema } from '@/schema';
+import * as z from 'zod/v4';
+
 import type {
     Flashcard,
     FlashcardCreate,
     FlashcardUpdate,
 } from '@/types/flashcard';
 
-export async function createCard(card: FlashcardCreate): Promise<Flashcard> {
+import { db } from '@/db';
+import { flashcardsTable } from '@/db/schema';
+import { flashcardSchema } from '@/schema/databaseSchema';
+import { Response } from '@/types/response';
+
+export async function createCard(
+    card: FlashcardCreate,
+): Promise<Response<Flashcard>> {
     try {
         const result = flashcardSchema.insert.safeParse(card);
         if (!result.success) {
             console.error(result.error);
-            throw new Error(
-                'Invalid flashcard data provided. Please try again with valid data.',
-            );
+            return {
+                success: false,
+                error: 'Invalid flashcard data provided. Please try again with valid data.',
+            };
         }
         const data = result.data;
         const newCard = await db
@@ -24,57 +30,255 @@ export async function createCard(card: FlashcardCreate): Promise<Flashcard> {
             .values({
                 authorId: data.authorId,
                 noteId: data.noteId,
-                publicAuthorId: data.publicAuthorId,
-                publicNoteId: data.publicNoteId,
                 question: data.question,
                 answer: data.answer,
             })
             .returning();
         const flashcard = newCard[0];
-        return flashcard;
+        if (!flashcard) {
+            return { success: false, error: 'Failed to create flashcard.' };
+        }
+        return { success: true, data: flashcard };
     } catch (error) {
         console.error(`Error creating flashcard:`, error);
-        throw error;
+        return {
+            success: false,
+            error: 'An unexpected error occured during flashcard creation. Please try again.',
+        };
     }
 }
 
 export async function createMultipleCards(
     cards: FlashcardCreate[],
-): Promise<Flashcard[]> {
+): Promise<Response<Flashcard[]>> {
     try {
         const result = flashcardSchema.insert.array().safeParse(cards);
         if (!result.success) {
             console.error(result.error);
-            throw new Error(
-                'Invalid flashcard data provided. Please try again with valid data.',
-            );
+            return {
+                success: false,
+                error: 'Invalid flashcard data provided. Please try again with valid data.',
+            };
         }
-
         const validatedCards = result.data;
         const newCards = await db
             .insert(flashcardsTable)
             .values(validatedCards)
             .returning();
-
-        return newCards;
+        if (!newCards) {
+            return { success: false, error: 'Failed to create flashcards.' };
+        }
+        return { success: true, data: newCards };
     } catch (error) {
         console.error('Error creating flashcards:', error);
+        return {
+            success: false,
+            error: 'An unexpected error occured during flashcard creation. Please try again.',
+        };
+    }
+}
+
+export async function deleteCard(id: string): Promise<Response<string>> {
+    try {
+        const result = z.uuid().safeParse(id);
+        if (!result.success) {
+            console.error(result.error);
+            return {
+                success: false,
+                error: 'Invalid flashcard id provided. Please try again with a valid id.',
+            };
+        }
+        const data = result.data;
+        const deleted = await db
+            .delete(flashcardsTable)
+            .where(eq(flashcardsTable.id, data))
+            .returning();
+        const deletedCard = deleted[0];
+        if (!deletedCard) {
+            return { success: false, error: 'Failed to delete flashcard.' };
+        }
+        return { success: true, data: deletedCard.id };
+    } catch (error) {
+        console.error(`Error deleting flashcard with id ${id}:`, error);
+        return {
+            success: false,
+            error: 'An unexpected error occured during flashcard deletion. Please try again.',
+        };
+    }
+}
+
+export async function retrieveCardById(
+    cardId: string,
+): Promise<Response<Flashcard>> {
+    try {
+        const result = z.uuid().safeParse(cardId);
+        if (!result.success) {
+            console.error(result.error);
+            return {
+                success: false,
+                error: 'Invalid flashcard id provided. Please try again with a valid id.',
+            };
+        }
+        const data = result.data;
+        const card = await db
+            .select()
+            .from(flashcardsTable)
+            .where(eq(flashcardsTable.id, data))
+            .limit(1);
+        const retrievedCard = card[0];
+        if (!retrievedCard) {
+            return { success: false, error: 'Failed to retrieve flashcard.' };
+        }
+        return { success: true, data: retrievedCard };
+    } catch (error) {
+        console.error(`Error getting card with id ${cardId}:`, error);
+        return {
+            success: false,
+            error: 'An unexpected error occured during flashcard retrieval. Please try again.',
+        };
+    }
+}
+
+export async function retrieveCardsByNoteId(
+    noteId: string,
+): Promise<Response<Flashcard[]>> {
+    try {
+        const result = z.uuid().safeParse(noteId);
+        if (!result.success) {
+            console.error(result.error);
+            return {
+                success: false,
+                error: 'Invalid note id provided. Please try again with a valid id.',
+            };
+        }
+        const data = result.data;
+        const cards = await db
+            .select()
+            .from(flashcardsTable)
+            .where(eq(flashcardsTable.id, data));
+        if (!cards) {
+            return { success: false, error: 'Failed to retrieve flashcards.' };
+        }
+        return { success: true, data: cards };
+    } catch (error) {
+        console.error(`Error getting cards with note id ${noteId}:`, error);
         throw error;
+    }
+}
+
+export async function retrieveCardsByUserId(
+    authorId: string,
+): Promise<Response<Flashcard[]>> {
+    try {
+        const result = z.uuid().safeParse(authorId);
+        if (!result.success) {
+            console.error(result.error);
+            return {
+                success: false,
+                error: 'Invalid user id provided. Please try again with a valid id.',
+            };
+        }
+        const data = result.data;
+        const cards = await db
+            .select()
+            .from(flashcardsTable)
+            .where(eq(flashcardsTable.authorId, data));
+        if (!cards) {
+            return { success: false, error: 'Failed to retrieve flashcards.' };
+        }
+        return { success: true, data: cards };
+    } catch (error) {
+        console.error(`Error getting cards with user id ${authorId}:`, error);
+        return {
+            success: false,
+            error: 'An unexpected error occured during flashcard retrieval. Please try again.',
+        };
+    }
+}
+
+export async function retrievePublicCardsByNoteId(
+    noteId: string,
+): Promise<Response<Flashcard[]>> {
+    try {
+        const result = z.uuid().safeParse(noteId);
+        if (!result.success) {
+            console.error(result.error);
+            return {
+                success: false,
+                error: 'Invalid note id provided. Please try again with a valid id.',
+            };
+        }
+        const data = result.data;
+        const cards = await db
+            .select()
+            .from(flashcardsTable)
+            .where(
+                and(
+                    eq(flashcardsTable.noteId, data),
+                    eq(flashcardsTable.public, true),
+                ),
+            );
+        if (!cards) {
+            return { success: false, error: 'Failed to retrieve flashcards.' };
+        }
+        return { success: true, data: cards };
+    } catch (error) {
+        console.error(`Error getting cards with note id ${noteId}:`, error);
+        return {
+            success: false,
+            error: 'An unexpected error occured during flashcard retrieval. Please try again.',
+        };
+    }
+}
+
+export async function retrievePublicCardsByUserId(
+    authorId: string,
+): Promise<Response<Flashcard[]>> {
+    try {
+        const result = z.string().uuid().safeParse(authorId);
+        if (!result.success) {
+            console.error(result.error);
+            return {
+                success: false,
+                error: 'Invalid user id provided. Please try again with a valid id.',
+            };
+        }
+        const data = result.data;
+        const cards = await db
+            .select()
+            .from(flashcardsTable)
+            .where(
+                and(
+                    eq(flashcardsTable.authorId, data),
+                    eq(flashcardsTable.public, true),
+                ),
+            );
+        if (!cards) {
+            return { success: false, error: 'Failed to retrieve flashcards.' };
+        }
+        return { success: true, data: cards };
+    } catch (error) {
+        console.error(`Error getting cards with user id ${authorId}:`, error);
+        return {
+            success: false,
+            error: 'An unexepected error occured during flashcard retrieval. Please try again.',
+        };
     }
 }
 
 export async function updateCard(
     updatedCard: FlashcardUpdate,
-): Promise<Flashcard> {
+): Promise<Response<Flashcard>> {
     try {
         const result = flashcardSchema.update.safeParse(updatedCard);
         if (!result.success) {
             console.error(result.error);
-            throw new Error(
-                'Invalid flashcard data provided. Please try again with valid data.',
-            );
+            return {
+                success: false,
+                error: 'Invalid flashcard data provided. Please try again with valid data.',
+            };
         }
-        const data = result.data;
+        const data: FlashcardUpdate = result.data;
         const updated = await db
             .update(flashcardsTable)
             .set({
@@ -84,178 +288,18 @@ export async function updateCard(
             .where(eq(flashcardsTable.id, data.id))
             .returning();
         const flashcard = updated[0];
-        return flashcard;
+        if (!flashcard) {
+            return { success: false, error: 'Failed to update flashcard.' };
+        }
+        return { success: true, data: flashcard };
     } catch (error) {
         console.error(
             `Error updating flashcard with id ${updatedCard.id}:`,
             error,
         );
-        throw error;
-    }
-}
-
-export async function deleteCard(id: string): Promise<Flashcard> {
-    try {
-        const result = z.string().uuid().safeParse(id);
-        if (!result.success) {
-            console.error(result.error);
-            throw new Error(
-                'Invalid flashcard id provided. Please try again with a valid id.',
-            );
-        }
-        const data = result.data;
-        const deleted = await db
-            .delete(flashcardsTable)
-            .where(eq(flashcardsTable.id, data))
-            .returning();
-        const flashcard = deleted[0];
-        return flashcard;
-    } catch (error) {
-        console.error(`Error deleting flashcard with id ${id}:`, error);
-        throw error;
-    }
-}
-
-export async function retrieveCardsByUserId(
-    publicAuthorId: string,
-): Promise<Flashcard[]> {
-    try {
-        const result = z.string().uuid().safeParse(publicAuthorId);
-        if (!result.success) {
-            console.error(result.error);
-            throw new Error(
-                'Invalid user id provided. Please try again with a valid id.',
-            );
-        }
-        const data = result.data;
-        const cards = await db
-            .select()
-            .from(flashcardsTable)
-            .where(eq(flashcardsTable.publicAuthorId, data));
-        return cards;
-    } catch (error) {
-        console.error(
-            `Error getting cards with user id ${publicAuthorId}:`,
-            error,
-        );
-        throw error;
-    }
-}
-
-export async function retrieveCardsByNoteId(
-    publicNoteId: string,
-): Promise<Flashcard[]> {
-    try {
-        const result = z.string().uuid().safeParse(publicNoteId);
-        if (!result.success) {
-            console.error(result.error);
-            throw new Error(
-                'Invalid note id provided. Please try again with a valid id.',
-            );
-        }
-        const data = result.data;
-        const cards = await db
-            .select()
-            .from(flashcardsTable)
-            .where(eq(flashcardsTable.publicNoteId, data));
-        return cards;
-    } catch (error) {
-        console.error(
-            `Error getting cards with note id ${publicNoteId}:`,
-            error,
-        );
-        throw error;
-    }
-}
-
-export async function retrieveCardById(
-    publicCardId: string,
-): Promise<Flashcard> {
-    try {
-        const result = z.string().uuid().safeParse(publicCardId);
-        if (!result.success) {
-            console.error(result.error);
-            throw new Error(
-                'Invalid card id provided. Please try again with a valid id.',
-            );
-        }
-
-        const data = result.data;
-        const card = await db
-            .select()
-            .from(flashcardsTable)
-            .where(eq(flashcardsTable.id, data))
-            .limit(1);
-
-        if (!card[0]) {
-            throw new Error(`No flashcard found with id: ${data}`);
-        }
-
-        return card[0];
-    } catch (error) {
-        console.error(`Error getting card with id ${publicCardId}:`, error);
-        throw error;
-    }
-}
-
-export async function retrievePublicCardsByUserId(
-    publicAuthorId: string,
-): Promise<Flashcard[]> {
-    try {
-        const result = z.string().uuid().safeParse(publicAuthorId);
-        if (!result.success) {
-            console.error(result.error);
-            throw new Error(
-                'Invalid user id provided. Please try again with a valid id.',
-            );
-        }
-        const data = result.data;
-        const cards = await db
-            .select()
-            .from(flashcardsTable)
-            .where(
-                and(
-                    eq(flashcardsTable.publicAuthorId, data),
-                    eq(flashcardsTable.public, true),
-                ),
-            );
-        return cards;
-    } catch (error) {
-        console.error(
-            `Error getting cards with user id ${publicAuthorId}:`,
-            error,
-        );
-        throw error;
-    }
-}
-
-export async function retrievePublicCardsByNoteId(
-    publicNoteId: string,
-): Promise<Flashcard[]> {
-    try {
-        const result = z.string().uuid().safeParse(publicNoteId);
-        if (!result.success) {
-            console.error(result.error);
-            throw new Error(
-                'Invalid note id provided. Please try again with a valid id.',
-            );
-        }
-        const data = result.data;
-        const cards = await db
-            .select()
-            .from(flashcardsTable)
-            .where(
-                and(
-                    eq(flashcardsTable.publicNoteId, data),
-                    eq(flashcardsTable.public, true),
-                ),
-            );
-        return cards;
-    } catch (error) {
-        console.error(
-            `Error getting cards with note id ${publicNoteId}:`,
-            error,
-        );
-        throw error;
+        return {
+            success: false,
+            error: 'An unexpected error occured during flashcard update. Please try again.',
+        };
     }
 }

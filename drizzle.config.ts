@@ -1,4 +1,5 @@
 import { defineConfig } from 'drizzle-kit';
+
 import { databaseUrl } from '@/config';
 
 export default defineConfig({

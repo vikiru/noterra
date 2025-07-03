@@ -1,11 +1,12 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
+
 import { User } from '@/types/user';
 
 export type UserState = {
-    user: User | null;
-    setUser: (user: User | null) => void;
+    user: null | User;
+    setUser: (user: null | User) => void;
     resetUser: () => void;
 };
 
