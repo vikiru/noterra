@@ -8,9 +8,11 @@ import type { User, UserCreate, UserUpdate } from '@/types/user';
 import { db } from '@/db';
 import { flashcardsTable, notesTable, usersTable } from '@/db/schema';
 import { userSchema } from '@/schema/databaseSchema';
-import { Response } from '@/types/response';
+import { ResponseData } from '@/types/response';
 
-export async function createUser(user: UserCreate): Promise<Response<User>> {
+export async function createUser(
+    user: UserCreate,
+): Promise<ResponseData<User>> {
     try {
         const result = userSchema.insert.safeParse(user);
         if (!result.success) {
@@ -51,7 +53,7 @@ export async function createUser(user: UserCreate): Promise<Response<User>> {
 
 export async function retrieveTotalCreations(
     id: string,
-): Promise<Response<TotalCreations>> {
+): Promise<ResponseData<TotalCreations>> {
     try {
         const result = z.uuid().safeParse(id);
         if (!result.success) {
@@ -87,7 +89,7 @@ export async function retrieveTotalCreations(
 
 export async function retrieveUserActivityOverview(
     id: string,
-): Promise<Response<ActivityOverview[]>> {
+): Promise<ResponseData<ActivityOverview[]>> {
     try {
         const result = z.uuid().safeParse(id);
         if (!result.success) {
@@ -131,7 +133,9 @@ export async function retrieveUserActivityOverview(
     }
 }
 
-export async function retrieveUserById(id: string): Promise<Response<User>> {
+export async function retrieveUserById(
+    id: string,
+): Promise<ResponseData<User>> {
     try {
         const result = z.uuid().safeParse(id);
         if (!result.success) {
@@ -162,7 +166,9 @@ export async function retrieveUserById(id: string): Promise<Response<User>> {
     }
 }
 
-export async function updateUser(user: UserUpdate): Promise<Response<User>> {
+export async function updateUser(
+    user: UserUpdate,
+): Promise<ResponseData<User>> {
     try {
         const result = userSchema.update.safeParse(user);
         if (!result.success) {

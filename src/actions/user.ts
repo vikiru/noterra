@@ -14,11 +14,11 @@ import {
     retrieveUserById,
     updateUser,
 } from '@/data-access/user';
-import { Response } from '@/types/response';
+import { ResponseData } from '@/types/response';
 
 // TODO: refac all actions to account for Response type.
 // TODO: rename response type to something else.
-export async function addUser(user: UserCreate): Promise<Response<User>> {
+export async function addUser(user: UserCreate): Promise<ResponseData<User>> {
     try {
         const { userId } = await auth();
         if (!userId) {
@@ -35,7 +35,9 @@ export async function addUser(user: UserCreate): Promise<Response<User>> {
     }
 }
 
-export async function fetchTotalCreations(): Promise<Response<TotalCreations>> {
+export async function fetchTotalCreations(): Promise<
+    ResponseData<TotalCreations>
+> {
     try {
         const { userId } = await auth();
         if (!userId) {
@@ -53,7 +55,7 @@ export async function fetchTotalCreations(): Promise<Response<TotalCreations>> {
 }
 
 export async function fetchUserActivityOverview(): Promise<
-    Response<ActivityOverview[]>
+    ResponseData<ActivityOverview[]>
 > {
     try {
         const { userId } = await auth();
@@ -71,7 +73,7 @@ export async function fetchUserActivityOverview(): Promise<
     }
 }
 
-export async function fetchUserById(): Promise<Response<User>> {
+export async function fetchUserById(): Promise<ResponseData<User>> {
     try {
         const { userId } = await auth();
         if (!userId) {
@@ -88,7 +90,9 @@ export async function fetchUserById(): Promise<Response<User>> {
     }
 }
 
-export async function modifyUser(user: UserUpdate): Promise<Response<User>> {
+export async function modifyUser(
+    user: UserUpdate,
+): Promise<ResponseData<User>> {
     try {
         const { userId } = await auth();
         if (!userId) {

@@ -20,11 +20,11 @@ import {
     retrievePublicCardsByUserId,
     updateCard,
 } from '@/data-access/card';
-import { Response } from '@/types/response';
+import { ResponseData } from '@/types/response';
 
 export async function addCard(
     card: FlashcardCreate,
-): Promise<Response<Flashcard>> {
+): Promise<ResponseData<Flashcard>> {
     try {
         const { userId } = await auth();
         if (!userId) {
@@ -43,7 +43,7 @@ export async function addCard(
 
 export async function addMultipleCards(
     cards: FlashcardCreate[],
-): Promise<Response<Flashcard[]>> {
+): Promise<ResponseData<Flashcard[]>> {
     try {
         const { userId } = await auth();
         if (!userId) {
@@ -60,7 +60,9 @@ export async function addMultipleCards(
     }
 }
 
-export async function fetchCardById(id: string): Promise<Response<Flashcard>> {
+export async function fetchCardById(
+    id: string,
+): Promise<ResponseData<Flashcard>> {
     try {
         const { userId } = await auth();
         if (!userId) {
@@ -79,7 +81,7 @@ export async function fetchCardById(id: string): Promise<Response<Flashcard>> {
 
 export async function fetchCardsByNoteId(
     id: string,
-): Promise<Response<Flashcard[]>> {
+): Promise<ResponseData<Flashcard[]>> {
     try {
         const { userId } = await auth();
         if (!userId) {
@@ -98,7 +100,7 @@ export async function fetchCardsByNoteId(
 
 export async function fetchCardsByUserId(
     id: string,
-): Promise<Response<Flashcard[]>> {
+): Promise<ResponseData<Flashcard[]>> {
     try {
         const { userId } = await auth();
         if (!userId) {
@@ -118,7 +120,7 @@ export async function fetchCardsByUserId(
 // TODO: move this to note, after refac schema
 export async function fetchPublicCardsByNoteId(
     id: string,
-): Promise<Response<Flashcard[]>> {
+): Promise<ResponseData<Flashcard[]>> {
     try {
         const { userId } = await auth();
         if (!userId) {
@@ -136,7 +138,7 @@ export async function fetchPublicCardsByNoteId(
 }
 
 export async function fetchPublicCardsByUserId(): Promise<
-    Response<Flashcard[]>
+    ResponseData<Flashcard[]>
 > {
     try {
         const { userId } = await auth();
@@ -156,7 +158,7 @@ export async function fetchPublicCardsByUserId(): Promise<
 
 export async function modifyCard(
     card: FlashcardUpdate,
-): Promise<Response<Flashcard>> {
+): Promise<ResponseData<Flashcard>> {
     try {
         const { userId } = await auth();
         if (!userId) {
@@ -173,7 +175,7 @@ export async function modifyCard(
     }
 }
 
-export async function removeCard(id: string): Promise<Response<string>> {
+export async function removeCard(id: string): Promise<ResponseData<string>> {
     try {
         const { userId } = await auth();
         if (!userId) {
