@@ -5,9 +5,11 @@ import { db } from '@/db';
 import { notesTable } from '@/db/schema';
 import { noteSchema } from '@/schema/databaseSchema';
 import { Note, NoteCreate, NoteUpdate } from '@/types/note';
-import { Response } from '@/types/response';
+import { ResponseData } from '@/types/response';
 
-export async function createNote(note: NoteCreate): Promise<Response<Note>> {
+export async function createNote(
+    note: NoteCreate,
+): Promise<ResponseData<Note>> {
     try {
         const result = noteSchema.insert.safeParse(note);
         if (!result.success) {
@@ -42,7 +44,7 @@ export async function createNote(note: NoteCreate): Promise<Response<Note>> {
     }
 }
 
-export async function deleteNote(id: string): Promise<Response<string>> {
+export async function deleteNote(id: string): Promise<ResponseData<string>> {
     try {
         const result = z.uuid().safeParse(id);
         if (!result.success) {
@@ -73,7 +75,7 @@ export async function deleteNote(id: string): Promise<Response<string>> {
 
 export async function retrieveNoteById(
     noteId: string,
-): Promise<Response<Note>> {
+): Promise<ResponseData<Note>> {
     try {
         const result = z.uuid().safeParse(noteId);
         if (!result.success) {
@@ -109,7 +111,7 @@ export async function retrieveNoteById(
 
 export async function retrieveNotesByUserId(
     authorId: string,
-): Promise<Response<Note[]>> {
+): Promise<ResponseData<Note[]>> {
     try {
         const result = z.uuid().safeParse(authorId);
         if (!result.success) {
@@ -142,7 +144,7 @@ export async function retrieveNotesByUserId(
 
 export async function retrievePublicNotesByUserId(
     authorId: string,
-): Promise<Response<Note[]>> {
+): Promise<ResponseData<Note[]>> {
     try {
         const result = z.uuid().safeParse(authorId);
         if (!result.success) {
@@ -182,7 +184,7 @@ export async function retrievePublicNotesByUserId(
 
 export async function updateNote(
     updatedNote: NoteUpdate,
-): Promise<Response<Note>> {
+): Promise<ResponseData<Note>> {
     try {
         const result = noteSchema.update.safeParse(updatedNote);
         if (!result.success) {

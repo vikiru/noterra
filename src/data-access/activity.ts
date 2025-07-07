@@ -4,12 +4,12 @@ import { z } from 'zod/v4';
 import { db } from '@/db';
 import { userActivityTable } from '@/db/schema';
 import { activitySchema } from '@/schema/databaseSchema';
-import { Response } from '@/types/response';
+import { ResponseData } from '@/types/response';
 import { UserActivity, UserActivityCreate } from '@/types/userActivity';
 
 export async function createUserActivity(
     activity: UserActivityCreate,
-): Promise<Response<UserActivity>> {
+): Promise<ResponseData<UserActivity>> {
     try {
         const result = activitySchema.insert.safeParse(activity);
         if (!result.success) {
@@ -39,7 +39,7 @@ export async function createUserActivity(
 
 export async function fetchUserActivities(
     userId: string,
-): Promise<Response<UserActivity[]>> {
+): Promise<ResponseData<UserActivity[]>> {
     try {
         const result = z.uuid().safeParse(userId);
         if (!result.success) {

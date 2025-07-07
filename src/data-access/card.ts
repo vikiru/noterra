@@ -10,11 +10,11 @@ import type {
 import { db } from '@/db';
 import { flashcardsTable } from '@/db/schema';
 import { flashcardSchema } from '@/schema/databaseSchema';
-import { Response } from '@/types/response';
+import { ResponseData } from '@/types/response';
 
 export async function createCard(
     card: FlashcardCreate,
-): Promise<Response<Flashcard>> {
+): Promise<ResponseData<Flashcard>> {
     try {
         const result = flashcardSchema.insert.safeParse(card);
         if (!result.success) {
@@ -50,7 +50,7 @@ export async function createCard(
 
 export async function createMultipleCards(
     cards: FlashcardCreate[],
-): Promise<Response<Flashcard[]>> {
+): Promise<ResponseData<Flashcard[]>> {
     try {
         const result = flashcardSchema.insert.array().safeParse(cards);
         if (!result.success) {
@@ -78,7 +78,7 @@ export async function createMultipleCards(
     }
 }
 
-export async function deleteCard(id: string): Promise<Response<string>> {
+export async function deleteCard(id: string): Promise<ResponseData<string>> {
     try {
         const result = z.uuid().safeParse(id);
         if (!result.success) {
@@ -109,7 +109,7 @@ export async function deleteCard(id: string): Promise<Response<string>> {
 
 export async function retrieveCardById(
     cardId: string,
-): Promise<Response<Flashcard>> {
+): Promise<ResponseData<Flashcard>> {
     try {
         const result = z.uuid().safeParse(cardId);
         if (!result.success) {
@@ -141,7 +141,7 @@ export async function retrieveCardById(
 
 export async function retrieveCardsByNoteId(
     noteId: string,
-): Promise<Response<Flashcard[]>> {
+): Promise<ResponseData<Flashcard[]>> {
     try {
         const result = z.uuid().safeParse(noteId);
         if (!result.success) {
@@ -168,7 +168,7 @@ export async function retrieveCardsByNoteId(
 
 export async function retrieveCardsByUserId(
     authorId: string,
-): Promise<Response<Flashcard[]>> {
+): Promise<ResponseData<Flashcard[]>> {
     try {
         const result = z.uuid().safeParse(authorId);
         if (!result.success) {
@@ -198,7 +198,7 @@ export async function retrieveCardsByUserId(
 
 export async function retrievePublicCardsByNoteId(
     noteId: string,
-): Promise<Response<Flashcard[]>> {
+): Promise<ResponseData<Flashcard[]>> {
     try {
         const result = z.uuid().safeParse(noteId);
         if (!result.success) {
@@ -233,7 +233,7 @@ export async function retrievePublicCardsByNoteId(
 
 export async function retrievePublicCardsByUserId(
     authorId: string,
-): Promise<Response<Flashcard[]>> {
+): Promise<ResponseData<Flashcard[]>> {
     try {
         const result = z.uuid().safeParse(authorId);
         if (!result.success) {
@@ -268,7 +268,7 @@ export async function retrievePublicCardsByUserId(
 
 export async function updateCard(
     updatedCard: FlashcardUpdate,
-): Promise<Response<Flashcard>> {
+): Promise<ResponseData<Flashcard>> {
     try {
         const result = flashcardSchema.update.safeParse(updatedCard);
         if (!result.success) {

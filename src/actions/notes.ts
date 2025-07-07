@@ -13,9 +13,9 @@ import {
     retrievePublicNotesByUserId,
     updateNote,
 } from '@/data-access/note';
-import { Response } from '@/types/response';
+import { ResponseData } from '@/types/response';
 
-export async function addNote(note: NoteCreate): Promise<Response<Note>> {
+export async function addNote(note: NoteCreate): Promise<ResponseData<Note>> {
     try {
         const { userId } = await auth();
         if (!userId) {
@@ -29,7 +29,7 @@ export async function addNote(note: NoteCreate): Promise<Response<Note>> {
     }
 }
 
-export async function fetchNoteById(id: string): Promise<Response<Note>> {
+export async function fetchNoteById(id: string): Promise<ResponseData<Note>> {
     try {
         const { userId } = await auth();
         if (!userId) {
@@ -46,7 +46,7 @@ export async function fetchNoteById(id: string): Promise<Response<Note>> {
     }
 }
 
-export async function fetchNotesByUserId(): Promise<Response<Note[]>> {
+export async function fetchNotesByUserId(): Promise<ResponseData<Note[]>> {
     try {
         const { userId } = await auth();
         if (!userId) {
@@ -63,7 +63,9 @@ export async function fetchNotesByUserId(): Promise<Response<Note[]>> {
     }
 }
 
-export async function fetchPublicNotesByUserId(): Promise<Response<Note[]>> {
+export async function fetchPublicNotesByUserId(): Promise<
+    ResponseData<Note[]>
+> {
     try {
         const { userId } = await auth();
         if (!userId) {
@@ -80,7 +82,9 @@ export async function fetchPublicNotesByUserId(): Promise<Response<Note[]>> {
     }
 }
 
-export async function modifyNote(note: NoteUpdate): Promise<Response<Note>> {
+export async function modifyNote(
+    note: NoteUpdate,
+): Promise<ResponseData<Note>> {
     try {
         const { userId } = await auth();
         if (!userId) {
@@ -97,7 +101,7 @@ export async function modifyNote(note: NoteUpdate): Promise<Response<Note>> {
     }
 }
 
-export async function removeNote(id: string): Promise<Response<string>> {
+export async function removeNote(id: string): Promise<ResponseData<string>> {
     try {
         const { userId } = await auth();
         if (!userId) {
