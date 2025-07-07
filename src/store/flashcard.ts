@@ -4,14 +4,12 @@ import { immer } from 'zustand/middleware/immer';
 
 import type { Flashcard } from '@/types/flashcard';
 
-// TODO: switch to Map, figure out how to seralize/deserialize.
-
 type FlashcardState = {
-    flashcards: Flashcard[];
-    getFlashcards: () => Flashcard[];
-    getFlashcardById: (publicFlashcardId: string) => Flashcard | undefined;
-    getFlashcardsByNoteId: (publicNoteId: string) => Flashcard[];
-    setFlashcards: (flashcards: Flashcard[]) => void;
+    flashcards: Map<string, Flashcard>;
+    getFlashcards: () => Map<string, Flashcard>;
+    getFlashcardById: (flashcardId: string) => Flashcard | undefined;
+    getFlashcardsByNoteId: (noteId: string) => Flashcard[];
+    setFlashcards: (flashcards: Map<string, Flashcard>) => void;
     addFlashcard: (flashcard: Flashcard) => void;
     removeFlashcard: (flashcard: Flashcard) => void;
     updateFlashcard: (flashcard: Flashcard) => void;
@@ -21,14 +19,16 @@ type FlashcardState = {
 export const useFlashcardStore = create<FlashcardState>()(
     persist(
         immer((set, get) => ({
-            flashcards: [],
+            flashcards: new Map<string, Flashcard>(),
             getFlashcards: () => get().flashcards,
-            getFlashcardById: (publicFlashcardId) =>
-                get().flashcards.find(
-                    (f) => f.publicFlashcardId === publicFlashcardId,
+            getFlashcardById: (flashcardId) =>
+                get().flashcards.get(flashcardId),
+            getFlashcardsByNoteId: (noteId) =>
+                Array.from(
+                    get()
+                        .flashcards.values()
+                        .filter((f) => f.noteId === noteId),
                 ),
-            getFlashcardsByNoteId: (publicNoteId) =>
-                get().flashcards.filter((f) => f.publicNoteId === publicNoteId),
             setFlashcards: (flashcards) => {
                 set((state) => {
                     state.flashcards = flashcards;
@@ -36,31 +36,23 @@ export const useFlashcardStore = create<FlashcardState>()(
             },
             addFlashcard: (flashcard) => {
                 set((state) => {
-                    state.flashcards.push(flashcard);
+                    state.flashcards.set(flashcard.id, flashcard);
                 });
             },
             removeFlashcard: (flashcard) => {
                 set((state) => {
-                    state.flashcards = state.flashcards.filter(
-                        (f) =>
-                            f.publicFlashcardId !== flashcard.publicFlashcardId,
-                    );
+                    state.flashcards.delete(flashcard.id);
                 });
             },
             updateFlashcard: (flashcard) => {
                 set((state) => {
-                    const index = state.flashcards.findIndex(
-                        (f) =>
-                            f.publicFlashcardId === flashcard.publicFlashcardId,
-                    );
-                    if (index !== -1) {
-                        state.flashcards[index] = flashcard;
-                    }
+                    if (state.flashcards.has(flashcard.id))
+                        state.flashcards.set(flashcard.id, flashcard);
                 });
             },
             resetFlashcards: () => {
                 set((state) => {
-                    state.flashcards = [];
+                    state.flashcards = new Map<string, Flashcard>();
                 });
             },
         })),
