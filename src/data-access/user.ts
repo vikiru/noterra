@@ -1,5 +1,5 @@
-import { and, eq, gte, sql } from 'drizzle-orm';
-import * as z from 'zod';
+import { eq, sql } from 'drizzle-orm';
+import * as z from 'zod/v4';
 
 import type { ActivityOverview } from '@/types/activityOverview';
 import type { TotalCreations } from '@/types/totalCreations';
@@ -8,48 +8,60 @@ import type { User, UserCreate, UserUpdate } from '@/types/user';
 import { db } from '@/db';
 import { flashcardsTable, notesTable, usersTable } from '@/db/schema';
 import { userSchema } from '@/schema/databaseSchema';
+import { Response } from '@/types/response';
 
-export async function createUser(user: UserCreate): Promise<User> {
+export async function createUser(user: UserCreate): Promise<Response<User>> {
     try {
         const result = userSchema.insert.safeParse(user);
         if (!result.success) {
             console.error(result.error);
-            throw new Error(
-                'Invalid user data provided, please try again with valid credentials.',
-            );
+            return {
+                success: false,
+                error: 'Invalid user data provided. Please try again with valid data.',
+            };
         }
-        const data = result.data;
+        const validatedUser = result.data;
         const newUser = await db
             .insert(usersTable)
             .values({
-                clerkId: data.clerkId,
-                username: data.username,
-                email: data.email,
-                firstName: data.firstName,
-                lastName: data.lastName,
-                bio: data.bio,
-                country: data.country,
+                clerkId: validatedUser.clerkId,
+                username: validatedUser.username,
+                email: validatedUser.email,
+                firstName: validatedUser.firstName,
+                lastName: validatedUser.lastName,
+                bio: validatedUser.bio,
+                country: validatedUser.country,
             })
             .returning();
-        return newUser[0];
+        if (!newUser) {
+            return {
+                success: false,
+                error: 'Failed to create user. Please try again.',
+            };
+        }
+        return { success: true, data: newUser[0] };
     } catch (error) {
         console.error(error);
-        throw error;
+        return {
+            success: false,
+            error: 'An unexpected error occured while creating user. Please try again.',
+        };
     }
 }
 
 export async function retrieveTotalCreations(
     id: string,
-): Promise<TotalCreations> {
+): Promise<Response<TotalCreations>> {
     try {
-        const result = z.string().uuid().safeParse(id);
+        const result = z.uuid().safeParse(id);
         if (!result.success) {
             console.error(result.error);
-            throw new Error(
-                'Invalid user id provided. Please try again with a valid id.',
-            );
+            return {
+                success: false,
+                error: 'Invalid user id provided. Please try again with a valid id.',
+            };
         }
-        const userId = result.data;
+        const validatedId = result.data;
         const total = await db
             .select({
                 notes: sql<number>`COUNT(DISTINCT ${notesTable.id})`,
@@ -60,26 +72,32 @@ export async function retrieveTotalCreations(
                 flashcardsTable,
                 sql`${flashcardsTable.noteId} = ${notesTable.id}`,
             )
-            .where(sql`${notesTable.authorId} = ${userId}`);
-        return total.length > 0 ? total[0] : { notes: 0, flashcards: 0 };
+            .where(sql`${notesTable.authorId} = ${validatedId}`);
+        const returnData =
+            total.length > 0 ? total[0] : { notes: 0, flashcards: 0 };
+        return { success: true, data: returnData };
     } catch (error) {
         console.error(`Error getting total creations with id ${id}:`, error);
-        throw error;
+        return {
+            success: false,
+            error: 'An unexpected error occured while fetching the total creations. Please try again.',
+        };
     }
 }
 
 export async function retrieveUserActivityOverview(
     id: string,
-): Promise<ActivityOverview[]> {
+): Promise<Response<ActivityOverview[]>> {
     try {
-        const result = z.string().uuid().safeParse(id);
+        const result = z.uuid().safeParse(id);
         if (!result.success) {
             console.error(result.error);
-            throw new Error(
-                'Invalid user id provided. Please try again with a valid id.',
-            );
+            return {
+                success: false,
+                error: 'Invalid user id provided. Please try again with a valid id.',
+            };
         }
-        const userId = result.data;
+        const validatedId = result.data;
         const today = new Date();
         const startDate = new Date();
         startDate.setDate(today.getDate() - 29);
@@ -96,65 +114,81 @@ export async function retrieveUserActivityOverview(
                 sql`${flashcardsTable.noteId} = ${notesTable.id}`,
             )
             .where(
-                sql`${notesTable.authorId} = ${userId} AND ${notesTable.createdAt} >= ${startDate}`,
+                sql`${notesTable.authorId} = ${validatedId} AND ${notesTable.createdAt} >= ${startDate}`,
             )
             .groupBy(sql`DATE(${notesTable.createdAt})`)
             .orderBy(sql`DATE(${notesTable.createdAt})`);
-        return activity;
+        return { success: true, data: activity };
     } catch (error) {
         console.error(
             `Error getting user activity overview with id ${id}:`,
             error,
         );
-        throw error;
+        return {
+            success: false,
+            error: 'An unexpected error occured while fetching the activity overview. Please try again.',
+        };
     }
 }
 
-export async function retrieveUserById(id: string): Promise<User> {
+export async function retrieveUserById(id: string): Promise<Response<User>> {
     try {
-        const result = z.string().uuid().safeParse(id);
+        const result = z.uuid().safeParse(id);
         if (!result.success) {
             console.error(result.error);
-            throw new Error(
-                'Invalid user id provided. Please try again with a valid id.',
-            );
+            return {
+                success: false,
+                error: 'Invalid user id provided. Please try again with a valid id.',
+            };
         }
-        const data = result.data;
-        const user = await db
+        const validatedId = result.data;
+        const userResult = await db
             .select()
             .from(usersTable)
-            .where(eq(usersTable.clerkId, data));
-        return user[0];
+            .where(eq(usersTable.clerkId, validatedId));
+        if (!userResult) {
+            return {
+                success: false,
+                error: 'No user found',
+            };
+        }
+        return { success: true, data: userResult[0] };
     } catch (error) {
         console.error(error);
-        throw error;
+        return {
+            success: false,
+            error: 'There was an error retrieving the user by id.',
+        };
     }
 }
 
-export async function updateUser(user: UserUpdate): Promise<User> {
+export async function updateUser(user: UserUpdate): Promise<Response<User>> {
     try {
         const result = userSchema.update.safeParse(user);
         if (!result.success) {
             console.error(result.error);
-            throw new Error(
-                'Invalid user data provided. Please try again with valid data.',
-            );
+            return { success: false, error: 'Invalid user data provided.' };
         }
-        const data = result.data;
-        const updatedData = await db
+        const validatedUser = result.data;
+        const userResult = await db
             .update(usersTable)
             .set({
-                firstName: data.firstName,
-                lastName: data.lastName,
-                bio: data.bio,
-                country: data.country,
+                firstName: validatedUser.firstName,
+                lastName: validatedUser.lastName,
+                bio: validatedUser.bio,
+                country: validatedUser.country,
             })
-            .where(eq(usersTable.clerkId, data.clerkId))
+            .where(eq(usersTable.clerkId, validatedUser.clerkId))
             .returning();
-        const updatedUser = updatedData[0];
-        return updatedUser;
+        if (!userResult) {
+            return { success: false, error: 'Failed to update user.' };
+        }
+        return { success: true, data: userResult[0] };
     } catch (error) {
         console.error(error);
-        throw error;
+        return {
+            success: false,
+            error: 'There was an error updating the user.',
+        };
     }
 }

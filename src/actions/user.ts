@@ -14,72 +14,93 @@ import {
     retrieveUserById,
     updateUser,
 } from '@/data-access/user';
+import { Response } from '@/types/response';
 
-export async function addUser(user: UserCreate): Promise<User> {
+// TODO: refac all actions to account for Response type.
+// TODO: rename response type to something else.
+export async function addUser(user: UserCreate): Promise<Response<User>> {
     try {
         const { userId } = await auth();
         if (!userId) {
             redirect('/auth/login');
         }
-        const newUser = await createUser(user);
-        return newUser;
+        const result = await createUser(user);
+        return result;
     } catch (error) {
         console.error('Error adding user:', error);
-        throw error;
+        return {
+            success: false,
+            error: 'There was an error adding the user',
+        };
     }
 }
 
-export async function fetchTotalCreations(): Promise<TotalCreations> {
+export async function fetchTotalCreations(): Promise<Response<TotalCreations>> {
     try {
         const { userId } = await auth();
         if (!userId) {
             redirect('/auth/login');
         }
-        const totalCreations = await retrieveTotalCreations(userId);
-        return totalCreations;
+        const result = await retrieveTotalCreations(userId);
+        return result;
     } catch (error) {
         console.error(`Error getting total creations:`, error);
-        throw error;
+        return {
+            success: false,
+            error: 'There was an error getting the total creations.',
+        };
     }
 }
 
-export async function fetchUserActivityOverview(): Promise<ActivityOverview[]> {
+export async function fetchUserActivityOverview(): Promise<
+    Response<ActivityOverview[]>
+> {
     try {
         const { userId } = await auth();
         if (!userId) {
             redirect('/auth/login');
         }
-        const activityOverview = await retrieveUserActivityOverview(userId);
-        return activityOverview;
+        const result = await retrieveUserActivityOverview(userId);
+        return result;
     } catch (error) {
         console.error('Error fetching user activity overview:', error);
-        throw error;
+        return {
+            success: false,
+            error: 'There was an error fetching the user activity overview.',
+        };
     }
 }
 
-export async function fetchUserById(): Promise<User> {
+export async function fetchUserById(): Promise<Response<User>> {
     try {
         const { userId } = await auth();
         if (!userId) {
             redirect('/auth/login');
         }
-        const user = await retrieveUserById(userId);
-        return user;
+        const result = await retrieveUserById(userId);
+        return result;
     } catch (error) {
         console.error('Error fetching user by id:', error);
-        throw error;
+        return {
+            success: false,
+            error: 'There was an error fetching the user.',
+        };
     }
 }
-export async function modifyUser(user: UserUpdate): Promise<User> {
+
+export async function modifyUser(user: UserUpdate): Promise<Response<User>> {
     try {
         const { userId } = await auth();
         if (!userId) {
             redirect('/auth/login');
         }
-        const updatedUser = await updateUser(user);
-        return updatedUser;
+        const result = await updateUser(user);
+        return result;
     } catch (error) {
         console.error('Error updating user:', error);
-        throw error;
+        return {
+            success: false,
+            error: 'There was an error updating the user.',
+        };
     }
 }

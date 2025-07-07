@@ -13,87 +13,103 @@ import {
     retrievePublicNotesByUserId,
     updateNote,
 } from '@/data-access/note';
+import { Response } from '@/types/response';
 
-export async function addNote(note: NoteCreate): Promise<Note> {
+export async function addNote(note: NoteCreate): Promise<Response<Note>> {
     try {
         const { userId } = await auth();
         if (!userId) {
             redirect('/auth/login');
         }
-        const newNote = await createNote(note);
-        return newNote;
+        const result = await createNote(note);
+        return result;
     } catch (error) {
         console.error('Error adding note:', error);
-        throw error;
+        return { success: false, error: 'There was an error adding the note.' };
     }
 }
 
-export async function fetchNoteById(id: string): Promise<Note> {
+export async function fetchNoteById(id: string): Promise<Response<Note>> {
     try {
         const { userId } = await auth();
         if (!userId) {
             redirect('/auth/login');
         }
-        const note = await retrieveNoteById(id);
-        return note;
+        const result = await retrieveNoteById(id);
+        return result;
     } catch (error) {
         console.error(`Error fetching note by id, for id ${id}:`, error);
-        throw error;
+        return {
+            success: false,
+            error: 'There was an error fetching the note.',
+        };
     }
 }
 
-export async function fetchNotesByUserId(): Promise<Note[]> {
+export async function fetchNotesByUserId(): Promise<Response<Note[]>> {
     try {
         const { userId } = await auth();
         if (!userId) {
             redirect('/auth/login');
         }
-        const notes = await retrieveNotesByUserId(userId);
-        return notes;
+        const result = await retrieveNotesByUserId(userId);
+        return result;
     } catch (error) {
         console.error('Error fetching notes:', error);
-        throw error;
+        return {
+            success: false,
+            error: 'There was an error fetching the notes.',
+        };
     }
 }
 
-export async function fetchPublicNotesByUserId(): Promise<Note[]> {
+export async function fetchPublicNotesByUserId(): Promise<Response<Note[]>> {
     try {
         const { userId } = await auth();
         if (!userId) {
             redirect('/auth/login');
         }
-        const notes = await retrievePublicNotesByUserId(userId);
-        return notes;
+        const result = await retrievePublicNotesByUserId(userId);
+        return result;
     } catch (error) {
         console.error('Error fetching public notes:', error);
-        throw error;
+        return {
+            success: false,
+            error: 'There was an error fetching the notes.',
+        };
     }
 }
 
-export async function modifyNote(note: NoteUpdate): Promise<Note> {
+export async function modifyNote(note: NoteUpdate): Promise<Response<Note>> {
     try {
         const { userId } = await auth();
         if (!userId) {
             redirect('/auth/login');
         }
-        const updatedNote = await updateNote(note);
-        return updatedNote;
+        const result = await updateNote(note);
+        return result;
     } catch (error) {
         console.error('Error updating note:', error);
-        throw error;
+        return {
+            success: false,
+            error: 'There was an error updating the note.',
+        };
     }
 }
 
-export async function removeNote(id: string): Promise<Note> {
+export async function removeNote(id: string): Promise<Response<string>> {
     try {
         const { userId } = await auth();
         if (!userId) {
             redirect('/auth/login');
         }
-        const deletedNote = await deleteNote(id);
-        return deletedNote;
+        const result = await deleteNote(id);
+        return result;
     } catch (error) {
         console.error(`Error removing note, for id ${id}:`, error);
-        throw error;
+        return {
+            success: false,
+            error: 'There was an error removing the note.',
+        };
     }
 }
