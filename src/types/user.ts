@@ -13,4 +13,5 @@ export type User = {
 export type UserCreate = Omit<User, 'createdAt' | 'updatedAt'>;
 export type UserUpdate = Partial<
     Pick<User, 'bio' | 'country' | 'firstName' | 'lastName'>
->;
+> &
+    Pick<User, 'clerkId' | 'email' | 'username'>;
