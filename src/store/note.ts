@@ -4,17 +4,15 @@ import { immer } from 'zustand/middleware/immer';
 
 import { Note } from '@/types/note';
 
-// TODO: update store to use maps, create custom storage in sep PR for all -> convert to arr using JSON.stringify.
-
 type NoteState = {
-    notes: Note[];
-    getNotes: () => Note[];
-    getNoteById: (publicNoteId: string) => Note | undefined;
-    getNotesByUserId: (publicAuthorId: string) => Note[];
-    getPublicNotesByUserId: (publicAuthorId: string) => Note[];
-    setNotes: (notes: Note[]) => void;
-    addNote: (note: any | Note) => void;
-    removeNote: (publicNoteId: string) => void;
+    notes: Map<string, Note>;
+    getNotes: () => Map<string, Note>;
+    getNoteById: (noteId: string) => Note | undefined;
+    getNotesByUserId: (authorId: string) => Note[];
+    getPublicNotesByUserId: (authorId: string) => Note[];
+    setNotes: (notes: Map<string, Note>) => void;
+    addNote: (note: Note) => void;
+    removeNote: (noteId: string) => void;
     updateNote: (note: Note) => void;
     resetNotes: () => void;
 };
@@ -22,18 +20,22 @@ type NoteState = {
 export const useNoteStore = create<NoteState>()(
     persist(
         immer((set, get) => ({
-            notes: [],
+            notes: new Map<string, Note>(),
             getNotes: () => get().notes,
-            getNoteById: (noteId: string) =>
-                get().notes.find((note: Note) => note.id === noteId),
-            getNotesByUserId: (publicAuthorId) =>
-                get().notes.filter(
-                    (note) => note.publicAuthorId === publicAuthorId,
+            getNoteById: (noteId: string) => get().notes.get(noteId),
+            getNotesByUserId: (authorId) =>
+                Array.from(
+                    get()
+                        .notes.values()
+                        .filter((note) => note.authorId === authorId),
                 ),
-            getPublicNotesByUserId: (publicAuthorId) =>
-                get().notes.filter(
-                    (note) =>
-                        note.publicAuthorId === publicAuthorId && note.public,
+            getPublicNotesByUserId: (authorId) =>
+                Array.from(
+                    get()
+                        .notes.values()
+                        .filter(
+                            (note) => note.authorId === authorId && note.public,
+                        ),
                 ),
             setNotes: (notes) => {
                 set((state) => {
@@ -42,29 +44,23 @@ export const useNoteStore = create<NoteState>()(
             },
             addNote: (note) => {
                 set((state) => {
-                    state.notes.push(note);
+                    state.notes.set(note.id, note);
                 });
             },
-            removeNote: (publicNoteId) => {
+            removeNote: (noteId) => {
                 set((state) => {
-                    state.notes = state.notes.filter(
-                        (note) => note.publicNoteId !== publicNoteId,
-                    );
+                    state.notes.delete(noteId);
                 });
             },
             updateNote: (note) => {
                 set((state) => {
-                    const index = state.notes.findIndex(
-                        (n) => n.publicNoteId === note.publicNoteId,
-                    );
-                    if (index !== -1) {
-                        state.notes[index] = note;
-                    }
+                    if (state.notes.has(note.id))
+                        state.notes.set(note.id, note);
                 });
             },
             resetNotes: () => {
                 set((state) => {
-                    state.notes = [];
+                    state.notes = new Map<string, Note>();
                 });
             },
         })),
