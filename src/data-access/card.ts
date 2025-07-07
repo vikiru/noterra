@@ -24,14 +24,14 @@ export async function createCard(
                 error: 'Invalid flashcard data provided. Please try again with valid data.',
             };
         }
-        const data = result.data;
+        const validatedFlashcard = result.data;
         const newCard = await db
             .insert(flashcardsTable)
             .values({
-                authorId: data.authorId,
-                noteId: data.noteId,
-                question: data.question,
-                answer: data.answer,
+                authorId: validatedFlashcard.authorId,
+                noteId: validatedFlashcard.noteId,
+                question: validatedFlashcard.question,
+                answer: validatedFlashcard.answer,
             })
             .returning();
         const flashcard = newCard[0];
@@ -88,10 +88,10 @@ export async function deleteCard(id: string): Promise<Response<string>> {
                 error: 'Invalid flashcard id provided. Please try again with a valid id.',
             };
         }
-        const data = result.data;
+        const validatedId = result.data;
         const deleted = await db
             .delete(flashcardsTable)
-            .where(eq(flashcardsTable.id, data))
+            .where(eq(flashcardsTable.id, validatedId))
             .returning();
         const deletedCard = deleted[0];
         if (!deletedCard) {
@@ -119,11 +119,11 @@ export async function retrieveCardById(
                 error: 'Invalid flashcard id provided. Please try again with a valid id.',
             };
         }
-        const data = result.data;
+        const validatedId = result.data;
         const card = await db
             .select()
             .from(flashcardsTable)
-            .where(eq(flashcardsTable.id, data))
+            .where(eq(flashcardsTable.id, validatedId))
             .limit(1);
         const retrievedCard = card[0];
         if (!retrievedCard) {
@@ -151,11 +151,11 @@ export async function retrieveCardsByNoteId(
                 error: 'Invalid note id provided. Please try again with a valid id.',
             };
         }
-        const data = result.data;
+        const validatedId = result.data;
         const cards = await db
             .select()
             .from(flashcardsTable)
-            .where(eq(flashcardsTable.id, data));
+            .where(eq(flashcardsTable.id, validatedId));
         if (!cards) {
             return { success: false, error: 'Failed to retrieve flashcards.' };
         }
@@ -208,13 +208,13 @@ export async function retrievePublicCardsByNoteId(
                 error: 'Invalid note id provided. Please try again with a valid id.',
             };
         }
-        const data = result.data;
+        const validatedId = result.data;
         const cards = await db
             .select()
             .from(flashcardsTable)
             .where(
                 and(
-                    eq(flashcardsTable.noteId, data),
+                    eq(flashcardsTable.noteId, validatedId),
                     eq(flashcardsTable.public, true),
                 ),
             );
@@ -235,7 +235,7 @@ export async function retrievePublicCardsByUserId(
     authorId: string,
 ): Promise<Response<Flashcard[]>> {
     try {
-        const result = z.string().uuid().safeParse(authorId);
+        const result = z.uuid().safeParse(authorId);
         if (!result.success) {
             console.error(result.error);
             return {
@@ -243,13 +243,13 @@ export async function retrievePublicCardsByUserId(
                 error: 'Invalid user id provided. Please try again with a valid id.',
             };
         }
-        const data = result.data;
+        const validatedId = result.data;
         const cards = await db
             .select()
             .from(flashcardsTable)
             .where(
                 and(
-                    eq(flashcardsTable.authorId, data),
+                    eq(flashcardsTable.authorId, validatedId),
                     eq(flashcardsTable.public, true),
                 ),
             );
@@ -278,14 +278,14 @@ export async function updateCard(
                 error: 'Invalid flashcard data provided. Please try again with valid data.',
             };
         }
-        const data: FlashcardUpdate = result.data;
+        const validatedCard = result.data;
         const updated = await db
             .update(flashcardsTable)
             .set({
-                question: data.question,
-                answer: data.answer,
+                question: validatedCard.question,
+                answer: validatedCard.answer,
             })
-            .where(eq(flashcardsTable.id, data.id))
+            .where(eq(flashcardsTable.id, validatedCard.id))
             .returning();
         const flashcard = updated[0];
         if (!flashcard) {

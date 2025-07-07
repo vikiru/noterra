@@ -20,131 +20,172 @@ import {
     retrievePublicCardsByUserId,
     updateCard,
 } from '@/data-access/card';
+import { Response } from '@/types/response';
 
-export async function addCard(card: FlashcardCreate): Promise<Flashcard> {
+export async function addCard(
+    card: FlashcardCreate,
+): Promise<Response<Flashcard>> {
     try {
         const { userId } = await auth();
         if (!userId) {
             redirect('/auth/login');
         }
-        const newCard = await createCard(card);
-        return newCard;
+        const result = await createCard(card);
+        return result;
     } catch (error) {
         console.error('Error adding card:', error);
-        throw error;
+        return {
+            success: false,
+            error: 'There was an error adding the card.',
+        };
     }
 }
 
 export async function addMultipleCards(
     cards: FlashcardCreate[],
-): Promise<Flashcard[]> {
+): Promise<Response<Flashcard[]>> {
     try {
         const { userId } = await auth();
         if (!userId) {
             redirect('/auth/login');
         }
-        const newCards = await createMultipleCards(cards);
-        return newCards;
+        const result = await createMultipleCards(cards);
+        return result;
     } catch (error) {
         console.error('Error adding cards:', error);
-        throw error;
+        return {
+            success: false,
+            error: 'There was an error adding the cards.',
+        };
     }
 }
 
-export async function fetchCardById(id: string): Promise<Flashcard> {
+export async function fetchCardById(id: string): Promise<Response<Flashcard>> {
     try {
         const { userId } = await auth();
         if (!userId) {
             redirect('/auth/login');
         }
-        const card = await retrieveCardById(id);
-        return card;
+        const result = await retrieveCardById(id);
+        return result;
     } catch (error) {
         console.error('Error fetching card by id:', error);
-        throw error;
+        return {
+            success: false,
+            error: 'There was an error fetching the card.',
+        };
     }
 }
 
-export async function fetchCardsByNoteId(id: string) {
+export async function fetchCardsByNoteId(
+    id: string,
+): Promise<Response<Flashcard[]>> {
     try {
         const { userId } = await auth();
         if (!userId) {
             redirect('/auth/login');
         }
-        const cards = await retrieveCardsByNoteId(id);
-        return cards;
+        const result = await retrieveCardsByNoteId(id);
+        return result;
     } catch (error) {
         console.error('Error fetching cards by note id:', error);
-        throw error;
+        return {
+            success: false,
+            error: 'There was an error fetching the cards.',
+        };
     }
 }
 
-export async function fetchCardsByUserId(id: string): Promise<Flashcard[]> {
+export async function fetchCardsByUserId(
+    id: string,
+): Promise<Response<Flashcard[]>> {
     try {
         const { userId } = await auth();
         if (!userId) {
             redirect('/auth/login');
         }
-        const cards = await retrieveCardsByUserId(id);
-        return cards;
+        const result = await retrieveCardsByUserId(id);
+        return result;
     } catch (error) {
         console.error('Error fetching cards by user id:', error);
-        throw error;
+        return {
+            success: false,
+            error: 'There was an error fetching the cards.',
+        };
     }
 }
 
-export async function fetchPublicCardsByNoteId(id: string) {
+// TODO: move this to note, after refac schema
+export async function fetchPublicCardsByNoteId(
+    id: string,
+): Promise<Response<Flashcard[]>> {
     try {
         const { userId } = await auth();
         if (!userId) {
             redirect('/auth/login');
         }
-        const cards = await retrievePublicCardsByNoteId(id);
-        return cards;
+        const result = await retrievePublicCardsByNoteId(id);
+        return result;
     } catch (error) {
         console.error('Error fetching public cards by note id:', error);
-        throw error;
+        return {
+            success: false,
+            error: 'There was an error fetching the cards.',
+        };
     }
 }
 
-export async function fetchPublicCardsByUserId() {
+export async function fetchPublicCardsByUserId(): Promise<
+    Response<Flashcard[]>
+> {
     try {
         const { userId } = await auth();
         if (!userId) {
             redirect('/auth/login');
         }
-        const cards = await retrievePublicCardsByUserId(userId);
-        return cards;
+        const result = await retrievePublicCardsByUserId(userId);
+        return result;
     } catch (error) {
         console.error('Error fetching public cards by user id:', error);
-        throw error;
+        return {
+            success: false,
+            error: 'There was an error fetching the cards.',
+        };
     }
 }
 
-export async function modifyCard(card: FlashcardUpdate): Promise<Flashcard> {
+export async function modifyCard(
+    card: FlashcardUpdate,
+): Promise<Response<Flashcard>> {
     try {
         const { userId } = await auth();
         if (!userId) {
             redirect('/auth/login');
         }
-        const updatedCard = await updateCard(card);
-        return updatedCard;
+        const result = await updateCard(card);
+        return result;
     } catch (error) {
         console.error('Error modifying card:', error);
-        throw error;
+        return {
+            success: false,
+            error: 'There was an error modifying the card.',
+        };
     }
 }
 
-export async function removeCard(id: string) {
+export async function removeCard(id: string): Promise<Response<string>> {
     try {
         const { userId } = await auth();
         if (!userId) {
             redirect('/auth/login');
         }
-        const deletedCard = await deleteCard(id);
-        return deletedCard;
+        const result = await deleteCard(id);
+        return result;
     } catch (error) {
         console.error('Error removing card:', error);
-        throw error;
+        return {
+            success: false,
+            error: 'There was an error removing the card.',
+        };
     }
 }

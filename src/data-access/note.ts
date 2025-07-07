@@ -1,5 +1,5 @@
 import { and, eq } from 'drizzle-orm';
-import * as z from 'zod';
+import * as z from 'zod/v4';
 
 import { db } from '@/db';
 import { notesTable } from '@/db/schema';
@@ -7,8 +7,6 @@ import { noteSchema } from '@/schema/databaseSchema';
 import { Note, NoteCreate, NoteUpdate } from '@/types/note';
 import { Response } from '@/types/response';
 
-// TODO: make sure to avoid all mentions of public fields.
-// TODO: finish redoing responses to use Response type for all data-access fns.
 export async function createNote(note: NoteCreate): Promise<Response<Note>> {
     try {
         const result = noteSchema.insert.safeParse(note);
@@ -19,15 +17,15 @@ export async function createNote(note: NoteCreate): Promise<Response<Note>> {
                 error: 'Invalid note data provided. Please try again with valid data.',
             };
         }
-        const data = result.data;
+        const validatedNote = result.data;
         const newNote = await db
             .insert(notesTable)
             .values({
-                authorId: data.authorId,
-                title: data.title,
-                content: data.content,
-                summary: data.summary,
-                keywords: data.keywords,
+                authorId: validatedNote.authorId,
+                title: validatedNote.title,
+                content: validatedNote.content,
+                summary: validatedNote.summary,
+                keywords: validatedNote.keywords,
             })
             .returning();
         const createdNote = newNote[0];
@@ -46,7 +44,7 @@ export async function createNote(note: NoteCreate): Promise<Response<Note>> {
 
 export async function deleteNote(id: string): Promise<Response<string>> {
     try {
-        const result = z.string().uuid().safeParse(id);
+        const result = z.uuid().safeParse(id);
         if (!result.success) {
             console.error(result.error);
             return {
@@ -54,10 +52,10 @@ export async function deleteNote(id: string): Promise<Response<string>> {
                 error: 'Invalid note id provided. Please try again with a valid id.',
             };
         }
-        const data = result.data;
+        const validatedId = result.data;
         const deleted = await db
             .delete(notesTable)
-            .where(eq(notesTable.id, data))
+            .where(eq(notesTable.id, validatedId))
             .returning();
         const deletedNote = deleted[0];
         if (!deletedNote) {
@@ -77,7 +75,7 @@ export async function retrieveNoteById(
     noteId: string,
 ): Promise<Response<Note>> {
     try {
-        const result = z.string().uuid().safeParse(noteId);
+        const result = z.uuid().safeParse(noteId);
         if (!result.success) {
             console.error(result.error);
             return {
@@ -85,12 +83,11 @@ export async function retrieveNoteById(
                 error: 'Invalid note id provided. Please try again with a valid id.',
             };
         }
-
-        const data = result.data;
+        const validatedId = result.data;
         const note = await db
             .select()
             .from(notesTable)
-            .where(eq(notesTable.id, data))
+            .where(eq(notesTable.id, validatedId))
             .limit(1);
 
         const fetchedNote = note[0];
@@ -114,7 +111,7 @@ export async function retrieveNotesByUserId(
     authorId: string,
 ): Promise<Response<Note[]>> {
     try {
-        const result = z.string().uuid().safeParse(authorId);
+        const result = z.uuid().safeParse(authorId);
         if (!result.success) {
             console.error(result.error);
             return {
@@ -122,11 +119,11 @@ export async function retrieveNotesByUserId(
                 error: 'Invalid user id provided. Please try again with a valid id.',
             };
         }
-        const data = result.data;
+        const validatedId = result.data;
         const notes = await db
             .select()
             .from(notesTable)
-            .where(eq(notesTable.authorId, data));
+            .where(eq(notesTable.authorId, validatedId));
         if (!notes) {
             return {
                 success: false,
@@ -155,12 +152,15 @@ export async function retrievePublicNotesByUserId(
                 error: 'Invalid user id provided. Please try again with a valid id.',
             };
         }
-        const data = result.data;
+        const validatedId = result.data;
         const notes = await db
             .select()
             .from(notesTable)
             .where(
-                and(eq(notesTable.authorId, data), eq(notesTable.public, true)),
+                and(
+                    eq(notesTable.authorId, validatedId),
+                    eq(notesTable.public, true),
+                ),
             );
 
         if (!notes) {
@@ -180,7 +180,9 @@ export async function retrievePublicNotesByUserId(
     }
 }
 
-export async function updateNote(updatedNote: NoteUpdate): Promise<Note> {
+export async function updateNote(
+    updatedNote: NoteUpdate,
+): Promise<Response<Note>> {
     try {
         const result = noteSchema.update.safeParse(updatedNote);
         if (!result.success) {
@@ -189,21 +191,27 @@ export async function updateNote(updatedNote: NoteUpdate): Promise<Note> {
                 'Invalid note data provided. Please try again with valid data.',
             );
         }
-        const data = result.data;
+        const validatedNote = result.data;
         const updated = await db
             .update(notesTable)
             .set({
-                title: data.title,
-                content: data.content,
-                summary: data.summary,
-                keywords: data.keywords,
+                title: validatedNote.title,
+                content: validatedNote.content,
+                summary: validatedNote.summary,
+                keywords: validatedNote.keywords,
             })
-            .where(eq(notesTable.id, data.id))
+            .where(eq(notesTable.id, validatedNote.id))
             .returning();
         const note = updated[0];
-        return note;
+        if (!note) {
+            return { success: false, error: 'Failed to update note' };
+        }
+        return { success: true, data: note };
     } catch (error) {
         console.error(`Error updating note with id ${updatedNote.id}:`, error);
-        throw error;
+        return {
+            success: false,
+            error: 'An unexpected error occured while updating note. Please try again.',
+        };
     }
 }
