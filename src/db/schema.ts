@@ -48,7 +48,7 @@ export const userActivityTable = pgTable(
             .references(() => usersTable.clerkId, { onDelete: 'cascade' }),
         action: activityAction('action').notNull(),
         type: activityType('type').notNull(),
-        entityId: text('entity_id').notNull(),
+        entityId: uuid('entity_id').notNull(),
         createdAt: timestamp('created_at', { withTimezone: true })
             .notNull()
             .defaultNow(),

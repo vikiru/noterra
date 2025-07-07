@@ -5,35 +5,35 @@ import { immer } from 'zustand/middleware/immer';
 import { UserActivity } from '@/types/userActivity';
 
 type UserActivityState = {
-    userActivity: Map<string, UserActivity>;
+    userActivities: Map<string, UserActivity>;
     addUserActivity: (userActivity: UserActivity) => void;
     removeUserActivity: (userActivityId: string) => void;
-    setUserActivity: (userActivity: Map<string, UserActivity>) => void;
-    resetUserActivity: () => void;
+    setUserActivities: (userActivity: Map<string, UserActivity>) => void;
+    resetUserActivities: () => void;
 };
 
 export const useUserActivityStore = create<UserActivityState>()(
     persist(
         immer((set) => ({
-            userActivity: new Map(),
+            userActivities: new Map(),
             addUserActivity: (userActivity: UserActivity) => {
                 set((state) => {
-                    state.userActivity.set(userActivity.id, userActivity);
+                    state.userActivities.set(userActivity.id, userActivity);
                 });
             },
             removeUserActivity: (userActivityId: string) => {
                 set((state) => {
-                    state.userActivity.delete(userActivityId);
+                    state.userActivities.delete(userActivityId);
                 });
             },
-            setUserActivity: (userActivity: Map<string, UserActivity>) => {
+            setUserActivities: (userActivity: Map<string, UserActivity>) => {
                 set((state) => {
-                    state.userActivity = userActivity;
+                    state.userActivities = userActivity;
                 });
             },
-            resetUserActivity: () => {
+            resetUserActivities: () => {
                 set((state) => {
-                    state.userActivity = new Map();
+                    state.userActivities = new Map();
                 });
             },
         })),
