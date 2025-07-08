@@ -2,13 +2,6 @@
 
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
-
-import type {
-    Flashcard,
-    FlashcardCreate,
-    FlashcardUpdate,
-} from '@/types/flashcard';
-
 import {
     createCard,
     createMultipleCards,
@@ -20,7 +13,12 @@ import {
     updateCard,
 } from '@/data-access/card';
 import { retrievePublicCardsByNoteId } from '@/data-access/note';
-import { ResponseData } from '@/types/response';
+import type {
+    Flashcard,
+    FlashcardCreate,
+    FlashcardUpdate,
+} from '@/types/flashcard';
+import type { ResponseData } from '@/types/response';
 
 export async function addCard(
     card: FlashcardCreate,

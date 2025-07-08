@@ -1,14 +1,12 @@
 import { eq, sql } from 'drizzle-orm';
 import * as z from 'zod/v4';
-
-import type { ActivityOverview } from '@/types/activityOverview';
-import type { TotalCreations } from '@/types/totalCreations';
-import type { User, UserCreate, UserUpdate } from '@/types/user';
-
 import { db } from '@/db';
 import { flashcardsTable, notesTable, usersTable } from '@/db/schema';
 import { userSchema } from '@/schema/databaseSchema';
-import { ResponseData } from '@/types/response';
+import type { ActivityOverview } from '@/types/activityOverview';
+import type { ResponseData } from '@/types/response';
+import type { TotalCreations } from '@/types/totalCreations';
+import type { User, UserCreate, UserUpdate } from '@/types/user';
 
 export async function createUser(
     user: UserCreate,

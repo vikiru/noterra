@@ -1,4 +1,4 @@
-import { ActivityAction, ActivityType } from '@/db/schema';
+import type { ActivityAction, ActivityType } from '@/db/schema';
 
 export type UserActivity = {
     id: string;

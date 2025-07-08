@@ -4,8 +4,8 @@ import { z } from 'zod/v4';
 import { db } from '@/db';
 import { userActivityTable } from '@/db/schema';
 import { activitySchema } from '@/schema/databaseSchema';
-import { ResponseData } from '@/types/response';
-import { UserActivity, UserActivityCreate } from '@/types/userActivity';
+import type { ResponseData } from '@/types/response';
+import type { UserActivity, UserActivityCreate } from '@/types/userActivity';
 
 export async function createUserActivity(
     activity: UserActivityCreate,

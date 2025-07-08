@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
-import { User } from '@/types/user';
+import type { User } from '@/types/user';
 
 export type UserState = {
     user: null | User;

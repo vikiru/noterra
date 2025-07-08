@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import * as z from 'zod/v4';
+import type * as z from 'zod/v4';
 
 import { addUser } from '@/actions/user';
 import { Button } from '@/components/ui/button';
@@ -22,7 +22,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { DASHBOARD_ROUTE } from '@/constants/route';
 import { onboardingSchema } from '@/schema/onboardingSchema';
 import { useUserStore } from '@/store/user';
-import { UserCreate } from '@/types/user';
+import type { UserCreate } from '@/types/user';
 
 // TODO: split this into hooks, schema dir, add on submit, update placecholder, etc as needed
 

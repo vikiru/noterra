@@ -2,11 +2,6 @@
 
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
-
-import type { ActivityOverview } from '@/types/activityOverview';
-import type { TotalCreations } from '@/types/totalCreations';
-import type { User, UserCreate, UserUpdate } from '@/types/user';
-
 import {
     createUser,
     retrieveTotalCreations,
@@ -14,7 +9,10 @@ import {
     retrieveUserById,
     updateUser,
 } from '@/data-access/user';
-import { ResponseData } from '@/types/response';
+import type { ActivityOverview } from '@/types/activityOverview';
+import type { ResponseData } from '@/types/response';
+import type { TotalCreations } from '@/types/totalCreations';
+import type { User, UserCreate, UserUpdate } from '@/types/user';
 
 // TODO: refac all actions to account for Response type.
 // TODO: rename response type to something else.

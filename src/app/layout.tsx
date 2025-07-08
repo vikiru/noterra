@@ -1,5 +1,3 @@
-import type { Metadata } from 'next';
-
 import {
     ClerkProvider,
     SignedIn,
@@ -7,6 +5,7 @@ import {
     SignInButton,
     SignUpButton,
 } from '@clerk/nextjs';
+import type { Metadata } from 'next';
 
 import './globals.css';
 import { LucideUser } from 'lucide-react';
@@ -14,8 +13,8 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import { Toaster } from 'sonner';
 
 import ThemeProvider from '@/components/ThemeProvider';
-import { Button } from '@/components/ui/button';
 import UserButton from '@/components/UserButton';
+import { Button } from '@/components/ui/button';
 
 const geistSans = Geist({
     variable: '--font-geist-sans',

@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 // TODO: tab to see flashcard as well + share / privacy settings
 import OnboardingForm from '@/components/forms/OnboardingForm';
 import { DASHBOARD_ROUTE } from '@/constants/route';
-import { UserState, useUserStore } from '@/store/user';
+import { type UserState, useUserStore } from '@/store/user';
 
 export default function OnboardingPage() {
     const user = useUserStore((state: UserState) => state.user);

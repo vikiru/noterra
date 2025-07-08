@@ -2,9 +2,6 @@
 
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
-
-import type { Note, NoteCreate, NoteUpdate } from '@/types/note';
-
 import {
     createNote,
     deleteNote,
@@ -13,7 +10,8 @@ import {
     retrievePublicNotesByUserId,
     updateNote,
 } from '@/data-access/note';
-import { ResponseData } from '@/types/response';
+import type { Note, NoteCreate, NoteUpdate } from '@/types/note';
+import type { ResponseData } from '@/types/response';
 
 export async function addNote(note: NoteCreate): Promise<ResponseData<Note>> {
     try {
