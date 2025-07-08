@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
-import { UserActivity } from '@/types/userActivity';
+import type { UserActivity } from '@/types/userActivity';
 
 type UserActivityState = {
     userActivities: Map<string, UserActivity>;

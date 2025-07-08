@@ -4,9 +4,9 @@ import * as z from 'zod/v4';
 import { db } from '@/db';
 import { flashcardsTable, notesTable } from '@/db/schema';
 import { noteSchema } from '@/schema/databaseSchema';
-import { Flashcard } from '@/types/flashcard';
-import { Note, NoteCreate, NoteUpdate } from '@/types/note';
-import { ResponseData } from '@/types/response';
+import type { Flashcard } from '@/types/flashcard';
+import type { Note, NoteCreate, NoteUpdate } from '@/types/note';
+import type { ResponseData } from '@/types/response';
 
 export async function createNote(
     note: NoteCreate,

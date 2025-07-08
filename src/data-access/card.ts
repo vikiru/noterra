@@ -1,16 +1,14 @@
 import { and, eq } from 'drizzle-orm';
 import * as z from 'zod/v4';
-
+import { db } from '@/db';
+import { flashcardsTable } from '@/db/schema';
+import { flashcardSchema } from '@/schema/databaseSchema';
 import type {
     Flashcard,
     FlashcardCreate,
     FlashcardUpdate,
 } from '@/types/flashcard';
-
-import { db } from '@/db';
-import { flashcardsTable } from '@/db/schema';
-import { flashcardSchema } from '@/schema/databaseSchema';
-import { ResponseData } from '@/types/response';
+import type { ResponseData } from '@/types/response';
 
 export async function createCard(
     card: FlashcardCreate,

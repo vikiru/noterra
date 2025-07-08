@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
-import { Note } from '@/types/note';
+import type { Note } from '@/types/note';
 
 type NoteState = {
     notes: Map<string, Note>;

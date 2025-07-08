@@ -1,12 +1,12 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
+@import "tailwindcss";
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 @plugin "@tailwindcss/typography";
 @plugin "tailwindcss-debug-screens" {
-    classname: 'debug-screens';
-    position: 'bottom, left';
-    prefix: 'screen: ';
+    classname: "debug-screens";
+    position: "bottom, left";
+    prefix: "screen: ";
 }
 
 :root {

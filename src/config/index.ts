@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import path from 'path';
 import * as z from 'zod/v4';
+
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 const envSchema = z.object({
