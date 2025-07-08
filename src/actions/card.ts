@@ -16,10 +16,10 @@ import {
     retrieveCardById,
     retrieveCardsByNoteId,
     retrieveCardsByUserId,
-    retrievePublicCardsByNoteId,
     retrievePublicCardsByUserId,
     updateCard,
 } from '@/data-access/card';
+import { retrievePublicCardsByNoteId } from '@/data-access/note';
 import { ResponseData } from '@/types/response';
 
 export async function addCard(

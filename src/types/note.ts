@@ -7,6 +7,7 @@ export type Note = {
     content: string;
     shared: boolean;
     public: boolean;
+    showCards: boolean;
     shareToken: string;
     createdAt: Date;
     updatedAt: Date;
@@ -20,7 +21,13 @@ export type NoteCreate = Omit<
 export type NoteUpdate = Partial<
     Pick<
         Note,
-        'content' | 'keywords' | 'public' | 'shared' | 'summary' | 'title'
+        | 'content'
+        | 'keywords'
+        | 'public'
+        | 'shared'
+        | 'showCards'
+        | 'summary'
+        | 'title'
     >
 > &
     Pick<Note, 'authorId' | 'id'>;
