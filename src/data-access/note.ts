@@ -2,8 +2,9 @@ import { and, eq } from 'drizzle-orm';
 import * as z from 'zod/v4';
 
 import { db } from '@/db';
-import { notesTable } from '@/db/schema';
+import { flashcardsTable, notesTable } from '@/db/schema';
 import { noteSchema } from '@/schema/databaseSchema';
+import { Flashcard } from '@/types/flashcard';
 import { Note, NoteCreate, NoteUpdate } from '@/types/note';
 import { ResponseData } from '@/types/response';
 
@@ -138,6 +139,50 @@ export async function retrieveNotesByUserId(
         return {
             success: false,
             error: 'An unexpected error occured while fetching the notes. Please try again.',
+        };
+    }
+}
+
+export async function retrievePublicCardsByNoteId(
+    noteId: string,
+): Promise<ResponseData<Flashcard[]>> {
+    try {
+        const result = z.uuid().safeParse(noteId);
+        if (!result.success) {
+            console.error(result.error);
+            return {
+                success: false,
+                error: 'Invalid note id provided. Please try again with a valid id.',
+            };
+        }
+        const validatedId = result.data;
+        const cards = await db
+            .select({
+                id: flashcardsTable.id,
+                noteId: flashcardsTable.noteId,
+                question: flashcardsTable.question,
+                answer: flashcardsTable.answer,
+                createdAt: flashcardsTable.createdAt,
+                updatedAt: flashcardsTable.updatedAt,
+            })
+            .from(flashcardsTable)
+            .innerJoin(notesTable, eq(flashcardsTable.noteId, notesTable.id))
+            .where(
+                and(
+                    eq(flashcardsTable.noteId, validatedId),
+                    eq(notesTable.showCards, true),
+                ),
+            )
+            .orderBy(flashcardsTable.createdAt);
+        if (cards.length === 0) {
+            return { success: false, error: 'No cards found for this note.' };
+        }
+        return { success: true, data: cards };
+    } catch (error) {
+        console.error(`Error getting cards with note id ${noteId}:`, error);
+        return {
+            success: false,
+            error: 'An unexpected error occured while fetching the cards. Please try again.',
         };
     }
 }

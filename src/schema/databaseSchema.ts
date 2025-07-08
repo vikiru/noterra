@@ -48,6 +48,7 @@ export const noteSchema = {
             content: true,
             public: true,
             shared: true,
+            showCards: true,
             keywords: true,
             summary: true,
         })
@@ -70,7 +71,6 @@ export const flashcardSchema = {
         .pick({
             question: true,
             answer: true,
-            public: true,
         })
         .partial()
         .extend({

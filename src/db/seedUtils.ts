@@ -36,7 +36,6 @@ async function createRandomUser() {
         .insert(usersTable)
         .values({
             clerkId: faker.string.uuid(),
-            profileImage: faker.image.url(),
             username: faker.internet.username(),
             email: faker.internet.email(),
             firstName: faker.person.firstName(),

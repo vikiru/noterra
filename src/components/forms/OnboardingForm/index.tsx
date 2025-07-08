@@ -45,12 +45,12 @@ export default function OnboardingForm() {
                 bio: values.bio,
                 country: values.country,
             };
-            const savedUser = await addUser(newUser);
-            setUser(savedUser);
-            if (!savedUser) {
+            const result = await addUser(newUser);
+            if (!result.success) {
                 toast.error('Failed to create user. Please try again.');
                 return;
             }
+            setUser(result.data);
             toast.success(
                 'Successfully completed onboarding. Redirecting to dashboard.',
             );

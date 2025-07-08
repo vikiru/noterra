@@ -196,41 +196,6 @@ export async function retrieveCardsByUserId(
     }
 }
 
-export async function retrievePublicCardsByNoteId(
-    noteId: string,
-): Promise<ResponseData<Flashcard[]>> {
-    try {
-        const result = z.uuid().safeParse(noteId);
-        if (!result.success) {
-            console.error(result.error);
-            return {
-                success: false,
-                error: 'Invalid note id provided. Please try again with a valid id.',
-            };
-        }
-        const validatedId = result.data;
-        const cards = await db
-            .select()
-            .from(flashcardsTable)
-            .where(
-                and(
-                    eq(flashcardsTable.noteId, validatedId),
-                    eq(flashcardsTable.public, true),
-                ),
-            );
-        if (!cards) {
-            return { success: false, error: 'Failed to retrieve flashcards.' };
-        }
-        return { success: true, data: cards };
-    } catch (error) {
-        console.error(`Error getting cards with note id ${noteId}:`, error);
-        return {
-            success: false,
-            error: 'An unexpected error occured during flashcard retrieval. Please try again.',
-        };
-    }
-}
-
 export async function retrievePublicCardsByUserId(
     authorId: string,
 ): Promise<ResponseData<Flashcard[]>> {
@@ -243,17 +208,12 @@ export async function retrievePublicCardsByUserId(
                 error: 'Invalid user id provided. Please try again with a valid id.',
             };
         }
-        const validatedId = result.data;
+        const data = result.data;
         const cards = await db
             .select()
             .from(flashcardsTable)
-            .where(
-                and(
-                    eq(flashcardsTable.authorId, validatedId),
-                    eq(flashcardsTable.public, true),
-                ),
-            );
-        if (!cards) {
+            .where(eq(flashcardsTable.authorId, data));
+        if (cards.length === 0) {
             return { success: false, error: 'Failed to retrieve flashcards.' };
         }
         return { success: true, data: cards };
@@ -261,7 +221,7 @@ export async function retrievePublicCardsByUserId(
         console.error(`Error getting cards with user id ${authorId}:`, error);
         return {
             success: false,
-            error: 'An unexepected error occured during flashcard retrieval. Please try again.',
+            error: 'An unexpected error occured during flashcard retrieval. Please try again.',
         };
     }
 }
