@@ -145,7 +145,7 @@ importers:
         version: 0.41.0(@types/pg@8.15.4)(gel@2.1.1)(pg@8.16.3)
       drizzle-zod:
         specifier: ^0.7.1
-        version: 0.7.1(drizzle-orm@0.41.0(@types/pg@8.15.4)(gel@2.1.1)(pg@8.16.3))(zod@3.25.75)
+        version: 0.7.1(drizzle-orm@0.41.0(@types/pg@8.15.4)(gel@2.1.1)(pg@8.16.3))(zod@4.0.5)
       formik:
         specifier: ^2.4.6
         version: 2.4.6(react@19.1.0)
@@ -231,8 +231,8 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       zod:
-        specifier: ^3.25.67
-        version: 3.25.75
+        specifier: ^4.0.5
+        version: 4.0.5
       zustand:
         specifier: ^5.0.3
         version: 5.0.6(@types/react@19.1.8)(immer@10.1.1)(react@19.1.0)(use-sync-external-store@1.5.0(react@19.1.0))
@@ -7612,8 +7612,8 @@ packages:
   zod@3.22.3:
     resolution: {integrity: sha512-EjIevzuJRiRPbVH4mGc8nApb/lVLKVpmUhAaR5R5doKGfAnGJ6Gr3CViAVjP+4FWSxCsybeWQdcgCtbX+7oZug==}
 
-  zod@3.25.75:
-    resolution: {integrity: sha512-OhpzAmVzabPOL6C3A3gpAifqr9MqihV/Msx3gor2b2kviCgcb+HM9SEOpMWwwNp9MRunWnhtAKUoo0AHhjyPPg==}
+  zod@4.0.5:
+    resolution: {integrity: sha512-/5UuuRPStvHXu7RS+gmvRf4NXrNxpSllGwDnCBcJZtQsKrviYXm54yDGV2KYNLT5kq0lHGcl7lqWJLgSaG+tgA==}
 
   zustand@5.0.6:
     resolution: {integrity: sha512-ihAqNeUVhe0MAD+X8M5UzqyZ9k3FFZLBTtqo6JLPwV53cbRB/mJwBI0PxcIgqhBBHlEs8G45OTDTMq3gNcLq3A==}
@@ -12771,10 +12771,10 @@ snapshots:
       gel: 2.1.1
       pg: 8.16.3
 
-  drizzle-zod@0.7.1(drizzle-orm@0.41.0(@types/pg@8.15.4)(gel@2.1.1)(pg@8.16.3))(zod@3.25.75):
+  drizzle-zod@0.7.1(drizzle-orm@0.41.0(@types/pg@8.15.4)(gel@2.1.1)(pg@8.16.3))(zod@4.0.5):
     dependencies:
       drizzle-orm: 0.41.0(@types/pg@8.15.4)(gel@2.1.1)(pg@8.16.3)
-      zod: 3.25.75
+      zod: 4.0.5
 
   dunder-proto@1.0.1:
     dependencies:
@@ -15894,7 +15894,7 @@ snapshots:
 
   zod@3.22.3: {}
 
-  zod@3.25.75: {}
+  zod@4.0.5: {}
 
   zustand@5.0.6(@types/react@19.1.8)(immer@10.1.1)(react@19.1.0)(use-sync-external-store@1.5.0(react@19.1.0)):
     optionalDependencies:
