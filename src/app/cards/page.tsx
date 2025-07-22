@@ -49,8 +49,8 @@ export default function FlashcardsPage() {
                             </div>
                         </div>
                         <div className="mt-2 flex flex-row items-center gap-2">
-                            <Book size={20} />
-                            20
+                            <Book size={16} />
+                            <span>20</span>
                             <Dot className="-mx-2 lg:-mx-1" size={15} />
                             <span className="text-sm">
                                 Created on Apr 5, 2025
