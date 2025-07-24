@@ -1,4 +1,5 @@
-import type { Note } from '@types/note';
+import type { Note } from '@/types/note';
+
 export const notes: Note[] = [
     {
         id: 'f2778ebf-5f94-49cb-875f-815107845f9b',

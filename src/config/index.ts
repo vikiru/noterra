@@ -1,6 +1,6 @@
+import path from 'node:path';
 import dotenv from 'dotenv';
-import path from 'path';
-import * as z from 'zod/v4';
+import * as z from 'zod';
 
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 

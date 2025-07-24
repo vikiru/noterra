@@ -3,23 +3,17 @@
 import { Loader2, WandSparkles } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { toast } from 'sonner';
 
-import { generateGeminiNote } from '@/actions/generateGeminiNote';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { NOTES_ROUTE } from '@/constants/route';
-import { promptSchema } from '@/schema/promptSchema';
-import { combineHTML } from '@/utils/combineHTML';
-import { updateTOC } from '@/utils/updateTOC';
 
 // TODO: clean this up. Split into hooks/etc, improve error/status msgs. Properly store note into state etc.
 export default function PromptPage() {
     const [prompt, setPrompt] = useState<string>('');
-    const [loading, setLoading] = useState<boolean>(false);
-    const [validationError, setValidationError] = useState<string>('');
-    const [error, setError] = useState<string>('');
-    const router = useRouter();
+    const [loading, _setLoading] = useState<boolean>(false);
+    const [validationError, _setValidationError] = useState<string>('');
+    const [_error, _setError] = useState<string>('');
+    const _router = useRouter();
     /**
         const [prompt, setPrompt] = useState<string>('');
         const [loading, setLoading] = useState<boolean>(false);

@@ -1,13 +1,4 @@
-import {
-    Book,
-    BookMarked,
-    BookOpen,
-    Clock,
-    Dot,
-    NotebookText,
-    Search,
-    SeparatorHorizontal,
-} from 'lucide-react';
+import { BookOpen, Clock } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {

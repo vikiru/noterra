@@ -1,5 +1,5 @@
 import { and, eq } from 'drizzle-orm';
-import * as z from 'zod/v4';
+import * as z from 'zod';
 
 import { db } from '@/db';
 import { flashcardsTable, notesTable } from '@/db/schema';
