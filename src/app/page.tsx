@@ -10,11 +10,12 @@ import {
     Card,
     CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
+
+// TODO: properly do homepage, dashboard, onboarding and rest of page mockups (all notes/cards, card/notes details, user profile, etc)
 
 const data = {
     note_contents: [
@@ -122,7 +123,7 @@ const data = {
     ],
 };
 
-const flashcards = [
+const _flashcards = [
     {
         question: 'What is Depth-First Search (DFS)?',
         answer: 'A graph traversal algorithm that explores as far as possible along each branch before backtracking.',
@@ -210,7 +211,7 @@ export default function Page() {
 
             updateTOC(noteSection);
         }
-    }, [safeHtml]);
+    }, []);
 
     return (
         <div className="flex min-h-screen grow flex-col overflow-hidden rounded-lg bg-white p-6 text-black shadow-lg">

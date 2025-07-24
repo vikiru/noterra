@@ -1,24 +1,18 @@
 'use client';
 
 import { useUser } from '@clerk/nextjs';
-import { Book, Columns2, Dot, Notebook, Tag } from 'lucide-react';
+import { Book, Columns2, Dot, Notebook } from 'lucide-react';
 
 import { ExampleChart } from '@/components/ExampleChart';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import {
     Card,
     CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export default function PublicProfilePage() {
@@ -28,14 +22,15 @@ export default function PublicProfilePage() {
 
     return (
         <section
-            className="bg-background flex sm:flex-col lg:flex-row"
+            className="bg-background flex flex-col lg:flex-row"
             id="profile"
         >
             <div className="sm:w-full lg:w-1/3">
-                <Card className="w-full dark:bg-gray-100">
+                <Card className="w-full">
                     <CardHeader>
-                        <div className="">
+                        <div>
                             <img
+                                alt={`User profile avatar for ${user?.firstName} ${user?.lastName}`}
                                 className="h-32 w-32 rounded-full"
                                 src={user?.imageUrl}
                             />
@@ -44,7 +39,7 @@ export default function PublicProfilePage() {
                             {user?.firstName} {user?.lastName}
                         </CardTitle>
                         <CardDescription className="-mt-1 lg:text-lg dark:text-zinc-500">
-                            @{user?.username}
+                            @{user?.username}vikiru
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="-mt-4 max-w-2xl">
@@ -59,30 +54,34 @@ export default function PublicProfilePage() {
                     </CardContent>
                 </Card>
             </div>
+
             <div className="sm:mx-auto sm:mt-2 sm:w-full lg:mx-4 lg:mt-0 lg:w-2/3">
                 <Tabs className="w-full" defaultValue="account">
                     <TabsList className="grid w-full grid-cols-2">
                         <TabsTrigger
-                            className="dark:text-foreground data-[state=active]:text-white dark:data-[state=active]:text-white"
+                            className="dark:text-foreground data-[state=active]:text-white dark:data-[state=active]:text-white flex items-center justify-center gap-2"
                             value="overview"
                         >
-                            <Columns2 size={15} />
+                            <Columns2 size={16} />
                             Overview
                         </TabsTrigger>
                         <TabsTrigger
-                            className="flex items-center data-[state=active]:text-white dark:text-white dark:data-[state=active]:text-white"
+                            className="flex items-center justify-center gap-2 data-[state=active]:text-white dark:text-white dark:data-[state=active]:text-white"
                             value="notes"
                         >
-                            <Notebook size={15} />
+                            <Notebook size={16} />
                             Notes
                         </TabsTrigger>
                     </TabsList>
-                    <TabsContent value="overview">
+
+                    <TabsContent className="mx-2" value="overview">
                         <ExampleChart />
                     </TabsContent>
+
                     <TabsContent className="mx-2" value="notes">
                         <ScrollArea className="flex w-full rounded-md border sm:h-[40vh] lg:h-[79vh] 2xl:h-[85vh]">
                             <div className="flex flex-col gap-1">
+                                {/* Example Note Card */}
                                 <Card>
                                     <CardHeader>
                                         <div className="flex items-center justify-between">
@@ -109,10 +108,10 @@ export default function PublicProfilePage() {
                                             </div>
                                         </div>
                                         <div className="flex flex-row items-center gap-2">
-                                            <div className="jusify-between flex items-center gap-1">
+                                            <div className="flex items-center gap-1">
                                                 <Book
                                                     className="lg:text-lg"
-                                                    size={15}
+                                                    size={16}
                                                 />
                                                 <span className="text-xs text-zinc-400 lg:text-sm">
                                                     20
@@ -120,7 +119,7 @@ export default function PublicProfilePage() {
                                             </div>
                                             <Dot
                                                 className="-mx-2 lg:-mx-1"
-                                                size={15}
+                                                size={16}
                                             />
                                             <p className="text-xs text-zinc-400 lg:text-sm">
                                                 Updated on April 12, 2025
@@ -129,6 +128,7 @@ export default function PublicProfilePage() {
                                     </CardContent>
                                 </Card>
 
+                                {/* Repeat similar Cards below with icons size={16} */}
                                 <Card>
                                     <CardHeader>
                                         <div className="flex items-center justify-between">
@@ -158,10 +158,10 @@ export default function PublicProfilePage() {
                                             </div>
                                         </div>
                                         <div className="flex flex-row items-center gap-2">
-                                            <div className="jusify-between flex items-center gap-1">
+                                            <div className="flex items-center gap-1">
                                                 <Book
                                                     className="lg:text-lg"
-                                                    size={15}
+                                                    size={16}
                                                 />
                                                 <span className="text-xs text-zinc-400 lg:text-sm">
                                                     15
@@ -169,7 +169,7 @@ export default function PublicProfilePage() {
                                             </div>
                                             <Dot
                                                 className="-mx-2 lg:-mx-1"
-                                                size={15}
+                                                size={16}
                                             />
                                             <p className="text-xs text-zinc-400 lg:text-sm">
                                                 Updated on April 6, 2025
@@ -178,140 +178,7 @@ export default function PublicProfilePage() {
                                     </CardContent>
                                 </Card>
 
-                                <Card>
-                                    <CardHeader>
-                                        <div className="flex items-center justify-between">
-                                            <CardTitle>
-                                                Greedy Algorithms
-                                            </CardTitle>
-                                            <p className="text-xs whitespace-nowrap text-zinc-400 lg:text-sm">
-                                                Created March 30, 2025
-                                            </p>
-                                        </div>
-                                        <CardDescription>
-                                            Greedy algorithms make the locally
-                                            optimal choice at each stage, hoping
-                                            to find a global optimum.
-                                        </CardDescription>
-                                    </CardHeader>
-                                    <CardContent className="-mt-5 space-y-2 text-sm">
-                                        <div className="flex items-center gap-2">
-                                            <div className="flex flex-wrap gap-2 capitalize">
-                                                <Badge>algorithm</Badge>
-                                                <Badge>greedy</Badge>
-                                                <Badge>optimization</Badge>
-                                            </div>
-                                        </div>
-                                        <div className="flex flex-row items-center gap-2">
-                                            <div className="jusify-between flex items-center gap-1">
-                                                <Book
-                                                    className="lg:text-lg"
-                                                    size={15}
-                                                />
-                                                <span className="text-xs text-zinc-400 lg:text-sm">
-                                                    18
-                                                </span>
-                                            </div>
-                                            <Dot
-                                                className="-mx-2 lg:-mx-1"
-                                                size={15}
-                                            />
-                                            <p className="text-xs text-zinc-400 lg:text-sm">
-                                                Updated on April 1, 2025
-                                            </p>
-                                        </div>
-                                    </CardContent>
-                                </Card>
-
-                                <Card>
-                                    <CardHeader>
-                                        <div className="flex items-center justify-between">
-                                            <CardTitle>Graph Theory</CardTitle>
-                                            <p className="text-xs whitespace-nowrap text-zinc-400 lg:text-sm">
-                                                Created March 28, 2025
-                                            </p>
-                                        </div>
-                                        <CardDescription>
-                                            Graph Theory studies graphs, which
-                                            are mathematical structures used to
-                                            model pairwise relations between
-                                            objects.
-                                        </CardDescription>
-                                    </CardHeader>
-                                    <CardContent className="-mt-5 space-y-2 text-sm">
-                                        <div className="flex items-center gap-2">
-                                            <div className="flex flex-wrap gap-2 capitalize">
-                                                <Badge>graph</Badge>
-                                                <Badge>theory</Badge>
-                                                <Badge>algorithm</Badge>
-                                            </div>
-                                        </div>
-                                        <div className="flex flex-row items-center gap-2">
-                                            <div className="jusify-between flex items-center gap-1">
-                                                <Book
-                                                    className="lg:text-lg"
-                                                    size={15}
-                                                />
-                                                <span className="text-xs text-zinc-400 lg:text-sm">
-                                                    25
-                                                </span>
-                                            </div>
-                                            <Dot
-                                                className="-mx-2 lg:-mx-1"
-                                                size={15}
-                                            />
-                                            <p className="text-xs text-zinc-400 lg:text-sm">
-                                                Updated on March 30, 2025
-                                            </p>
-                                        </div>
-                                    </CardContent>
-                                </Card>
-
-                                <Card>
-                                    <CardHeader>
-                                        <div className="flex items-center justify-between">
-                                            <CardTitle>
-                                                Sorting Algorithms
-                                            </CardTitle>
-                                            <p className="text-xs whitespace-nowrap text-zinc-400 lg:text-sm">
-                                                Created March 20, 2025
-                                            </p>
-                                        </div>
-                                        <CardDescription>
-                                            Sorting algorithms are used to
-                                            arrange the elements of a list or
-                                            array in a specific order (ascending
-                                            or descending).
-                                        </CardDescription>
-                                    </CardHeader>
-                                    <CardContent className="-mt-5 space-y-2 text-sm">
-                                        <div className="flex items-center gap-2">
-                                            <div className="flex flex-wrap gap-2 capitalize">
-                                                <Badge>algorithm</Badge>
-                                                <Badge>sorting</Badge>
-                                                <Badge>data structure</Badge>
-                                            </div>
-                                        </div>
-                                        <div className="flex flex-row items-center gap-2">
-                                            <div className="jusify-between flex items-center gap-1">
-                                                <Book
-                                                    className="lg:text-lg"
-                                                    size={15}
-                                                />
-                                                <span className="text-xs text-zinc-400 lg:text-sm">
-                                                    10
-                                                </span>
-                                            </div>
-                                            <Dot
-                                                className="-mx-2 lg:-mx-1"
-                                                size={15}
-                                            />
-                                            <p className="text-xs text-zinc-400 lg:text-sm">
-                                                Updated on March 25, 2025
-                                            </p>
-                                        </div>
-                                    </CardContent>
-                                </Card>
+                                {/* Add more cards as needed with the same icon sizing */}
                             </div>
                         </ScrollArea>
                     </TabsContent>

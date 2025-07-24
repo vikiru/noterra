@@ -90,7 +90,7 @@ export function ExampleChart() {
     });
 
     return (
-        <Card className="dark:bg-gray-100">
+        <Card className="dark:bg-gray-500">
             <CardHeader className="flex items-center gap-2 space-y-0 border-b py-5 sm:flex-row">
                 <div className="grid flex-1 gap-1 text-center sm:text-left">
                     <CardTitle className="text-3xl dark:text-zinc-900">

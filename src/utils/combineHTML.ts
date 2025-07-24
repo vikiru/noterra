@@ -1,5 +1,4 @@
 import DOMPurify from 'isomorphic-dompurify';
-import { JSDOM } from 'jsdom';
 
 import type { GeminiNoteContent } from '@/types/geminiResponse';
 

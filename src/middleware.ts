@@ -4,6 +4,8 @@ const isPublicRoute = createRouteMatcher([
     '/auth/login(.*)',
     '/auth/signup(.*)',
     '/',
+    '/notes(.*)',
+    '/(.*)', // temp match all routes.
 ]);
 
 export default clerkMiddleware(async (auth, req) => {
@@ -20,3 +22,7 @@ export const config = {
         '/(api|trpc)(.*)',
     ],
 };
+
+// export default function middleware() {
+//     return; // Allow all requests through
+// }
