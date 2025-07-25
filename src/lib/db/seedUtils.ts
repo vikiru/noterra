@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-import { db } from '@/db';
+import { db } from '@/db/index';
 import { flashcardsTable, notesTable, usersTable } from '@/db/schema';
 
 async function createRandomFlashcard(authorId: string, noteId: string) {

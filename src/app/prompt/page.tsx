@@ -4,12 +4,11 @@ import { Loader2, WandSparkles } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'sonner';
-
-import { generateGeminiNote } from '@/actions/generateGeminiNote';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { NOTES_ROUTE } from '@/constants/route';
-import { promptSchema } from '@/schema/promptSchema';
+import { generateGeminiNote } from '@/gemini/actions/generateGeminiNote';
+import { promptSchema } from '@/gemini/schema/promptSchema';
 import { combineHTML } from '@/utils/combineHTML';
 import { updateTOC } from '@/utils/updateTOC';
 
@@ -29,7 +28,7 @@ export default function PromptPage() {
         e.preventDefault();
         const validatedPrompt = promptSchema.safeParse({ prompt });
         if (!validatedPrompt.success) {
-            setValidationError(validatedPrompt.error.errors[0]?.message);
+            setValidationError('Invalid prompt provided, please try again.');
             return;
         }
         setValidationError('');
