@@ -6,7 +6,7 @@ import {
 } from '@google/genai';
 
 import { geminiApiKey } from '@/config';
-import { geminiPrompt } from '@/gemini/prompt';
+import { geminiPrompt } from '@/gemini/prompts/index';
 
 const genAI = new GoogleGenAI({ apiKey: geminiApiKey });
 const model = 'gemini-2.0-flash';

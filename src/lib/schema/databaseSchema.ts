@@ -23,7 +23,7 @@ export const userSchema = {
         })
         .partial()
         .extend({
-            clerkId: z.string().uuid(),
+            clerkId: z.uuid(),
         }),
     insert: createInsertSchema(usersTable).omit({
         createdAt: true,
@@ -54,8 +54,8 @@ export const noteSchema = {
         })
         .partial()
         .extend({
-            id: z.string().uuid(),
-            authorId: z.string().uuid(),
+            id: z.uuid(),
+            authorId: z.uuid(),
         }),
     insert: createInsertSchema(notesTable).omit({
         id: true,
@@ -74,8 +74,8 @@ export const flashcardSchema = {
         })
         .partial()
         .extend({
-            id: z.string().uuid(),
-            noteId: z.string().uuid(),
+            id: z.uuid(),
+            noteId: z.uuid(),
         }),
     insert: createInsertSchema(flashcardsTable).omit({
         id: true,
