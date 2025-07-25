@@ -1,11 +1,13 @@
 import { eq } from 'drizzle-orm';
-import { z } from 'zod/v4';
-
-import { db } from '@/db';
+import { z } from 'zod';
+import type {
+    UserActivity,
+    UserActivityCreate,
+} from '@/activity/types/activity';
+import { db } from '@/db/index';
 import { userActivityTable } from '@/db/schema';
 import { activitySchema } from '@/schema/databaseSchema';
 import type { ResponseData } from '@/types/response';
-import type { UserActivity, UserActivityCreate } from '@/types/userActivity';
 
 export async function createUserActivity(
     activity: UserActivityCreate,

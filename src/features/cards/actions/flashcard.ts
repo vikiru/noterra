@@ -11,13 +11,13 @@ import {
     retrieveCardsByUserId,
     retrievePublicCardsByUserId,
     updateCard,
-} from '@/data-access/card';
-import { retrievePublicCardsByNoteId } from '@/data-access/note';
+} from '@/cards/data-access/flashcard';
 import type {
     Flashcard,
     FlashcardCreate,
     FlashcardUpdate,
-} from '@/types/flashcard';
+} from '@/cards/types/flashcard';
+import { retrievePublicCardsByNoteId } from '@/notes/data-access/notes';
 import type { ResponseData } from '@/types/response';
 
 export async function addCard(

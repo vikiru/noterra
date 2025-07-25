@@ -3,12 +3,10 @@ import {
     SignedIn,
     SignedOut,
     SignInButton,
-    SignUpButton,
 } from '@clerk/nextjs';
 import type { Metadata } from 'next';
 
 import './globals.css';
-import { LucideUser } from 'lucide-react';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { Toaster } from 'sonner';
 

@@ -1,17 +1,14 @@
-import { Book, Dot, Search } from 'lucide-react';
+import { Book, Dot } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
 import {
     Card,
-    CardAction,
     CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { ScrollArea } from '@/components/ui/scroll-area';
 
 export default function FlashcardsPage() {
     return (

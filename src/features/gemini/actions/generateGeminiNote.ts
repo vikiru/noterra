@@ -14,7 +14,7 @@ export async function generateGeminiNote(prompt: string) {
 
     const validatedPrompt = promptSchema.safeParse({ prompt });
     if (!validatedPrompt.success) {
-        throw new Error(validatedPrompt.error.errors[0]?.message);
+        throw new Error('Invalid prompt, please try again.');
     }
     const geminiPrompt = validatedPrompt.data.prompt;
 

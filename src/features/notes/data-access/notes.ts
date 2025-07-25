@@ -1,11 +1,10 @@
 import { and, eq } from 'drizzle-orm';
-import * as z from 'zod/v4';
-
-import { db } from '@/db';
+import * as z from 'zod';
+import type { Flashcard } from '@/cards/types/flashcard';
+import { db } from '@/db/index';
 import { flashcardsTable, notesTable } from '@/db/schema';
+import type { Note, NoteCreate, NoteUpdate } from '@/notes/types/notes';
 import { noteSchema } from '@/schema/databaseSchema';
-import type { Flashcard } from '@/types/flashcard';
-import type { Note, NoteCreate, NoteUpdate } from '@/types/note';
 import type { ResponseData } from '@/types/response';
 
 export async function createNote(

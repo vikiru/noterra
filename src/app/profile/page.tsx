@@ -1,24 +1,18 @@
 'use client';
 
 import { useUser } from '@clerk/nextjs';
-import { Book, Columns2, Dot, Notebook, Tag } from 'lucide-react';
+import { Book, Columns2, Dot, Notebook } from 'lucide-react';
 
 import { ExampleChart } from '@/components/ExampleChart';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import {
     Card,
     CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export default function PublicProfilePage() {

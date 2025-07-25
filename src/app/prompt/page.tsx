@@ -41,13 +41,13 @@ export default function PromptPage() {
             const htmlResponse = combineHTML(response.notes_contents);
             console.log(response.metadata);
             const updatedHTML = await updateTOC(htmlResponse);
-            const note = {
+            const _note = {
                 title: response.metadata.title,
                 keywords: response.metadata.keywords,
                 summary: response.metadata.summary,
                 content: updatedHTML,
             };
-            const flashcards = response.flashcards;
+            const _flashcards = response.flashcards;
             setLoading(false);
             toast.success('Note generated successfully!');
             router.push(NOTES_ROUTE);

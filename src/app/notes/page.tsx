@@ -10,7 +10,6 @@ import {
     Card,
     CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
@@ -123,7 +122,7 @@ const data = {
 };
 
 // TODO: redo this with shadcnui components.
-const flashcards = [
+const _flashcards = [
     {
         question: 'What is Depth-First Search (DFS)?',
         answer: 'A graph traversal algorithm that explores as far as possible along each branch before backtracking.',
@@ -211,7 +210,7 @@ export default function Page() {
 
             updateTOC(noteSection);
         }
-    }, [safeHtml]);
+    }, []);
 
     return (
         <div className="flex min-h-screen grow flex-col overflow-hidden rounded-lg bg-white p-6 text-black shadow-lg">

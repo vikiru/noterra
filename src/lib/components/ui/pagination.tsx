@@ -6,7 +6,7 @@ import {
 import type * as React from 'react';
 
 import { type Button, buttonVariants } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn';
 
 type PaginationLinkProps = Pick<React.ComponentProps<typeof Button>, 'size'> &
     React.ComponentProps<'a'> & {
@@ -19,7 +19,6 @@ function Pagination({ className, ...props }: React.ComponentProps<'nav'>) {
             aria-label="pagination"
             className={cn('mx-auto flex w-full justify-center', className)}
             data-slot="pagination"
-            role="navigation"
             {...props}
         />
     );
