@@ -10,11 +10,11 @@ import { DASHBOARD_ROUTE } from '@/constants/route';
 import { type UserState, useUserStore } from '@/user/store/userStore';
 
 export default function OnboardingPage() {
-    const user = useUserStore((state: UserState) => state.user);
-    const router = useRouter();
-    if (user) {
-        router.push(DASHBOARD_ROUTE);
-    } else {
-        return <OnboardingForm />;
-    }
+  const user = useUserStore((state: UserState) => state.user);
+  const router = useRouter();
+  if (user) {
+    router.push(DASHBOARD_ROUTE);
+  } else {
+    return <OnboardingForm />;
+  }
 }

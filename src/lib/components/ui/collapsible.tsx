@@ -3,31 +3,31 @@
 import * as CollapsiblePrimitive from '@radix-ui/react-collapsible';
 
 function Collapsible({
-    ...props
+  ...props
 }: React.ComponentProps<typeof CollapsiblePrimitive.Root>) {
-    return <CollapsiblePrimitive.Root data-slot="collapsible" {...props} />;
+  return <CollapsiblePrimitive.Root data-slot="collapsible" {...props} />;
 }
 
 function CollapsibleContent({
-    ...props
+  ...props
 }: React.ComponentProps<typeof CollapsiblePrimitive.CollapsibleContent>) {
-    return (
-        <CollapsiblePrimitive.CollapsibleContent
-            data-slot="collapsible-content"
-            {...props}
-        />
-    );
+  return (
+    <CollapsiblePrimitive.CollapsibleContent
+      data-slot="collapsible-content"
+      {...props}
+    />
+  );
 }
 
 function CollapsibleTrigger({
-    ...props
+  ...props
 }: React.ComponentProps<typeof CollapsiblePrimitive.CollapsibleTrigger>) {
-    return (
-        <CollapsiblePrimitive.CollapsibleTrigger
-            data-slot="collapsible-trigger"
-            {...props}
-        />
-    );
+  return (
+    <CollapsiblePrimitive.CollapsibleTrigger
+      data-slot="collapsible-trigger"
+      {...props}
+    />
+  );
 }
 
 export { Collapsible, CollapsibleContent, CollapsibleTrigger };

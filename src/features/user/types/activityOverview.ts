@@ -1,5 +1,5 @@
 export type ActivityOverview = {
-    date: string;
-    notes: number;
-    flashcards: number;
+  date: string;
+  notes: number;
+  flashcards: number;
 };

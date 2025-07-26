@@ -1,48 +1,103 @@
 {
-    "compilerOptions": {
-        "target": "esnext",
-        "lib": ["dom", "dom.iterable", "esnext"],
-        "allowJs": true,
-        "skipLibCheck": true,
-        "strict": true,
-        "noEmit": true,
-        "esModuleInterop": true,
-        "module": "esnext",
-        "moduleResolution": "bundler",
-        "resolveJsonModule": true,
-        "isolatedModules": true,
-        "jsx": "preserve",
-        "forceConsistentCasingInFileNames": true,
-        "paths": {
-            "@/*": ["./src/*"],
-            "@/db/*": ["./src/lib/db/*"],
-            "@/constants/*": ["./src/lib/constants/*"],
-            "@/schema/*": ["./src/lib/schema/*"],
-            "@/hooks/*": ["./src/lib/hooks/*"],
-            "@/types/*": ["./src/lib/types/*"],
-            "@/utils/*": ["./src/lib/utils/*"],
-            "@/components/*": ["./src/lib/components/*"],
-            "@/activity/*": ["./src/features/activity/*"],
-            "@/cards/*": ["./src/features/cards/*"],
-            "@/editor/*": ["./src/features/editor/*"],
-            "@/export/*": ["./src/features/export/*"],
-            "@/gemini/*": ["./src/features/gemini/*"],
-            "@/notes/*": ["./src/features/notes/*"],
-            "@/user/*": ["./src/features/user/*"]
-        },
-        "incremental": true,
-        "plugins": [
-            {
-                "name": "next"
-            }
-        ]
-    },
-    "include": [
-        "next-env.d.ts",
-        "src/**/*.ts",
-        "src/**/*.tsx",
-        "*.config.ts",
-        ".next/types/**/*.ts"
+  "compilerOptions": {
+    "target": "esnext",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
     ],
-    "exclude": ["node_modules"]
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "@/db/*": [
+        "./src/lib/db/*"
+      ],
+      "@/constants/*": [
+        "./src/lib/constants/*"
+      ],
+      "@/schema/*": [
+        "./src/lib/schema/*"
+      ],
+      "@/hooks/*": [
+        "./src/lib/hooks/*"
+      ],
+      "@/types/*": [
+        "./src/lib/types/*"
+      ],
+      "@/utils/*": [
+        "./src/lib/utils/*"
+      ],
+      "@/components/*": [
+        "./src/lib/components/*"
+      ],
+      "@/activity/*": [
+        "./src/features/activity/*"
+      ],
+      "@/cards/*": [
+        "./src/features/cards/*"
+      ],
+      "@/editor/*": [
+        "./src/features/editor/*"
+      ],
+      "@/export/*": [
+        "./src/features/export/*"
+      ],
+      "@/gemini/*": [
+        "./src/features/gemini/*"
+      ],
+      "@/notes/*": [
+        "./src/features/notes/*"
+      ],
+      "@/user/*": [
+        "./src/features/user/*"
+      ]
+    },
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "*.config.ts",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "**.*/",
+    ".next",
+    ".git",
+    ".github",
+    "public",
+    "dist",
+    "build",
+    "out",
+    ".vercel",
+    ".vscode",
+    ".clerk",
+    ".turbo",
+    ".wrangler",
+    "*.json",
+    "*.md",
+    "*.mdx",
+    "*.lock",
+    "*.yaml",
+    "*.yml"
+  ]
 }
