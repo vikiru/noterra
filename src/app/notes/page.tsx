@@ -1,18 +1,16 @@
-'use client';
-
-import parse from 'html-react-parser';
-import DOMPurify from 'isomorphic-dompurify';
-import mermaid from 'mermaid';
-import { type RefObject, useEffect, useRef } from 'react';
-
+import { BookOpen, Clock } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   Card,
+  CardAction,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
 const data = {
@@ -121,494 +119,86 @@ const data = {
   ],
 };
 
-// TODO: redo this with shadcnui components.
-const _flashcards = [
-  {
-    question: 'What is Depth-First Search (DFS)?',
-    answer:
-      'A graph traversal algorithm that explores as far as possible along each branch before backtracking.',
-  },
-  {
-    question:
-      'What data structure is commonly used in the iterative implementation of DFS?',
-    answer: 'A stack.',
-  },
-  {
-    question: 'What is the time complexity of DFS?',
-    answer:
-      'O(V + E), where V is the number of vertices and E is the number of edges.',
-  },
-  {
-    question: 'Name one application of DFS.',
-    answer:
-      'Pathfinding, cycle detection, topological sorting, or finding connected components.',
-  },
-  {
-    question: 'What is backtracking in the context of DFS?',
-    answer:
-      'The process of returning to a previous node after reaching a dead end or fully exploring a branch.',
-  },
-  {
-    question: 'What is the main difference between DFS and BFS?',
-    answer:
-      'DFS explores deeply along each branch, while BFS explores all neighbors at the current level before moving to the next level.',
-  },
-  {
-    question: 'How does recursion relate to DFS?',
-    answer: 'DFS is often implemented using recursive functions.',
-  },
-  {
-    question: 'What is a graph in the context of DFS?',
-    answer:
-      'A data structure consisting of nodes (vertices) and edges that connect them.',
-  },
-  {
-    question: "What is the purpose of marking nodes as 'visited' in DFS?",
-    answer:
-      'To avoid revisiting nodes and prevent infinite loops in cyclic graphs.',
-  },
-  {
-    question: 'Explain the LIFO principle in the context of DFS.',
-    answer:
-      'LIFO (Last-In, First-Out) is the principle followed by the stack data structure, where the last element added is the first one removed, which is crucial for the iterative implementation of DFS.',
-  },
-  {
-    question: 'What is a node (or vertex) in a graph?',
-    answer: 'A fundamental unit in a graph, representing an entity or object.',
-  },
-  {
-    question: 'What is an edge in a graph?',
-    answer: 'A connection between two nodes in a graph.',
-  },
-];
-
-function combineAndSanitizeNoteContent(noteContent: any) {
-  let combinedHtml = '';
-
-  noteContent.forEach((content: { content: string }) => {
-    combinedHtml += content.content;
-  });
-
-  const sanitizedHtml = DOMPurify.sanitize(combinedHtml);
-  return sanitizedHtml;
-}
-
-const keywords = [
-  'Depth-First Search',
-  'DFS',
-  'Graph Traversal',
-  'Recursion',
-  'Stack',
-  'Algorithm',
-];
-export default function Page() {
-  const noteSection = useRef<HTMLElement>(null);
-  const safeHtml = combineAndSanitizeNoteContent(data.note_contents || []);
-
-  useEffect(() => {
-    if (noteSection !== null) {
-      mermaid.initialize({ startOnLoad: true });
-      mermaid.contentLoaded();
-
-      const mermaidElements = document.querySelectorAll('.mermaid');
-      mermaidElements.forEach((element) => {
-        const parent = element.parentElement;
-        parent?.classList.add('not-prose');
-      });
-
-      updateTOC(noteSection);
-    }
-  }, []);
-
+export default function AllNotesPage() {
   return (
-    <div className="flex min-h-screen grow flex-col overflow-hidden rounded-lg bg-white p-6 text-black shadow-lg">
-      <div>
-        <h3 className="">Notes</h3>
+    <section
+      className="w-full flex flex-col flex-1 min-h-screen dark:bg-gray-600"
+      id="all-notes"
+    >
+      <div className="mx-4 sm:text-left lg:max-w-3xl">
+        <h2 className="text-center sm:text-left font-semibold leading-tight tracking-tight text-gray-900 dark:text-gray-100">
+          Your Knowledge Hub
+        </h2>
+        <p className="text-gray-500 dark:text-gray-400 text-base leading-relaxed font-light mt-1 sm:ml-0 ml-4">
+          Explore and review your notes in one place.
+        </p>
       </div>
-
-      <div className="flex justify-between">
-        <div className="rounded-lg bg-gray-300 sm:w-1/4 lg:flex lg:w-1/4">
-          <ScrollArea className="h-[90vh] w-full overflow-x-auto overflow-y-auto rounded-lg bg-gray-300 p-4 shadow-inner">
-            <div className="flex flex-col gap-1">
-              {/* Recursion (unstyled) */}
-              <Card className="prose w-full">
-                <CardHeader>
-                  <CardTitle className="text-lg">Recursion</CardTitle>
-                  <CardDescription>
-                    Understanding the concept of functions calling themselves.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="-mt-4 flex w-full flex-wrap gap-1">
-                    {keywords.map((keyword, index) => {
-                      return (
-                        <Badge className="capitalize" key={index}>
-                          {keyword}
-                        </Badge>
-                      );
-                    })}
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="prose w-full dark:bg-gray-100">
-                <CardHeader>
-                  <CardTitle className="text-lg text-black">
-                    Base Case
-                  </CardTitle>
-                  <CardDescription>
-                    The termination condition for a recursive function.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="-mt-4 flex w-full flex-wrap gap-1">
-                    {[
-                      'termination',
-                      'condition',
-                      'stopping',
-                      'exit',
-                      'end',
-                      'base case',
-                    ].map((keyword, index) => {
-                      return (
-                        <Badge className="capitalize" key={index}>
-                          {keyword}
-                        </Badge>
-                      );
-                    })}
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="prose w-full">
-                <CardHeader>
-                  <CardTitle className="text-lg">Recursive Call</CardTitle>
-                  <CardDescription>
-                    When a function calls itself to solve a smaller instance of
-                    the problem.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="-mt-4 flex w-full flex-wrap gap-1">
-                    {[
-                      'self-call',
-                      'problem',
-                      'solution',
-                      'recursive',
-                      'function',
-                      'stack',
-                    ].map((keyword, index) => {
-                      return (
-                        <Badge className="capitalize" key={index}>
-                          {keyword}
-                        </Badge>
-                      );
-                    })}
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="prose w-full">
-                <CardHeader>
-                  <CardTitle className="text-lg">Recursion Depth</CardTitle>
-                  <CardDescription>
-                    The level of nested recursive calls made by a function.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="-mt-4 flex w-full flex-wrap gap-1">
-                    {[
-                      'depth',
-                      'call-stack',
-                      'nested',
-                      'recursion',
-                      'level',
-                      'performance',
-                    ].map((keyword, index) => {
-                      return (
-                        <Badge className="capitalize" key={index}>
-                          {keyword}
-                        </Badge>
-                      );
-                    })}
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="prose w-full">
-                <CardHeader>
-                  <CardTitle className="text-lg">Infinite Recursion</CardTitle>
-                  <CardDescription>
-                    When a recursive function fails to reach the base case,
-                    leading to an infinite loop.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="-mt-4 flex w-full flex-wrap gap-1">
-                    {[
-                      'infinite',
-                      'loop',
-                      'failure',
-                      'stack overflow',
-                      'endless',
-                      'base case',
-                    ].map((keyword, index) => {
-                      return (
-                        <Badge className="capitalize" key={index}>
-                          {keyword}
-                        </Badge>
-                      );
-                    })}
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="prose w-full">
-                <CardHeader>
-                  <CardTitle className="text-lg">Tail Recursion</CardTitle>
-                  <CardDescription>
-                    A form of recursion where the recursive call is the last
-                    operation in the function.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="-mt-4 flex w-full flex-wrap gap-1">
-                    {[
-                      'tail call',
-                      'optimization',
-                      'last call',
-                      'efficiency',
-                      'memory',
-                      'function',
-                    ].map((keyword, index) => {
-                      return (
-                        <Badge className="capitalize" key={index}>
-                          {keyword}
-                        </Badge>
-                      );
-                    })}
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="prose w-full">
-                <CardHeader>
-                  <CardTitle className="text-lg">Recursion Tree</CardTitle>
-                  <CardDescription>
-                    A diagram that visualizes the recursive calls made by a
-                    function.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="-mt-4 flex w-full flex-wrap gap-1">
-                    {[
-                      'tree',
-                      'visualization',
-                      'calls',
-                      'branches',
-                      'diagram',
-                      'structure',
-                    ].map((keyword, index) => {
-                      return (
-                        <Badge className="capitalize" key={index}>
-                          {keyword}
-                        </Badge>
-                      );
-                    })}
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="prose w-full">
-                <CardHeader>
-                  <CardTitle className="text-lg">
-                    Recursion vs Iteration
-                  </CardTitle>
-                  <CardDescription>
-                    Comparing recursion with looping techniques like for/while
-                    loops for solving problems.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="-mt-4 flex w-full flex-wrap gap-1">
-                    {[
-                      'iteration',
-                      'looping',
-                      'comparison',
-                      'efficiency',
-                      'stack',
-                      'recursive',
-                    ].map((keyword, index) => {
-                      return (
-                        <Badge className="capitalize" key={index}>
-                          {keyword}
-                        </Badge>
-                      );
-                    })}
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="prose w-full">
-                <CardHeader>
-                  <CardTitle className="text-lg">Divide and Conquer</CardTitle>
-                  <CardDescription>
-                    A strategy where recursion is used to break down problems
-                    into smaller subproblems.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="-mt-4 flex w-full flex-wrap gap-1">
-                    {[
-                      'divide',
-                      'conquer',
-                      'subproblems',
-                      'recursive',
-                      'algorithm',
-                      'merge',
-                    ].map((keyword, index) => {
-                      return (
-                        <Badge className="capitalize" key={index}>
-                          {keyword}
-                        </Badge>
-                      );
-                    })}
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="prose w-full">
-                <CardHeader>
-                  <CardTitle className="text-lg">Memoization</CardTitle>
-                  <CardDescription>
-                    A technique used to optimize recursive functions by storing
-                    results of expensive function calls.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="-mt-4 flex w-full flex-wrap gap-1">
-                    {[
-                      'optimization',
-                      'caching',
-                      'performance',
-                      'memo',
-                      'recursion',
-                      'lookup',
-                    ].map((keyword, index) => {
-                      return (
-                        <Badge className="capitalize" key={index}>
-                          {keyword}
-                        </Badge>
-                      );
-                    })}
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="prose w-full">
-                <CardHeader>
-                  <CardTitle className="text-lg">
-                    Recursive Data Structures
-                  </CardTitle>
-                  <CardDescription>
-                    Data structures like trees and graphs that are inherently
-                    recursive in nature.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="-mt-4 flex w-full flex-wrap gap-1">
-                    {[
-                      'data structures',
-                      'tree',
-                      'graph',
-                      'recursive',
-                      'nodes',
-                      'edges',
-                    ].map((keyword, index) => {
-                      return (
-                        <Badge className="capitalize" key={index}>
-                          {keyword}
-                        </Badge>
-                      );
-                    })}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </ScrollArea>
-        </div>
-        <div className="flex justify-end overflow-hidden rounded-lg bg-gray-300 lg:w-3/4">
-          <ScrollArea className="h-[90vh] w-full overflow-x-auto overflow-y-auto rounded-lg bg-gray-50 p-4 shadow-inner">
-            <section
-              className="container-xl prose sm:prose-sm md:prose-base lg:prose-lg mx-4 w-full 2xl:max-w-[95%]"
-              id="note"
-              ref={noteSection}
-            >
-              {parse(safeHtml)}
-            </section>
-          </ScrollArea>
-        </div>
+      <div className="mx-2 my-4">
+        <Input placeholder="Search notes" />
       </div>
-    </div>
+      <ScrollArea className="h-[80vh] lg:h-[75vh] 2xl:h-[70vh] py-2 rounded-md w-full overscroll-contain max-h-screen overflow-y-auto">
+        <div className="mx-2 grid grid-cols-1 lg:grid-cols-2 gap-2">
+          {/* Note Card*/}
+          <Card className="hover:shadow-md transition-shadow duration-200 ease-in-out">
+            <CardHeader>
+              <CardTitle>
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5">
+                  <h4 className="font-semibold tracking-tight text-gray-900 dark:text-gray-100">
+                    Recursion: An Alternative to Iterative Approach
+                  </h4>
+                  <time
+                    className="flex items-center gap-1.5 mt-2 sm:mt-0 text-gray-500 dark:text-gray-400 text-sm font-medium"
+                    dateTime="2025-07-05"
+                  >
+                    <Clock aria-hidden="true" size={16} />
+                    Jul 5, 2025
+                  </time>
+                </div>
+              </CardTitle>
+
+              <CardDescription className="text-gray-600 dark:text-gray-400 leading-relaxed mt-1">
+                <p>
+                  Recursion is a programming technique where a function calls
+                  itself to solve smaller instances of a problem until reaching
+                  a base case.
+                </p>
+              </CardDescription>
+            </CardHeader>
+
+            <CardContent className="flex flex-wrap gap-2 mt-3 leading-relaxed">
+              {[
+                'Recursion',
+                'Algorithm',
+                'Base Case',
+                'Stack',
+                'Iteration',
+                'Divide & Conquer',
+              ].map((tag) => (
+                <Badge
+                  aria-label={`Tag: ${tag}`}
+                  className="bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-300"
+                  key={tag}
+                >
+                  {tag}
+                </Badge>
+              ))}
+            </CardContent>
+
+            <CardFooter className="mt-4">
+              <CardAction>
+                <Button
+                  aria-label="View note details"
+                  className="flex items-center gap-2 cursor-pointer"
+                  variant="outline"
+                >
+                  <BookOpen aria-hidden="true" size={16} />
+                  View
+                </Button>
+              </CardAction>
+            </CardFooter>
+          </Card>
+        </div>
+      </ScrollArea>
+    </section>
   );
-}
-
-// TODO: finish prompt cleanup
-// TODO: add google books + youtube data, maybe medium api and some api for course data
-// TODO: create utils for combining, sanitizing, updating toc, convert md -> html, html -> md, json -> html, etc
-// TODO: create a simple server action for gemini (add auth later).
-// TODO: Auth with clerk later as well.
-// TODO: setup tip tap full page editor, user should be able to edit content, title, any other relevant data.
-// TODO: setup full page note view, flashcard view per note, with edit/add forms, delete action with alert + toasts
-// TODO: flashcard quizlike component? (optional)
-// TODO: export .md, .pdf, .txt, .zip etc format handling
-// TODO: pdf viewer and pdf downloading
-// TODO: toc sidebar, history, local save one note at a time, undo/redo?, tiptap toolbar
-// TODO: homepage, user dashboard, profile page, account settings, sign up/login, note creation/prompt page (later on add customization to prompt)
-// TODO: share notes, mark as public/private, public note library - view only for now, option to view, preview pdf/dl and optionally share flashcards.
-// TODO: generate public random uuid/ids for user, notes, flashcards used throughout app to keep private ids secure.
-// TODO: crud for notes, flashcard. schema/types/prisma model
-// TODO: after simple frontend + actions and backend setup, feat by feat. ensure responsiveness for tailwind breakpoints only for now.
-function updateTOC(ref: RefObject<HTMLElement | null>) {
-  if (!ref.current) return;
-  const currentRef = ref.current;
-  const sections = currentRef.querySelectorAll('section');
-  const tocSection = currentRef.querySelector('#toc');
-  let toc = '';
-  sections.forEach((section) => {
-    const headings = Array.from(
-      section.querySelectorAll('h1, h2, h3, h4, h5, h6'),
-    );
-    headings.sort((a, b) => {
-      const levelA = parseInt(a.tagName[1], 10);
-      const levelB = parseInt(b.tagName[1], 10);
-      return levelA - levelB;
-    });
-    const topLevelHeading = headings[0];
-    const headingText = topLevelHeading.textContent
-      ?.trim()
-      .toLowerCase()
-      .replace(/\s+/g, '-');
-    if (headingText) {
-      topLevelHeading.id = headingText;
-      toc += `<li><a href="#${topLevelHeading.textContent?.toLowerCase().replace(' ', '-')}">${topLevelHeading.textContent}</a>`;
-      toc += `<ol>`;
-    }
-
-    headings.slice(1).forEach((heading) => {
-      const headingText = heading.textContent
-        ?.trim()
-        .toLowerCase()
-        .replace(/\s+/g, '-');
-      if (headingText) {
-        heading.id = headingText;
-        toc += `<li><a href="#${headingText}">${heading.textContent}</a></li>`;
-      }
-    });
-    toc += '</ol></li>';
-  });
-  const tocList = tocSection?.querySelector('ol');
-  if (tocList) {
-    tocList.innerHTML = toc;
-  }
 }
