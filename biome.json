@@ -1,71 +1,96 @@
 {
-    "$schema": "https://biomejs.dev/schemas/2.0.6/schema.json",
-    "assist": {
-        "actions": {
-            "source": {
-                "organizeImports": "on",
-                "useSortedAttributes": "on",
-                "useSortedKeys": "off",
-                "useSortedProperties": "on"
-            }
-        },
-        "enabled": true
+  "$schema": "https://biomejs.dev/schemas/2.1.2/schema.json",
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on",
+        "useSortedAttributes": "on",
+        "useSortedKeys": "off",
+        "useSortedProperties": "on"
+      }
     },
-    "files": { "ignoreUnknown": true },
+    "enabled": true
+  },
+  "files": {
+    "ignoreUnknown": true,
+    "includes": [
+      "src/**/*.ts",
+      "src/**/*.tsx",
+      "src/**/*.js",
+      "src/**/*.jsx",
+      "src/**/*.cjs",
+      "src/**/*.mjs",
+      "**/*.mjs",
+      "**/*.cjs",
+      "*.config.mjs",
+      "*.config.cjs",
+      "*.config.ts",
+      "*.config.js",
+      "!**/.wrangler/**",
+      "!/**/.next/**",
+      "!/**/node_modules/**",
+      "!/**/dist/**",
+      "!/**/build/**",
+      "!/**/public/**",
+      "!/**/out/**",
+      "!/**/.git/**",
+      "!/**/.github/**",
+      "!/**/*.css",
+      "!/**/*.html",
+      "!/**/*.json",
+      "!/**/*.md",
+      "!/**/*.mdx"
+    ]
+  },
+  "formatter": {
+    "attributePosition": "auto",
+    "bracketSameLine": false,
+    "bracketSpacing": true,
+    "enabled": true,
+    "expand": "auto",
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 80,
+    "useEditorconfig": true
+  },
+  "javascript": {
     "formatter": {
-        "attributePosition": "auto",
-        "bracketSameLine": false,
-        "bracketSpacing": true,
-        "enabled": true,
-        "expand": "auto",
-        "formatWithErrors": false,
-        "includes": [
-            "**",
-            "!**/.github/",
-            "!**/.husky/",
-            "!**/.next/",
-            "!**/build/",
-            "!**/next/",
-            "!**/node_modules/",
-            "!**/public/",
-            "!**/dist/",
-            "!**/.prettierignore",
-            "!**/.gitignore",
-            "!**/.gitattributes",
-            "!**/LICENSE",
-            "!**/*.ico",
-            "!**/package-lock.json",
-            "!**/.env",
-            "!**/.env.*"
-        ],
-        "indentStyle": "space",
-        "indentWidth": 4,
-        "lineEnding": "lf",
-        "lineWidth": 80,
-        "useEditorconfig": true
+      "arrowParentheses": "always",
+      "bracketSameLine": false,
+      "bracketSpacing": true,
+      "jsxQuoteStyle": "double",
+      "quoteProperties": "asNeeded",
+      "quoteStyle": "single",
+      "semicolons": "always",
+      "trailingCommas": "all"
     },
-    "html": { "formatter": { "selfCloseVoidElements": "always" } },
-    "javascript": {
-        "formatter": {
-            "arrowParentheses": "always",
-            "attributePosition": "auto",
-            "bracketSameLine": false,
-            "bracketSpacing": true,
-            "jsxQuoteStyle": "double",
-            "quoteProperties": "asNeeded",
-            "quoteStyle": "single",
-            "semicolons": "always",
-            "trailingCommas": "all"
-        }
+    "jsxRuntime": "reactClassic"
+  },
+  "linter": {
+    "domains": {
+      "next": "recommended",
+      "project": "none",
+      "react": "recommended"
     },
-    "linter": {
-        "domains": {
-            "next": "recommended",
-            "project": "recommended",
-            "react": "recommended"
-        },
-        "enabled": true,
-        "rules": { "recommended": true }
-    },
-    "vcs": { "clientKind": "git", "enabled": true, "useIgnoreFile": true }
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "nursery": {
+        "recommended": false,
+        "noMagicNumbers": "off"
+      },
+      "correctness": {
+        "noUndeclaredDependencies": "off",
+        "useImportExtensions": "off"
+      }
+    }
+  },
+  "vcs": {
+    "clientKind": "git",
+    "enabled": true,
+    "useIgnoreFile": true,
+    "defaultBranch": "main"
+  }
 }

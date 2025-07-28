@@ -6,16 +6,17 @@
 // // TODO: note page shows up as preview, similar to medium articles single col layout, with edit, export as menus on top right
 // // TODO: tab to see flashcard as well + share / privacy settings
 import OnboardingForm from '@/components/forms/OnboardingForm';
-import { type UserState, useUserStore } from '@/store/user';
+import { DASHBOARD_ROUTE } from '@/constants/route';
+import { type UserState, useUserStore } from '@/user/store/userStore';
+import { useRouter } from 'next/navigation';
 
 // TODO: fix this, userouter only works in client component
 export default function OnboardingPage() {
-    const _user = useUserStore((state: UserState) => state.user);
-    // // const router = useRouter();
-    // if (user) {
-    //     router.push(DASHBOARD_ROUTE);
-    // } else {
-    //     return <OnboardingForm />;
-    // }
+  const user = useUserStore((state: UserState) => state.user);
+  const router = useRouter();
+  if (user) {
+    router.push(DASHBOARD_ROUTE);
+  } else {
     return <OnboardingForm />;
+  }
 }
