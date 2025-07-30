@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
-
+import { createCustomStorage } from '@/lib/store/customStorage';
 import type { Note } from '@/notes/types/notes';
 
 type NoteState = {
@@ -63,6 +63,7 @@ export const useNoteStore = create<NoteState>()(
     })),
     {
       name: 'note-storage',
+      storage: createCustomStorage<NoteState>(),
     },
   ),
 );

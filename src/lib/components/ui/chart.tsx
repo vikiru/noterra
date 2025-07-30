@@ -42,7 +42,7 @@ function ChartContainer({
   return (
     <ChartContext.Provider value={{ config }}>
       <div
-        className={cn(
+        class={cn(
           "[&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_[stroke='#ccc']]:stroke-border flex aspect-video justify-center text-xs [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-hidden [&_.recharts-sector]:outline-hidden [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-surface]:outline-hidden",
           className,
         )}
@@ -143,7 +143,7 @@ function ChartTooltipContent({
 
     if (labelFormatter) {
       return (
-        <div className={cn('font-medium', labelClassName)}>
+        <div class={cn('font-medium', labelClassName)}>
           {labelFormatter(value, payload)}
         </div>
       );
@@ -153,7 +153,7 @@ function ChartTooltipContent({
       return null;
     }
 
-    return <div className={cn('font-medium', labelClassName)}>{value}</div>;
+    return <div class={cn('font-medium', labelClassName)}>{value}</div>;
   }, [
     label,
     labelFormatter,
@@ -172,13 +172,13 @@ function ChartTooltipContent({
 
   return (
     <div
-      className={cn(
+      class={cn(
         'grid min-w-[8rem] items-start gap-1.5 rounded-lg border border-neutral-200 border-neutral-200/50 bg-white px-2.5 py-1.5 text-xs shadow-xl dark:border-neutral-800 dark:border-neutral-800/50 dark:bg-neutral-950',
         className,
       )}
     >
       {!nestLabel ? tooltipLabel : null}
-      <div className="grid gap-1.5">
+      <div class="grid gap-1.5">
         {payload.map((item, index) => {
           const key = `${nameKey || item.name || item.dataKey || 'value'}`;
           const itemConfig = getPayloadConfigFromPayload(config, item, key);
@@ -186,7 +186,7 @@ function ChartTooltipContent({
 
           return (
             <div
-              className={cn(
+              class={cn(
                 'flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:text-neutral-500 dark:[&>svg]:text-neutral-400',
                 indicator === 'dot' && 'items-center',
               )}
@@ -201,7 +201,7 @@ function ChartTooltipContent({
                   ) : (
                     !hideIndicator && (
                       <div
-                        className={cn(
+                        class={cn(
                           'shrink-0 rounded-[2px] border-(--color-border) bg-(--color-bg)',
                           {
                             'h-2.5 w-2.5': indicator === 'dot',
@@ -221,19 +221,19 @@ function ChartTooltipContent({
                     )
                   )}
                   <div
-                    className={cn(
+                    class={cn(
                       'flex flex-1 justify-between leading-none',
                       nestLabel ? 'items-end' : 'items-center',
                     )}
                   >
-                    <div className="grid gap-1.5">
+                    <div class="grid gap-1.5">
                       {nestLabel ? tooltipLabel : null}
-                      <span className="text-neutral-500 dark:text-neutral-400">
+                      <span class="text-neutral-500 dark:text-neutral-400">
                         {itemConfig?.label || item.name}
                       </span>
                     </div>
                     {item.value && (
-                      <span className="font-mono font-medium text-neutral-950 tabular-nums dark:text-neutral-50">
+                      <span class="font-mono font-medium text-neutral-950 tabular-nums dark:text-neutral-50">
                         {item.value.toLocaleString()}
                       </span>
                     )}
@@ -269,7 +269,7 @@ function ChartLegendContent({
 
   return (
     <div
-      className={cn(
+      class={cn(
         'flex items-center justify-center gap-4',
         verticalAlign === 'top' ? 'pb-3' : 'pt-3',
         className,
@@ -281,7 +281,7 @@ function ChartLegendContent({
 
         return (
           <div
-            className={cn(
+            class={cn(
               'flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-neutral-500 dark:[&>svg]:text-neutral-400',
             )}
             key={item.value}
@@ -290,7 +290,7 @@ function ChartLegendContent({
               <itemConfig.icon />
             ) : (
               <div
-                className="h-2 w-2 shrink-0 rounded-[2px]"
+                class="h-2 w-2 shrink-0 rounded-[2px]"
                 style={{
                   backgroundColor: item.color,
                 }}

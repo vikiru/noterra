@@ -1,108 +1,72 @@
 'use server';
 
-import { auth } from '@clerk/nextjs/server';
-import { redirect } from 'next/navigation';
-import type { ResponseData } from '@/types/response';
 import {
-  createUser,
-  retrieveTotalCreations,
-  retrieveUserActivityOverview,
-  retrieveUserById,
-  updateUser,
-} from '@/user/data-access/user';
-import type { ActivityOverview } from '@/user/types/activityOverview';
-import type { TotalCreations } from '@/user/types/totalCreations';
+  insertUserSchema,
+  selectUserSchema,
+} from '@/features/user/schema/userSchema';
+import { checkOwnership } from '@/lib/auth';
+import { validateData } from '@/lib/utils/validateData';
+import { insertUser, updateUser } from '@/user/data-access/user';
 import type { User, UserCreate, UserUpdate } from '@/user/types/user';
 
-// TODO: refac all actions to account for Response type.
-// TODO: rename response type to something else.
-export async function addUser(user: UserCreate): Promise<ResponseData<User>> {
+export async function createUser(user: UserCreate) {
   try {
-    const { userId } = await auth();
-    if (!userId) {
-      redirect('/auth/login');
+    const ownership = await checkOwnership(user.clerkId);
+    if (!ownership) {
+      return {
+        success: false,
+        error: 'You are not authorized to create this user. Please try again.',
+      };
     }
-    const result = await createUser(user);
-    return result;
+    const result = validateData<UserCreate>(user, insertUserSchema);
+    if (!result.success) {
+      return result;
+    }
+    const validatedUser = result.data;
+    const newUser = await insertUser(validatedUser);
+    if (!newUser) {
+      return {
+        success: false,
+        error: 'Failed to create user. Please try again.',
+      };
+    }
+    return { success: true, data: newUser };
   } catch (error) {
-    console.error('Error adding user:', error);
+    console.error('Error creating user:', error);
     return {
       success: false,
-      error: 'There was an error adding the user',
+      error: 'Failed to create user. Please try again.',
     };
   }
 }
 
-export async function fetchTotalCreations(): Promise<
-  ResponseData<TotalCreations>
-> {
+export async function modifyUser(user: User) {
   try {
-    const { userId } = await auth();
-    if (!userId) {
-      redirect('/auth/login');
+    const ownership = await checkOwnership(user.clerkId);
+    if (!ownership) {
+      return {
+        success: false,
+        error: 'You are not authorized to update this user. Please try again.',
+      };
     }
-    const result = await retrieveTotalCreations(userId);
-    return result;
-  } catch (error) {
-    console.error(`Error getting total creations:`, error);
-    return {
-      success: false,
-      error: 'There was an error getting the total creations.',
-    };
-  }
-}
-
-export async function fetchUserActivityOverview(): Promise<
-  ResponseData<ActivityOverview[]>
-> {
-  try {
-    const { userId } = await auth();
-    if (!userId) {
-      redirect('/auth/login');
+    const result = validateData<UserUpdate>(user, selectUserSchema);
+    if (!result.success) {
+      return result;
     }
-    const result = await retrieveUserActivityOverview(userId);
-    return result;
-  } catch (error) {
-    console.error('Error fetching user activity overview:', error);
-    return {
-      success: false,
-      error: 'There was an error fetching the user activity overview.',
-    };
-  }
-}
-
-export async function fetchUserById(): Promise<ResponseData<User>> {
-  try {
-    const { userId } = await auth();
-    if (!userId) {
-      redirect('/auth/login');
+    const validatedUser = result.data;
+    const updatedUser = await updateUser(validatedUser);
+    if (!updatedUser) {
+      return {
+        success: false,
+        error: 'Failed to update user. Please try again.',
+      };
     }
-    const result = await retrieveUserById(userId);
-    return result;
-  } catch (error) {
-    console.error('Error fetching user by id:', error);
-    return {
-      success: false,
-      error: 'There was an error fetching the user.',
-    };
-  }
-}
-
-export async function modifyUser(
-  user: UserUpdate,
-): Promise<ResponseData<User>> {
-  try {
-    const { userId } = await auth();
-    if (!userId) {
-      redirect('/auth/login');
-    }
-    const result = await updateUser(user);
-    return result;
+    return { success: true, data: updatedUser };
   } catch (error) {
     console.error('Error updating user:', error);
     return {
       success: false,
-      error: 'There was an error updating the user.',
+      error: 'Failed to update user. Please try again.',
     };
   }
 }

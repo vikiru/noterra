@@ -81,29 +81,29 @@ const htmlContent = `
 
 // TODO: clean this up. Test responsiveness again.
 export default function NoteDetailsPage() {
-    return (
-        <main
-            aria-label="Note details"
-            className="flex flex-col min-h-screen w-full max-w-4xl mx-auto p-4 overflow-y-auto"
-            id="note-details" // for accessibility: focus on page container if needed
-            tabIndex={-1}
-        >
-            <header className="mb-6">
-                <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight text-center sm:text-left text-gray-900 dark:text-gray-100">
-                    Recursion: An Alternative to Iterative Approach
-                </h1>
-                <p className="mt-2 text-sm sm:text-base text-center sm:text-left text-gray-500 dark:text-gray-400">
-                    Created by <strong>John Doe</strong> on{' '}
-                    <time dateTime="2025-07-05">Jul 5, 2025</time>
-                </p>
-            </header>
+  return (
+    <main
+      aria-label="Note details"
+      class="flex flex-col min-h-screen w-full max-w-4xl mx-auto p-4 overflow-y-auto"
+      id="note-details" // for accessibility: focus on page container if needed
+      tabIndex={-1}
+    >
+      <header class="mb-6">
+        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight text-center sm:text-left text-gray-900 dark:text-gray-100">
+          Recursion: An Alternative to Iterative Approach
+        </h1>
+        <p class="mt-2 text-sm sm:text-base text-center sm:text-left text-gray-500 dark:text-gray-400">
+          Created by <strong>John Doe</strong> on{' '}
+          <time dateTime="2025-07-05">Jul 5, 2025</time>
+        </p>
+      </header>
 
-            <article
-                className="prose max-w-none prose-neutral prose-base sm:prose-lg dark:prose-invert"
-                id="note"
-            >
-                {parse(htmlContent)}
-            </article>
-        </main>
-    );
+      <article
+        class="prose max-w-none prose-neutral prose-base sm:prose-lg dark:prose-invert"
+        id="note"
+      >
+        {parse(htmlContent)}
+      </article>
+    </main>
+  );
 }

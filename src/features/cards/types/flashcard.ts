@@ -1,12 +1,10 @@
-export type Flashcard = {
-  id: string;
-  noteId: string;
-  question: string;
-  answer: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
+import type z from 'zod';
+import type {
+  insertFlashcardSchema,
+  selectFlashcardSchema,
+  updateFlashcardSchema,
+} from '@/features/cards/schema/flashcardSchema';
 
-export type FlashcardCreate = Omit<Flashcard, 'createdAt' | 'id' | 'updatedAt'>;
-export type FlashcardUpdate = Partial<Pick<Flashcard, 'answer' | 'question'>> &
-  Pick<Flashcard, 'id' | 'noteId'>;
+export type Flashcard = z.infer<typeof selectFlashcardSchema>;
+export type FlashcardCreate = z.infer<typeof insertFlashcardSchema>;
+export type FlashcardUpdate = z.infer<typeof updateFlashcardSchema>;

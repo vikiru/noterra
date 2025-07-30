@@ -7,6 +7,7 @@
       "esnext"
     ],
     "allowJs": true,
+    "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
@@ -17,51 +18,52 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "forceConsistentCasingInFileNames": true,
+    "baseUrl": "./",
     "paths": {
       "@/*": [
-        "./src/*"
+        "src/*"
       ],
-      "@/db/*": [
-        "./src/lib/db/*"
-      ],
-      "@/constants/*": [
-        "./src/lib/constants/*"
-      ],
-      "@/schema/*": [
-        "./src/lib/schema/*"
-      ],
-      "@/hooks/*": [
-        "./src/lib/hooks/*"
-      ],
-      "@/types/*": [
-        "./src/lib/types/*"
-      ],
-      "@/utils/*": [
-        "./src/lib/utils/*"
-      ],
-      "@/components/*": [
-        "./src/lib/components/*"
+      "@/features/*": [
+        "src/features/*"
       ],
       "@/activity/*": [
-        "./src/features/activity/*"
+        "src/features/activity/*"
       ],
       "@/cards/*": [
-        "./src/features/cards/*"
-      ],
-      "@/editor/*": [
-        "./src/features/editor/*"
-      ],
-      "@/export/*": [
-        "./src/features/export/*"
+        "src/features/cards/*"
       ],
       "@/gemini/*": [
-        "./src/features/gemini/*"
+        "src/features/gemini/*"
       ],
       "@/notes/*": [
-        "./src/features/notes/*"
+        "src/features/notes/*"
       ],
       "@/user/*": [
-        "./src/features/user/*"
+        "src/features/user/*"
+      ],
+      "@/types/*": [
+        "src/lib/types/*"
+      ],
+      "@/utils/*": [
+        "src/lib/utils/*"
+      ],
+      "@/components/*": [
+        "src/lib/components/*"
+      ],
+      "@/constants/*": [
+        "src/lib/constants/*"
+      ],
+      "@/hooks/*": [
+        "src/lib/hooks/*"
+      ],
+      "@/db/*": [
+        "src/lib/db/*"
+      ],
+      "@/schema/*": [
+        "src/lib/schema/*"
+      ],
+      "@/store/*": [
+        "src/lib/store/*"
       ]
     },
     "incremental": true,

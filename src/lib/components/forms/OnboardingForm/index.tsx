@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import type * as z from 'zod';
+import type z from 'zod';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -19,7 +19,6 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { DASHBOARD_ROUTE } from '@/constants/route';
 import { onboardingSchema } from '@/schema/onboardingSchema';
-import { addUser } from '@/user/actions/user';
 import { useUserStore } from '@/user/store/userStore';
 import type { UserCreate } from '@/user/types/user';
 
@@ -62,11 +61,11 @@ export default function OnboardingForm() {
 
   return (
     <Form {...form}>
-      <h1 className="text-center text-3xl leading-tight font-semibold">
+      <h1 class="text-center text-3xl leading-tight font-semibold">
         Complete your profile
       </h1>
       <form
-        className="mx-auto max-w-3xl space-y-8 py-10"
+        class="mx-auto max-w-3xl space-y-8 py-10"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         {/* First Name Field */}
@@ -113,7 +112,7 @@ export default function OnboardingForm() {
               </FormDescription>
               <FormControl>
                 <Textarea
-                  className="resize-none"
+                  class="resize-none"
                   placeholder="e.g., I love coding and exploring new technologies."
                   {...field}
                 />
@@ -140,7 +139,7 @@ export default function OnboardingForm() {
             </FormItem>
           )}
         />
-        <Button className="cursor-pointer" type="submit">
+        <Button class="cursor-pointer" type="submit">
           Submit
         </Button>
       </form>

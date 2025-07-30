@@ -3,14 +3,14 @@ import { defineConfig } from 'drizzle-kit';
 import { databaseUrl } from '@/config';
 
 export default defineConfig({
-    out: './src/db/migrations',
-    schema: './src/db/schema.ts',
-    dialect: 'postgresql',
-    dbCredentials: {
-        url: databaseUrl,
-    },
-    strict: true,
-    verbose: true,
+  out: './src/db/migrations',
+  schema: './src/db/schema.ts',
+  dialect: 'postgresql',
+  dbCredentials: {
+    url: databaseUrl,
+  },
+  strict: true,
+  verbose: true,
 });
 
 // 1. npx drizzle-kit push

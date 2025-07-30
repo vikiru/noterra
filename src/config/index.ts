@@ -1,8 +1,5 @@
-import path from 'node:path';
-import dotenv from 'dotenv';
-import * as z from 'zod';
-
-dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+import z from 'zod';
+import '../../envConfig.ts';
 
 const envSchema = z.object({
   NODE_ENV: z
@@ -18,7 +15,7 @@ const envSchema = z.object({
 const env = envSchema.safeParse(process.env);
 
 if (env.success === false) {
-  console.error('Invalid environment variables', z.treeifyError(env.error));
+  console.error('Invalid environment variables', z.prettifyError(env.error));
   throw new Error('Invalid environment variables');
 }
 

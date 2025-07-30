@@ -15,13 +15,13 @@ function BreadcrumbEllipsis({
   return (
     <span
       aria-hidden="true"
-      className={cn('flex size-9 items-center justify-center', className)}
+      class={cn('flex size-9 items-center justify-center', className)}
       data-slot="breadcrumb-ellipsis"
       role="presentation"
       {...props}
     >
-      <MoreHorizontal className="size-4" />
-      <span className="sr-only">More</span>
+      <MoreHorizontal class="size-4" />
+      <span class="sr-only">More</span>
     </span>
   );
 }
@@ -29,7 +29,7 @@ function BreadcrumbEllipsis({
 function BreadcrumbItem({ className, ...props }: React.ComponentProps<'li'>) {
   return (
     <li
-      className={cn('inline-flex items-center gap-1.5', className)}
+      class={cn('inline-flex items-center gap-1.5', className)}
       data-slot="breadcrumb-item"
       {...props}
     />
@@ -47,7 +47,7 @@ function BreadcrumbLink({
 
   return (
     <Comp
-      className={cn(
+      class={cn(
         'transition-colors hover:text-neutral-950 dark:hover:text-neutral-50',
         className,
       )}
@@ -60,7 +60,7 @@ function BreadcrumbLink({
 function BreadcrumbList({ className, ...props }: React.ComponentProps<'ol'>) {
   return (
     <ol
-      className={cn(
+      class={cn(
         'flex flex-wrap items-center gap-1.5 text-sm break-words text-neutral-500 sm:gap-2.5 dark:text-neutral-400',
         className,
       )}
@@ -75,10 +75,7 @@ function BreadcrumbPage({ className, ...props }: React.ComponentProps<'span'>) {
     <span
       aria-current="page"
       aria-disabled="true"
-      className={cn(
-        'font-normal text-neutral-950 dark:text-neutral-50',
-        className,
-      )}
+      class={cn('font-normal text-neutral-950 dark:text-neutral-50', className)}
       data-slot="breadcrumb-page"
       role="link"
       {...props}
@@ -94,7 +91,7 @@ function BreadcrumbSeparator({
   return (
     <li
       aria-hidden="true"
-      className={cn('[&>svg]:size-3.5', className)}
+      class={cn('[&>svg]:size-3.5', className)}
       data-slot="breadcrumb-separator"
       role="presentation"
       {...props}

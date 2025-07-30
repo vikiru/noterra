@@ -3,6 +3,7 @@ import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
 import type { Flashcard } from '@/cards/types/flashcard';
+import { createCustomStorage } from '@/lib/store/customStorage';
 
 type FlashcardState = {
   flashcards: Map<string, Flashcard>;
@@ -57,6 +58,7 @@ export const useFlashcardStore = create<FlashcardState>()(
     })),
     {
       name: 'flashcard-storage',
+      storage: createCustomStorage<FlashcardState>(),
     },
   ),
 );

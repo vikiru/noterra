@@ -1,117 +1,78 @@
 'use server';
 
-import { auth } from '@clerk/nextjs/server';
-import { redirect } from 'next/navigation';
-import type { ResponseData } from '@/lib/types/response';
 import {
-  createNote,
-  deleteNote,
-  retrieveNoteById,
-  retrieveNotesByUserId,
-  retrievePublicNotesByUserId,
+  findNoteById,
+  insertNote,
+  removeNote,
   updateNote,
-} from '@/notes/data-access/notes';
-import type { Note, NoteCreate, NoteUpdate } from '@/notes/types/notes';
+} from '@/features/notes/data-access/notes';
+import { insertNoteSchema } from '@/features/notes/schema/noteSchema';
+import { checkOwnership } from '@/lib/auth';
+import { validateData } from '@/lib/utils/validateData';
+import type { Note, NoteCreate } from '@/notes/types/notes';
 
-export async function addNote(note: NoteCreate): Promise<ResponseData<Note>> {
+export async function createNote(note: NoteCreate) {
   try {
-    const { userId } = await auth();
-    if (!userId) {
-      redirect('/auth/login');
+    const isOwner = await checkOwnership(note.authorId);
+    if (!isOwner) {
+      return {
+        success: false,
+        error: "You don't have permission to create this note.",
+      };
     }
-    const result = await createNote(note);
-    return result;
-  } catch (error) {
-    console.error('Error adding note:', error);
-    return { success: false, error: 'There was an error adding the note.' };
-  }
-}
 
-export async function fetchNoteById(id: string): Promise<ResponseData<Note>> {
-  try {
-    const { userId } = await auth();
-    if (!userId) {
-      redirect('/auth/login');
-    }
-    const result = await retrieveNoteById(id);
-    return result;
+    const result = validateData(note, insertNoteSchema);
+    if (!result.success) return result;
+
+    const newNote = await insertNote(result.data);
+    return { success: true, data: newNote };
   } catch (error) {
-    console.error(`Error fetching note by id, for id ${id}:`, error);
+    console.error('Error creating note:', error);
     return {
       success: false,
-      error: 'There was an error fetching the note.',
+      error: 'Unexpected error occurred while creating note.',
     };
   }
 }
 
-export async function fetchNotesByUserId(): Promise<ResponseData<Note[]>> {
+export async function updateNoteAction(updatedNote: Note) {
   try {
-    const { userId } = await auth();
-    if (!userId) {
-      redirect('/auth/login');
+    const existing = await findNoteById(updatedNote.id);
+    if (!existing) {
+      return { success: false, error: 'Note not found.' };
     }
-    const result = await retrieveNotesByUserId(userId);
-    return result;
-  } catch (error) {
-    console.error('Error fetching notes:', error);
-    return {
-      success: false,
-      error: 'There was an error fetching the notes.',
-    };
-  }
-}
-
-export async function fetchPublicNotesByUserId(): Promise<
-  ResponseData<Note[]>
-> {
-  try {
-    const { userId } = await auth();
-    if (!userId) {
-      redirect('/auth/login');
+    const isOwner = await checkOwnership(existing.authorId);
+    if (!isOwner) {
+      return { success: false, error: 'Access denied.' };
     }
-    const result = await retrievePublicNotesByUserId(userId);
-    return result;
-  } catch (error) {
-    console.error('Error fetching public notes:', error);
-    return {
-      success: false,
-      error: 'There was an error fetching the notes.',
-    };
-  }
-}
-
-export async function modifyNote(
-  note: NoteUpdate,
-): Promise<ResponseData<Note>> {
-  try {
-    const { userId } = await auth();
-    if (!userId) {
-      redirect('/auth/login');
-    }
-    const result = await updateNote(note);
-    return result;
+    const modifiedNote = await updateNote(updatedNote);
+    return { success: true, data: modifiedNote };
   } catch (error) {
     console.error('Error updating note:', error);
     return {
       success: false,
-      error: 'There was an error updating the note.',
+      error: 'Unexpected error occurred while updating note.',
     };
   }
 }
 
-export async function removeNote(id: string): Promise<ResponseData<string>> {
+export async function deleteNote(noteId: string) {
   try {
-    const { userId } = await auth();
-    if (!userId) {
-      redirect('/auth/login');
+    const existing = await findNoteById(noteId);
+    if (!existing) {
+      return { success: false, error: 'Note not found.' };
     }
-    const result = await deleteNote(id);
-    return result;
+    const isOwner = await checkOwnership(existing.authorId);
+    if (!isOwner) {
+      return { success: false, error: 'Access denied.' };
+    }
+    const deleted = await removeNote(noteId);
+    return { success: true, data: deleted };
   } catch (error) {
-    console.error(`Error removing note, for id ${id}:`, error);
+    console.error('Error deleting note:', error);
     return {
       success: false,
-      error: 'There was an error removing the note.',
+      error: 'Unexpected error occurred while deleting note.',
     };
   }
 }

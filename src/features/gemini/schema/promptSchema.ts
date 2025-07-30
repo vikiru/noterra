@@ -1,5 +1,5 @@
 import { Profanity } from '@2toad/profanity';
-import * as z from 'zod';
+import z from 'zod';
 
 export const profanity = new Profanity({
   wholeWord: false,

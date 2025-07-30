@@ -1,17 +1,10 @@
-export type User = {
-  clerkId: string;
-  username: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  bio: string;
-  country: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
+import type z from 'zod';
+import type {
+  insertUserSchema,
+  selectUserSchema,
+  updateUserSchema,
+} from '@/features/user/schema/userSchema';
 
-export type UserCreate = Omit<User, 'createdAt' | 'updatedAt'>;
-export type UserUpdate = Partial<
-  Pick<User, 'bio' | 'country' | 'firstName' | 'lastName'>
-> &
-  Pick<User, 'clerkId' | 'email' | 'username'>;
+export type User = z.infer<typeof selectUserSchema>;
+export type UserCreate = z.infer<typeof insertUserSchema>;
+export type UserUpdate = z.infer<typeof updateUserSchema>;

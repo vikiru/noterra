@@ -3,6 +3,7 @@ import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
 import type { UserActivity } from '@/activity/types/activity';
+import { createCustomStorage } from '@/lib/store/customStorage';
 
 type UserActivityState = {
   userActivities: Map<string, UserActivity>;
@@ -39,6 +40,7 @@ export const useUserActivityStore = create<UserActivityState>()(
     })),
     {
       name: 'user-activity-storage',
+      storage: createCustomStorage<UserActivityState>(),
     },
   ),
 );

@@ -38,7 +38,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" suppresshydrationwarning>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} debug-screens antialiased`}
+          class={`${geistSans.variable} ${geistMono.variable} debug-screens antialiased`}
         >
           <Toaster position="top-right" richColors />
           <ThemeProvider
@@ -47,11 +47,11 @@ export default function RootLayout({
             disableTransitionOnChange
             enableSystem
           >
-            <header className="flex h-16 items-center justify-end gap-4 p-4">
+            <header class="flex h-16 items-center justify-end gap-4 p-4">
               <SignedOut>
                 <SignInButton>
                   <Button
-                    className="hover:cursor-pointer"
+                    class="hover:cursor-pointer"
                     size={'lg'}
                     variant={'outline'}
                   >

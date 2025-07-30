@@ -1,4 +1,4 @@
-import * as z from 'zod';
+import z from 'zod';
 
 export const onboardingSchema = z.object({
   firstName: z.string().min(1).max(100),
