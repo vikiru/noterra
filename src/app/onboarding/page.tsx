@@ -5,10 +5,11 @@
 // // TODO: design notes page and each note is a card with brief metadata, flashcard count, etc. opens in new page
 // // TODO: note page shows up as preview, similar to medium articles single col layout, with edit, export as menus on top right
 // // TODO: tab to see flashcard as well + share / privacy settings
+
+import { useRouter } from 'next/navigation';
 import OnboardingForm from '@/components/forms/OnboardingForm';
 import { DASHBOARD_ROUTE } from '@/constants/route';
 import { type UserState, useUserStore } from '@/user/store/userStore';
-import { useRouter } from 'next/navigation';
 
 // TODO: fix this, userouter only works in client component
 export default function OnboardingPage() {

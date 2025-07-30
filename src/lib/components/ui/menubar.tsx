@@ -12,7 +12,7 @@ function Menubar({
 }: React.ComponentProps<typeof MenubarPrimitive.Root>) {
   return (
     <MenubarPrimitive.Root
-      className={cn(
+      class={cn(
         'flex h-9 items-center gap-1 rounded-md border border-neutral-200 bg-white p-1 shadow-xs dark:border-neutral-800 dark:bg-neutral-950',
         className,
       )}
@@ -31,16 +31,16 @@ function MenubarCheckboxItem({
   return (
     <MenubarPrimitive.CheckboxItem
       checked={checked}
-      className={cn(
+      class={cn(
         "relative flex cursor-default items-center gap-2 rounded-xs py-1.5 pr-2 pl-8 text-sm outline-hidden select-none focus:bg-neutral-100 focus:text-neutral-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-neutral-800 dark:focus:text-neutral-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       data-slot="menubar-checkbox-item"
       {...props}
     >
-      <span className="pointer-events-none absolute left-2 flex size-3.5 items-center justify-center">
+      <span class="pointer-events-none absolute left-2 flex size-3.5 items-center justify-center">
         <MenubarPrimitive.ItemIndicator>
-          <CheckIcon className="size-4" />
+          <CheckIcon class="size-4" />
         </MenubarPrimitive.ItemIndicator>
       </span>
       {children}
@@ -60,7 +60,7 @@ function MenubarContent({
       <MenubarPrimitive.Content
         align={align}
         alignOffset={alignOffset}
-        className={cn(
+        class={cn(
           'data-[state=open]:animate-in data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 min-w-[12rem] origin-(--radix-menubar-content-transform-origin) overflow-hidden rounded-md border border-neutral-200 bg-white p-1 text-neutral-950 shadow-md dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-50',
           className,
         )}
@@ -89,7 +89,7 @@ function MenubarItem({
 }) {
   return (
     <MenubarPrimitive.Item
-      className={cn(
+      class={cn(
         "data-[variant=destructive]:*:[svg]:!text-destructive relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none focus:bg-neutral-100 focus:text-neutral-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[inset]:pl-8 data-[variant=destructive]:text-red-500 data-[variant=destructive]:focus:bg-red-500/10 data-[variant=destructive]:focus:text-red-500 dark:focus:bg-neutral-800 dark:focus:text-neutral-50 dark:data-[variant=destructive]:text-red-900 dark:dark:data-[variant=destructive]:focus:bg-red-900/20 dark:data-[variant=destructive]:focus:bg-red-500/20 dark:data-[variant=destructive]:focus:bg-red-900/10 dark:data-[variant=destructive]:focus:text-red-900 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='text-'])]:text-neutral-500 dark:[&_svg:not([class*='text-'])]:text-neutral-400",
         className,
       )}
@@ -110,10 +110,7 @@ function MenubarLabel({
 }) {
   return (
     <MenubarPrimitive.Label
-      className={cn(
-        'px-2 py-1.5 text-sm font-medium data-[inset]:pl-8',
-        className,
-      )}
+      class={cn('px-2 py-1.5 text-sm font-medium data-[inset]:pl-8', className)}
       data-inset={inset}
       data-slot="menubar-label"
       {...props}
@@ -148,16 +145,16 @@ function MenubarRadioItem({
 }: React.ComponentProps<typeof MenubarPrimitive.RadioItem>) {
   return (
     <MenubarPrimitive.RadioItem
-      className={cn(
+      class={cn(
         "relative flex cursor-default items-center gap-2 rounded-xs py-1.5 pr-2 pl-8 text-sm outline-hidden select-none focus:bg-neutral-100 focus:text-neutral-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-neutral-800 dark:focus:text-neutral-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       data-slot="menubar-radio-item"
       {...props}
     >
-      <span className="pointer-events-none absolute left-2 flex size-3.5 items-center justify-center">
+      <span class="pointer-events-none absolute left-2 flex size-3.5 items-center justify-center">
         <MenubarPrimitive.ItemIndicator>
-          <CircleIcon className="size-2 fill-current" />
+          <CircleIcon class="size-2 fill-current" />
         </MenubarPrimitive.ItemIndicator>
       </span>
       {children}
@@ -171,7 +168,7 @@ function MenubarSeparator({
 }: React.ComponentProps<typeof MenubarPrimitive.Separator>) {
   return (
     <MenubarPrimitive.Separator
-      className={cn(
+      class={cn(
         '-mx-1 my-1 h-px bg-neutral-200 dark:bg-neutral-800',
         className,
       )}
@@ -187,7 +184,7 @@ function MenubarShortcut({
 }: React.ComponentProps<'span'>) {
   return (
     <span
-      className={cn(
+      class={cn(
         'ml-auto text-xs tracking-widest text-neutral-500 dark:text-neutral-400',
         className,
       )}
@@ -209,7 +206,7 @@ function MenubarSubContent({
 }: React.ComponentProps<typeof MenubarPrimitive.SubContent>) {
   return (
     <MenubarPrimitive.SubContent
-      className={cn(
+      class={cn(
         'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 min-w-[8rem] origin-(--radix-menubar-content-transform-origin) overflow-hidden rounded-md border border-neutral-200 bg-white p-1 text-neutral-950 shadow-lg dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-50',
         className,
       )}
@@ -229,7 +226,7 @@ function MenubarSubTrigger({
 }) {
   return (
     <MenubarPrimitive.SubTrigger
-      className={cn(
+      class={cn(
         'flex cursor-default items-center rounded-sm px-2 py-1.5 text-sm outline-none select-none focus:bg-neutral-100 focus:text-neutral-900 data-[inset]:pl-8 data-[state=open]:bg-neutral-100 data-[state=open]:text-neutral-900 dark:focus:bg-neutral-800 dark:focus:text-neutral-50 dark:data-[state=open]:bg-neutral-800 dark:data-[state=open]:text-neutral-50',
         className,
       )}
@@ -238,7 +235,7 @@ function MenubarSubTrigger({
       {...props}
     >
       {children}
-      <ChevronRightIcon className="ml-auto h-4 w-4" />
+      <ChevronRightIcon class="ml-auto h-4 w-4" />
     </MenubarPrimitive.SubTrigger>
   );
 }
@@ -249,7 +246,7 @@ function MenubarTrigger({
 }: React.ComponentProps<typeof MenubarPrimitive.Trigger>) {
   return (
     <MenubarPrimitive.Trigger
-      className={cn(
+      class={cn(
         'flex items-center rounded-sm px-2 py-1 text-sm font-medium outline-hidden select-none focus:bg-neutral-100 focus:text-neutral-900 data-[state=open]:bg-neutral-100 data-[state=open]:text-neutral-900 dark:focus:bg-neutral-800 dark:focus:text-neutral-50 dark:data-[state=open]:bg-neutral-800 dark:data-[state=open]:text-neutral-50',
         className,
       )}

@@ -17,7 +17,7 @@ function Pagination({ className, ...props }: React.ComponentProps<'nav'>) {
   return (
     <nav
       aria-label="pagination"
-      className={cn('mx-auto flex w-full justify-center', className)}
+      class={cn('mx-auto flex w-full justify-center', className)}
       data-slot="pagination"
       {...props}
     />
@@ -30,7 +30,7 @@ function PaginationContent({
 }: React.ComponentProps<'ul'>) {
   return (
     <ul
-      className={cn('flex flex-row items-center gap-1', className)}
+      class={cn('flex flex-row items-center gap-1', className)}
       data-slot="pagination-content"
       {...props}
     />
@@ -44,12 +44,12 @@ function PaginationEllipsis({
   return (
     <span
       aria-hidden
-      className={cn('flex size-9 items-center justify-center', className)}
+      class={cn('flex size-9 items-center justify-center', className)}
       data-slot="pagination-ellipsis"
       {...props}
     >
-      <MoreHorizontalIcon className="size-4" />
-      <span className="sr-only">More pages</span>
+      <MoreHorizontalIcon class="size-4" />
+      <span class="sr-only">More pages</span>
     </span>
   );
 }
@@ -67,7 +67,7 @@ function PaginationLink({
   return (
     <a
       aria-current={isActive ? 'page' : undefined}
-      className={cn(
+      class={cn(
         buttonVariants({
           variant: isActive ? 'outline' : 'ghost',
           size,
@@ -88,11 +88,11 @@ function PaginationNext({
   return (
     <PaginationLink
       aria-label="Go to next page"
-      className={cn('gap-1 px-2.5 sm:pr-2.5', className)}
+      class={cn('gap-1 px-2.5 sm:pr-2.5', className)}
       size="default"
       {...props}
     >
-      <span className="hidden sm:block">Next</span>
+      <span class="hidden sm:block">Next</span>
       <ChevronRightIcon />
     </PaginationLink>
   );
@@ -105,12 +105,12 @@ function PaginationPrevious({
   return (
     <PaginationLink
       aria-label="Go to previous page"
-      className={cn('gap-1 px-2.5 sm:pl-2.5', className)}
+      class={cn('gap-1 px-2.5 sm:pl-2.5', className)}
       size="default"
       {...props}
     >
       <ChevronLeftIcon />
-      <span className="hidden sm:block">Previous</span>
+      <span class="hidden sm:block">Previous</span>
     </PaginationLink>
   );
 }

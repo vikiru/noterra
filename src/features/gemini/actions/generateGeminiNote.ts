@@ -1,17 +1,13 @@
 'use server';
 
-import { auth } from '@clerk/nextjs/server';
-import { redirect } from 'next/navigation';
 import { genAI, generationConfig, model } from '@/gemini/config';
 import { promptSchema } from '@/gemini/schema/promptSchema';
 import type { GeminiResponse } from '@/gemini/types/geminiResponse';
+import { getCurrentUser } from '@/lib/auth';
 
+// TODO: convert to use ResponseData type.
 export async function generateGeminiNote(prompt: string) {
-  const { userId } = await auth();
-  if (!userId) {
-    redirect('/auth/login');
-  }
-
+  await getCurrentUser();
   const validatedPrompt = promptSchema.safeParse({ prompt });
   if (!validatedPrompt.success) {
     throw new Error('Invalid prompt, please try again.');

@@ -1,12 +1,8 @@
-import type { ActivityAction, ActivityType } from '@/db/schema';
+import type z from 'zod';
+import type {
+  insertActivitySchema,
+  selectActivitySchema,
+} from '@/features/activity/schema/activitySchema';
 
-export type UserActivity = {
-  id: string;
-  userId: string;
-  action: ActivityAction;
-  type: ActivityType;
-  entityId: string;
-  createdAt: Date;
-};
-
-export type UserActivityCreate = Omit<UserActivity, 'createdAt' | 'id'>;
+export type UserActivity = z.infer<typeof selectActivitySchema>;
+export type UserActivityCreate = z.infer<typeof insertActivitySchema>;

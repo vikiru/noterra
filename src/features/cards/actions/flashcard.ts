@@ -1,191 +1,121 @@
 'use server';
 
-import { auth } from '@clerk/nextjs/server';
-import { redirect } from 'next/navigation';
+import type { Flashcard, FlashcardCreate } from '@/cards/types/flashcard';
 import {
-  createCard,
-  createMultipleCards,
-  deleteCard,
-  retrieveCardById,
-  retrieveCardsByNoteId,
-  retrieveCardsByUserId,
-  retrievePublicCardsByUserId,
-  updateCard,
-} from '@/cards/data-access/flashcard';
-import type {
-  Flashcard,
-  FlashcardCreate,
-  FlashcardUpdate,
-} from '@/cards/types/flashcard';
-import { retrievePublicCardsByNoteId } from '@/notes/data-access/notes';
-import type { ResponseData } from '@/types/response';
+  findCardById,
+  insertCard,
+  insertMultipleCards,
+  modifyCard,
+  removeCard,
+} from '@/features/cards/data-access/flashcard';
+import {
+  insertFlashcardArraySchema,
+  insertFlashcardSchema,
+  selectFlashcardSchema,
+} from '@/features/cards/schema/flashcardSchema';
+import { checkOwnership } from '@/lib/auth';
+import { validateData } from '@/lib/utils/validateData';
 
-export async function addCard(
-  card: FlashcardCreate,
-): Promise<ResponseData<Flashcard>> {
+export async function createFlashcard(card: FlashcardCreate) {
   try {
-    const { userId } = await auth();
-    if (!userId) {
-      redirect('/auth/login');
+    const isOwner = await checkOwnership(card.authorId);
+    if (!isOwner) {
+      return {
+        success: false,
+        error: "You don't have permission to create this flashcard.",
+      };
     }
-    const result = await createCard(card);
-    return result;
-  } catch (error) {
-    console.error('Error adding card:', error);
+
+    const result = validateData<FlashcardCreate>(card, insertFlashcardSchema);
+    if (!result.success) return result;
+    const newCard = await insertCard(result.data);
+    return { success: true, data: newCard };
+  } catch (err) {
+    console.error('Error creating flashcard:', err);
     return {
       success: false,
-      error: 'There was an error adding the card.',
+      error: 'Unexpected error occurred during flashcard creation.',
     };
   }
 }
 
-export async function addMultipleCards(
-  cards: FlashcardCreate[],
-): Promise<ResponseData<Flashcard[]>> {
+export async function createMultipleFlashcards(cards: FlashcardCreate[]) {
   try {
-    const { userId } = await auth();
-    if (!userId) {
-      redirect('/auth/login');
+    if (cards.length === 0) {
+      return { success: false, error: 'No cards provided.' };
     }
-    const result = await createMultipleCards(cards);
-    return result;
-  } catch (error) {
-    console.error('Error adding cards:', error);
+
+    const firstAuthorId = cards[0].authorId;
+    const isOwner = await checkOwnership(firstAuthorId);
+    if (!isOwner) {
+      return {
+        success: false,
+        error: "You don't have permission to create these flashcards.",
+      };
+    }
+
+    const result = validateData<FlashcardCreate[]>(
+      cards,
+      insertFlashcardArraySchema,
+    );
+    if (!result.success) return result;
+
+    const created = await insertMultipleCards(result.data);
+    return { success: true, data: created };
+  } catch (err) {
+    console.error('Error creating multiple flashcards:', err);
     return {
       success: false,
-      error: 'There was an error adding the cards.',
+      error: 'Unexpected error occurred while creating flashcards.',
     };
   }
 }
 
-export async function fetchCardById(
-  id: string,
-): Promise<ResponseData<Flashcard>> {
+export async function updateFlashcard(updatedCard: Flashcard) {
   try {
-    const { userId } = await auth();
-    if (!userId) {
-      redirect('/auth/login');
+    const existing = await findCardById(updatedCard.id);
+    if (!existing) {
+      return { success: false, error: 'Flashcard not found.' };
     }
-    const result = await retrieveCardById(id);
-    return result;
-  } catch (error) {
-    console.error('Error fetching card by id:', error);
+
+    const isOwner = await checkOwnership(existing.authorId);
+    if (!isOwner) {
+      return { success: false, error: 'Access denied.' };
+    }
+
+    const result = validateData<Flashcard>(updatedCard, selectFlashcardSchema);
+    if (!result.success) return result;
+
+    const saved = await modifyCard(result.data);
+    return { success: true, data: saved };
+  } catch (err) {
+    console.error('Error updating flashcard:', err);
     return {
       success: false,
-      error: 'There was an error fetching the card.',
+      error: 'Unexpected error occurred during flashcard update.',
     };
   }
 }
 
-export async function fetchCardsByNoteId(
-  id: string,
-): Promise<ResponseData<Flashcard[]>> {
+export async function deleteFlashcard(flashcardId: string) {
   try {
-    const { userId } = await auth();
-    if (!userId) {
-      redirect('/auth/login');
+    const existing = await findCardById(flashcardId);
+    if (!existing) {
+      return { success: false, error: 'Flashcard not found.' };
     }
-    const result = await retrieveCardsByNoteId(id);
-    return result;
-  } catch (error) {
-    console.error('Error fetching cards by note id:', error);
-    return {
-      success: false,
-      error: 'There was an error fetching the cards.',
-    };
-  }
-}
 
-export async function fetchCardsByUserId(
-  id: string,
-): Promise<ResponseData<Flashcard[]>> {
-  try {
-    const { userId } = await auth();
-    if (!userId) {
-      redirect('/auth/login');
+    const isOwner = await checkOwnership(existing.authorId);
+    if (!isOwner) {
+      return { success: false, error: 'Access denied.' };
     }
-    const result = await retrieveCardsByUserId(id);
-    return result;
-  } catch (error) {
-    console.error('Error fetching cards by user id:', error);
-    return {
-      success: false,
-      error: 'There was an error fetching the cards.',
-    };
-  }
-}
 
-// TODO: move this to note, after refac schema
-export async function fetchPublicCardsByNoteId(
-  id: string,
-): Promise<ResponseData<Flashcard[]>> {
-  try {
-    const { userId } = await auth();
-    if (!userId) {
-      redirect('/auth/login');
-    }
-    const result = await retrievePublicCardsByNoteId(id);
-    return result;
-  } catch (error) {
-    console.error('Error fetching public cards by note id:', error);
+    const deleted = await removeCard(flashcardId);
+    return { success: true, data: deleted };
+  } catch (err) {
+    console.error('Error deleting flashcard:', err);
     return {
       success: false,
-      error: 'There was an error fetching the cards.',
-    };
-  }
-}
-
-export async function fetchPublicCardsByUserId(): Promise<
-  ResponseData<Flashcard[]>
-> {
-  try {
-    const { userId } = await auth();
-    if (!userId) {
-      redirect('/auth/login');
-    }
-    const result = await retrievePublicCardsByUserId(userId);
-    return result;
-  } catch (error) {
-    console.error('Error fetching public cards by user id:', error);
-    return {
-      success: false,
-      error: 'There was an error fetching the cards.',
-    };
-  }
-}
-
-export async function modifyCard(
-  card: FlashcardUpdate,
-): Promise<ResponseData<Flashcard>> {
-  try {
-    const { userId } = await auth();
-    if (!userId) {
-      redirect('/auth/login');
-    }
-    const result = await updateCard(card);
-    return result;
-  } catch (error) {
-    console.error('Error modifying card:', error);
-    return {
-      success: false,
-      error: 'There was an error modifying the card.',
-    };
-  }
-}
-
-export async function removeCard(id: string): Promise<ResponseData<string>> {
-  try {
-    const { userId } = await auth();
-    if (!userId) {
-      redirect('/auth/login');
-    }
-    const result = await deleteCard(id);
-    return result;
-  } catch (error) {
-    console.error('Error removing card:', error);
-    return {
-      success: false,
-      error: 'There was an error removing the card.',
+      error: 'Unexpected error occurred during flashcard deletion.',
     };
   }
 }
