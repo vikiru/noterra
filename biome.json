@@ -99,3 +99,11 @@
     "defaultBranch": "main"
   }
 }
+/*"],
+        "@/store/*": ["./src/lib/store/*"]
+      }
+    }
+  },
+  "linter": {
+    "domains": {
+      "next": "recommended",
