@@ -90,10 +90,10 @@ export function ExampleChart() {
   });
 
   return (
-    <Card class="dark:bg-gray-100">
-      <CardHeader class="flex items-center gap-2 space-y-0 border-b py-5 sm:flex-row">
-        <div class="grid flex-1 gap-1 text-center sm:text-left">
-          <CardTitle class="text-3xl dark:text-zinc-900">
+    <Card className="dark:bg-gray-100">
+      <CardHeader className="flex items-center gap-2 space-y-0 border-b py-5 sm:flex-row">
+        <div className="grid flex-1 gap-1 text-center sm:text-left">
+          <CardTitle className="text-3xl dark:text-zinc-900">
             Activity Overview
           </CardTitle>
           <CardDescription>Notes and flashcards created.</CardDescription>
@@ -101,26 +101,26 @@ export function ExampleChart() {
         <Select onValueChange={setTimeRange} value={timeRange}>
           <SelectTrigger
             aria-label="Select a value"
-            class="w-[160px] rounded-lg sm:ml-auto"
+            className="w-[160px] rounded-lg sm:ml-auto"
           >
             <SelectValue placeholder="Last 3 months" />
           </SelectTrigger>
-          <SelectContent class="rounded-xl">
-            <SelectItem class="rounded-lg" value="90d">
+          <SelectContent className="rounded-xl">
+            <SelectItem className="rounded-lg" value="90d">
               Last 3 months
             </SelectItem>
-            <SelectItem class="rounded-lg" value="30d">
+            <SelectItem className="rounded-lg" value="30d">
               Last 30 days
             </SelectItem>
-            <SelectItem class="rounded-lg" value="7d">
+            <SelectItem className="rounded-lg" value="7d">
               Last 7 days
             </SelectItem>
           </SelectContent>
         </Select>
       </CardHeader>
-      <CardContent class="px-2 pt-4 sm:px-6 sm:pt-6">
+      <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
         <ChartContainer
-          class="aspect-auto h-[250px] w-full"
+          className="aspect-auto h-[250px] w-full"
           config={chartConfig}
         >
           <AreaChart data={filteredData}>
@@ -194,7 +194,9 @@ export function ExampleChart() {
               type="natural"
             />
             <ChartLegend
-              content={<ChartLegendContent class="dark:[&>svg]:text-black" />}
+              content={
+                <ChartLegendContent className="dark:[&>svg]:text-black" />
+              }
             />
           </AreaChart>
         </ChartContainer>

@@ -38,8 +38,8 @@ export default function FlashcardForm() {
     try {
       console.log(values);
       toast(
-        <pre class="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code class="text-white">{JSON.stringify(values, null, 2)}</code>
+        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
         </pre>,
       );
     } catch (error) {
@@ -51,7 +51,7 @@ export default function FlashcardForm() {
   return (
     <Form {...form}>
       <form
-        class="mx-auto max-w-3xl space-y-8 py-10"
+        className="mx-auto max-w-3xl space-y-8 py-10"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField

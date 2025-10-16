@@ -1,7 +1,8 @@
-import { and, eq } from 'drizzle-orm';
+import { and, desc, eq } from 'drizzle-orm';
 import type { Flashcard } from '@/cards/types/flashcard';
 import { db } from '@/db/index';
 import { flashcardsTable, notesTable } from '@/db/schema';
+import type { NoteMetadata } from '@/features/notes/types/noteMetadata';
 import type { NoteData } from '@/lib/types/noteData';
 import type { Note, NoteCreate } from '@/notes/types/notes';
 
@@ -112,4 +113,40 @@ export async function updateNote(updatedNote: Note): Promise<Note> {
     .where(eq(notesTable.id, updatedNote.id))
     .returning();
   return result[0];
+}
+
+export async function findRecentUserNotes(userId: string): Promise<Note[]> {
+  const result: Note[] = await db
+    .select()
+    .from(notesTable)
+    .where(eq(notesTable.authorId, userId))
+    .orderBy(desc(notesTable.createdAt))
+    .limit(10);
+  return result;
+}
+
+export async function findNoteMetadata(
+  userId: string,
+  offset: number,
+  limit: number,
+): Promise<NoteMetadata[]> {
+  const result: NoteMetadata[] = await db
+    .select({
+      id: notesTable.id,
+      createdAt: notesTable.createdAt,
+      authorId: notesTable.authorId,
+      title: notesTable.title,
+      summary: notesTable.summary,
+      keywords: notesTable.keywords,
+      public: notesTable.public,
+      shared: notesTable.shared,
+      showCards: notesTable.showCards,
+      shareToken: notesTable.shareToken,
+    })
+    .from(notesTable)
+    .where(eq(notesTable.authorId, userId))
+    .orderBy(desc(notesTable.createdAt))
+    .limit(limit)
+    .offset(offset);
+  return result;
 }

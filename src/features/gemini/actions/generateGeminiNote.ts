@@ -4,16 +4,21 @@ import { genAI, generationConfig, model } from '@/gemini/config';
 import { promptSchema } from '@/gemini/schema/promptSchema';
 import type { GeminiResponse } from '@/gemini/types/geminiResponse';
 import { getCurrentUser } from '@/lib/auth';
+import type { ResponseData } from '@/lib/types/response';
+import { validateData } from '@/lib/utils/validateData';
 
-// TODO: convert to use ResponseData type.
-export async function generateGeminiNote(prompt: string) {
+// TODO: page.tsx:96 ApiError: got status: UNAVAILABLE. {"error":{"code":503,"message":"The model is overloaded. Please try again later.","status":"UNAVAILABLE"}}
+export async function generateGeminiNote(
+  prompt: string,
+): Promise<ResponseData<GeminiResponse>> {
   await getCurrentUser();
-  const validatedPrompt = promptSchema.safeParse({ prompt });
-  if (!validatedPrompt.success) {
-    throw new Error('Invalid prompt, please try again.');
-  }
-  const geminiPrompt = validatedPrompt.data.prompt;
 
+  const promptResult = validateData({ prompt }, promptSchema);
+  if (!promptResult.success) {
+    return promptResult;
+  }
+
+  const geminiPrompt = promptResult.data.prompt;
   const contents = [
     {
       role: 'user',
@@ -21,21 +26,25 @@ export async function generateGeminiNote(prompt: string) {
     },
   ];
 
-  const result = await genAI.models.generateContentStream({
+  const geminiResult = await genAI.models.generateContent({
     model,
     config: generationConfig,
     contents: contents,
   });
 
-  if (!result) {
-    throw new Error('No response from Gemini. Please try again later.');
+  if (!geminiResult) {
+    return {
+      success: false,
+      error: 'Failed to generate gemini note. No response from Gemini',
+    };
   }
 
-  let chunkedText = '';
-  for await (const chunk of result) {
-    chunkedText += chunk.text;
-  }
+  // let chunkedText = '';
+  // for await (const chunk of geminiResult) {
+  //   chunkedText += chunk.text;
+  // }
 
-  const response: GeminiResponse = JSON.parse(chunkedText);
-  return response;
+  console.log(geminiResult.text);
+  const response: GeminiResponse = JSON.parse(geminiResult.text as string);
+  return { success: true, data: response };
 }

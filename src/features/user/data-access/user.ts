@@ -17,6 +17,14 @@ export async function findUserById(id: string) {
   return result[0];
 }
 
+export async function findUserByUsername(username: string) {
+  const result = await db
+    .select()
+    .from(usersTable)
+    .where(eq(usersTable.username, username));
+  return result[0];
+}
+
 export async function findUserTotalCreations(
   id: string,
 ): Promise<TotalCreations> {

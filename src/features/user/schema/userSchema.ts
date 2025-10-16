@@ -8,7 +8,6 @@ import { usersTable } from '@/lib/db/schema';
 export const selectUserSchema = createSelectSchema(usersTable);
 export const insertUserSchema = createInsertSchema(usersTable)
   .omit({
-    id: true,
     createdAt: true,
     updatedAt: true,
   })

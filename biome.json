@@ -77,14 +77,17 @@
     "enabled": true,
     "rules": {
       "recommended": true,
-      "a11y": "warn",
-      "suspicious": "warn",
+      "a11y": "info",
+      "suspicious": {
+        "noConsole": "off",
+        "noReactSpecificProps": "off"
+      },
       "nursery": {
-        "recommended": false,
-        "noMagicNumbers": "off"
+        "recommended": false
       },
       "correctness": {
         "noUndeclaredDependencies": "off",
+        "noUnusedVariables": "off",
         "useImportExtensions": "off"
       }
     }

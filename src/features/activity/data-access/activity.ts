@@ -1,5 +1,5 @@
 'use server';
-import { eq } from 'drizzle-orm';
+import { desc, eq } from 'drizzle-orm';
 import type {
   UserActivity,
   UserActivityCreate,
@@ -26,5 +26,17 @@ export async function findUserActivities(
     .select()
     .from(userActivityTable)
     .where(eq(userActivityTable.userId, userId));
+  return result;
+}
+
+export async function findRecentUserActivities(
+  userId: string,
+): Promise<UserActivity[]> {
+  const result = await db
+    .select()
+    .from(userActivityTable)
+    .where(eq(userActivityTable.userId, userId))
+    .orderBy(desc(userActivityTable.createdAt))
+    .limit(10);
   return result;
 }
