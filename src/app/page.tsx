@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { Button } from "@/lib/components/ui/button";
-import { Download, Pencil, WandSparkles } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { Download, Pencil, WandSparkles } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { Button } from '@/lib/components/ui/button';
 
 // TODO: Clean this up -> sep components, cleanup styling and add proper light/dark mode.
 
@@ -25,9 +25,9 @@ export default function Home() {
             </p>
             <div className="mt-6 flex flex-col items-center justify-center">
               <Button
-                size="lg"
                 className="px-8 py-6 text-base font-semibold hover:cursor-pointer"
-                onClick={() => router.push("/dashboard")}
+                onClick={() => router.push('/dashboard')}
+                size="lg"
               >
                 Get Started
                 <span className="ml-2">→</span>
@@ -38,8 +38,8 @@ export default function Home() {
       </section>
 
       <section
-        id="features"
         className="container mx-auto pb-16 px-4 sm:px-6 lg:px-8"
+        id="features"
       >
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
