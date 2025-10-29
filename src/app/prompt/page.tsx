@@ -1,138 +1,138 @@
 'use client';
 
-import { Loader2, WandSparkles } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useAuth } from '@clerk/nextjs';
+import { WandSparkles } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { NOTES_ROUTE } from '@/constants/route';
-import { generateGeminiNote } from '@/gemini/actions/generateGeminiNote';
+import { createMultipleFlashcards } from '@/features/cards/actions/flashcard';
+import { generateGeminiNote } from '@/features/gemini/actions/generateGeminiNote';
+import { constructCards } from '@/features/gemini/utils/constructCards';
+import { constructNote } from '@/features/gemini/utils/constructNote';
+import { createNote } from '@/features/notes/actions/notes';
+import type { Note } from '@/features/notes/types/notes';
 import { promptSchema } from '@/gemini/schema/promptSchema';
-import { combineHTML } from '@/utils/combineHTML';
-import { updateTOC } from '@/utils/updateTOC';
+import { Button } from '@/lib/components/ui/button';
+import { Input } from '@/lib/components/ui/input';
+import { validateData } from '@/lib/utils/validateData';
 
-// TODO: clean this up. Split into hooks/etc, improve error/status msgs. Properly store note into state etc.
 export default function PromptPage() {
-  const [prompt, setPrompt] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
-  const [validationError, setValidationError] = useState<string>('');
-  const [error, setError] = useState<string>('');
-  const router = useRouter();
+  const { userId } = useAuth();
 
-  const handleSubmit = async (
-    e:
-      | React.KeyboardEvent<HTMLInputElement>
-      | React.MouseEvent<HTMLButtonElement>,
-  ) => {
+  const [prompt, setPrompt] = useState('');
+  const [log, setLog] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [validationError, setValidationError] = useState('');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPrompt(e.target.value);
+    const result = promptSchema.safeParse({ prompt: e.target.value });
+    setValidationError(result.success ? '' : result.error.issues[0].message);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const validatedPrompt = promptSchema.safeParse({ prompt });
-    if (!validatedPrompt.success) {
-      setValidationError('Invalid prompt provided, please try again.');
+    const result = validateData({ prompt }, promptSchema);
+    if (!result.success) {
+      setValidationError(result.error);
       return;
     }
-    setValidationError('');
-    const geminiPrompt = validatedPrompt.data.prompt;
+    const validatedPrompt = result.data.prompt;
 
     try {
+      setLog('Generating note with Gemini....');
       setLoading(true);
-      const response = await generateGeminiNote(geminiPrompt);
-      const htmlResponse = combineHTML(response.notes_contents);
-      console.log(response.metadata);
-      const updatedHTML = await updateTOC(htmlResponse);
-      const _note = {
-        title: response.metadata.title,
-        keywords: response.metadata.keywords,
-        summary: response.metadata.summary,
-        content: updatedHTML,
-      };
-      const _flashcards = response.flashcards;
-      setLoading(false);
+      const geminiResponseData = await generateGeminiNote(validatedPrompt);
+
+      if (!geminiResponseData.success) {
+        toast.error(geminiResponseData.error);
+        setLog('');
+        setLoading(false);
+        return;
+      }
+
+      setLog('Successfully generated note with Gemini.');
+      setLog('Combining note contents into singular note...');
+      const note = constructNote(geminiResponseData.data, userId as string);
+
+      setLog('Inserting note into DB...');
+      const noteCreationResult = await createNote(note);
+      if (!noteCreationResult.success) {
+        toast.error(noteCreationResult.error);
+        setLog('');
+        setLoading(false);
+        return;
+      }
+
+      const newNote = noteCreationResult.data as Note;
       toast.success('Note generated successfully!');
-      router.push(NOTES_ROUTE);
-    } catch (err) {
-      console.error(err);
-      setError('Something went wrong. Please try again.');
-      toast.error(error);
+
+      setLog('Constructing flashcard data for DB insertion...');
+      const flashcards = constructCards(
+        geminiResponseData.data.flashcards,
+        newNote.authorId,
+        newNote.id,
+      );
+      const flashcardsCreationResult =
+        await createMultipleFlashcards(flashcards);
+
+      if (!flashcardsCreationResult.success) {
+        toast.error(flashcardsCreationResult.error);
+        setLog('');
+        setLoading(false);
+        return;
+      }
+
+      toast.success('Flashcards generated successfully!');
+      setLog('Successfully inserted flashcards into DB.');
+      setLoading(false);
+
+      // Redirect or useStore usage here
+      // redirect(`${NOTES_ROUTE}/${newNote.id}`);
+    } catch (error) {
+      console.error(error);
+      toast.error('Unexpected error occurred while generating note.');
+      setLoading(false);
     }
   };
 
   return (
-    <section
-      class="flex min-h-screen flex-col items-center justify-center overflow-hidden dark:bg-zinc-900"
-      id="prompt-page"
-    >
-      <div class="-mt-20 flex flex-col items-center justify-center">
-        <h2 class="my-4 bg-gradient-to-tr from-rose-500 via-orange-400 to-yellow-300 bg-clip-text py-2 tracking-tight text-transparent sm:text-5xl lg:text-6xl">
-          Bright Ideas Start Here
-        </h2>
-        <p class="-mt-4 mb-4 text-lg tracking-wider text-gray-300 lg:text-xl">
-          Generate detailed notes and flashcards on any topic!
-        </p>
-      </div>
+    <div className="max-w-xl mx-auto px-4 py-10 space-y-6">
+      <h1 className="text-2xl font-bold text-center">Generate a New Note</h1>
 
-      <div class="flex w-full items-center space-x-2 py-2 sm:max-w-xl lg:max-w-4xl">
+      <form className="space-y-4" onSubmit={handleSubmit}>
         <Input
-          class={`${prompt ? 'lowercase' : ''} lg:h-10 lg:text-lg`}
-          onChange={(e) => setPrompt(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              handleSubmit(e);
-            }
-          }}
-          placeholder="Enter a topic here"
+          aria-invalid={!!validationError}
+          className="w-full"
+          onChange={handleChange}
+          placeholder="Enter a topic..."
           type="text"
           value={prompt}
         />
+        {validationError && (
+          <p className="text-sm text-red-500">{validationError}</p>
+        )}
+
         <Button
-          class="hover:cursor-pointer lg:text-base"
-          disabled={loading}
-          onClick={handleSubmit}
-          size={'lg'}
+          aria-disabled={loading || validationError !== ''}
+          className="w-full flex items-center justify-center gap-2"
+          disabled={loading || validationError !== ''}
           type="submit"
         >
-          {loading ? 'Generating...' : 'Generate'}
           {loading ? (
-            <Loader2 class="animate-spin" size={24} />
+            'Generating...'
           ) : (
-            <WandSparkles size={24} />
+            <>
+              Generate Note <WandSparkles size={16} />
+            </>
           )}
         </Button>
-      </div>
-      <div class="mx-4 flex flex-row items-start justify-start">
-        {validationError && (
-          <p class="text-start text-red-500">{validationError}</p>
-        )}
-      </div>
+      </form>
 
-      <div class="mx-4 mt-4 flex flex-wrap justify-center gap-2">
-        <div class="mx-4 mt-4 flex flex-wrap justify-center gap-2">
-          <button
-            class="text-md rounded-lg bg-zinc-800 px-6 py-2 hover:cursor-pointer sm:px-3 sm:py-2 sm:text-base"
-            onClick={() => setPrompt('Explain Recursion')}
-          >
-            <h5>Explain Recursion</h5>
-          </button>
-          <button
-            class="rounded-lg bg-zinc-800 px-6 py-2 hover:cursor-pointer sm:px-3 sm:py-2 sm:text-base"
-            onClick={() => setPrompt('Explain Photosynthesis')}
-          >
-            <h5>Explain Photosynthesis</h5>
-          </button>
-          <button
-            class="rounded-lg bg-zinc-800 px-6 py-2 hover:cursor-pointer sm:px-3 sm:py-2 sm:text-base"
-            onClick={() => setPrompt('Explain the History of the Internet')}
-          >
-            <h5>Explain the History of the Internet</h5>
-          </button>
-          <button
-            class="rounded-lg bg-zinc-800 px-6 py-2 hover:cursor-pointer sm:px-3 sm:py-2 sm:text-base"
-            onClick={() => setPrompt('Explain Supply and Demand')}
-          >
-            <h5>Explain Supply and Demand</h5>
-          </button>
+      {log && (
+        <div className="text-sm text-muted-foreground whitespace-pre-wrap border border-border rounded p-3">
+          {log}
         </div>
-      </div>
-    </section>
+      )}
+    </div>
   );
 }

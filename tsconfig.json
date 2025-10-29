@@ -9,6 +9,7 @@
     "allowJs": true,
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
+    "incremental": true,
     "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
@@ -22,6 +23,9 @@
     "paths": {
       "@/*": [
         "src/*"
+      ],
+      "@/config/*": [
+        "src/config/*"
       ],
       "@/features/*": [
         "src/features/*"
@@ -66,7 +70,6 @@
         "src/lib/store/*"
       ]
     },
-    "incremental": true,
     "plugins": [
       {
         "name": "next"

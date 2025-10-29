@@ -67,7 +67,7 @@ Provide a detailed introduction to the topic. Use clear, accessible language, an
 Mindmap
 Provide a mindmap overview of all the key concepts pertaining to this topic using Mermaid.js in the following syntax:
 html
-<pre class="mermaid">
+<pre className="mermaid">
 mindmap
 root((API Use))
     Origins
@@ -159,7 +159,7 @@ Optional Details to Include:
 Diagrams and Visuals: Diagrams, using Mermaid syntax, must be accompanied by detailed explanations or annotations. Start with simple diagrams and explanations, and gradually introduce more technical or abstract diagrams with detailed annotations within the same visual explanation.
 
 Please use the following format for all mermaid diagrams:
-<pre class="mermaid">
+<pre className="mermaid">
       graph TD
       A[Client] --> B[Load Balancer]
       B --> C[Server01]
@@ -171,7 +171,7 @@ Additionally, don't feel limited by the types of diagrams you can render. Mermai
 Sequence Diagram:
 
 html
-<pre class="mermaid">
+<pre className="mermaid">
 sequenceDiagram
     participant User
     participant System
@@ -183,7 +183,7 @@ sequenceDiagram
 Class Diagram:
 
 html
-<pre class="mermaid">
+<pre className="mermaid">
 classDiagram
     class Shape {
         +int area()
@@ -273,6 +273,7 @@ json
   ],
   "metadata": {
     "title": "Sensible Title for the Topic", // add a unique sensible title that reflects the topic and its content, focus on the core of the topic and its importance - be concise
+    "summary": "Summary of the note content, focus on the core of the topic and its importance - be concise",
     "keywords": ["keyword1", "keyword2", "topic-related"],
   },
   "flashcards": [

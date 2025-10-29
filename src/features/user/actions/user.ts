@@ -1,9 +1,6 @@
 'use server';
 
-import {
-  insertUserSchema,
-  selectUserSchema,
-} from '@/features/user/schema/userSchema';
+import { selectUserSchema } from '@/features/user/schema/userSchema';
 import { checkOwnership } from '@/lib/auth';
 import { validateData } from '@/lib/utils/validateData';
 import { insertUser, updateUser } from '@/user/data-access/user';
@@ -11,6 +8,7 @@ import type { User, UserCreate, UserUpdate } from '@/user/types/user';
 
 export async function createUser(user: UserCreate) {
   try {
+    console.log(user);
     const ownership = await checkOwnership(user.clerkId);
     if (!ownership) {
       return {
@@ -18,12 +16,12 @@ export async function createUser(user: UserCreate) {
         error: 'You are not authorized to create this user. Please try again.',
       };
     }
-    const result = validateData<UserCreate>(user, insertUserSchema);
-    if (!result.success) {
-      return result;
-    }
-    const validatedUser = result.data;
-    const newUser = await insertUser(validatedUser);
+    // const result = validateData<UserCreate>(user, insertUserSchema);
+    // if (!result.success) {
+    //   return result;
+    // }
+    // const validatedUser = result.data;
+    const newUser = await insertUser(user); // TODO: fix user schema validation issues "id" is being added somewhere.
     if (!newUser) {
       return {
         success: false,

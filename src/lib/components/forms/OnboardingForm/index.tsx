@@ -18,9 +18,10 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { DASHBOARD_ROUTE } from '@/constants/route';
+import { createUser } from '@/features/user/actions/user';
 import { onboardingSchema } from '@/schema/onboardingSchema';
 import { useUserStore } from '@/user/store/userStore';
-import type { UserCreate } from '@/user/types/user';
+import type { User, UserCreate } from '@/user/types/user';
 
 // TODO: split this into hooks, schema dir, add on submit, update placecholder, etc as needed
 
@@ -34,6 +35,7 @@ export default function OnboardingForm() {
 
   async function onSubmit(values: z.infer<typeof onboardingSchema>) {
     try {
+      console.log(user);
       const newUser: UserCreate = {
         clerkId: user?.id as string,
         username: user?.username as string,
@@ -43,12 +45,14 @@ export default function OnboardingForm() {
         bio: values.bio,
         country: values.country,
       };
-      const result = await addUser(newUser);
+      toast.info(`${JSON.stringify(values)}`);
+      const result = await createUser(newUser);
+      console.log(result);
       if (!result.success) {
         toast.error('Failed to create user. Please try again.');
         return;
       }
-      setUser(result.data);
+      setUser(result.data as User);
       toast.success(
         'Successfully completed onboarding. Redirecting to dashboard.',
       );
@@ -58,14 +62,16 @@ export default function OnboardingForm() {
       toast.error('Failed to submit the form. Please try again.');
     }
   }
-
+  if (!isLoaded) {
+    return <div>Loading...</div>;
+  }
   return (
     <Form {...form}>
-      <h1 class="text-center text-3xl leading-tight font-semibold">
+      <h1 className="text-center text-3xl leading-tight font-semibold">
         Complete your profile
       </h1>
       <form
-        class="mx-auto max-w-3xl space-y-8 py-10"
+        className="mx-auto max-w-3xl space-y-8 py-10"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         {/* First Name Field */}
@@ -112,7 +118,7 @@ export default function OnboardingForm() {
               </FormDescription>
               <FormControl>
                 <Textarea
-                  class="resize-none"
+                  className="resize-none"
                   placeholder="e.g., I love coding and exploring new technologies."
                   {...field}
                 />
@@ -139,7 +145,7 @@ export default function OnboardingForm() {
             </FormItem>
           )}
         />
-        <Button class="cursor-pointer" type="submit">
+        <Button className="cursor-pointer" type="submit">
           Submit
         </Button>
       </form>

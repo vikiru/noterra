@@ -1,3 +1,4 @@
+'use client';
 // import { useRouter } from 'next/navigation';
 //
 // // TODO: finish gemini prompt page (save notes and cards to db - toc update later)

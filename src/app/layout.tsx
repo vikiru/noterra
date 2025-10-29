@@ -1,25 +1,17 @@
-import {
-  ClerkProvider,
-  SignedIn,
-  SignedOut,
-  SignInButton,
-} from '@clerk/nextjs';
+import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata } from 'next';
 
 import './globals.css';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { Toaster } from 'sonner';
+import { TanstackProvider } from '@/lib/components/providers/TanstackProvider';
 
-import ThemeProvider from '@/components/ThemeProvider';
-import UserButton from '@/components/UserButton';
-import { Button } from '@/components/ui/button';
-
-const geistSans = Geist({
+const _geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin'],
 });
 
-const geistMono = Geist_Mono({
+const _geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
 });
@@ -36,35 +28,11 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en" suppresshydrationwarning>
-        <body
-          class={`${geistSans.variable} ${geistMono.variable} debug-screens antialiased`}
-        >
+      <html lang="en" suppressHydrationWarning>
+        <body className={`debug-screens antialiased`}>
           <Toaster position="top-right" richColors />
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            disableTransitionOnChange
-            enableSystem
-          >
-            <header class="flex h-16 items-center justify-end gap-4 p-4">
-              <SignedOut>
-                <SignInButton>
-                  <Button
-                    class="hover:cursor-pointer"
-                    size={'lg'}
-                    variant={'outline'}
-                  >
-                    Login
-                  </Button>
-                </SignInButton>
-              </SignedOut>
-              <SignedIn>
-                <UserButton />
-              </SignedIn>
-            </header>
-            {children}
-          </ThemeProvider>
+          <header className="flex h-16 items-center justify-end gap-4 p-4"></header>
+          <TanstackProvider>{children}</TanstackProvider>
         </body>
       </html>
     </ClerkProvider>

@@ -6,24 +6,29 @@ import {
 } from '@google/genai';
 
 import { geminiApiKey } from '@/config';
-import { geminiPrompt } from '@/gemini/prompts/index';
+import { geminiPrompt } from '@/gemini/prompts/';
 
 const genAI = new GoogleGenAI({ apiKey: geminiApiKey });
-const model = 'gemini-2.0-flash';
+const geminiModel = 'gemini-2.5-flash';
 
-const safetySettings = Object.values(HarmCategory)
-  .filter((category) => category !== HarmCategory.HARM_CATEGORY_UNSPECIFIED)
-  .map((category) => ({
-    category: category,
-    threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
-  }));
+const targetedCategories = [
+  HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+  HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+  HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+  HarmCategory.HARM_CATEGORY_HARASSMENT,
+  HarmCategory.HARM_CATEGORY_CIVIC_INTEGRITY,
+];
+
+const safetySettings = targetedCategories.map((category: HarmCategory) => ({
+  category,
+  threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
+}));
 
 const generationConfig = {
   temperature: 0.5,
   safetySettings: safetySettings,
   topP: 0.95,
   topK: 40,
-  maxOutputTokens: 8192,
   responseModalities: [],
   responseMimeType: 'application/json',
   responseSchema: {
@@ -93,7 +98,7 @@ const generationConfig = {
   ],
 };
 
-export { genAI, generationConfig, model };
+export { genAI, generationConfig, geminiModel as model };
 
 // TODO: cleanup prompt, update mermaid diagram handling, build a simple tiptap editor component just to preview this
 // TODO: add google books and yt data api for 5-10 books/videos relevant to the topic for books `Title (Year Released) - Author(s)`.

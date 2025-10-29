@@ -1,10 +1,10 @@
-import 'server-only';
+'use server';
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import { cache } from 'react';
 import { SIGNIN_ROUTE } from '@/constants/route';
 import { findNoteWithCardsById } from '@/features/notes/data-access/notes';
-import type { AccessPrivelege } from '@/lib/types/accessPrivelege';
+import type { AccessPrivilege } from '@/lib/types/accessPrivilege';
 
 export const getCurrentUser = cache(async function getCurrentUser() {
   try {
@@ -29,7 +29,7 @@ export async function checkOwnership(
 // TODO: clean this up once frontend user flows are finished. Sep notes and flashcard handling. (if showcards add redirect to flashcard details for this note)
 export async function checkAccessPrivileges(
   noteId: string,
-): Promise<AccessPrivelege> {
+): Promise<AccessPrivilege> {
   const { note, flashcards } = await findNoteWithCardsById(noteId);
   if (!note) {
     return {
