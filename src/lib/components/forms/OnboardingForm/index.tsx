@@ -66,89 +66,123 @@ export default function OnboardingForm() {
     return <div>Loading...</div>;
   }
   return (
-    <Form {...form}>
-      <h1 className="text-center text-3xl leading-tight font-semibold">
-        Complete your profile
-      </h1>
-      <form
-        className="mx-auto max-w-3xl space-y-8 py-10"
-        onSubmit={form.handleSubmit(onSubmit)}
-      >
-        {/* First Name Field */}
-        <FormField
-          control={form.control}
-          name="firstName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>First Name</FormLabel>
-              <FormDescription>Enter your first name.</FormDescription>
-              <FormControl>
-                <Input placeholder="e.g., John" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+    <main className="min-h-screen">
+      <Form {...form}>
+        <div className="mx-auto max-w-2xl space-y-2 text-center">
+          <h1 className="text-3xl font-semibold leading-tight">
+            Complete your profile
+          </h1>
+          <p className="text-muted-foreground">
+            Help us personalize your learning experience
+          </p>
+        </div>
 
-        {/* Last Name Field */}
-        <FormField
-          control={form.control}
-          name="lastName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Last Name</FormLabel>
-              <FormDescription>Enter your last name.</FormDescription>
-              <FormControl>
-                <Input placeholder="e.g., Doe" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <form
+          className="mx-auto mt-8 max-w-2xl space-y-6"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
+          {/* First Name */}
+          <FormField
+            control={form.control}
+            name="firstName"
+            render={({ field }) => (
+              <FormItem className="space-y-1.5">
+                <div className="space-y-1">
+                  <FormLabel className="text-sm font-medium">
+                    First Name
+                  </FormLabel>
+                  <FormDescription className="text-xs">
+                    Your first name
+                  </FormDescription>
+                </div>
+                <FormControl>
+                  <Input className="h-11" placeholder="e.g., John" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        {/* Bio Field */}
-        <FormField
-          control={form.control}
-          name="bio"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Bio</FormLabel>
-              <FormDescription>
-                Tell us a little about yourself.
-              </FormDescription>
-              <FormControl>
-                <Textarea
-                  className="resize-none"
-                  placeholder="e.g., I love coding and exploring new technologies."
-                  {...field}
-                />
-              </FormControl>{' '}
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          {/* Last Name */}
+          <FormField
+            control={form.control}
+            name="lastName"
+            render={({ field }) => (
+              <FormItem className="space-y-1.5">
+                <div className="space-y-1">
+                  <FormLabel className="text-sm font-medium">
+                    Last Name
+                  </FormLabel>
+                  <FormDescription className="text-xs">
+                    Your last name
+                  </FormDescription>
+                </div>
+                <FormControl>
+                  <Input className="h-11" placeholder="e.g., Doe" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        {/* Country Field */}
-        <FormField
-          control={form.control}
-          name="country"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Country</FormLabel>
-              <FormDescription>
-                Enter your country of residence.
-              </FormDescription>
-              <FormControl>
-                <Input placeholder="e.g., Canada" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button className="cursor-pointer" type="submit">
-          Submit
-        </Button>
-      </form>
-    </Form>
+          {/* Bio */}
+          <FormField
+            control={form.control}
+            name="bio"
+            render={({ field }) => (
+              <FormItem className="space-y-1.5">
+                <div className="space-y-1">
+                  <FormLabel className="text-sm font-medium">
+                    About You
+                  </FormLabel>
+                  <FormDescription className="text-xs">
+                    A short bio to help personalize your experience
+                  </FormDescription>
+                </div>
+                <FormControl>
+                  <Textarea
+                    className="min-h-[100px] resize-none"
+                    placeholder="Tell us a bit about yourself and your learning goals..."
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Country */}
+          <FormField
+            control={form.control}
+            name="country"
+            render={({ field }) => (
+              <FormItem className="space-y-1.5">
+                <div className="space-y-1">
+                  <FormLabel className="text-sm font-medium">Country</FormLabel>
+                  <FormDescription className="text-xs">
+                    Your country of residence
+                  </FormDescription>
+                </div>
+                <FormControl>
+                  <Input
+                    className="h-11"
+                    placeholder="e.g., Canada"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <div className="pt-1 pb-2">
+            <Button className="hover:cursor-pointer" type="submit">
+              Complete Setup
+              <span className="ml-2">→</span>
+            </Button>
+          </div>
+        </form>
+      </Form>
+    </main>
   );
 }
