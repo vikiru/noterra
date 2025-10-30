@@ -1,32 +1,32 @@
-"use client";
+'use client';
 
-import { useAuth } from "@clerk/nextjs";
-import { Copy, Lightbulb, Loader2, WandSparkles } from "lucide-react";
-import { useState } from "react";
-import { toast } from "sonner";
-import { createMultipleFlashcards } from "@/features/cards/actions/flashcard";
-import { generateGeminiNote } from "@/features/gemini/actions/generateGeminiNote";
-import { constructCards } from "@/features/gemini/utils/constructCards";
-import { constructNote } from "@/features/gemini/utils/constructNote";
-import { createNote } from "@/features/notes/actions/notes";
-import type { Note } from "@/features/notes/types/notes";
-import { promptSchema } from "@/gemini/schema/promptSchema";
-import { Button } from "@/lib/components/ui/button";
-import { Input } from "@/lib/components/ui/input";
-import { validateData } from "@/lib/utils/validateData";
+import { useAuth } from '@clerk/nextjs';
+import { Copy, Lightbulb, Loader2, WandSparkles } from 'lucide-react';
+import { useState } from 'react';
+import { toast } from 'sonner';
+import { createMultipleFlashcards } from '@/features/cards/actions/flashcard';
+import { generateGeminiNote } from '@/features/gemini/actions/generateGeminiNote';
+import { constructCards } from '@/features/gemini/utils/constructCards';
+import { constructNote } from '@/features/gemini/utils/constructNote';
+import { createNote } from '@/features/notes/actions/notes';
+import type { Note } from '@/features/notes/types/notes';
+import { promptSchema } from '@/gemini/schema/promptSchema';
+import { Button } from '@/lib/components/ui/button';
+import { Input } from '@/lib/components/ui/input';
+import { validateData } from '@/lib/utils/validateData';
 
 export default function PromptPage() {
   const { userId } = useAuth();
 
-  const [prompt, setPrompt] = useState("");
-  const [log, setLog] = useState("");
+  const [prompt, setPrompt] = useState('');
+  const [log, setLog] = useState('');
   const [loading, setLoading] = useState(false);
-  const [validationError, setValidationError] = useState("");
+  const [validationError, setValidationError] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPrompt(e.target.value);
     const result = promptSchema.safeParse({ prompt: e.target.value });
-    setValidationError(result.success ? "" : result.error.issues[0].message);
+    setValidationError(result.success ? '' : result.error.issues[0].message);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -39,59 +39,58 @@ export default function PromptPage() {
     const validatedPrompt = result.data.prompt;
 
     try {
-      setLog("Generating note with Gemini....");
+      setLog('Generating note with Gemini....');
       setLoading(true);
       const geminiResponseData = await generateGeminiNote(validatedPrompt);
 
       if (!geminiResponseData.success) {
         toast.error(geminiResponseData.error);
-        setLog("");
+        setLog('');
         setLoading(false);
         return;
       }
 
-      setLog("Successfully generated note with Gemini.");
-      setLog("Combining note contents into singular note...");
+      setLog('Successfully generated note with Gemini.');
+      setLog('Combining note contents into singular note...');
       const note = constructNote(geminiResponseData.data, userId as string);
 
-      setLog("Inserting note into DB...");
+      setLog('Inserting note into DB...');
       const noteCreationResult = await createNote(note);
       if (!noteCreationResult.success) {
         toast.error(noteCreationResult.error);
-        setLog("");
+        setLog('');
         setLoading(false);
         return;
       }
 
       const newNote = noteCreationResult.data as Note;
-      toast.success("Note generated successfully!");
+      toast.success('Note generated successfully!');
 
-      setLog("Constructing flashcard data for DB insertion...");
+      setLog('Constructing flashcard data for DB insertion...');
       const flashcards = constructCards(
         geminiResponseData.data.flashcards,
         newNote.authorId,
-        newNote.id
+        newNote.id,
       );
-      const flashcardsCreationResult = await createMultipleFlashcards(
-        flashcards
-      );
+      const flashcardsCreationResult =
+        await createMultipleFlashcards(flashcards);
 
       if (!flashcardsCreationResult.success) {
         toast.error(flashcardsCreationResult.error);
-        setLog("");
+        setLog('');
         setLoading(false);
         return;
       }
 
-      toast.success("Flashcards generated successfully!");
-      setLog("Successfully inserted flashcards into DB.");
+      toast.success('Flashcards generated successfully!');
+      setLog('Successfully inserted flashcards into DB.');
       setLoading(false);
 
       // Redirect or useStore usage here
       // redirect(`${NOTES_ROUTE}/${newNote.id}`);
     } catch (error) {
       console.error(error);
-      toast.error("Unexpected error occurred while generating note.");
+      toast.error('Unexpected error occurred while generating note.');
       setLoading(false);
     }
   };
@@ -143,7 +142,7 @@ export default function PromptPage() {
 
             <Button
               className="mt-2 w-full py-6 text-base font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5"
-              disabled={loading || validationError !== ""}
+              disabled={loading || validationError !== ''}
               size="lg"
               type="submit"
             >
@@ -166,17 +165,17 @@ export default function PromptPage() {
               </p>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 {[
-                  "Explain recursion in simple terms",
-                  "Explain quantum computing basics",
-                  "How does blockchain work?",
-                  "What is machine learning?",
+                  'Explain recursion in simple terms',
+                  'Explain quantum computing basics',
+                  'How does blockchain work?',
+                  'What is machine learning?',
                 ].map((example, index) => (
                   <button
                     className="w-full rounded-lg border border-border bg-card p-3 text-left text-sm text-foreground/90 transition-all hover:bg-accent/50 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
                     key={index}
                     onClick={() => {
                       setPrompt(example);
-                      setValidationError("");
+                      setValidationError('');
                     }}
                     type="button"
                   >
