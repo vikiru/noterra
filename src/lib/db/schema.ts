@@ -1,4 +1,4 @@
-import { relations } from 'drizzle-orm';
+import { relations, sql } from 'drizzle-orm';
 import {
   boolean,
   index,
@@ -10,7 +10,7 @@ import {
 } from 'drizzle-orm/pg-core';
 
 export const usersTable = pgTable('users', {
-  clerkId: text('id').primaryKey(),
+  clerkId: text('clerk_id').primaryKey(),
   username: text('username').notNull().unique(),
   email: text('email').notNull().unique(),
   firstName: text('first_name').notNull(),
@@ -25,33 +25,6 @@ export const usersTable = pgTable('users', {
     .defaultNow(),
 });
 
-export type ActivityAction = 'create' | 'delete' | 'update';
-export type ActivityType = 'flashcard' | 'note';
-
-export const userActivityTable = pgTable(
-  'user_activity',
-  {
-    id: uuid('id').primaryKey().defaultRandom(),
-    userId: text('user_id')
-      .notNull()
-      .references(() => usersTable.clerkId, { onDelete: 'cascade' }),
-    action: text('action', {
-      enum: ['create', 'update', 'delete'],
-    }).notNull(),
-    type: text('type', { enum: ['note', 'flashcard'] }).notNull(),
-    entityId: uuid('entity_id').notNull(),
-    createdAt: timestamp('created_at', { withTimezone: true })
-      .notNull()
-      .defaultNow(),
-  },
-  (table) => {
-    return [
-      index('user_action_index').on(table.userId, table.action),
-      index('user_time_index').on(table.userId, table.createdAt),
-    ];
-  },
-);
-
 export const notesTable = pgTable(
   'notes',
   {
@@ -61,7 +34,7 @@ export const notesTable = pgTable(
       .references(() => usersTable.clerkId, { onDelete: 'cascade' }),
     title: text('title').notNull(),
     summary: text('summary').notNull(),
-    keywords: text('keywords').notNull(),
+    keywords: text('keywords').array().notNull().default(sql`ARRAY[]::text[]`),
     content: text('content').notNull(),
     shared: boolean('shared').notNull().default(false),
     public: boolean('public').notNull().default(false),
@@ -79,7 +52,6 @@ export const notesTable = pgTable(
     index('author_public_note_index').on(table.authorId, table.public),
     index('author_shared_note_index').on(table.authorId, table.shared),
     index('author_public_card_index').on(table.authorId, table.showCards),
-    index('keyword_index').on(table.keywords),
   ],
 );
 
@@ -111,7 +83,6 @@ export const flashcardsTable = pgTable(
 export const userRelations = relations(usersTable, ({ many }) => ({
   notes: many(notesTable),
   flashcards: many(flashcardsTable),
-  activity: many(userActivityTable),
 }));
 
 export const noteRelations = relations(notesTable, ({ one, many }) => ({
