@@ -30,9 +30,6 @@
       "@/features/*": [
         "src/features/*"
       ],
-      "@/activity/*": [
-        "src/features/activity/*"
-      ],
       "@/cards/*": [
         "src/features/cards/*"
       ],
