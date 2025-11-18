@@ -115,9 +115,20 @@ export async function updateNote(updatedNote: Note): Promise<Note> {
   return result[0];
 }
 
-export async function findRecentUserNotes(userId: string): Promise<Note[]> {
-  const result: Note[] = await db
-    .select()
+export async function findRecentUserNotes(
+  userId: string,
+): Promise<NoteMetadata[]> {
+  const result: NoteMetadata[] = await db
+    .select({
+      id: notesTable.id,
+      authorId: notesTable.authorId,
+      title: notesTable.title,
+      summary: notesTable.summary,
+      keywords: notesTable.keywords,
+      shared: notesTable.shared,
+      public: notesTable.public,
+      createdAt: notesTable.createdAt,
+    })
     .from(notesTable)
     .where(eq(notesTable.authorId, userId))
     .orderBy(desc(notesTable.createdAt))

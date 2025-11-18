@@ -6,6 +6,7 @@ import {
   MapPin,
   Plus,
 } from 'lucide-react';
+import { notFound } from 'next/navigation';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -16,10 +17,13 @@ import { findCardSets } from '@/features/cards/data-access/flashcard';
 import { findPublicNotesByUserId } from '@/features/notes/data-access/notes';
 import {
   findUserActivityOverview,
+  findUserByUsername,
   findUserTotalCreations,
   getUserProfile,
+  getUserProfilePageData,
 } from '@/features/user/data-access/user';
 import { ScrollArea } from '@/lib/components/ui/scroll-area';
+import type { User } from '@/user/types/user';
 
 export default async function ProfilePage({
   params,
@@ -27,25 +31,34 @@ export default async function ProfilePage({
   params: { username: string };
 }) {
   const { username } = params;
-  const user = await getUserProfile(username);
-  const stats = await findUserTotalCreations(user.clerkId as string);
-  const notes = await findPublicNotesByUserId(user.clerkId as string);
-  const cardSets = await findCardSets(user.clerkId as string, true);
-  const activity = await findUserActivityOverview(user.clerkId as string);
+  const user: User | null = await findUserByUsername(username);
+  if (!user) {
+    return notFound();
+  }
+  const {
+    userProfile,
+    totalCreations,
+    publicNotes,
+    publicCards,
+    activityOverview,
+  } = await getUserProfilePageData(user.clerkId);
 
   const initials =
-    `${user.firstName?.[0] || ''}${user.lastName?.[0] || ''}`.toUpperCase() ||
+    `${userProfile.firstName?.[0] || ''}${userProfile.lastName?.[0] || ''}`.toUpperCase() ||
     'U';
-  const memberSince = new Date(user.createdAt).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-  });
+  const memberSince = new Date(userProfile.createdAt).toLocaleDateString(
+    'en-US',
+    {
+      year: 'numeric',
+      month: 'long',
+    },
+  );
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Left Column - Profile Card */}
-        <div className="w-full lg:w-80 flex-shrink-0">
+        <div className="w-full lg:w-80 shrink-0">
           <Card className="sticky top-8">
             <div className="p-6 text-center">
               <Avatar className="h-24 w-24 mx-auto mb-4 border-2 border-black dark:border-white">
@@ -54,19 +67,21 @@ export default async function ProfilePage({
                 </AvatarFallback>
               </Avatar>
               <h2 className="text-xl font-bold">
-                {user.firstName} {user.lastName}
+                {userProfile.firstName} {userProfile.lastName}
               </h2>
-              <p className="text-muted-foreground">@{user.username}</p>
+              <p className="text-muted-foreground">@{userProfile.username}</p>
 
-              {user.bio && (
-                <p className="mt-4 text-sm text-muted-foreground">{user.bio}</p>
+              {userProfile.bio && (
+                <p className="mt-4 text-sm text-muted-foreground">
+                  {userProfile.bio}
+                </p>
               )}
 
               <div className="mt-6 space-y-3 text-left">
-                {user.country && (
+                {userProfile.country && (
                   <div className="flex items-center">
                     <MapPin className="h-4 w-4 mr-2 text-muted-foreground" />
-                    <span className="text-sm">{user.country}</span>
+                    <span className="text-sm">{userProfile.country}</span>
                   </div>
                 )}
                 <div className="flex items-center">
@@ -79,11 +94,13 @@ export default async function ProfilePage({
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center">
-                  <p className="text-2xl font-bold">{stats.notes}</p>
+                  <p className="text-2xl font-bold">{totalCreations.notes}</p>
                   <p className="text-sm text-muted-foreground">Notes</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-2xl font-bold">{stats.flashcards}</p>
+                  <p className="text-2xl font-bold">
+                    {totalCreations.flashcards}
+                  </p>
                   <p className="text-sm text-muted-foreground">Flashcards</p>
                 </div>
               </div>
@@ -113,7 +130,7 @@ export default async function ProfilePage({
                     Your Notes
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    {stats.notes} notes
+                    {totalCreations.notes} notes
                   </p>
                 </div>
                 <Button
@@ -127,7 +144,7 @@ export default async function ProfilePage({
               </div>
               <ScrollArea className="h-[500px] pr-4">
                 <div className="space-y-3">
-                  {notes.map((note) => (
+                  {publicNotes.map((note) => (
                     <Card
                       className="hover:bg-accent/10 transition-colors cursor-pointer border-border/50"
                       key={note.id}
@@ -154,13 +171,13 @@ export default async function ProfilePage({
                               {note.content}
                             </p>
                             <div className="flex flex-wrap gap-1.5 mt-2">
-                              {note.tags.map((tag) => (
+                              {note.keywords.map((keyword) => (
                                 <Badge
                                   className="text-[11px] font-normal text-muted-foreground"
-                                  key={tag}
+                                  key={keyword}
                                   variant="outline"
                                 >
-                                  {tag}
+                                  {keyword}
                                 </Badge>
                               ))}
                             </div>
@@ -180,13 +197,13 @@ export default async function ProfilePage({
                     Your Flashcard Sets
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    {stats.flashcards} cards across 2 sets
+                    {totalCreations.flashcards} cards
                   </p>
                 </div>
               </div>
               <ScrollArea className="h-[500px] pr-4">
                 <div className="space-y-3">
-                  {cardSets.map((set) => (
+                  {publicCards.map((set) => (
                     <Card
                       className="hover:bg-accent/10 transition-colors cursor-pointer border-border/50"
                       key={set.id}
@@ -233,7 +250,7 @@ export default async function ProfilePage({
               </div>
               <ScrollArea className="h-[500px] pr-4">
                 <div className="space-y-3">
-                  {activity.map((activity) => (
+                  {activityOverview.map((activity) => (
                     <Card
                       className="hover:bg-accent/10 transition-colors border-border/50"
                       key={activity.date}

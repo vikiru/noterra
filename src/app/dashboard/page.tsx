@@ -1,25 +1,38 @@
-import { Activity, BarChart2, BookOpen, FileText, History } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
-  findUserActivityOverview,
-  findUserById,
-  findUserTotalCreations,
-} from '@/features/user/data-access/user';
+  Activity,
+  ArrowRight,
+  BookOpen,
+  FileText,
+  Globe,
+  History,
+  Link,
+  Lock,
+  Plus,
+} from 'lucide-react';
+import { redirect } from 'next/navigation';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { getUserDashboardData } from '@/features/user/data-access/user';
 import { getCurrentUser } from '@/lib/auth';
-import { ChartAreaInteractive } from '@/lib/components/ExampleChart';
+import { Button } from '@/lib/components/ui/button';
+import { SIGNIN_ROUTE } from '@/lib/constants/route';
 
 export default async function DashboardPage() {
   const userId = await getCurrentUser();
-  const user = await findUserById(userId as string);
-  const stats = await findUserTotalCreations(userId as string);
-  const activity = await findUserActivityOverview(userId as string);
+  if (!userId) {
+    redirect(SIGNIN_ROUTE);
+  }
+
+  const { firstName, recentNotes, totalCreations, activityOverview } =
+    await getUserDashboardData(userId);
+
+  console.log(recentNotes);
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-8">
       {/* Welcome Section */}
       <div className="space-y-2">
         <h1 className="text-3xl font-bold tracking-tight">
-          Welcome back, {user.firstName}!
+          Welcome back, {firstName || 'User'}
         </h1>
         <p className="text-muted-foreground">
           Here's what's happening with your studies today.
@@ -39,7 +52,7 @@ export default async function DashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold tracking-tight">
-              {stats.notes}
+              {totalCreations.notes}
             </div>
             <p className="text-sm text-muted-foreground mt-1">Notes created</p>
           </CardContent>
@@ -55,7 +68,7 @@ export default async function DashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold tracking-tight">
-              {stats.flashcards}
+              {totalCreations.flashcards}
             </div>
             <p className="text-sm text-muted-foreground mt-1">
               Flashcards created
@@ -80,23 +93,41 @@ export default async function DashboardPage() {
         </Card>
       </div>
 
-      {/* Activity Graph */}
+      {/* Recent Notes */}
       <Card>
         <CardHeader>
-          <CardTitle>Activity Overview</CardTitle>
+          <CardTitle className="text-lg">Recent Notes</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="h-[300px] flex items-center justify-center bg-muted/20 rounded-lg">
-            <div className="text-center p-6">
-              <BarChart2 className="mx-auto h-12 w-12 text-muted-foreground mb-2" />
-              <p className="text-sm text-muted-foreground">
-                Activity chart will be displayed here
-              </p>
-              <p className="text-xs text-muted-foreground mt-1">
-                Showing data for last 3 months
-              </p>
+          {recentNotes.length === 0 ? (
+            <div className="text-center py-8 text-muted-foreground">
+              <p>No notes found</p>
             </div>
-          </div>
+          ) : (
+            <div className="space-y-2">
+              {recentNotes.map((note) => (
+                <a
+                  className="block no-underline hover:no-underline focus:no-underline"
+                  href={`/notes/${note.id}`}
+                  key={note.id}
+                >
+                  <Card className="p-3 rounded-lg hover:bg-muted/50 transition-colors">
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-medium truncate">
+                        {note.title || 'Untitled Note'}
+                      </h3>
+                      <span className="ml-4 text-sm text-muted-foreground whitespace-nowrap">
+                        {new Date(note.createdAt).toLocaleDateString('en-US', {
+                          month: 'short',
+                          day: 'numeric',
+                        })}
+                      </span>
+                    </div>
+                  </Card>
+                </a>
+              ))}
+            </div>
+          )}
         </CardContent>
       </Card>
 
@@ -110,7 +141,7 @@ export default async function DashboardPage() {
         </CardHeader>
         <CardContent>
           <div>
-            {activity.slice(0, 5).map((item) => (
+            {activityOverview.slice(0, 5).map((item) => (
               <div className="flex items-start gap-3" key={item.date}>
                 <div className="p-1.5 rounded-full bg-primary/10 text-primary mt-0.5"></div>
                 <div className="flex-1">

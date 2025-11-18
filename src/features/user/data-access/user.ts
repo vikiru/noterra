@@ -1,5 +1,10 @@
 import { eq, sql } from 'drizzle-orm';
 import { db } from '@/db/index';
+import { findCardSets } from '@/features/cards/data-access/flashcard';
+import {
+  findPublicNotesByUserId,
+  findRecentUserNotes,
+} from '@/features/notes/data-access/notes';
 import { flashcardsTable, notesTable, usersTable } from '@/lib/db/schema';
 import type { TotalCreations } from '@/user/types/totalCreations';
 import type { UserCreate, UserUpdate } from '@/user/types/user';
@@ -76,7 +81,7 @@ export async function updateUser(user: UserUpdate) {
   return result[0];
 }
 
-export async function getUserProfile(username: string) {
+export async function getUserProfile(userId: string) {
   const result = await db
     .select({
       clerkId: usersTable.clerkId,
@@ -88,8 +93,93 @@ export async function getUserProfile(username: string) {
       createdAt: usersTable.createdAt,
     })
     .from(usersTable)
-    .where(eq(usersTable.username, username));
+    .where(eq(usersTable.clerkId, userId));
 
   const userData = result[0];
   return userData;
+}
+
+export async function getUserFirstName(userId: string) {
+  const result = await db
+    .select({
+      firstName: usersTable.firstName,
+    })
+    .from(usersTable)
+    .where(eq(usersTable.clerkId, userId));
+
+  const userFirstName = result[0].firstName;
+  return userFirstName;
+}
+
+export async function getUserDashboardData(userId: string) {
+  const [
+    firstNameData,
+    recentNotesData,
+    totalCreationsData,
+    activityOverviewData,
+  ] = await Promise.allSettled([
+    getUserFirstName(userId),
+    findRecentUserNotes(userId),
+    findUserTotalCreations(userId),
+    findUserActivityOverview(userId),
+  ]);
+
+  const firstName =
+    firstNameData.status === 'fulfilled' ? firstNameData.value : '';
+  const recentNotes =
+    recentNotesData.status === 'fulfilled' ? recentNotesData.value : [];
+  const totalCreations =
+    totalCreationsData.status === 'fulfilled'
+      ? totalCreationsData.value
+      : { notes: 0, flashcards: 0 };
+  const activityOverview =
+    activityOverviewData.status === 'fulfilled'
+      ? activityOverviewData.value
+      : [];
+
+  return {
+    firstName,
+    recentNotes,
+    totalCreations,
+    activityOverview,
+  };
+}
+
+export async function getUserProfilePageData(userId: string) {
+  const [
+    userProfileData,
+    totalCreationsData,
+    publicNoteData,
+    publicCardData,
+    activityOverviewData,
+  ] = await Promise.allSettled([
+    getUserProfile(userId),
+    findUserTotalCreations(userId),
+    findPublicNotesByUserId(userId),
+    findCardSets(userId, true),
+    findUserActivityOverview(userId),
+  ]);
+
+  const userProfile =
+    userProfileData.status === 'fulfilled' ? userProfileData.value : null;
+  const totalCreations =
+    totalCreationsData.status === 'fulfilled'
+      ? totalCreationsData.value
+      : { notes: 0, flashcards: 0 };
+  const publicNotes =
+    publicNoteData.status === 'fulfilled' ? publicNoteData.value : [];
+  const publicCards =
+    publicCardData.status === 'fulfilled' ? publicCardData.value : [];
+  const activityOverview =
+    activityOverviewData.status === 'fulfilled'
+      ? activityOverviewData.value
+      : [];
+
+  return {
+    userProfile,
+    totalCreations,
+    publicNotes,
+    publicCards,
+    activityOverview,
+  };
 }
