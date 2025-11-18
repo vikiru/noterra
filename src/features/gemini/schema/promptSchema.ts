@@ -12,8 +12,8 @@ export const promptSchema = z.object({
   prompt: z
     .string()
     .min(2, { message: 'Prompt is expected to be at least 2 characters' })
-    .max(1000, {
-      message: 'Prompt is expected to be at most 1000 characters',
+    .max(500, {
+      message: 'Prompt is expected to be at most 500 characters',
     })
     .refine((prompt) => !profanity.exists(prompt), {
       message: 'Prompt contains inappropriate language',
