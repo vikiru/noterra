@@ -191,6 +191,17 @@ body {
         background-color: transparent !important;
     }
 
+
+    /* hide mermaid errors */
+    div[id^="dmermaid-"]:has(svg[aria-roledescription="error"]) {
+        display: none !important;
+    }
+
+    svg[aria-roledescription="error"] {
+        display: none !important;
+    }
+
+    /* node label color */
     .nodeLabel p {
         color: var(--background);
     }
@@ -206,6 +217,15 @@ body {
         #note-ctr #actions,
         #note-ctr #dropdown-menu,
         #note-ctr #dropdown-menu * {
+            display: none !important;
+        }
+
+        /* hide mermaid errors */
+        div[id^="dmermaid-"]:has(svg[aria-roledescription="error"]) {
+            display: none !important;
+        }
+
+        svg[aria-roledescription="error"] {
             display: none !important;
         }
 
@@ -282,6 +302,7 @@ body {
             word-break: break-word !important;
             white-space: normal !important;
             max-width: 100% !important;
+            -webkit-box-sizing: border-box !important;
             box-sizing: border-box !important;
         }
 
@@ -314,6 +335,8 @@ body {
             /* allow horizontal scroll */
             page-break-inside: avoid !important;
             /* keep code together */
+            -webkit-column-break-inside: avoid !important;
+            -moz-column-break-inside: avoid !important;
             break-inside: avoid !important;
         }
 
@@ -325,6 +348,8 @@ body {
             max-width: 100% !important;
             width: auto !important;
             height: auto !important;
+            -webkit-column-break-inside: avoid;
+            -moz-column-break-inside: avoid;
             break-inside: avoid;
             page-break-inside: avoid;
         }
@@ -338,7 +363,11 @@ body {
         h6 {
             page-break-after: avoid;
             page-break-inside: avoid;
+            -webkit-column-break-after: avoid;
+            -moz-column-break-after: avoid;
             break-after: avoid;
+            -webkit-column-break-inside: avoid;
+            -moz-column-break-inside: avoid;
             break-inside: avoid;
         }
 
@@ -356,6 +385,8 @@ body {
         dl>dt,
         dl>dd {
             page-break-inside: avoid;
+            -webkit-column-break-inside: avoid;
+            -moz-column-break-inside: avoid;
             break-inside: avoid;
             margin: 0;
             padding: 0;
@@ -377,6 +408,4 @@ body {
             margin: 1cm;
         }
     }
-
-
 }
