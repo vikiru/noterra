@@ -11,7 +11,7 @@ export function constructNote(
   const newNote: NoteCreate = {
     authorId,
     title: noteMetaData.title,
-    keywords: noteMetaData.keywords.join(', '),
+    keywords: noteMetaData.keywords,
     summary: noteMetaData.summary,
     content: noteContent,
     public: false,

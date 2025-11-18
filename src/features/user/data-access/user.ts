@@ -75,3 +75,21 @@ export async function updateUser(user: UserUpdate) {
     .returning();
   return result[0];
 }
+
+export async function getUserProfile(username: string) {
+  const result = await db
+    .select({
+      clerkId: usersTable.clerkId,
+      username: usersTable.username,
+      firstName: usersTable.firstName,
+      lastName: usersTable.lastName,
+      country: usersTable.country,
+      bio: usersTable.bio,
+      createdAt: usersTable.createdAt,
+    })
+    .from(usersTable)
+    .where(eq(usersTable.username, username));
+
+  const userData = result[0];
+  return userData;
+}

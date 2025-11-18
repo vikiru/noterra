@@ -2,7 +2,7 @@ import { Profanity } from '@2toad/profanity';
 import z from 'zod';
 
 export const profanity = new Profanity({
-  wholeWord: false,
+  wholeWord: true,
   grawlix: '*****',
   grawlixChar: '$',
   languages: ['en'],

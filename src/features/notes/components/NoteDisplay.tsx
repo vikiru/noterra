@@ -13,7 +13,9 @@ import {
   Share2,
   Trash2,
 } from 'lucide-react';
+import mermaid from 'mermaid';
 import Link from 'next/link';
+import { useEffect } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
@@ -30,7 +32,7 @@ type NoteDisplayProps = {
     id: string;
     title: string;
     content: string;
-    keywords: string;
+    keywords: string[];
     public: boolean;
     createdAt: Date;
     updatedAt: Date;
@@ -38,8 +40,40 @@ type NoteDisplayProps = {
 };
 
 export function NoteDisplay({ note }: NoteDisplayProps) {
+  console.log(note.content);
+  useEffect(() => {
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'base',
+    });
+
+    const renderMermaidDiagrams = async () => {
+      const mermaidDivs = document.querySelectorAll(
+        'div[id*="diagram"], div#mindmap-overview-mindmap, div[id*="mindmap"]',
+      );
+      const mermaidDiagrams = [];
+
+      mermaidDivs.forEach((div) => {
+        const pre = div.firstElementChild;
+        console.log(pre);
+        if (pre && pre.tagName === 'PRE') {
+          mermaidDiagrams.push(pre);
+        }
+      });
+
+      if (mermaidDiagrams.length > 0) {
+        await mermaid.run({
+          nodes: mermaidDiagrams,
+          suppressErrors: true,
+        });
+      }
+    };
+
+    renderMermaidDiagrams();
+  }, [note.content]);
+
   return (
-    <div className="container mx-auto px-3 sm:px-4 py-6 sm:py-8 max-w-4xl">
+    <section className="container max-w-6xl mx-auto px-3 sm:px-4 py-6 sm:py-8">
       {/* Back and Actions */}
       <div className="flex justify-between items-center mb-6">
         <Button asChild variant="ghost">
@@ -83,7 +117,9 @@ export function NoteDisplay({ note }: NoteDisplayProps) {
             <DropdownMenuContent align="end">
               <DropdownMenuItem className="cursor-pointer">
                 <Book className="mr-2 h-4 w-4" />
-                <span>View Flashcards</span>
+                <span>
+                  <a href={`/notes/${note.id}/flashcards`}>View Flashcards</a>
+                </span>
               </DropdownMenuItem>
               <DropdownMenuItem className="cursor-pointer">
                 <FileText className="mr-2 h-4 w-4" />
@@ -103,48 +139,51 @@ export function NoteDisplay({ note }: NoteDisplayProps) {
         </div>
       </div>
 
-      {/* Note Header */}
-      <div className="mb-6">
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2">
-          {note.title}
-        </h1>
+      <section className="print" id="note">
+        {/* Note Header */}
+        <div className="mb-6">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2">
+            {note.title}
+          </h1>
 
-        <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-          <div>
-            <time dateTime={note.createdAt.toISOString()}>
-              {note.createdAt.toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric',
-              })}
-            </time>
-          </div>
-          <div className="flex items-center gap-1.5">
-            {note.public ? (
-              <Globe className="h-3.5 w-3.5" />
-            ) : (
-              <Lock className="h-3.5 w-3.5" />
-            )}
-            <span>{note.public ? 'Public' : 'Private'}</span>
+          <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+            <div>
+              <time dateTime={note.createdAt.toISOString()}>
+                {note.createdAt.toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric',
+                })}
+              </time>
+            </div>
+            <div className="flex items-center gap-1.5">
+              {note.public ? (
+                <Globe className="h-3.5 w-3.5" />
+              ) : (
+                <Lock className="h-3.5 w-3.5" />
+              )}
+              <span>{note.public ? 'Public' : 'Private'}</span>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Keywords */}
-      {note.keywords && (
-        <div className="flex flex-wrap gap-2 mb-6">
-          {note.keywords.split(',').map((keyword) => (
-            <Badge className="text-xs" key={keyword.trim()} variant="secondary">
-              {keyword.trim()}
-            </Badge>
-          ))}
-        </div>
-      )}
+        {/* Keywords */}
+        {note.keywords && (
+          <div className="flex flex-wrap gap-2 mb-6">
+            {note.keywords.map((kw) => (
+              <Badge className="text-xs" key={kw.trim()} variant="secondary">
+                {kw.trim()}
+              </Badge>
+            ))}
+          </div>
+        )}
 
-      <div
-        className="prose dark:prose-invert max-w-none bg-white px-6 pb-2 pt-1 rounded-lg"
-        dangerouslySetInnerHTML={{ __html: note.content }}
-      />
-    </div>
+        <section
+          className="max-w-none bg-white dark:bg-red prose px-6 pb-2 pt-1 rounded-lg dark:bg-black"
+          dangerouslySetInnerHTML={{ __html: note.content }}
+          id="note-content"
+        />
+      </section>
+    </section>
   );
 }

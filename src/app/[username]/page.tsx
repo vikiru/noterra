@@ -12,9 +12,12 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { findCardSets } from '@/features/cards/data-access/flashcard';
+import { findPublicNotesByUserId } from '@/features/notes/data-access/notes';
 import {
-  findUserByUsername,
+  findUserActivityOverview,
   findUserTotalCreations,
+  getUserProfile,
 } from '@/features/user/data-access/user';
 import { ScrollArea } from '@/lib/components/ui/scroll-area';
 
@@ -24,8 +27,11 @@ export default async function ProfilePage({
   params: { username: string };
 }) {
   const { username } = params;
-  const user = await findUserByUsername(username as string);
+  const user = await getUserProfile(username);
   const stats = await findUserTotalCreations(user.clerkId as string);
+  const notes = await findPublicNotesByUserId(user.clerkId as string);
+  const cardSets = await findCardSets(user.clerkId as string, true);
+  const activity = await findUserActivityOverview(user.clerkId as string);
 
   const initials =
     `${user.firstName?.[0] || ''}${user.lastName?.[0] || ''}`.toUpperCase() ||
@@ -121,24 +127,7 @@ export default async function ProfilePage({
               </div>
               <ScrollArea className="h-[500px] pr-4">
                 <div className="space-y-3">
-                  {[
-                    {
-                      id: '1',
-                      title: 'Introduction to React Hooks',
-                      content:
-                        'Hooks allow you to use state and other React features without writing a class...',
-                      updatedAt: new Date('2025-10-28'),
-                      tags: ['react', 'hooks', 'frontend'],
-                    },
-                    {
-                      id: '2',
-                      title: 'TypeScript Best Practices',
-                      content:
-                        'TypeScript provides static typing which helps catch errors early...',
-                      updatedAt: new Date('2025-10-25'),
-                      tags: ['typescript', 'programming'],
-                    },
-                  ].map((note) => (
+                  {notes.map((note) => (
                     <Card
                       className="hover:bg-accent/10 transition-colors cursor-pointer border-border/50"
                       key={note.id}
@@ -197,24 +186,7 @@ export default async function ProfilePage({
               </div>
               <ScrollArea className="h-[500px] pr-4">
                 <div className="space-y-3">
-                  {[
-                    {
-                      id: '1',
-                      title: 'JavaScript Basics',
-                      description: 'Core JavaScript concepts and syntax',
-                      cardCount: 12,
-                      lastStudied: '2 days ago',
-                      mastery: 75,
-                    },
-                    {
-                      id: '2',
-                      title: 'CSS Grid Layout',
-                      description: 'Mastering CSS Grid for modern layouts',
-                      cardCount: 8,
-                      lastStudied: '1 week ago',
-                      mastery: 45,
-                    },
-                  ].map((set) => (
+                  {cardSets.map((set) => (
                     <Card
                       className="hover:bg-accent/10 transition-colors cursor-pointer border-border/50"
                       key={set.id}
@@ -236,8 +208,8 @@ export default async function ProfilePage({
                                 {set.cardCount} cards
                               </Badge>
                             </div>
-                            <p className="text-sm text-muted-foreground mt-1">
-                              {set.description}
+                            <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
+                              {set.summary}
                             </p>
                           </div>
                         </div>
@@ -261,91 +233,26 @@ export default async function ProfilePage({
               </div>
               <ScrollArea className="h-[500px] pr-4">
                 <div className="space-y-3">
-                  {[
-                    {
-                      id: '1',
-                      type: 'note',
-                      action: 'created',
-                      title: 'React Hooks Guide',
-                      time: 'Oct 30, 2025',
-                      details: '',
-                    },
-                    {
-                      id: '1',
-                      type: 'note',
-                      action: 'created',
-                      title: 'React Hooks Guide',
-                      time: 'Oct 30, 2025',
-                      details: '',
-                    },
-                    {
-                      id: '1',
-                      type: 'note',
-                      action: 'created',
-                      title: 'React Hooks Guide',
-                      time: 'Oct 30, 2025',
-                      details: '',
-                    },
-                    {
-                      id: '1',
-                      type: 'note',
-                      action: 'created',
-                      title: 'React Hooks Guide',
-                      time: 'Oct 30, 2025',
-                      details: '',
-                    },
-                    {
-                      id: '2',
-                      type: 'flashcard',
-                      action: 'studied',
-                      title: 'JavaScript Basics',
-                      time: 'Oct 29, 2025',
-                      details: '8/12 cards mastered',
-                    },
-                    {
-                      id: '3',
-                      type: 'note',
-                      action: 'updated',
-                      title: 'TypeScript Best Practices',
-                      time: 'Oct 27, 2025',
-                      details: '',
-                    },
-                    {
-                      id: '4',
-                      type: 'flashcard',
-                      action: 'created',
-                      title: 'CSS Grid Layout',
-                      time: 'Oct 23, 2025',
-                      details: '',
-                    },
-                  ].map((activity) => (
+                  {activity.map((activity) => (
                     <Card
                       className="hover:bg-accent/10 transition-colors border-border/50"
-                      key={activity.id}
+                      key={activity.date}
                     >
                       <CardContent className="p-2">
                         <div className="flex items-center gap-2">
                           <div className="p-1.5 rounded-full bg-primary/10 text-primary flex-shrink-0">
-                            {activity.type === 'note' ? (
-                              <FileText className="h-3.5 w-3.5" />
-                            ) : (
-                              <BookOpen className="h-3.5 w-3.5" />
-                            )}
+                            <FileText className="h-3.5 w-3.5" />
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
                               <h4 className="text-sm font-medium text-black dark:text-white leading-tight line-clamp-1">
-                                {activity.title}
+                                Created {activity.notes} notes and{' '}
+                                {activity.flashcards} flashcards
                               </h4>
-                              <span className="text-xs text-muted-foreground whitespace-nowrap">
-                                {activity.time}
+                              <span className="ml-auto text-xs text-muted-foreground whitespace-nowrap">
+                                {activity.date}
                               </span>
                             </div>
-                            {activity.details && (
-                              <p className="text-xs text-muted-foreground mt-0.5">
-                                {activity.details}
-                              </p>
-                            )}
                           </div>
                         </div>
                       </CardContent>

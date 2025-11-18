@@ -1,8 +1,9 @@
 'use server';
-import { eq } from 'drizzle-orm';
+import { and, eq, sql } from 'drizzle-orm';
 import type { Flashcard, FlashcardCreate } from '@/cards/types/flashcard';
 import { db } from '@/db/index';
-import { flashcardsTable } from '@/db/schema';
+import { flashcardsTable, notesTable } from '@/db/schema';
+import type { FlashcardSet } from '@/features/cards/types/flashcardSet';
 
 export async function insertCard(card: FlashcardCreate): Promise<Flashcard> {
   const result: Flashcard[] = await db
@@ -62,4 +63,37 @@ export async function modifyCard(flashcard: Flashcard): Promise<Flashcard> {
     .where(eq(flashcardsTable.id, flashcard.id))
     .returning();
   return result[0];
+}
+
+export async function findCardSets(
+  userId: string,
+  publicOnly = false,
+): Promise<FlashcardSet[]> {
+  const result = await db
+    .select({
+      id: notesTable.id,
+      title: notesTable.title,
+      summary: notesTable.summary,
+      keywords: notesTable.keywords,
+      createdAt: notesTable.createdAt,
+      updatedAt: notesTable.updatedAt,
+      cardCount: sql<number>`COUNT(${flashcardsTable.id})`.as('card_count'),
+    })
+    .from(notesTable)
+    .leftJoin(flashcardsTable, eq(flashcardsTable.noteId, notesTable.id))
+    .where(
+      publicOnly
+        ? and(eq(notesTable.authorId, userId), eq(notesTable.public, true))
+        : eq(notesTable.authorId, userId),
+    )
+    .groupBy(
+      notesTable.id,
+      notesTable.title,
+      notesTable.summary,
+      notesTable.keywords,
+      notesTable.createdAt,
+      notesTable.updatedAt,
+    );
+
+  return result;
 }

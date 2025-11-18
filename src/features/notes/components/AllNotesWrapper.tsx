@@ -39,7 +39,7 @@ export async function AllNotesWrapper() {
   }
 
   return (
-    <div className="container mx-auto px-3 sm:px-4 py-6 sm:py-8">
+    <div className="container max-w-[100%] mx-auto px-3 sm:px-4 py-6 sm:py-8">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-3 sm:gap-4">
         <div className="w-full sm:w-auto">
           <h1 className="text-xl sm:text-2xl font-bold tracking-tight leading-tight">
@@ -57,7 +57,7 @@ export async function AllNotesWrapper() {
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 max-h-[calc(100vh-14rem)] overflow-y-auto">
         {notes.map((note) => (
           <Card
             className="group hover:shadow-md transition-all duration-200 flex flex-col h-full w-full"
@@ -67,25 +67,25 @@ export async function AllNotesWrapper() {
               className="flex flex-col flex-grow"
               href={`/notes/${note.id}`}
             >
-              <CardHeader className="pb-4 pt-5">
-                <div className="flex items-center justify-between mb-2">
+              <CardHeader className="pb-4">
+                <div className="flex items-center">
                   <CardTitle className="text-base sm:text-lg font-semibold line-clamp-2 min-h-[2.75rem] overflow-hidden">
                     {note.title || 'Untitled Note'}
                   </CardTitle>
-                  <span className="inline-flex items-center text-xs text-muted-foreground">
-                    {note.public ? (
-                      <>
-                        <Globe className="h-3.5 w-3.5 mr-1" />
-                        Public
-                      </>
-                    ) : (
-                      <>
-                        <Lock className="h-3.5 w-3.5 mr-1" />
-                        Private
-                      </>
-                    )}
-                  </span>
                 </div>
+                <span className="inline-flex items-center text-xs text-muted-foreground">
+                  {note.public ? (
+                    <>
+                      <Globe className="h-3.5 w-3.5 mr-1" />
+                      Public
+                    </>
+                  ) : (
+                    <>
+                      <Lock className="h-3.5 w-3.5 mr-1" />
+                      Private
+                    </>
+                  )}
+                </span>
                 <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2 mt-1">
                   {note.summary || 'No description provided.'}
                 </p>
@@ -93,18 +93,15 @@ export async function AllNotesWrapper() {
 
               <CardContent className="flex-grow py-1 sm:py-2 px-4 sm:px-6">
                 <div className="flex flex-wrap gap-1.5 mb-2 -ml-1.5 -mt-1.5">
-                  {note.keywords
-                    .split(',')
-                    .slice(0, 5)
-                    .map((kw) => (
-                      <Badge
-                        className="text-xs font-normal whitespace-nowrap overflow-hidden text-ellipsis max-w-[calc(100%-0.75rem)]"
-                        key={kw.trim()}
-                        variant="secondary"
-                      >
-                        {kw.trim()}
-                      </Badge>
-                    ))}
+                  {note.keywords.map((kw) => (
+                    <Badge
+                      className="text-xs font-normal whitespace-nowrap overflow-hidden text-ellipsis max-w-[calc(100%-0.75rem)]"
+                      key={kw.trim()}
+                      variant="secondary"
+                    >
+                      {kw.trim()}
+                    </Badge>
+                  ))}
                 </div>
               </CardContent>
 
