@@ -41,8 +41,9 @@ type NoteDisplayProps = {
 
 import TurnDown from 'turndown';
 
+// TODO: Massive refactor this and all other pages, split server/client and proper props etc. Use custom hooks where possible.
+
 export function NoteDisplay({ note }: NoteDisplayProps) {
-  const [mermaidRendered, setMermaidRendered] = useState(false);
   const contentRef = useRef<HTMLDivElement | null>(null);
   const printSectionRef = useRef<HTMLDivElement | null>(null);
 
@@ -75,7 +76,6 @@ export function NoteDisplay({ note }: NoteDisplayProps) {
     };
 
     renderMermaidDiagrams();
-    setMermaidRendered(true);
   }, [note.content]);
 
   // TODO: Clean up these hooks.
@@ -113,10 +113,10 @@ export function NoteDisplay({ note }: NoteDisplayProps) {
   }, [note.title]);
 
   const convertToPDF = useCallback(async () => {
-    if (printSectionRef.current && mermaidRendered) {
+    if (printSectionRef.current) {
       window.print();
     }
-  }, [note.title, mermaidRendered]);
+  }, [note.title]);
 
   return (
     <section

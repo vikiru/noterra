@@ -106,6 +106,7 @@ Each object in "note_contents" must have three keys: "title" (a string), "headin
     *   All HTML lists must be properly closed before starting new sections, unless the new section is genuinely part of that list.
     *   For example, if you end a section with an <ol> or <ul> list, ensure you include the closing </ol> or </ul> tag before the section ends.
     *   Do not start a new section with content that should be part of a previous list.
+    *   **CRITICAL:** AVOID using @media print { ... } syntax in any CSS or style definitions within your HTML content.
 
 *   **Diagrams and Code Blocks:** Every diagram and code block MUST be wrapped in a <div> with a unique ID.
     *   **Mindmap Diagram:** The mindmap diagram must be wrapped in \`<div id="mindmap-overview">\`.
@@ -170,6 +171,7 @@ Each object in "note_contents" must have three keys: "title" (a string), "headin
         - Add empty lines between major branches in the code to improve spacing
         - Ensure all nodes are properly connected and no orphan nodes exist
         - Test that the mindmap renders without overlapping elements
+        - **CRITICAL:** Do not use curly braces { } anywhere in the mindmap syntax. This includes node definitions and connections. Follow the standard Mermaid mindmap syntax strictly.
 
 *   **Regular Code Blocks (e.g., Python, JavaScript):**
     *   Use the exact format: \`<pre><code class="language-python">...code...</code></pre>\`
