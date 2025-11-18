@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import { FileText } from 'lucide-react';
+import Link from 'next/link';
 import {
   Empty,
   EmptyContent,
@@ -24,8 +24,8 @@ export function EmptyNotesState() {
         </EmptyHeader>
         <EmptyContent>
           <Link
-            href="/prompt"
             className="text-primary hover:underline font-medium"
+            href="/prompt"
           >
             Create Note
           </Link>
