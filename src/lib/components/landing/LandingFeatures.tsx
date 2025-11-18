@@ -22,7 +22,9 @@ export function LandingFeatures() {
           <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
             <WandSparkles className="h-5 w-5" />
           </div>
-          <h3 className="mb-2 text-lg font-semibold font-heading">AI Note Generation</h3>
+          <h3 className="mb-2 text-lg font-semibold font-heading">
+            AI Note Generation
+          </h3>
           <p className="text-muted-foreground font-body">
             Effortlessly create comprehensive notes that break down complex
             topics into digestible chunks, powered by Gemini AI.
@@ -34,7 +36,9 @@ export function LandingFeatures() {
           <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
             <Download className="h-5 w-5" />
           </div>
-          <h3 className="mb-2 text-lg font-semibold font-heading">Export and Share</h3>
+          <h3 className="mb-2 text-lg font-semibold font-heading">
+            Export and Share
+          </h3>
           <p className="text-muted-foreground font-body">
             Export your notes to multiple formats including Markdown, PDF, and
             plain text. Share your knowledge with others effortlessly.
@@ -46,11 +50,12 @@ export function LandingFeatures() {
           <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
             <Pencil className="h-5 w-5" />
           </div>
-          <h3 className="mb-2 text-lg font-semibold font-heading">Powerful Editor</h3>
+          <h3 className="mb-2 text-lg font-semibold font-heading">
+            Powerful Editor
+          </h3>
           <p className="text-muted-foreground font-body">
             Enjoy a seamless writing experience with our rich text editor
-            powered by TipTap. Format, organize, and style your notes with
-            ease.
+            powered by TipTap. Format, organize, and style your notes with ease.
           </p>
         </div>
       </div>

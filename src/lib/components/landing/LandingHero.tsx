@@ -10,8 +10,8 @@ export function LandingHero() {
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-muted-foreground font-body">
             Choose any topic and let AI break it down into simple,
-            easy-to-understand insights. Gain clarity, master complex ideas,
-            and discover practical ways to apply your new knowledge.
+            easy-to-understand insights. Gain clarity, master complex ideas, and
+            discover practical ways to apply your new knowledge.
           </p>
           <div className="mt-6 flex flex-col items-center justify-center">
             <GetStartedButton />

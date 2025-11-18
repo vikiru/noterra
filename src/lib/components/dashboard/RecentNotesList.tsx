@@ -14,8 +14,8 @@ export function RecentNotesList({ recentNotes }: RecentNotesListProps) {
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-lg font-medium">Recent Notes</CardTitle>
         <a
-          href="/notes"
           className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1"
+          href="/notes"
         >
           View all <ArrowRight className="h-3 w-3" />
         </a>
