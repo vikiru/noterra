@@ -39,7 +39,7 @@ export async function AllNotesWrapper() {
   }
 
   return (
-    <div className="container max-w-[100%] mx-auto px-3 sm:px-4 py-6 sm:py-8">
+    <div className="container max-w-full mx-auto px-3 sm:px-4 py-6 sm:py-8">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-3 sm:gap-4">
         <div className="w-full sm:w-auto">
           <h1 className="text-xl sm:text-2xl font-bold tracking-tight leading-tight">
