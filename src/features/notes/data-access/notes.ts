@@ -150,3 +150,16 @@ export async function findNoteMetadata(
     .offset(offset);
   return result;
 }
+
+export async function findNoteTitles(
+  userId: string,
+): Promise<{ id: string; title: string }[]> {
+  const result = await db
+    .select({
+      id: notesTable.id,
+      title: notesTable.title,
+    })
+    .from(notesTable)
+    .where(eq(notesTable.authorId, userId));
+  return result;
+}

@@ -6,8 +6,7 @@ export function combineHTML(notesContents: GeminiNoteContent[]): string {
   let combinedHTML = '';
 
   notesContents.forEach((noteContent: GeminiNoteContent) => {
-    const sanitizedHTML = DOMPurify.sanitize(noteContent.content);
-    combinedHTML += sanitizedHTML;
+    combinedHTML += noteContent.content;
   });
 
   return combinedHTML;

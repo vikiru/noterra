@@ -1,23 +1,18 @@
-import { Activity, BarChart2, BookOpen, FileText } from 'lucide-react';
+import { Activity, BarChart2, BookOpen, FileText, History } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { findUserActivities } from '@/features/activity/data-access/activity';
 import {
+  findUserActivityOverview,
   findUserById,
   findUserTotalCreations,
 } from '@/features/user/data-access/user';
 import { getCurrentUser } from '@/lib/auth';
+import { ChartAreaInteractive } from '@/lib/components/ExampleChart';
 
 export default async function DashboardPage() {
   const userId = await getCurrentUser();
   const user = await findUserById(userId as string);
   const stats = await findUserTotalCreations(userId as string);
-  const activity = await findUserActivities(userId as string);
-
-  const chartData = [
-    { month: 'Oct', notes: 12, flashcards: 8 },
-    { month: 'Sep', notes: 18, flashcards: 12 },
-    { month: 'Aug', notes: 8, flashcards: 15 },
-  ];
+  const activity = await findUserActivityOverview(userId as string);
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-8">
@@ -98,7 +93,7 @@ export default async function DashboardPage() {
                 Activity chart will be displayed here
               </p>
               <p className="text-xs text-muted-foreground mt-1">
-                Showing data for: {chartData.map((d) => d.month).join(', ')}
+                Showing data for last 3 months
               </p>
             </div>
           </div>
@@ -108,24 +103,26 @@ export default async function DashboardPage() {
       {/* Recent Activity */}
       <Card>
         <CardHeader>
-          <CardTitle>Recent Activity</CardTitle>
+          <div className="flex items-center gap-2">
+            <History className="h-5 w-5" />
+            <CardTitle>Recent Activity</CardTitle>
+          </div>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
+          <div>
             {activity.slice(0, 5).map((item) => (
-              <div className="flex items-start gap-3" key={item.id}>
+              <div className="flex items-start gap-3" key={item.date}>
                 <div className="p-1.5 rounded-full bg-primary/10 text-primary mt-0.5"></div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium leading-none">
-                    {item.type === 'note' ? 'Note' : 'Flashcard'} {item.action}
-                  </p>
                   <p className="text-sm text-muted-foreground">
-                    {new Date(item.createdAt).toLocaleDateString('en-US', {
+                    {new Date(item.date).toLocaleDateString('en-US', {
                       month: 'short',
                       day: 'numeric',
-                      hour: '2-digit',
-                      minute: '2-digit',
+                      year: 'numeric',
                     })}
+                  </p>
+                  <p className="text-sm font-medium leading-none mt-1">
+                    Created {item.notes} notes and {item.flashcards} flashcards.
                   </p>
                 </div>
               </div>
