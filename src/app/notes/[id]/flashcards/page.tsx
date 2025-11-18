@@ -27,10 +27,10 @@ export default async function NoteFlashcardsPage({
 
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b pb-6">
             <div className="space-y-1">
-              <h1 className="text-3xl font-bold tracking-tight font-heading">
+              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight font-heading text-foreground">
                 Flashcards
               </h1>
-              <p className="text-muted-foreground font-body max-w-2xl">
+              <p className="text-muted-foreground font-body text-lg max-w-2xl">
                 Review and manage the flashcards generated from your note.
               </p>
             </div>
