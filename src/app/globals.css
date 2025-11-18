@@ -8,6 +8,7 @@
 @custom-variant dark (&:is(.dark *));
 @plugin "@tailwindcss/typography";
 
+/* TODO: Remove this and from the html once done development */
 @plugin "tailwindcss-debug-screens" {
     classname: "debug-screens";
     position: "bottom, left";
@@ -170,11 +171,11 @@ body {
     }
 
     h1 {
-        font-size: clamp(2.5rem, 2vw + 2rem, 4rem); /* 40–64px */
+        font-size: clamp(2.25rem, 1.5rem + 3vw, 3.75rem); /* 40–64px */
     }
 
     h2 {
-        font-size: clamp(2rem, 1.5vw + 1.5rem, 3rem); /* 32–48px */
+        font-size: clamp(2rem, 1.5rem + 2vw, 3rem); /* 32–48px */
     }
 
     h3 {
@@ -205,4 +206,20 @@ body {
     body {
         height: 100vh;
     }
+
+    /* Override MermaidJS label for diagrams */
+pre[data-processed=true]{
+    background-color: transparent !important;
+}
+
+
+
+.nodeLabel p {
+    color: var(--background);
+}
+
+/* Hide the cluster rect */
+[id^="mermaid-"] .cluster rect{
+    display: none;
+}
 }
