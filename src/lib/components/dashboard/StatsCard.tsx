@@ -1,17 +1,13 @@
-import { LucideIcon } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 
 type StatsCardProps = {
   title: string;
   value: string | number;
   icon: LucideIcon;
-}
+};
 
-export function StatsCard({
-  title,
-  value,
-  icon: Icon,
-}: StatsCardProps) {
+export function StatsCard({ title, value, icon: Icon }: StatsCardProps) {
   return (
     <Card>
       <CardContent className="p-6">

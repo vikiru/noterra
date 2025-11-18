@@ -10,14 +10,14 @@ export function DashboardStats({ totalCreations }: DashboardStatsProps) {
   return (
     <div className="grid gap-4 md:grid-cols-2">
       <StatsCard
+        icon={FileText}
         title="Total Notes"
         value={totalCreations.notes}
-        icon={FileText}
       />
       <StatsCard
+        icon={BookOpen}
         title="Total Flashcards"
         value={totalCreations.flashcards}
-        icon={BookOpen}
       />
     </div>
   );

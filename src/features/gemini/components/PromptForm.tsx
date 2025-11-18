@@ -4,15 +4,15 @@ import { useAuth } from '@clerk/nextjs';
 import { Loader2, WandSparkles } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { createMultipleFlashcards } from '@/features/cards/actions/flashcard';
 import { generateGeminiNote } from '@/features/gemini/actions/generateGeminiNote';
+import { promptSchema } from '@/features/gemini/schema/promptSchema';
 import { constructCards } from '@/features/gemini/utils/constructCards';
 import { constructNote } from '@/features/gemini/utils/constructNote';
 import { createNote } from '@/features/notes/actions/notes';
 import type { Note } from '@/features/notes/types/notes';
-import { promptSchema } from '@/features/gemini/schema/promptSchema';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { validateData } from '@/lib/utils/validateData';
 
 export function PromptForm() {

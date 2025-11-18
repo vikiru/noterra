@@ -28,7 +28,7 @@ export function ActivityFeed({ activityOverview }: ActivityFeedProps) {
             <EmptyActivityState />
           ) : (
             recentActivity.map((item) => (
-              <ActivityFeedItem key={item.date} item={item} />
+              <ActivityFeedItem item={item} key={item.date} />
             ))
           )}
         </div>

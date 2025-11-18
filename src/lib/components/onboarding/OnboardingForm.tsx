@@ -79,10 +79,7 @@ export function OnboardingForm() {
             </p>
           </div>
 
-          <form
-            className="space-y-6"
-            onSubmit={form.handleSubmit(onSubmit)}
-          >
+          <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
             <div className="grid grid-cols-2 gap-4">
               {/* First Name */}
               <FormField
@@ -94,7 +91,11 @@ export function OnboardingForm() {
                       First Name
                     </FormLabel>
                     <FormControl>
-                      <Input className="h-11" placeholder="e.g., John" {...field} />
+                      <Input
+                        className="h-11"
+                        placeholder="e.g., John"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -111,7 +112,11 @@ export function OnboardingForm() {
                       Last Name
                     </FormLabel>
                     <FormControl>
-                      <Input className="h-11" placeholder="e.g., Doe" {...field} />
+                      <Input
+                        className="h-11"
+                        placeholder="e.g., Doe"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -149,7 +154,9 @@ export function OnboardingForm() {
               name="country"
               render={({ field }) => (
                 <FormItem className="space-y-1.5">
-                  <FormLabel className="text-sm font-medium font-heading">Country</FormLabel>
+                  <FormLabel className="text-sm font-medium font-heading">
+                    Country
+                  </FormLabel>
                   <FormControl>
                     <Input
                       className="h-11"
@@ -162,7 +169,10 @@ export function OnboardingForm() {
               )}
             />
 
-            <Button className="w-full h-11 text-base font-semibold hover:cursor-pointer" type="submit">
+            <Button
+              className="w-full h-11 text-base font-semibold hover:cursor-pointer"
+              type="submit"
+            >
               Complete Setup
             </Button>
           </form>

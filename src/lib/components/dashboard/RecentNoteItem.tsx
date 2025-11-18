@@ -8,8 +8,8 @@ type RecentNoteItemProps = {
 export function RecentNoteItem({ note }: RecentNoteItemProps) {
   return (
     <a
-      href={`/notes/${note.id}`}
       className="flex items-center justify-between p-2 rounded-md hover:bg-muted/50 transition-colors group"
+      href={`/notes/${note.id}`}
     >
       <div className="flex items-center gap-3 overflow-hidden">
         <div className="h-8 w-8 rounded bg-primary/10 flex items-center justify-center shrink-0 text-primary">

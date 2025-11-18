@@ -2,7 +2,12 @@ import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata } from 'next';
 
 import './globals.css';
-import { Inter, JetBrains_Mono, Plus_Jakarta_Sans, Syne } from 'next/font/google';
+import {
+  Inter,
+  JetBrains_Mono,
+  Plus_Jakarta_Sans,
+  Syne,
+} from 'next/font/google';
 import { Toaster } from 'sonner';
 import { TanstackProvider } from '@/lib/components/providers/TanstackProvider';
 
