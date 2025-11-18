@@ -152,6 +152,7 @@ body {
 
 /*TODO: Clean this up, finalize fonts and type scale.*/
 @layer base {
+
     h1,
     h2,
     h3,
@@ -198,4 +199,184 @@ body {
     [id^="mermaid-"] .cluster rect {
         display: none;
     }
+
+    @media print {
+
+        /* hide UI */
+        #note-ctr #actions,
+        #note-ctr #dropdown-menu,
+        #note-ctr #dropdown-menu * {
+            display: none !important;
+        }
+
+        /* body base */
+        body {
+            font-size: 12pt;
+            line-height: 1.45;
+            color: #000 !important;
+            background: #fff !important;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+            margin: 0 !important;
+            padding: 0 !important;
+            height: auto !important;
+        }
+
+        /* dark mode fix */
+        *[class*="dark:"],
+        :root.dark & {
+            background: none !important;
+            color: #000 !important;
+        }
+
+        /* container */
+        #note-ctr {
+            padding: 0 !important;
+            margin: 0 !important;
+            max-width: 100% !important;
+            height: auto !important;
+        }
+
+        #note {
+            width: 100% !important;
+        }
+
+        /* headings/text */
+        #note h1 {
+            font-size: 20pt !important;
+            margin-bottom: 0.5rem !important;
+        }
+
+        #note time,
+        #note .text-muted-foreground,
+        #note .text-sm {
+            font-size: 10pt !important;
+            color: #000 !important;
+        }
+
+        /* badges */
+        #note .badge,
+        #note .Badge,
+        #note .keyword {
+            border: 1px solid #444 !important;
+            background: #eee !important;
+            color: #000 !important;
+            padding: 2px 6px !important;
+            border-radius: 4px !important;
+            font-size: 9pt !important;
+        }
+
+        /* content layout */
+        #note-content {
+            padding: 0 !important;
+            background: #fff !important;
+            color: #000 !important;
+            max-width: 100% !important;
+            page-break-inside: auto;
+        }
+
+        /* prevent overflow */
+        #note-content,
+        #note-content * {
+            overflow-wrap: break-word !important;
+            word-break: break-word !important;
+            white-space: normal !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        /* tables */
+        #note-content table {
+            width: 100% !important;
+            border-collapse: collapse !important;
+        }
+
+        #note-content th,
+        #note-content td {
+            border: 1px solid #000 !important;
+            padding: 4px 6px !important;
+        }
+
+        /* code blocks */
+        #note-content pre,
+        #note-content code {
+            font-size: 10pt !important;
+            font-family: monospace !important;
+            background: #f4f4f4 !important;
+            color: #000 !important;
+            border: 1px solid #ddd !important;
+            padding: 8px !important;
+            white-space: pre-wrap !important;
+            /* preserve line breaks */
+            word-wrap: break-word !important;
+            /* break long lines */
+            overflow-x: auto !important;
+            /* allow horizontal scroll */
+            page-break-inside: avoid !important;
+            /* keep code together */
+            break-inside: avoid !important;
+        }
+
+        /* images/figures/svg */
+        #note-content img,
+        #note-content svg,
+        #note-content table,
+        #note-content figure {
+            max-width: 100% !important;
+            width: auto !important;
+            height: auto !important;
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        /* headings page break */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            page-break-after: avoid;
+            page-break-inside: avoid;
+            break-after: avoid;
+            break-inside: avoid;
+        }
+
+        /* mermaid fix */
+        .nodeLabel p {
+            color: #000 !important;
+        }
+
+        [id^="mermaid-"] .cluster rect {
+            display: none !important;
+        }
+
+        /* definition lists */
+        dl,
+        dl>dt,
+        dl>dd {
+            page-break-inside: avoid;
+            break-inside: avoid;
+            margin: 0;
+            padding: 0;
+        }
+
+        dt {
+            font-weight: bold;
+            page-break-after: avoid;
+        }
+
+        dd {
+            margin-left: 1em;
+            page-break-before: avoid;
+            page-break-after: auto;
+        }
+
+        /* page margins */
+        @page {
+            margin: 1cm;
+        }
+    }
+
+
 }
