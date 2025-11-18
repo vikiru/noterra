@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import mermaid from 'mermaid';
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
@@ -39,8 +39,13 @@ type NoteDisplayProps = {
   };
 };
 
+import TurnDown from 'turndown';
+
 export function NoteDisplay({ note }: NoteDisplayProps) {
-  console.log(note.content);
+  const [mermaidRendered, setMermaidRendered] = useState(false);
+  const contentRef = useRef<HTMLDivElement | null>(null);
+  const printSectionRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     mermaid.initialize({
       startOnLoad: false,
@@ -49,7 +54,7 @@ export function NoteDisplay({ note }: NoteDisplayProps) {
 
     const renderMermaidDiagrams = async () => {
       const mermaidDivs = document.querySelectorAll(
-        'div[id*="diagram"], div#mindmap-overview-mindmap, div[id*="mindmap"]',
+        'div[id*="diagram"], div#mindmap-overview-mindmap, div[id*="mindmap"], pre.mermaid',
       );
       const mermaidDiagrams = [];
 
@@ -70,12 +75,56 @@ export function NoteDisplay({ note }: NoteDisplayProps) {
     };
 
     renderMermaidDiagrams();
+    setMermaidRendered(true);
   }, [note.content]);
 
+  // TODO: Clean up these hooks.
+  const convertToMarkdown = useCallback(() => {
+    if (contentRef.current) {
+      const turnDownService = new TurnDown();
+      const markdown = turnDownService.turndown(contentRef.current.innerHTML);
+      console.log(note.title);
+
+      // Create a blob and trigger download
+      const blob = new Blob([markdown], { type: 'text/markdown' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${note.title}.md`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  }, [note.title]);
+
+  const convertToText = useCallback(() => {
+    if (contentRef.current) {
+      const turnDownService = new TurnDown();
+      const markdown = turnDownService.turndown(contentRef.current.innerHTML);
+
+      // Create a blob and trigger download
+      const blob = new Blob([markdown], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${note.title}.txt`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  }, [note.title]);
+
+  const convertToPDF = useCallback(async () => {
+    if (printSectionRef.current && mermaidRendered) {
+      window.print();
+    }
+  }, [note.title, mermaidRendered]);
+
   return (
-    <section className="container max-w-6xl mx-auto px-3 sm:px-4 py-6 sm:py-8">
+    <section
+      className="container max-w-6xl mx-auto px-3 sm:px-4 py-6 sm:py-8"
+      id="note-ctr"
+    >
       {/* Back and Actions */}
-      <div className="flex justify-between items-center mb-6">
+      <section className="flex justify-between items-center mb-6" id="actions">
         <Button asChild variant="ghost">
           <Link
             className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
@@ -103,43 +152,59 @@ export function NoteDisplay({ note }: NoteDisplayProps) {
             <Share2 className="h-4 w-4" />
             <span className="hidden sm:inline">Share</span>
           </Button>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                className="gap-1.5 hover:bg-muted/50 dark:hover:bg-muted/80 text-muted-foreground hover:text-foreground dark:hover:text-foreground"
-                size="sm"
-                variant="ghost"
-              >
-                <MoreVertical className="h-4 w-4" />
-                <span className="sr-only">More actions</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem className="cursor-pointer">
-                <Book className="mr-2 h-4 w-4" />
-                <span>
-                  <a href={`/notes/${note.id}/flashcards`}>View Flashcards</a>
-                </span>
-              </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
-                <FileText className="mr-2 h-4 w-4" />
-                <span>Export as Markdown</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
-                <FileDown className="mr-2 h-4 w-4" />
-                <span>Export as PDF</span>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className="cursor-pointer text-destructive focus:text-destructive">
-                <Trash2 className="mr-2 h-4 w-4" />
-                <span>Delete Note</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      </div>
 
-      <section className="print" id="note">
+          <section id="dropdown-menu">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  className="gap-1.5 hover:bg-muted/50 dark:hover:bg-muted/80 text-muted-foreground hover:text-foreground dark:hover:text-foreground"
+                  size="sm"
+                  variant="ghost"
+                >
+                  <MoreVertical className="h-4 w-4" />
+                  <span className="sr-only">More actions</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem className="cursor-pointer">
+                  <Book className="mr-2 h-4 w-4" />
+                  <span>
+                    <a href={`/notes/${note.id}/flashcards`}>View Flashcards</a>
+                  </span>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  onClick={convertToMarkdown}
+                >
+                  <FileText className="mr-2 h-4 w-4" />
+                  <span>Export as Markdown</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  onClick={convertToText}
+                >
+                  <FileText className="mr-2 h-4 w-4" />
+                  <span>Export as Text</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  onClick={convertToPDF}
+                >
+                  <FileDown className="mr-2 h-4 w-4" />
+                  <span>Export as PDF</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="cursor-pointer text-destructive focus:text-destructive">
+                  <Trash2 className="mr-2 h-4 w-4" />
+                  <span>Delete Note</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </section>
+        </div>
+      </section>
+
+      <section id="note" ref={printSectionRef}>
         {/* Note Header */}
         <div className="mb-6">
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2">
@@ -182,6 +247,7 @@ export function NoteDisplay({ note }: NoteDisplayProps) {
           className="max-w-none bg-white dark:bg-red prose px-6 pb-2 pt-1 rounded-lg dark:bg-black"
           dangerouslySetInnerHTML={{ __html: note.content }}
           id="note-content"
+          ref={contentRef}
         />
       </section>
     </section>
