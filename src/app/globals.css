@@ -170,37 +170,15 @@ body {
         font-family: "Fira Code", monospace;
     }
 
-    h1 {
-        font-size: clamp(2.25rem, 1.5rem + 3vw, 3.75rem); /* 40–64px */
-    }
-
-    h2 {
-        font-size: clamp(2rem, 1.5rem + 2vw, 3rem); /* 32–48px */
-    }
-
-    h3 {
-        font-size: clamp(1.75rem, 1vw + 1.2rem, 2.25rem); /* 28–36px */
-    }
-
-    h4 {
-        font-size: clamp(1.5rem, 0.8vw + 1rem, 2rem); /* 24–32px */
-    }
-
-    h5 {
-        font-size: clamp(1.25rem, 0.6vw + 0.9rem, 1.5rem); /* 20–24px */
-    }
-
-    h6 {
-        font-size: clamp(1.125rem, 0.5vw + 0.85rem, 1.25rem); /* 18–20px */
-    }
-
-    body {
-        font-size: clamp(1rem, 0.25vw + 0.9rem, 1.125rem); /* 16–18px */
-    }
-
-    small {
-        font-size: clamp(0.875rem, 0.1vw + 0.8rem, 0.95rem); /* 14–15.2px */
-    }
+    /* Typography scale  */
+    /* h1 { font-size: clamp(2.25rem, 1.5rem + 3vw, 3.75rem); } */
+    /* h2 { font-size: clamp(2rem, 1.5rem + 2vw, 3rem); } */
+    /* h3 { font-size: clamp(1.75rem, 1vw + 1.2rem, 2.25rem); } */
+    /* h4 { font-size: clamp(1.5rem, 0.8vw + 1rem, 2rem); } */
+    /* h5 { font-size: clamp(1.25rem, 0.6vw + 0.9rem, 1.5rem); } */
+    /* h6 { font-size: clamp(1.125rem, 0.5vw + 0.85rem, 1.25rem); } */
+    /* body { font-size: clamp(1rem, 0.25vw + 0.9rem, 1.125rem); } */
+    /* small { font-size: clamp(0.875rem, 0.1vw + 0.8rem, 0.95rem); } */
 
     html,
     body {
@@ -208,18 +186,16 @@ body {
     }
 
     /* Override MermaidJS label for diagrams */
-pre[data-processed=true]{
-    background-color: transparent !important;
-}
+    pre[data-processed="true"] {
+        background-color: transparent !important;
+    }
 
+    .nodeLabel p {
+        color: var(--background);
+    }
 
-
-.nodeLabel p {
-    color: var(--background);
-}
-
-/* Hide the cluster rect */
-[id^="mermaid-"] .cluster rect{
-    display: none;
-}
+    /* Hide the cluster rect */
+    [id^="mermaid-"] .cluster rect {
+        display: none;
+    }
 }
