@@ -1,4 +1,5 @@
 import { ArrowRight, Globe, Lock } from 'lucide-react';
+import { DateTime } from 'luxon';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -10,9 +11,9 @@ import {
 } from '@/components/ui/card';
 import type { Note } from '@/lib/db/schema';
 
-interface NoteCardProps {
+type NoteCardProps = {
   note: Note;
-}
+};
 
 export function NoteCard({ note }: NoteCardProps) {
   return (
@@ -59,11 +60,7 @@ export function NoteCard({ note }: NoteCardProps) {
         <CardFooter className="pt-2 sm:pt-3 pb-3 sm:pb-4 mt-auto border-t px-4 sm:px-6">
           <div className="w-full flex justify-between items-center text-xs text-muted-foreground">
             <time dateTime={note.createdAt.toISOString()}>
-              {new Date(note.createdAt).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric',
-              })}
+              {DateTime.fromJSDate(note.createdAt).toFormat('LLL dd, yyyy')}
             </time>
             <span className="inline-flex items-center text-primary font-medium group-hover:underline">
               View <ArrowRight className="ml-1 h-3.5 w-3.5" />

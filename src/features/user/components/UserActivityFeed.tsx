@@ -2,15 +2,15 @@ import { Clock } from 'lucide-react';
 import { ScrollArea } from '@/lib/components/ui/scroll-area';
 import { ActivityCard } from './ActivityCard';
 
-interface ActivityItem {
+type ActivityItem = {
   date: string;
   notes: number;
   flashcards: number;
-}
+};
 
-interface UserActivityFeedProps {
+type UserActivityFeedProps = {
   activity: ActivityItem[];
-}
+};
 
 export function UserActivityFeed({ activity }: UserActivityFeedProps) {
   return (

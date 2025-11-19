@@ -6,14 +6,18 @@ import { Textarea } from '@/components/ui/textarea';
 import { usePromptForm } from '@/features/gemini/hooks/usePromptForm';
 
 export function PromptForm() {
-  const { prompt, loading, validationError, handleChange, handleSubmit } = usePromptForm();
+  const { prompt, loading, validationError, handleChange, handleSubmit } =
+    usePromptForm();
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="block text-sm font-medium leading-6" htmlFor="prompt">
+            <label
+              className="block text-sm font-medium leading-6"
+              htmlFor="prompt"
+            >
               Topic
             </label>
             <span className="text-xs text-muted-foreground">
@@ -26,12 +30,12 @@ export function PromptForm() {
             disabled={loading}
             id="prompt"
             maxLength={500}
-            rows={4}
             name="prompt"
             onChange={handleChange}
             placeholder="Enter a topic to generate note and flashcards..."
-            value={prompt}
+            rows={4}
             style={{ resize: 'none' }}
+            value={prompt}
           />
 
           {validationError && (

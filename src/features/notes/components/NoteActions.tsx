@@ -20,12 +20,12 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-interface NoteActionsProps {
+type NoteActionsProps = {
   noteId: string;
   onExportMarkdown: () => void;
   onExportText: () => void;
   onExportPDF: () => void;
-}
+};
 
 export function NoteActions({
   noteId,

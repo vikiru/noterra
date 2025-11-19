@@ -4,15 +4,11 @@ import { Card, CardContent } from '@/components/ui/card';
 import { ScrollArea } from '@/lib/components/ui/scroll-area';
 import type { FlashcardSet } from '@/lib/db/schema';
 
-interface UserFlashcardsListProps {
+type UserFlashcardsListProps = {
   flashcards: (FlashcardSet & { cardCount: number })[];
-  totalFlashcards: number;
-}
+};
 
-export function UserFlashcardsList({
-  flashcards,
-  totalFlashcards,
-}: UserFlashcardsListProps) {
+export function UserFlashcardsList({ flashcards }: UserFlashcardsListProps) {
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between mb-4">

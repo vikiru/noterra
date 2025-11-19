@@ -1,8 +1,9 @@
 import { Calendar, FileText } from 'lucide-react';
-import type { Note } from '@/features/notes/types/notes';
+import { DateTime } from 'luxon';
+import type { NoteMetadata } from '@/features/notes/types/noteMetadata';
 
 type RecentNoteItemProps = {
-  note: Note;
+  note: NoteMetadata;
 };
 
 export function RecentNoteItem({ note }: RecentNoteItemProps) {
@@ -21,10 +22,7 @@ export function RecentNoteItem({ note }: RecentNoteItemProps) {
       </div>
       <div className="flex items-center gap-2 text-xs text-muted-foreground shrink-0">
         <Calendar className="h-3 w-3" />
-        {new Date(note.createdAt).toLocaleDateString('en-US', {
-          month: 'short',
-          day: 'numeric',
-        })}
+        {DateTime.fromJSDate(note.createdAt).toFormat('LLL d')}
       </div>
     </a>
   );

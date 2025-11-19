@@ -4,10 +4,10 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils/cn';
 
-interface GetStartedButtonProps {
+type GetStartedButtonProps = {
   size?: 'default' | 'sm' | 'lg' | 'icon';
   className?: string;
-}
+};
 
 export function GetStartedButton({
   size = 'lg',

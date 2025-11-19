@@ -1,12 +1,12 @@
 import { Library } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 
-interface LogoProps {
+type LogoProps = {
   className?: string;
   iconSize?: number;
   textSize?: string;
   containerSize?: string;
-}
+};
 
 export function Logo({
   className,

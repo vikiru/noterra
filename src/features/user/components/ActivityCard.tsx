@@ -1,15 +1,16 @@
 import { BookOpen, FileText } from 'lucide-react';
+import { DateTime } from 'luxon';
 import { Card, CardContent } from '@/components/ui/card';
 
-interface ActivityItem {
+type ActivityItem = {
   date: string;
   notes: number;
   flashcards: number;
-}
+};
 
-interface ActivityCardProps {
+type ActivityCardProps = {
   activity: ActivityItem;
-}
+};
 
 export function ActivityCard({ activity }: ActivityCardProps) {
   return (
@@ -28,21 +29,26 @@ export function ActivityCard({ activity }: ActivityCardProps) {
               </div>
             )}
           </div>
+
           <div>
             <p className="text-sm font-medium leading-none">
               {activity.notes > 0 && activity.flashcards > 0
-                ? `Created ${activity.notes} note${activity.notes > 1 ? 's' : ''} and ${activity.flashcards} flashcard set${activity.flashcards > 1 ? 's' : ''}`
+                ? `Created ${activity.notes} note${activity.notes !== 1 ? 's' : ''} and ${activity.flashcards} flashcard set${activity.flashcards !== 1 ? 's' : ''}`
                 : activity.notes > 0
-                  ? `Created ${activity.notes} note${activity.notes > 1 ? 's' : ''}`
-                  : `Created ${activity.flashcards} flashcard set${activity.flashcards > 1 ? 's' : ''}`}
+                  ? `Created ${activity.notes} note${activity.notes !== 1 ? 's' : ''}`
+                  : activity.flashcards > 0
+                    ? `Created ${activity.flashcards} flashcard set${activity.flashcards !== 1 ? 's' : ''}`
+                    : null}
             </p>
+
+            {activity.notes === 0 && activity.flashcards === 0 && (
+              <p className="text-sm font-medium leading-none">
+                No activity recorded on this day
+              </p>
+            )}
+
             <p className="text-xs text-muted-foreground mt-1">
-              {new Date(activity.date).toLocaleDateString('en-US', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}
+              {DateTime.fromISO(activity.date).toFormat('LLL d, yyyy')}
             </p>
           </div>
         </div>

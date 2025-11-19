@@ -42,7 +42,6 @@ export default async function ProfilePage({
           activity={activityOverview}
           flashcards={publicCards}
           notes={publicNotes}
-          totalCreations={totalCreations}
         />
       </div>
     </div>

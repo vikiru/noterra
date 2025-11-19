@@ -1,10 +1,11 @@
 import { CalendarDays, MapPin } from 'lucide-react';
+import { DateTime } from 'luxon';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Card } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import type { TotalCreations } from '@/user/types/totalCreations';
 
-interface ProfileHeaderProps {
+type ProfileHeaderProps = {
   userProfile: {
     firstName: string | null;
     lastName: string | null;
@@ -14,7 +15,7 @@ interface ProfileHeaderProps {
     createdAt: Date;
   };
   totalCreations: TotalCreations;
-}
+};
 
 export function ProfileHeader({
   userProfile,
@@ -23,8 +24,7 @@ export function ProfileHeader({
   const initials =
     `${userProfile.firstName?.[0] || ''}${userProfile.lastName?.[0] || ''}`.toUpperCase() ||
     'U';
-  const memberSince = new Date(userProfile.createdAt).toLocaleDateString(
-    'en-US',
+  const memberSince = DateTime.fromJSDate(userProfile.createdAt).toLocaleString(
     {
       year: 'numeric',
       month: 'long',
