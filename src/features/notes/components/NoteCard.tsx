@@ -17,10 +17,10 @@ interface NoteCardProps {
 export function NoteCard({ note }: NoteCardProps) {
   return (
     <Card className="group hover:shadow-md transition-all duration-200 flex flex-col h-full w-full">
-      <Link className="flex flex-col flex-grow" href={`/notes/${note.id}`}>
+      <Link className="flex flex-col grow" href={`/notes/${note.id}`}>
         <CardHeader className="pb-4">
           <div className="flex items-center">
-            <CardTitle className="text-base sm:text-lg font-semibold line-clamp-2 min-h-[2.75rem] overflow-hidden">
+            <CardTitle className="text-base sm:text-lg font-semibold line-clamp-2 min-h-11 overflow-hidden">
               {note.title || 'Untitled Note'}
             </CardTitle>
           </div>
@@ -42,9 +42,9 @@ export function NoteCard({ note }: NoteCardProps) {
           </p>
         </CardHeader>
 
-        <CardContent className="flex-grow py-1 sm:py-2 px-4 sm:px-6">
+        <CardContent className="grow py-1 sm:py-2 px-4 sm:px-6">
           <div className="flex flex-wrap gap-1.5 mb-2 -ml-1.5 -mt-1.5">
-            {note.keywords.map((kw) => (
+            {note.keywords.map((kw: string) => (
               <Badge
                 className="text-xs font-normal whitespace-nowrap overflow-hidden text-ellipsis max-w-[calc(100%-0.75rem)]"
                 key={kw.trim()}
@@ -58,8 +58,8 @@ export function NoteCard({ note }: NoteCardProps) {
 
         <CardFooter className="pt-2 sm:pt-3 pb-3 sm:pb-4 mt-auto border-t px-4 sm:px-6">
           <div className="w-full flex justify-between items-center text-xs text-muted-foreground">
-            <time dateTime={note.updatedAt.toISOString()}>
-              {new Date(note.updatedAt).toLocaleDateString('en-US', {
+            <time dateTime={note.createdAt.toISOString()}>
+              {new Date(note.createdAt).toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: 'short',
                 day: 'numeric',

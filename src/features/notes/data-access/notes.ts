@@ -138,8 +138,6 @@ export async function findRecentUserNotes(
 
 export async function findNoteMetadata(
   userId: string,
-  offset: number,
-  limit: number,
 ): Promise<NoteMetadata[]> {
   const result: NoteMetadata[] = await db
     .select({
@@ -156,9 +154,7 @@ export async function findNoteMetadata(
     })
     .from(notesTable)
     .where(eq(notesTable.authorId, userId))
-    .orderBy(desc(notesTable.createdAt))
-    .limit(limit)
-    .offset(offset);
+    .orderBy(desc(notesTable.createdAt));
   return result;
 }
 
