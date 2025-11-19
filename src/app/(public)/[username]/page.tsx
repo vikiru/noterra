@@ -14,9 +14,11 @@ export default async function ProfilePage({
 }) {
   const { username } = params;
   const user: User | null = await findUserByUsername(username);
+
   if (!user) {
     return notFound();
   }
+
   const {
     userProfile,
     totalCreations,
