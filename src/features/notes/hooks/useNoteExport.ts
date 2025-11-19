@@ -2,48 +2,49 @@ import { type RefObject, useCallback } from 'react';
 import TurnDown from 'turndown';
 
 interface UseNoteExportProps {
-  note: {
-    title: string;
-  };
+  title: string;
+  content: string;
   contentRef: RefObject<HTMLDivElement | null>;
 }
 
-export function useNoteExport({ note, contentRef }: UseNoteExportProps) {
-  const convertToMarkdown = useCallback(() => {
-    if (contentRef?.current) {
-      const turnDownService = new TurnDown();
-      const markdown = turnDownService.turndown(contentRef.current.innerHTML);
+export function useNoteExport({ title, content, contentRef }: UseNoteExportProps) {
+    const convertToMarkdown = useCallback(() => {
+      if (contentRef?.current) {
+        const turnDownService = new TurnDown();
+        const markdown = turnDownService.turndown(content);
 
-      const blob = new Blob([markdown], { type: 'text/markdown' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `${note.title}.md`;
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-  }, [note.title, contentRef]);
+        const normalized = markdown.replace(/\r?\n/g, '\r\n');
+        const blob = new Blob([normalized], { type: 'text/markdown; charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${title}.md`;
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+    }, [title, content, contentRef]);
 
-  const convertToText = useCallback(() => {
-    if (contentRef?.current) {
-      const turnDownService = new TurnDown();
-      const markdown = turnDownService.turndown(contentRef.current.innerHTML);
+    const convertToText = useCallback(() => {
+      if (contentRef?.current) {
+        const turnDownService = new TurnDown();
+        const markdown = turnDownService.turndown(content);
 
-      const blob = new Blob([markdown], { type: 'text/plain' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `${note.title}.txt`;
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-  }, [note.title, contentRef]);
+        const normalized = markdown.replace(/\r?\n/g, '\r\n');
+        const blob = new Blob([normalized], { type: 'text/plain; charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${title}.txt`;
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+    }, [title, content, contentRef]);
 
-  const convertToPDF = useCallback(async () => {
-    if (typeof window !== 'undefined') {
-      window.print();
-    }
-  }, []);
+    const convertToPDF = useCallback(async () => {
+      if (typeof window !== 'undefined') {
+        window.print();
+      }
+    }, []);
 
   return {
     convertToMarkdown,
