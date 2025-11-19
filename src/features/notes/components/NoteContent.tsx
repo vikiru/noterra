@@ -9,7 +9,7 @@ interface NoteContentProps {
 }
 
 export function NoteContent({ content, contentRef }: NoteContentProps) {
-  useMermaidRender(content);
+  useMermaidRender();
 
   return (
     <section
