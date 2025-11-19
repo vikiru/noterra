@@ -1,7 +1,7 @@
-import { and, desc, eq } from 'drizzle-orm';
+import { and, desc, eq, getTableColumns } from 'drizzle-orm';
 import type { Flashcard } from '@/cards/types/flashcard';
 import { db } from '@/db/index';
-import { flashcardsTable, notesTable } from '@/db/schema';
+import { flashcardsTable, notesTable, usersTable } from '@/db/schema';
 import type { NoteMetadata } from '@/features/notes/types/noteMetadata';
 import type { NoteData } from '@/lib/types/noteData';
 import type { Note, NoteCreate } from '@/notes/types/notes';
@@ -26,6 +26,40 @@ export async function findNoteById(noteId: string): Promise<Note | null> {
     .where(eq(notesTable.id, noteId))
     .limit(1);
   return result[0] ?? null;
+}
+
+export async function findNoteWithAuthorById(
+  noteId: string,
+): Promise<
+  | (Note & {
+      author: { username: string; firstName: string; lastName: string };
+    })
+  | null
+> {
+  const result = await db
+    .select({
+      ...getTableColumns(notesTable),
+      authorUsername: usersTable.username,
+      authorFirstName: usersTable.firstName,
+      authorLastName: usersTable.lastName,
+    })
+    .from(notesTable)
+    .innerJoin(usersTable, eq(notesTable.authorId, usersTable.clerkId))
+    .where(eq(notesTable.id, noteId))
+    .limit(1);
+
+  if (!result[0]) return null;
+
+  const { authorUsername, authorFirstName, authorLastName, ...noteData } =
+    result[0];
+  return {
+    ...noteData,
+    author: {
+      username: authorUsername,
+      firstName: authorFirstName,
+      lastName: authorLastName,
+    },
+  };
 }
 
 export async function findNoteWithCardsById(noteId: string): Promise<NoteData> {
