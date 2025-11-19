@@ -1,4 +1,4 @@
-import { useCallback, RefObject } from 'react';
+import { type RefObject, useCallback } from 'react';
 import TurnDown from 'turndown';
 
 interface UseNoteExportProps {
@@ -8,10 +8,7 @@ interface UseNoteExportProps {
   contentRef: RefObject<HTMLDivElement | null>;
 }
 
-export function useNoteExport({
-  note,
-  contentRef,
-}: UseNoteExportProps) {
+export function useNoteExport({ note, contentRef }: UseNoteExportProps) {
   const convertToMarkdown = useCallback(() => {
     if (contentRef?.current) {
       const turnDownService = new TurnDown();

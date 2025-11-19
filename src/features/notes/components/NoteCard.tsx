@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Note } from '@/lib/db/schema';
+import type { Note } from '@/lib/db/schema';
 
 interface NoteCardProps {
   note: Note;
