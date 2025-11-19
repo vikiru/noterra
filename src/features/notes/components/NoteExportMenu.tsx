@@ -1,7 +1,6 @@
 'use client';
 
-import { Book, FileDown, FileText, MoreVertical, Trash2 } from 'lucide-react';
-import Link from 'next/link';
+import { FileDown, FileText, MoreVertical, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -15,12 +14,14 @@ type NoteExportMenuProps = {
   onExportMarkdown: () => void;
   onExportText: () => void;
   onExportPDF: () => void;
+  onDelete?: () => void;
 };
 
 export function NoteExportMenu({
   onExportMarkdown,
   onExportText,
   onExportPDF,
+  onDelete,
 }: NoteExportMenuProps) {
   return (
     <DropdownMenu>
@@ -36,7 +37,7 @@ export function NoteExportMenu({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem className="cursor-pointer" onClick={onExportMarkdown}>
-          <FileText className="mr-2 h-4 w-4" />
+          <FileDown className="mr-2 h-4 w-4" />
           <span>Export as Markdown</span>
         </DropdownMenuItem>
         <DropdownMenuItem className="cursor-pointer" onClick={onExportText}>
@@ -44,9 +45,21 @@ export function NoteExportMenu({
           <span>Export as Text</span>
         </DropdownMenuItem>
         <DropdownMenuItem className="cursor-pointer" onClick={onExportPDF}>
-          <FileDown className="mr-2 h-4 w-4" />
+          <FileText className="mr-2 h-4 w-4" />
           <span>Export as PDF</span>
         </DropdownMenuItem>
+        {onDelete && (
+          <>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              className="cursor-pointer text-destructive focus:text-destructive focus:bg-destructive/10"
+              onClick={onDelete}
+            >
+              <Trash2 className="mr-2 h-4 w-4" />
+              <span>Delete Note</span>
+            </DropdownMenuItem>
+          </>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

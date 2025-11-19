@@ -8,10 +8,13 @@ import type { Note } from '@/features/notes/types/notes';
 import { useNoteExport } from '../hooks/useNoteExport';
 
 type NoteDetailProps = {
-  note: Note;
+  note: Note & {
+    author: { username: string; firstName: string; lastName: string };
+  };
+  showUserActions?: boolean;
 };
 
-export function NoteDetail({ note }: NoteDetailProps) {
+export function NoteDetail({ note, showUserActions = true }: NoteDetailProps) {
   const contentRef = useRef<HTMLDivElement>(null);
 
   const { convertToMarkdown, convertToText, convertToPDF } = useNoteExport({
@@ -26,11 +29,14 @@ export function NoteDetail({ note }: NoteDetailProps) {
       id="note-ctr"
     >
       <NoteActions
+        noteId={note.id}
         onDelete={() => {}}
         onExportMarkdown={convertToMarkdown}
         onExportPDF={convertToPDF}
         onExportText={convertToText}
-        onShare={() => {}}
+        shareToken={note.shareToken}
+        showUserActions={showUserActions}
+        username={note.author.username}
       />
 
       <section id="note">
