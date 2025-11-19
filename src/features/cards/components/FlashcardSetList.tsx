@@ -15,7 +15,7 @@ export async function FlashcardSetList() {
   }
 
   return (
-    <ScrollArea className="h-[calc(100vh-14rem)] pr-4">
+    <ScrollArea className="h-[calc(100vh-17rem)] pr-4">
       <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pb-4">
         {cardSets.map((set) => (
           <FlashcardSetCard key={set.id} set={set} />

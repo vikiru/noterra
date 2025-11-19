@@ -1,4 +1,4 @@
-<h1 align="center">Boilerplate Repository <br> Future Projects 🚀 </h1>
+<h1 align="center">Noterra | AI Learning Tool <br> Future Projects 🚀 </h1>
 
 <div align="center" id="badges">
 <br/>

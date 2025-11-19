@@ -1,12 +1,20 @@
 'use client';
-
 import { UserButton as ClerkButton, useUser } from '@clerk/nextjs';
-import { BookOpen, House, LucideUser, Notebook, PlusCircle } from 'lucide-react';
+import {
+  BookOpen,
+  House,
+  LucideUser,
+  Notebook,
+  PlusCircle,
+} from 'lucide-react';
+import { Spinner } from '@/lib/components/ui/spinner';
 
 export default function UserButton() {
   const { user, isLoaded } = useUser();
 
-  if (!isLoaded) return null;
+  if (!isLoaded) {
+    return <Spinner />;
+  }
 
   return (
     <ClerkButton>
@@ -17,7 +25,7 @@ export default function UserButton() {
           labelIcon={<House className="w-4 h-4" />}
         />
         <ClerkButton.Link
-          href={user?.username ? `/${user.username}` : '#'}
+          href={`/${user?.username}`}
           label="Profile"
           labelIcon={<LucideUser className="w-4 h-4" />}
         />
