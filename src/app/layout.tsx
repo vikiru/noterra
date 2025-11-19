@@ -42,13 +42,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider afterSignOutUrl="/">
       <html lang="en" suppressHydrationWarning>
         <body
           className={`debug-screens antialiased ${fontHeading.variable} ${fontBody.variable} ${fontMono.variable} ${fontLogo.variable} font-body`}
         >
           <Toaster position="top-right" richColors />
-          <header className="flex h-16 items-center justify-end gap-4 p-4"></header>
           <TanstackProvider>{children}</TanstackProvider>
         </body>
       </html>

@@ -1,26 +1,40 @@
 'use client';
 
-import { UserButton as ClerkButton } from '@clerk/nextjs';
-import { House, LucideUser, Notebook } from 'lucide-react';
+import { UserButton as ClerkButton, useUser } from '@clerk/nextjs';
+import { BookOpen, House, LucideUser, Notebook, PlusCircle } from 'lucide-react';
 
 export default function UserButton() {
+  const { user, isLoaded } = useUser();
+
+  if (!isLoaded) return null;
+
   return (
     <ClerkButton>
       <ClerkButton.MenuItems>
         <ClerkButton.Link
           href="/dashboard"
           label="Dashboard"
-          labelIcon={<House size={15} />}
+          labelIcon={<House className="w-4 h-4" />}
         />
         <ClerkButton.Link
-          href="/profile"
+          href={user?.username ? `/${user.username}` : '#'}
           label="Profile"
-          labelIcon={<LucideUser size={15} />}
+          labelIcon={<LucideUser className="w-4 h-4" />}
+        />
+        <ClerkButton.Link
+          href="/prompt"
+          label="New Note"
+          labelIcon={<PlusCircle className="w-4 h-4" />}
         />
         <ClerkButton.Link
           href="/notes"
           label="Notes"
-          labelIcon={<Notebook size={15} />}
+          labelIcon={<Notebook className="w-4 h-4" />}
+        />
+        <ClerkButton.Link
+          href="/cards"
+          label="Flashcards"
+          labelIcon={<BookOpen className="w-4 h-4" />}
         />
         <ClerkButton.Action label="manageAccount" />
       </ClerkButton.MenuItems>
