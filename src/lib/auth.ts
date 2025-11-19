@@ -26,7 +26,6 @@ export async function checkOwnership(
   return userId === resourceOwnerId;
 }
 
-// TODO: clean this up once frontend user flows are finished. Sep notes and flashcard handling. (if showcards add redirect to flashcard details for this note)
 export async function checkAccessPrivileges(
   noteId: string,
 ): Promise<AccessPrivilege> {

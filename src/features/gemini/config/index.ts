@@ -99,7 +99,3 @@ const generationConfig = {
 };
 
 export { genAI, generationConfig, geminiModel as model };
-
-// TODO: cleanup prompt, update mermaid diagram handling, build a simple tiptap editor component just to preview this
-// TODO: add google books and yt data api for 5-10 books/videos relevant to the topic for books `Title (Year Released) - Author(s)`.
-// TODO: videos: `Video Title (hyperlinked) - (channel name)`
