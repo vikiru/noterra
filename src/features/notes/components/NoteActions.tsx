@@ -19,6 +19,9 @@ type NoteActionsProps = {
   username: string;
   showUserActions?: boolean;
   showFlashcardButton?: boolean;
+  isPublic: boolean;
+  isShared: boolean;
+  showCards: boolean;
 };
 
 export function NoteActions({
@@ -31,6 +34,9 @@ export function NoteActions({
   username,
   showUserActions = true,
   showFlashcardButton = true,
+  isPublic,
+  isShared,
+  showCards,
 }: NoteActionsProps) {
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
 
@@ -75,6 +81,9 @@ export function NoteActions({
           open={isShareDialogOpen}
           shareToken={shareToken}
           username={username}
+          initialIsPublic={isPublic}
+          initialIsShared={isShared}
+          initialShowCards={showCards}
         />
       )}
     </>

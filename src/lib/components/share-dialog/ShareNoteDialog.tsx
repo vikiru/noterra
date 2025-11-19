@@ -1,7 +1,7 @@
 'use client';
 
 import { Loader2 } from 'lucide-react';
-import { useState, useTransition } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
@@ -23,6 +23,9 @@ type ShareNoteDialogProps = {
   noteId: string;
   shareToken: string;
   username: string;
+  initialIsPublic?: boolean;
+  initialIsShared?: boolean;
+  initialShowCards?: boolean;
 };
 
 export function ShareNoteDialog({
@@ -31,11 +34,22 @@ export function ShareNoteDialog({
   noteId,
   shareToken,
   username,
+  initialIsPublic = false,
+  initialIsShared = false,
+  initialShowCards = true,
 }: ShareNoteDialogProps) {
-  const [isPublic, setIsPublic] = useState(false);
-  const [isShared, setIsShared] = useState(false);
-  const [showFlashcards, setShowFlashcards] = useState(true);
+  const [isPublic, setIsPublic] = useState(initialIsPublic);
+  const [isShared, setIsShared] = useState(initialIsShared);
+  const [showFlashcards, setShowFlashcards] = useState(initialShowCards);
   const [isPending, startTransition] = useTransition();
+
+  useEffect(() => {
+    if (open) {
+      setIsPublic(initialIsPublic);
+      setIsShared(initialIsShared);
+      setShowFlashcards(initialShowCards);
+    }
+  }, [open, initialIsPublic, initialIsShared, initialShowCards]);
 
   const getShareLink = () => {
     const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
