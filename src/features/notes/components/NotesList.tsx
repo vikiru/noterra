@@ -34,7 +34,7 @@ export function NotesList({ notes }: NotesListProps) {
         </Button>
       </div>
 
-      <ScrollArea className="h-[calc(100vh-14rem)] pr-4">
+      <ScrollArea className="h-[calc(100vh-17rem)] pr-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 pb-4">
           {notes.map((note) => (
             <NoteCard key={note.id} note={note} />
