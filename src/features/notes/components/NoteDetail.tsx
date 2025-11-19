@@ -7,7 +7,7 @@ import { NoteHeader } from '@/features/notes/components/NoteHeader';
 import type { Note } from '@/features/notes/types/notes';
 import { useNoteExport } from '../hooks/useNoteExport';
 
-interface NoteDetailProps {
+type NoteDetailProps  = {
   note: Note;
 }
 
@@ -15,7 +15,8 @@ export function NoteDetail({ note }: NoteDetailProps) {
   const contentRef = useRef<HTMLDivElement>(null);
 
   const { convertToMarkdown, convertToText, convertToPDF } = useNoteExport({
-    note,
+    title: note.title,
+    content: note.content,
     contentRef,
   });
 
