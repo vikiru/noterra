@@ -2,12 +2,12 @@ import { Loader2 } from 'lucide-react';
 import { Suspense } from 'react';
 import { NoteDetailWrapper } from '@/features/notes/components/NoteDetailWrapper';
 
-export default function NoteDetailsPage({
+export default async function NoteDetailsPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const { id } = params;
+  const { id } = await params;
   return (
     <Suspense
       fallback={
