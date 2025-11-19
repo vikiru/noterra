@@ -34,18 +34,18 @@ export function NoteDetail({
       id="note-ctr"
     >
       <NoteActions
+        isPublic={note.public}
+        isShared={note.shared}
         noteId={note.id}
         onDelete={() => {}}
         onExportMarkdown={convertToMarkdown}
         onExportPDF={convertToPDF}
         onExportText={convertToText}
         shareToken={note.shareToken}
-        showUserActions={showUserActions}
-        showFlashcardButton={showFlashcardButton}
-        username={note.author.username}
-        isPublic={note.public}
-        isShared={note.shared}
         showCards={note.showCards}
+        showFlashcardButton={showFlashcardButton}
+        showUserActions={showUserActions}
+        username={note.author.username}
       />
 
       <section id="note">

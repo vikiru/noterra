@@ -1,8 +1,8 @@
 import { Loader2 } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
-import { findNoteByShareToken } from '@/features/notes/data-access/notes';
 import { NoteDetail } from '@/features/notes/components/NoteDetail';
+import { findNoteByShareToken } from '@/features/notes/data-access/notes';
 
 export default async function SharedNotePage({
   params,
@@ -10,7 +10,7 @@ export default async function SharedNotePage({
   params: Promise<{ shareToken: string }>;
 }) {
   const { shareToken } = await params;
-  
+
   const note = await findNoteByShareToken(shareToken);
 
   if (!note || !note.shared) {
@@ -25,10 +25,10 @@ export default async function SharedNotePage({
         </div>
       }
     >
-      <NoteDetail 
-        note={note} 
-        showUserActions={false} 
+      <NoteDetail
+        note={note}
         showFlashcardButton={note.showCards}
+        showUserActions={false}
       />
     </Suspense>
   );

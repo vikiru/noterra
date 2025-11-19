@@ -65,6 +65,7 @@ export function NoteActions({
             <NoteShareButton onClick={() => setIsShareDialogOpen(true)} />
           )}
           <NoteExportMenu
+            isStandalone={!showUserActions}
             onDelete={showUserActions ? onDelete : undefined}
             onExportMarkdown={onExportMarkdown}
             onExportPDF={onExportPDF}
@@ -76,14 +77,14 @@ export function NoteActions({
 
       {showUserActions && (
         <ShareNoteDialog
+          initialIsPublic={isPublic}
+          initialIsShared={isShared}
+          initialShowCards={showCards}
           noteId={noteId}
           onOpenChange={setIsShareDialogOpen}
           open={isShareDialogOpen}
           shareToken={shareToken}
           username={username}
-          initialIsPublic={isPublic}
-          initialIsShared={isShared}
-          initialShowCards={showCards}
         />
       )}
     </>

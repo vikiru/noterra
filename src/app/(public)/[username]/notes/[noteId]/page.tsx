@@ -1,8 +1,8 @@
 import { Loader2 } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
-import { findNoteWithAuthorById } from '@/features/notes/data-access/notes';
 import { NoteDetail } from '@/features/notes/components/NoteDetail';
+import { findNoteWithAuthorById } from '@/features/notes/data-access/notes';
 
 export default async function PublicNotePage({
   params,
@@ -10,7 +10,7 @@ export default async function PublicNotePage({
   params: Promise<{ username: string; noteId: string }>;
 }) {
   const { noteId } = await params;
-  
+
   const note = await findNoteWithAuthorById(noteId);
 
   if (!note || !note.public) {
@@ -25,10 +25,10 @@ export default async function PublicNotePage({
         </div>
       }
     >
-      <NoteDetail 
-        note={note} 
-        showUserActions={false} 
+      <NoteDetail
+        note={note}
         showFlashcardButton={note.showCards}
+        showUserActions={false}
       />
     </Suspense>
   );
