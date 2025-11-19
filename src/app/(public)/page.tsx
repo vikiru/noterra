@@ -1,6 +1,13 @@
+import type { Metadata } from 'next';
 import { LandingFeatures } from '@/lib/components/landing/LandingFeatures';
 import { LandingFooter } from '@/lib/components/landing/LandingFooter';
 import { LandingHero } from '@/lib/components/landing/LandingHero';
+
+export const metadata: Metadata = {
+  title: 'Noterra | Home',
+  description:
+    'AI-powered learning tool for creating and reviewing notes and flashcards.',
+};
 
 export default function Home() {
   return (
