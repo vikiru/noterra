@@ -48,8 +48,9 @@ export async function updateNoteAction(updatedNote: Note) {
     if (!isOwner) {
       return { success: false, error: 'Access denied.' };
     }
-    const modifiedNote = await updateNote(updatedNote);
-    return { success: true, data: modifiedNote };
+    await updateNote(updatedNote);
+    revalidatePath(`/notes/${updatedNote.id}`);
+    return { success: true };
   } catch (error) {
     console.error('Error updating note:', error);
     return {
@@ -69,8 +70,9 @@ export async function deleteNote(noteId: string) {
     if (!isOwner) {
       return { success: false, error: 'Access denied.' };
     }
-    const deleted = await removeNote(noteId);
-    return { success: true, data: deleted };
+    await removeNote(noteId);
+    revalidatePath('/notes');
+    return { success: true };
   } catch (error) {
     console.error('Error deleting note:', error);
     return {
@@ -106,7 +108,7 @@ export async function updateNoteVisibilityAction(
       revalidatePath(`/shared/${existing.shareToken}`);
     }
 
-    return { success: true, data: updatedNote };
+    return { success: true };
   } catch (error) {
     console.error('Error updating note visibility:', error);
     return {

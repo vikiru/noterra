@@ -91,13 +91,36 @@ export async function findNotesByUserId(userId: string): Promise<Note[]> {
   return result;
 }
 
-export async function findNoteByShareToken(shareToken: string): Promise<Note> {
-  const result: Note[] = await db
-    .select()
+export async function findNoteByShareToken(shareToken: string): Promise<
+  | (Note & {
+      author: { username: string; firstName: string; lastName: string };
+    })
+  | null
+> {
+  const result = await db
+    .select({
+      ...getTableColumns(notesTable),
+      authorUsername: usersTable.username,
+      authorFirstName: usersTable.firstName,
+      authorLastName: usersTable.lastName,
+    })
     .from(notesTable)
+    .innerJoin(usersTable, eq(notesTable.authorId, usersTable.clerkId))
     .where(eq(notesTable.shareToken, shareToken))
     .limit(1);
-  return result[0];
+
+  if (!result[0]) return null;
+
+  const { authorUsername, authorFirstName, authorLastName, ...noteData } =
+    result[0];
+  return {
+    ...noteData,
+    author: {
+      username: authorUsername,
+      firstName: authorFirstName,
+      lastName: authorLastName,
+    },
+  };
 }
 
 export async function findPublicCardsByNoteId(

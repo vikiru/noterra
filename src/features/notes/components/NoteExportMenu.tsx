@@ -1,6 +1,8 @@
 'use client';
 
-import { FileDown, FileText, MoreVertical, Trash2 } from 'lucide-react';
+import { Eye, FileDown, FileText, MoreVertical, Trash2 } from 'lucide-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -15,6 +17,7 @@ type NoteExportMenuProps = {
   onExportText: () => void;
   onExportPDF: () => void;
   onDelete?: () => void;
+  showFlashcardButton?: boolean;
 };
 
 export function NoteExportMenu({
@@ -22,7 +25,11 @@ export function NoteExportMenu({
   onExportText,
   onExportPDF,
   onDelete,
+  showFlashcardButton = true,
 }: NoteExportMenuProps) {
+  const pathname = usePathname();
+  const flashcardsLink = `${pathname}/flashcards`;
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -48,6 +55,17 @@ export function NoteExportMenu({
           <FileText className="mr-2 h-4 w-4" />
           <span>Export as PDF</span>
         </DropdownMenuItem>
+        {showFlashcardButton && (
+          <>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem asChild className="cursor-pointer">
+              <Link href={flashcardsLink}>
+                <Eye className="mr-2 h-4 w-4" />
+                <span>View Flashcards</span>
+              </Link>
+            </DropdownMenuItem>
+          </>
+        )}
         {onDelete && (
           <>
             <DropdownMenuSeparator />

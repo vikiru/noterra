@@ -12,9 +12,14 @@ type NoteDetailProps = {
     author: { username: string; firstName: string; lastName: string };
   };
   showUserActions?: boolean;
+  showFlashcardButton?: boolean;
 };
 
-export function NoteDetail({ note, showUserActions = true }: NoteDetailProps) {
+export function NoteDetail({
+  note,
+  showUserActions = true,
+  showFlashcardButton = true,
+}: NoteDetailProps) {
   const contentRef = useRef<HTMLDivElement>(null);
 
   const { convertToMarkdown, convertToText, convertToPDF } = useNoteExport({
@@ -36,6 +41,7 @@ export function NoteDetail({ note, showUserActions = true }: NoteDetailProps) {
         onExportText={convertToText}
         shareToken={note.shareToken}
         showUserActions={showUserActions}
+        showFlashcardButton={showFlashcardButton}
         username={note.author.username}
       />
 
