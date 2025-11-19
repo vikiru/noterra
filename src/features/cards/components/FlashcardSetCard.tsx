@@ -1,5 +1,5 @@
 import { ArrowRight, Clock } from 'lucide-react';
-
+import { DateTime } from 'luxon';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
@@ -38,11 +38,7 @@ export function FlashcardSetCard({ set }: FlashcardSetCardProps) {
               <div className="flex items-center text-sm text-muted-foreground">
                 <Clock className="mr-1.5 size-3 shrink-0" />
                 <span className="text-xs">
-                  {new Date(set.updatedAt).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric',
-                  })}
+                  {DateTime.fromJSDate(set.createdAt).toFormat('LLL dd, yyyy')}
                 </span>
               </div>
               <Button

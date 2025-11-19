@@ -5,12 +5,11 @@ import { Card, CardContent } from '@/components/ui/card';
 import { ScrollArea } from '@/lib/components/ui/scroll-area';
 import type { Note } from '@/lib/db/schema';
 
-interface UserNotesListProps {
+type UserNotesListProps = {
   notes: Note[];
-  totalNotes: number;
-}
+};
 
-export function UserNotesList({ notes, totalNotes }: UserNotesListProps) {
+export function UserNotesList({ notes }: UserNotesListProps) {
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between mb-4">

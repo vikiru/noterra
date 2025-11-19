@@ -1,14 +1,15 @@
 import { Globe, Lock } from 'lucide-react';
+import { DateTime } from 'luxon';
 import { Badge } from '@/components/ui/badge';
-import type { Note } from '@/lib/db/schema';
+import type { Note } from '@/features/notes/types/notes';
 
-interface NoteHeaderProps {
+type NoteHeaderProps = {
   note: Pick<Note, 'title' | 'createdAt' | 'public' | 'keywords'>;
-}
+};
 
 export function NoteHeader({ note }: NoteHeaderProps) {
   return (
-    <div className="mb-6">
+    <section id="note-header" className="mb-2">
       <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2 font-heading">
         {note.title}
       </h1>
@@ -16,11 +17,7 @@ export function NoteHeader({ note }: NoteHeaderProps) {
       <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-6 font-body">
         <div>
           <time dateTime={note.createdAt.toISOString()}>
-            {note.createdAt.toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'short',
-              day: 'numeric',
-            })}
+            {DateTime.fromJSDate(note.createdAt).toFormat('LLL dd, yyyy')}
           </time>
         </div>
         <div className="flex items-center gap-1.5">
@@ -42,6 +39,6 @@ export function NoteHeader({ note }: NoteHeaderProps) {
           ))}
         </div>
       )}
-    </div>
+    </section>
   );
 }

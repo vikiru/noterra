@@ -13,7 +13,7 @@ type ActivityFeedProps = {
 };
 
 export function ActivityFeed({ activityOverview }: ActivityFeedProps) {
-  const recentActivity = activityOverview.slice(0, 7);
+  console.log(activityOverview);
 
   return (
     <Card>
@@ -24,10 +24,10 @@ export function ActivityFeed({ activityOverview }: ActivityFeedProps) {
       </CardHeader>
       <CardContent>
         <div className="space-y-1">
-          {recentActivity.length === 0 ? (
+          {activityOverview.length === 0 ? (
             <EmptyActivityState />
           ) : (
-            recentActivity.map((item) => (
+            activityOverview.map((item) => (
               <ActivityFeedItem item={item} key={item.date} />
             ))
           )}

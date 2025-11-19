@@ -51,8 +51,11 @@ export async function findUserTotalCreations(
 
 export async function findUserActivityOverview(id: string) {
   const today = new Date();
+  today.setHours(23, 59, 59, 999);
   const startDate = new Date();
-  startDate.setDate(today.getDate() - 29);
+  startDate.setDate(today.getDate() - 6);
+  startDate.setHours(0, 0, 0, 0);
+
   const result = await db
     .select({
       date: sql<string>`DATE(${notesTable.createdAt})`,
@@ -69,7 +72,24 @@ export async function findUserActivityOverview(id: string) {
     )
     .groupBy(sql`DATE(${notesTable.createdAt})`)
     .orderBy(sql`DATE(${notesTable.createdAt})`);
-  return result;
+
+  const dates: string[] = [];
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(startDate);
+    d.setDate(startDate.getDate() + i);
+    dates.push(d.toISOString().split('T')[0]);
+  }
+
+  const overview = dates.map((day) => {
+    const found = result.find((a) => a.date === day);
+    return {
+      date: day,
+      notes: found?.notes ?? 0,
+      flashcards: found?.flashcards ?? 0,
+    };
+  });
+
+  return overview;
 }
 
 export async function updateUser(user: UserUpdate) {

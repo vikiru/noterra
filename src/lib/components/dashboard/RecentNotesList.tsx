@@ -1,11 +1,11 @@
 import { ArrowRight } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import type { Note } from '@/features/notes/types/notes';
+import type { NoteMetadata } from '@/features/notes/types/noteMetadata';
 import { EmptyNotesState } from '@/lib/components/dashboard/EmptyNotesState';
 import { RecentNoteItem } from '@/lib/components/dashboard/RecentNoteItem';
 
 type RecentNotesListProps = {
-  recentNotes: Note[];
+  recentNotes: NoteMetadata[];
 };
 
 export function RecentNotesList({ recentNotes }: RecentNotesListProps) {

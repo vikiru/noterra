@@ -1,16 +1,16 @@
-import { useState } from 'react';
 import { useAuth } from '@clerk/nextjs';
-import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
-import { NOTES_ROUTE } from '@/lib/constants/route';
-import { validateData } from '@/lib/utils/validateData';
+import { useState } from 'react';
+import { toast } from 'sonner';
+import { createMultipleFlashcards } from '@/features/cards/actions/flashcard';
 import { generateGeminiNote } from '@/features/gemini/actions/generateGeminiNote';
 import { promptSchema } from '@/features/gemini/schema/promptSchema';
+import { constructCards } from '@/features/gemini/utils/constructCards';
 import { constructNote } from '@/features/gemini/utils/constructNote';
 import { createNote } from '@/features/notes/actions/notes';
 import type { Note } from '@/features/notes/types/notes';
-import { createMultipleFlashcards } from '@/features/cards/actions/flashcard';
-import { constructCards } from '@/features/gemini/utils/constructCards';
+import { NOTES_ROUTE } from '@/lib/constants/route';
+import { validateData } from '@/lib/utils/validateData';
 
 export function usePromptForm() {
   const { userId } = useAuth();
@@ -59,7 +59,8 @@ export function usePromptForm() {
         newNote.authorId,
         newNote.id,
       );
-      const flashcardsCreationResult = await createMultipleFlashcards(flashcards);
+      const flashcardsCreationResult =
+        await createMultipleFlashcards(flashcards);
       if (!flashcardsCreationResult.success) {
         toast.error(flashcardsCreationResult.error);
         setLoading(false);

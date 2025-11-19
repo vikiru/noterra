@@ -1,24 +1,19 @@
 import { BookOpen, Clock, FileText } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import type { FlashcardSet, Note } from '@/lib/db/schema';
-import type { TotalCreations } from '@/user/types/totalCreations';
 import { UserActivityFeed } from './UserActivityFeed';
 import { UserFlashcardsList } from './UserFlashcardsList';
 import { UserNotesList } from './UserNotesList';
+import { Note } from '@/features/notes/types/notes';
+import { FlashcardSet } from '@/features/cards/types/flashcardSet';
 
-interface ProfileTabsProps {
+
+type ProfileTabsProps = {
   notes: Note[];
   flashcards: (FlashcardSet & { cardCount: number })[];
   activity: { date: string; notes: number; flashcards: number }[];
-  totalCreations: TotalCreations;
-}
+};
 
-export function ProfileTabs({
-  notes,
-  flashcards,
-  activity,
-  totalCreations,
-}: ProfileTabsProps) {
+export function ProfileTabs({ notes, flashcards, activity }: ProfileTabsProps) {
   return (
     <div className="flex-1">
       <Tabs className="w-full" defaultValue="notes">
@@ -35,14 +30,11 @@ export function ProfileTabs({
         </TabsList>
 
         <TabsContent value="notes">
-          <UserNotesList notes={notes} totalNotes={totalCreations.notes} />
+          <UserNotesList notes={notes} />
         </TabsContent>
 
         <TabsContent value="flashcards">
-          <UserFlashcardsList
-            flashcards={flashcards}
-            totalFlashcards={totalCreations.flashcards}
-          />
+          <UserFlashcardsList flashcards={flashcards} />
         </TabsContent>
 
         <TabsContent value="activity">

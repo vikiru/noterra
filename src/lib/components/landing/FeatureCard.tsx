@@ -1,10 +1,10 @@
 import type { LucideIcon } from 'lucide-react';
 
-interface FeatureCardProps {
+type FeatureCardProps = {
   title: string;
   description: string;
   icon: LucideIcon;
-}
+};
 
 export function FeatureCard({
   title,
