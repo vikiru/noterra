@@ -65,8 +65,8 @@ export function UserNotesList({ notes }: UserNotesListProps) {
                           })}
                         </span>
                       </div>
-                      <p className="text-sm text-muted-foreground mt-1">
-                        {note.content}
+                      <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
+                        {note.summary}
                       </p>
                       <div className="flex flex-wrap gap-1.5 mt-2">
                         {note.keywords.map((keyword) => (

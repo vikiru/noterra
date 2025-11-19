@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { Loader2 } from 'lucide-react';
+import { useState, useTransition } from 'react';
 import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
@@ -12,14 +13,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { updateNoteVisibilityAction } from '@/features/notes/actions/notes';
 import { ShareLink } from './ShareLink';
 import { VisibilityCard } from './VisibilityCard';
 
 type ShareNoteDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  isPublic?: boolean;
-  isShared?: boolean;
   noteId: string;
   shareToken: string;
   username: string;
@@ -28,30 +28,43 @@ type ShareNoteDialogProps = {
 export function ShareNoteDialog({
   open,
   onOpenChange,
-  isPublic: initialIsPublic = false,
-  isShared: initialIsShared = false,
   noteId,
   shareToken,
   username,
 }: ShareNoteDialogProps) {
-  const [isPublic, setIsPublic] = useState(initialIsPublic);
-  const [isShared, setIsShared] = useState(initialIsShared);
-  const [showFlashcards, setShowFlashcards] = useState(false);
+  const [isPublic, setIsPublic] = useState(false);
+  const [isShared, setIsShared] = useState(false);
+  const [showFlashcards, setShowFlashcards] = useState(true);
+  const [isPending, startTransition] = useTransition();
 
   const getShareLink = () => {
-    if (typeof window === 'undefined') return '';
-    const baseUrl = window.location.origin;
+    const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
     if (isPublic) {
       return `${baseUrl}/${username}/notes/${noteId}`;
     }
-    return `${baseUrl}/shared/${shareToken}`;
+    if (isShared) {
+      return `${baseUrl}/shared/${shareToken}`;
+    }
+    return '';
   };
 
   const link = getShareLink();
 
   const handleSave = () => {
-    onOpenChange(false);
-    toast.success('Sharing settings saved');
+    startTransition(async () => {
+      const result = await updateNoteVisibilityAction(noteId, {
+        public: isPublic,
+        shared: isShared,
+        showCards: showFlashcards,
+      });
+
+      if (result.success) {
+        toast.success('Note visibility updated');
+        onOpenChange(false);
+      } else {
+        toast.error(result.error || 'Failed to update visibility');
+      }
+    });
   };
 
   return (
@@ -59,14 +72,14 @@ export function ShareNoteDialog({
       <DialogContent className="sm:max-w-md p-0 gap-0 overflow-hidden border-neutral-200 dark:border-neutral-800">
         <DialogHeader className="px-6 pt-6 pb-4">
           <DialogTitle className="text-xl font-semibold text-black">
-            Note Visibility
+            Share Note
           </DialogTitle>
           <DialogDescription className="text-neutral-500 dark:text-neutral-400">
             Manage access and visibility settings for this note.
           </DialogDescription>
         </DialogHeader>
 
-        <div className="px-6 pb-6 flex flex-col gap-6">
+        <div className="px-6 py-2 space-y-6">
           <VisibilityCard
             isPublic={isPublic}
             isShared={isShared}
@@ -81,7 +94,7 @@ export function ShareNoteDialog({
           )}
         </div>
 
-        <DialogFooter className="bg-neutral-50 dark:bg-neutral-900/50 px-6 py-4 border-t border-neutral-100 dark:border-neutral-800">
+        <DialogFooter className="px-6 py-4 bg-neutral-50 dark:bg-neutral-900/50 border-t border-neutral-200 dark:border-neutral-800 gap-2">
           <Button
             className="h-9 text-black"
             onClick={() => onOpenChange(false)}
@@ -89,8 +102,15 @@ export function ShareNoteDialog({
           >
             Cancel
           </Button>
-          <Button className="h-9" onClick={handleSave}>
-            Save Changes
+          <Button className="h-9" disabled={isPending} onClick={handleSave}>
+            {isPending ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Saving...
+              </>
+            ) : (
+              'Save Changes'
+            )}
           </Button>
         </DialogFooter>
       </DialogContent>
