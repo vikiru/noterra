@@ -43,6 +43,9 @@ export function NoteDetail({
         showUserActions={showUserActions}
         showFlashcardButton={showFlashcardButton}
         username={note.author.username}
+        isPublic={note.public}
+        isShared={note.shared}
+        showCards={note.showCards}
       />
 
       <section id="note">
