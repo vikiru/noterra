@@ -18,6 +18,7 @@ type NoteActionsProps = {
   shareToken: string;
   username: string;
   showUserActions?: boolean;
+  showFlashcardButton?: boolean;
 };
 
 export function NoteActions({
@@ -29,6 +30,7 @@ export function NoteActions({
   shareToken,
   username,
   showUserActions = true,
+  showFlashcardButton = true,
 }: NoteActionsProps) {
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
 
@@ -48,7 +50,7 @@ export function NoteActions({
             </Link>
           </Button>
         ) : (
-          <div /> /* Spacer to keep alignment if needed, or just null */
+          <div />
         )}
 
         <div className="flex items-center gap-1.5">
@@ -61,6 +63,7 @@ export function NoteActions({
             onExportMarkdown={onExportMarkdown}
             onExportPDF={onExportPDF}
             onExportText={onExportText}
+            showFlashcardButton={showFlashcardButton}
           />
         </div>
       </section>
