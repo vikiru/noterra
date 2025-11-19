@@ -1,5 +1,6 @@
 import { SignedIn, SignedOut, SignInButton, SignUpButton } from '@clerk/nextjs';
 import { Logo } from '@/lib/components/Logo';
+import { GetStartedButton } from '@/lib/components/landing/GetStartedButton';
 import UserButton from '@/lib/components/UserButton';
 
 export async function Header() {
@@ -9,15 +10,14 @@ export async function Header() {
         className="flex items-center gap-2 hover:opacity-80 transition-opacity"
         href="/"
       >
-        <Logo />
+        <Logo containerSize="h-10 w-10" iconSize={24} textSize="text-xl" />
       </a>
       <div className="flex items-center gap-4">
         <SignedIn>
           <UserButton />
         </SignedIn>
         <SignedOut>
-          <SignInButton />
-          <SignUpButton />
+          <GetStartedButton size="sm" />
         </SignedOut>
       </div>
     </header>

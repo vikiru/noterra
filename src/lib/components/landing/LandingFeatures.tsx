@@ -1,62 +1,50 @@
 import { Download, Pencil, WandSparkles } from 'lucide-react';
+import { FeatureCard } from './FeatureCard';
+
+const features = [
+  {
+    name: 'AI Note Generation',
+    description:
+      'Effortlessly create comprehensive notes that break down complex topics into digestible chunks, powered by Gemini AI.',
+    icon: WandSparkles,
+  },
+  {
+    name: 'Export and Share',
+    description:
+      'Export your notes to multiple formats including Markdown, PDF, and plain text. Share your knowledge with others effortlessly.',
+    icon: Download,
+  },
+  {
+    name: 'Powerful Editor',
+    description:
+      'Enjoy a seamless writing experience with our rich text editor powered by TipTap. Format, organize, and style your notes with ease.',
+    icon: Pencil,
+  },
+];
 
 export function LandingFeatures() {
   return (
-    <section
-      className="container mx-auto pb-16 px-4 sm:px-6 lg:px-8"
-      id="features"
-    >
-      <div className="text-center mb-12">
-        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl font-heading">
-          Powerful Features for Effective Learning
-        </h2>
-        <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto font-body">
-          Transform the way you learn with our AI-powered tools designed to
-          enhance your study experience
-        </p>
-      </div>
-
-      <div className="grid gap-8 md:grid-cols-3">
-        {/* AI Note Generation */}
-        <div className="group relative overflow-hidden rounded-xl border bg-card p-6 shadow-sm transition-all hover:shadow-md">
-          <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
-            <WandSparkles className="h-5 w-5" />
-          </div>
-          <h3 className="mb-2 text-lg font-semibold font-heading">
-            AI Note Generation
-          </h3>
-          <p className="text-muted-foreground font-body">
-            Effortlessly create comprehensive notes that break down complex
-            topics into digestible chunks, powered by Gemini AI.
+    <section className="py-24 sm:py-28 bg-muted/30" id="features">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-2xl text-center mb-16">
+          <h2 className="mt-2 text-4xl font-bold tracking-tighter text-foreground sm:text-5xl font-heading text-balance">
+            Powerful Features for Effective Learning
+          </h2>
+          <p className="mt-6 text-xl leading-relaxed text-muted-foreground font-body text-pretty">
+            Transform the way you learn with our AI-powered tools designed to
+            enhance your study experience.
           </p>
         </div>
 
-        {/* Export and Share */}
-        <div className="group relative overflow-hidden rounded-xl border bg-card p-6 shadow-sm transition-all hover:shadow-md">
-          <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
-            <Download className="h-5 w-5" />
-          </div>
-          <h3 className="mb-2 text-lg font-semibold font-heading">
-            Export and Share
-          </h3>
-          <p className="text-muted-foreground font-body">
-            Export your notes to multiple formats including Markdown, PDF, and
-            plain text. Share your knowledge with others effortlessly.
-          </p>
-        </div>
-
-        {/* Powerful Editor */}
-        <div className="group relative overflow-hidden rounded-xl border bg-card p-6 shadow-sm transition-all hover:shadow-md">
-          <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
-            <Pencil className="h-5 w-5" />
-          </div>
-          <h3 className="mb-2 text-lg font-semibold font-heading">
-            Powerful Editor
-          </h3>
-          <p className="text-muted-foreground font-body">
-            Enjoy a seamless writing experience with our rich text editor
-            powered by TipTap. Format, organize, and style your notes with ease.
-          </p>
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+          {features.map((feature) => (
+            <FeatureCard
+              description={feature.description}
+              icon={feature.icon}
+              key={feature.name}
+              title={feature.name}
+            />
+          ))}
         </div>
       </div>
     </section>
