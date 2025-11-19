@@ -9,7 +9,7 @@ type NoteHeaderProps = {
 
 export function NoteHeader({ note }: NoteHeaderProps) {
   return (
-    <section id="note-header" className="mb-2">
+    <section className="mb-2" id="note-header">
       <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2 font-heading">
         {note.title}
       </h1>

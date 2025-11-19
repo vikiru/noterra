@@ -32,8 +32,9 @@ const fontLogo = Syne({
 });
 
 export const metadata: Metadata = {
-  title: 'AI Learning Tool',
-  description: 'Master any topic with AI-generated notes and flashcards.',
+  title: 'Noterra | AI Learning Tool',
+  description:
+    'Noterra is an AI-powered learning tool to generate comprehensive notes and flashcards for any user-given topic.',
 };
 
 export default function RootLayout({

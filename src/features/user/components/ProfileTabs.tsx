@@ -1,11 +1,10 @@
 import { BookOpen, Clock, FileText } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import type { FlashcardSet } from '@/features/cards/types/flashcardSet';
+import type { Note } from '@/features/notes/types/notes';
 import { UserActivityFeed } from './UserActivityFeed';
 import { UserFlashcardsList } from './UserFlashcardsList';
 import { UserNotesList } from './UserNotesList';
-import { Note } from '@/features/notes/types/notes';
-import { FlashcardSet } from '@/features/cards/types/flashcardSet';
-
 
 type ProfileTabsProps = {
   notes: Note[];
