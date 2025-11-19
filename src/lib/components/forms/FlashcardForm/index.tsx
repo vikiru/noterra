@@ -28,7 +28,6 @@ const formSchema = z.object({
     .trim(),
 });
 
-// TODO: split this into hooks, schema dir, add on submit, update placecholder, etc as needed
 export default function FlashcardForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

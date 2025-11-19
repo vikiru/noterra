@@ -23,8 +23,6 @@ import { onboardingSchema } from '@/schema/onboardingSchema';
 import { useUserStore } from '@/user/store/userStore';
 import type { User, UserCreate } from '@/user/types/user';
 
-// TODO: split this into hooks, schema dir, add on submit, update placecholder, etc as needed
-
 export default function OnboardingForm() {
   const { user, isLoaded } = useUser();
   const form = useForm<z.infer<typeof onboardingSchema>>({
