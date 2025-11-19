@@ -192,7 +192,7 @@ body {
 
     /* node label color */
     .nodeLabel p {
-        color: var(--background);
+        color: black;
     }
 
     /* Hide the cluster rect */
