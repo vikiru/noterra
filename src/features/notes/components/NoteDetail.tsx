@@ -26,10 +26,11 @@ export function NoteDetail({ note }: NoteDetailProps) {
       id="note-ctr"
     >
       <NoteActions
-        noteId={note.id}
+        onDelete={() => {}}
         onExportMarkdown={convertToMarkdown}
         onExportPDF={convertToPDF}
         onExportText={convertToText}
+        onShare={() => {}}
       />
 
       <section id="note">

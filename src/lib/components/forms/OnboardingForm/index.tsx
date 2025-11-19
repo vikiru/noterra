@@ -35,7 +35,6 @@ export default function OnboardingForm() {
 
   async function onSubmit(values: z.infer<typeof onboardingSchema>) {
     try {
-      console.log(user);
       const newUser: UserCreate = {
         clerkId: user?.id as string,
         username: user?.username as string,
@@ -45,14 +44,15 @@ export default function OnboardingForm() {
         bio: values.bio,
         country: values.country,
       };
-      toast.info(`${JSON.stringify(values)}`);
+
       const result = await createUser(newUser);
-      console.log(result);
       if (!result.success) {
         toast.error('Failed to create user. Please try again.');
         return;
       }
+
       setUser(result.data as User);
+
       toast.success(
         'Successfully completed onboarding. Redirecting to dashboard.',
       );

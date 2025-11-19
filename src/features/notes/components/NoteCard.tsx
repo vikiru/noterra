@@ -9,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import type { Note } from '@/lib/db/schema';
+import type { Note } from '@/features/notes/types/notes';
 
 type NoteCardProps = {
   note: Note;

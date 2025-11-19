@@ -13,7 +13,6 @@ async function createRandomFlashcard(authorId: string, noteId: string) {
       answer: faker.lorem.sentence(4).replace('.', ''),
     })
     .returning();
-  console.log('Flashcard\n', flashcard);
   return flashcard;
 }
 

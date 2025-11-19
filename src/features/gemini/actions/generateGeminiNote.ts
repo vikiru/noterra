@@ -44,7 +44,6 @@ export async function generateGeminiNote(
   //   chunkedText += chunk.text;
   // }
 
-  console.log(geminiResult.text);
   const response: GeminiResponse = JSON.parse(geminiResult.text as string);
   return { success: true, data: response };
 }

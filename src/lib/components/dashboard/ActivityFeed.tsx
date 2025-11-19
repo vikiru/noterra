@@ -13,8 +13,6 @@ type ActivityFeedProps = {
 };
 
 export function ActivityFeed({ activityOverview }: ActivityFeedProps) {
-  console.log(activityOverview);
-
   return (
     <Card>
       <CardHeader className="flex flex-row items-center space-y-0 pb-2">
