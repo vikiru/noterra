@@ -17,12 +17,15 @@ export function useMermaidRender() {
 
         mermaidDivs.forEach((div) => {
           if (div.getAttribute('data-processed')) return;
-          
+
           const pre = div.firstElementChild;
           if (pre && pre.tagName === 'PRE') {
             mermaidDiagrams.push(pre);
-          } else if (div.tagName === 'PRE' && div.classList.contains('mermaid')) {
-             mermaidDiagrams.push(div);
+          } else if (
+            div.tagName === 'PRE' &&
+            div.classList.contains('mermaid')
+          ) {
+            mermaidDiagrams.push(div);
           }
         });
 

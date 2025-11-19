@@ -1,17 +1,16 @@
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import type { Note } from '@/features/notes/types/notes';
 import { ScrollArea } from '@/lib/components/ui/scroll-area';
 import { EmptyNotesState } from './EmptyNotesState';
 import { NoteCard } from './NoteCard';
-import { Note } from '@/features/notes/types/notes';
 
 type NotesListProps = {
   notes: Note[];
-}
+};
 
 export function NotesList({ notes }: NotesListProps) {
-
   if (!notes.length) {
     return <EmptyNotesState />;
   }

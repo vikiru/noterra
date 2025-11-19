@@ -1,6 +1,6 @@
 import { Globe, Lock } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { Note } from '@/lib/db/schema';
+import type { Note } from '@/lib/db/schema';
 
 interface NoteHeaderProps {
   note: Pick<Note, 'title' | 'createdAt' | 'public' | 'keywords'>;

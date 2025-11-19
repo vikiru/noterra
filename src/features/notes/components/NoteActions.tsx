@@ -35,7 +35,12 @@ export function NoteActions({
 }: NoteActionsProps) {
   return (
     <section className="flex justify-between items-center mb-6" id="actions">
-      <Button asChild variant="ghost" size="sm" className="-ml-3 text-muted-foreground hover:text-black">
+      <Button
+        asChild
+        className="-ml-3 text-muted-foreground hover:text-black"
+        size="sm"
+        variant="ghost"
+      >
         <Link className="flex items-center gap-2" href="/notes">
           <ArrowLeft className="h-4 w-4" />
           Back to Notes
@@ -85,17 +90,11 @@ export function NoteActions({
               <FileText className="mr-2 h-4 w-4" />
               <span>Export as Markdown</span>
             </DropdownMenuItem>
-            <DropdownMenuItem
-              className="cursor-pointer"
-              onClick={onExportText}
-            >
+            <DropdownMenuItem className="cursor-pointer" onClick={onExportText}>
               <FileText className="mr-2 h-4 w-4" />
               <span>Export as Text</span>
             </DropdownMenuItem>
-            <DropdownMenuItem
-              className="cursor-pointer"
-              onClick={onExportPDF}
-            >
+            <DropdownMenuItem className="cursor-pointer" onClick={onExportPDF}>
               <FileDown className="mr-2 h-4 w-4" />
               <span>Export as PDF</span>
             </DropdownMenuItem>
