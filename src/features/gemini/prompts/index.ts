@@ -82,6 +82,8 @@ Each object in "note_contents" must have three keys: "title" (a string), "headin
 
 **Failure to follow these rules will result in an incorrect response.**
 
+*   **TITLE CHARACTER RESTRICTION:** Note titles must NOT contain these characters: \\ / : * ? " < > |
+
 *   **OPTIONAL MINDMAP SECTION:** The "Mindmap" section is entirely optional. Include it only if it provides significant value for the specific topic. If you choose to omit it, you must also omit its entry from the "Table of Contents" and not include the section object in the \`note_contents\` array at all.
 
 *   **SEMANTIC HTML STRUCTURE:** **CRITICAL** - Use semantic HTML5 section elements for all content organization:
