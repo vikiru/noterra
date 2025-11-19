@@ -28,9 +28,7 @@ export async function findNoteById(noteId: string): Promise<Note | null> {
   return result[0] ?? null;
 }
 
-export async function findNoteWithAuthorById(
-  noteId: string,
-): Promise<
+export async function findNoteWithAuthorById(noteId: string): Promise<
   | (Note & {
       author: { username: string; firstName: string; lastName: string };
     })
@@ -145,6 +143,22 @@ export async function updateNote(updatedNote: Note): Promise<Note> {
       showCards: updatedNote.showCards,
     })
     .where(eq(notesTable.id, updatedNote.id))
+    .returning();
+  return result[0];
+}
+
+export async function updateNoteVisibility(
+  noteId: string,
+  visibility: { public: boolean; shared: boolean; showCards: boolean },
+): Promise<Note> {
+  const result = await db
+    .update(notesTable)
+    .set({
+      public: visibility.public,
+      shared: visibility.shared,
+      showCards: visibility.showCards,
+    })
+    .where(eq(notesTable.id, noteId))
     .returning();
   return result[0];
 }

@@ -1,10 +1,13 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import {
   findNoteById,
+  findNoteWithAuthorById,
   insertNote,
   removeNote,
   updateNote,
+  updateNoteVisibility,
 } from '@/features/notes/data-access/notes';
 import { insertNoteSchema } from '@/features/notes/schema/noteSchema';
 import { checkOwnership } from '@/lib/auth';
@@ -73,6 +76,42 @@ export async function deleteNote(noteId: string) {
     return {
       success: false,
       error: 'Unexpected error occurred while deleting note.',
+    };
+  }
+}
+
+export async function updateNoteVisibilityAction(
+  noteId: string,
+  visibility: { public: boolean; shared: boolean; showCards: boolean },
+) {
+  try {
+    const existing = await findNoteWithAuthorById(noteId);
+    if (!existing) {
+      return { success: false, error: 'Note not found.' };
+    }
+    const isOwner = await checkOwnership(existing.authorId);
+    if (!isOwner) {
+      return { success: false, error: 'Access denied.' };
+    }
+
+    const updatedNote = await updateNoteVisibility(noteId, visibility);
+
+    revalidatePath(`/notes/${noteId}`);
+
+    if (updatedNote.public || existing.public) {
+      revalidatePath(`/${existing.author.username}/notes/${noteId}`);
+    }
+
+    if (updatedNote.shared || existing.shared) {
+      revalidatePath(`/shared/${existing.shareToken}`);
+    }
+
+    return { success: true, data: updatedNote };
+  } catch (error) {
+    console.error('Error updating note visibility:', error);
+    return {
+      success: false,
+      error: 'Unexpected error occurred while updating visibility.',
     };
   }
 }

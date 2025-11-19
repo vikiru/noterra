@@ -1,12 +1,10 @@
 'use client';
 
 import { Check, Copy, Globe, Lock } from 'lucide-react';
-import { useState } from 'react';
-import { toast } from 'sonner';
-
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useCopyLink } from '@/lib/hooks/useCopyLink';
 
 type ShareLinkProps = {
   link: string;
@@ -14,18 +12,7 @@ type ShareLinkProps = {
 };
 
 export function ShareLink({ link, isPublic }: ShareLinkProps) {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(link);
-      setCopied(true);
-      toast.success('Link copied to clipboard');
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      toast.error('Failed to copy link');
-    }
-  };
+  const { copied, copy } = useCopyLink(link);
 
   return (
     <div className="flex flex-col gap-2">
@@ -35,7 +22,7 @@ export function ShareLink({ link, isPublic }: ShareLinkProps) {
       >
         Share Link
       </Label>
-      <div className="flex items-center space-x-2">
+      <div className="flex gap-2">
         <div className="relative flex-1">
           <Input
             className="pr-9 h-9 text-sm bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-300 focus-visible:ring-1"
@@ -53,7 +40,7 @@ export function ShareLink({ link, isPublic }: ShareLinkProps) {
         </div>
         <Button
           className="px-3 h-9 shrink-0 bg-neutral-900 dark:bg-neutral-50 text-white dark:text-neutral-900 hover:bg-neutral-800 dark:hover:bg-neutral-200"
-          onClick={handleCopy}
+          onClick={copy}
           size="sm"
         >
           {copied ? (
@@ -61,7 +48,7 @@ export function ShareLink({ link, isPublic }: ShareLinkProps) {
           ) : (
             <Copy className="h-3.5 w-3.5" />
           )}
-          <span className="sr-only">Copy</span>
+          <span className="sr-only">Copy link</span>
         </Button>
       </div>
     </div>
