@@ -209,6 +209,10 @@ body {
             display: none !important;
         }
 
+        header {
+            display: none !important;
+        }
+
         /* hide mermaid errors */
         div[id^="dmermaid-"]:has(svg[aria-roledescription="error"]) {
             display: none !important;

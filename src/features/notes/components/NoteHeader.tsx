@@ -16,7 +16,7 @@ export function NoteHeader({ note }: NoteHeaderProps) {
       : note.author.username;
 
   return (
-    <section className="mb-2" id="note-header">
+    <section className="mb-2 print:mt-2" id="note-header">
       <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2 font-heading">
         {note.title}
       </h1>
