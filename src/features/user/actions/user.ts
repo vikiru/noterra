@@ -8,7 +8,6 @@ import type { User, UserCreate, UserUpdate } from '@/user/types/user';
 
 export async function createUser(user: UserCreate) {
   try {
-    console.log(user);
     const ownership = await checkOwnership(user.clerkId);
     if (!ownership) {
       return {
@@ -16,12 +15,7 @@ export async function createUser(user: UserCreate) {
         error: 'You are not authorized to create this user. Please try again.',
       };
     }
-    // const result = validateData<UserCreate>(user, insertUserSchema);
-    // if (!result.success) {
-    //   return result;
-    // }
-    // const validatedUser = result.data;
-    const newUser = await insertUser(user); // TODO: fix user schema validation issues "id" is being added somewhere.
+    const newUser = await insertUser(user);
     if (!newUser) {
       return {
         success: false,

@@ -2,8 +2,8 @@ import { FileText, Plus } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import type { Note } from '@/features/notes/types/notes';
 import { ScrollArea } from '@/lib/components/ui/scroll-area';
-import type { Note } from '@/lib/db/schema';
 
 type UserNotesListProps = {
   notes: Note[];
