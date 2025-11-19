@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { findCardsByNoteId } from '@/features/cards/data-access/flashcard';
-import { NoteDisplay } from '@/features/notes/components/NoteDisplay';
+import { NoteDetail } from '@/features/notes/components/NoteDetail';
 import { findNoteById } from '@/features/notes/data-access/notes';
 import { getCurrentUser } from '@/lib/auth';
 
@@ -15,5 +15,5 @@ export async function NoteDetailWrapper({ noteId }: { noteId: string }) {
     return notFound();
   }
 
-  return <NoteDisplay note={note} />;
+  return <NoteDetail note={note} />;
 }

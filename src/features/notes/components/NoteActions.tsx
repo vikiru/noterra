@@ -35,7 +35,7 @@ export function NoteActions({
 }: NoteActionsProps) {
   return (
     <section className="flex justify-between items-center mb-6" id="actions">
-      <Button asChild variant="ghost" size="sm" className="-ml-3 text-muted-foreground hover:text-foreground">
+      <Button asChild variant="ghost" size="sm" className="-ml-3 text-muted-foreground hover:text-black">
         <Link className="flex items-center gap-2" href="/notes">
           <ArrowLeft className="h-4 w-4" />
           Back to Notes

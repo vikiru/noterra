@@ -5,17 +5,15 @@ interface UseNoteExportProps {
   note: {
     title: string;
   };
-  contentRef: RefObject<HTMLDivElement>;
-  printSectionRef?: RefObject<HTMLDivElement>;
+  contentRef: RefObject<HTMLDivElement | null>;
 }
 
 export function useNoteExport({
   note,
   contentRef,
-  printSectionRef,
 }: UseNoteExportProps) {
   const convertToMarkdown = useCallback(() => {
-    if (contentRef.current) {
+    if (contentRef?.current) {
       const turnDownService = new TurnDown();
       const markdown = turnDownService.turndown(contentRef.current.innerHTML);
 
@@ -30,7 +28,7 @@ export function useNoteExport({
   }, [note.title, contentRef]);
 
   const convertToText = useCallback(() => {
-    if (contentRef.current) {
+    if (contentRef?.current) {
       const turnDownService = new TurnDown();
       const markdown = turnDownService.turndown(contentRef.current.innerHTML);
 

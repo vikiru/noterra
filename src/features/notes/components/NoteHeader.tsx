@@ -35,7 +35,7 @@ export function NoteHeader({ note }: NoteHeaderProps) {
 
       {note.keywords && note.keywords.length > 0 && (
         <div className="flex flex-wrap gap-2">
-          {note.keywords.map((kw) => (
+          {note.keywords.map((kw: string) => (
             <Badge className="text-xs" key={kw.trim()} variant="secondary">
               {kw.trim()}
             </Badge>
