@@ -1,19 +1,30 @@
-import { ArrowLeft, Plus } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 import { Button } from '@/components/ui/button';
 import { FlashcardListView } from '@/features/cards/components/FlashcardListView';
-import { findNoteTitleById } from '@/features/notes/data-access/notes';
+import {
+  findNoteByShareToken,
+  findPublicCardsByNoteId,
+} from '@/features/notes/data-access/notes';
 import { Spinner } from '@/lib/components/ui/spinner';
 
-export default async function NoteFlashcardsPage({
+export default async function SharedNoteFlashcardsPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ shareToken: string }>;
 }) {
-  const noteTitle = await findNoteTitleById(params.id);
+  const { shareToken } = await params;
 
-  if (!noteTitle) {
+  const note = await findNoteByShareToken(shareToken);
+
+  if (!note || !note.shared || !note.showCards) {
+    return notFound();
+  }
+
+  const cards = await findPublicCardsByNoteId(note.id);
+
+  if (cards.length === 0) {
     return notFound();
   }
 
@@ -27,7 +38,7 @@ export default async function NoteFlashcardsPage({
             size="sm"
             variant="ghost"
           >
-            <a href={`/notes/${params.id}`}>
+            <a href={`/shared/${shareToken}`}>
               <ArrowLeft className="mr-2 size-4 transition-transform group-hover:-translate-x-1 " />
               Back to note
             </a>
@@ -36,21 +47,12 @@ export default async function NoteFlashcardsPage({
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b pb-6">
             <div className="space-y-1">
               <h1 className="text-3xl sm:text-4xl font-bold tracking-tight font-heading text-foreground">
-                {noteTitle.title}
+                {note.title}
               </h1>
               <p className="text-muted-foreground font-body text-lg max-w-2xl">
-                Review and manage the flashcards generated from your note.
+                Review the flashcards from this note.
               </p>
             </div>
-            <Button asChild className="w-full sm:w-auto shadow-sm">
-              <a
-                className="flex items-center justify-center"
-                href={`/notes/${params.id}/flashcards/new`}
-              >
-                <Plus className="mr-2 size-4" />
-                Add New Card
-              </a>
-            </Button>
           </div>
         </div>
 
@@ -61,7 +63,7 @@ export default async function NoteFlashcardsPage({
             </div>
           }
         >
-          <FlashcardListView noteId={params.id} />
+          <FlashcardListView noteId={note.id} showUserActions={false} />
         </Suspense>
       </div>
     </div>

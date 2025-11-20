@@ -10,9 +10,13 @@ type ActivityItem = {
 
 type UserActivityFeedProps = {
   activity: ActivityItem[];
+  isOwnProfile: boolean;
 };
 
-export function UserActivityFeed({ activity }: UserActivityFeedProps) {
+export function UserActivityFeed({
+  activity,
+  isOwnProfile,
+}: UserActivityFeedProps) {
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between mb-4">
@@ -30,10 +34,12 @@ export function UserActivityFeed({ activity }: UserActivityFeedProps) {
             <Clock className="h-6 w-6 text-muted-foreground" />
           </div>
           <h3 className="text-sm font-medium text-foreground">
-            No recent activity
+            {isOwnProfile ? 'No recent activity' : 'No public activity'}
           </h3>
           <p className="text-xs text-muted-foreground mt-1 max-w-xs">
-            Recent actions will appear here.
+            {isOwnProfile
+              ? 'Recent actions will appear here.'
+              : 'This user has no recent public activity.'}
           </p>
         </div>
       ) : (

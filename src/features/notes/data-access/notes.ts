@@ -28,6 +28,17 @@ export async function findNoteById(noteId: string): Promise<Note | null> {
   return result[0] ?? null;
 }
 
+export async function findNoteTitleById(
+  noteId: string,
+): Promise<{ title: string } | null> {
+  const result = await db
+    .select({ title: notesTable.title })
+    .from(notesTable)
+    .where(eq(notesTable.id, noteId))
+    .limit(1);
+  return result[0] ?? null;
+}
+
 export async function findNoteWithAuthorById(noteId: string): Promise<
   | (Note & {
       author: { username: string; firstName: string; lastName: string };
@@ -143,13 +154,22 @@ export async function findPublicCardsByNoteId(
   return result;
 }
 
-export async function findPublicNotesByUserId(userId: string): Promise<Note[]> {
-  const result: Note[] = await db
-    .select()
+export async function findPublicNotesByUserId(
+  userId: string,
+): Promise<NoteMetadata[]> {
+  const result: NoteMetadata[] = await db
+    .select({
+      id: notesTable.id,
+      authorId: notesTable.authorId,
+      title: notesTable.title,
+      summary: notesTable.summary,
+      keywords: notesTable.keywords,
+      shared: notesTable.shared,
+      public: notesTable.public,
+      createdAt: notesTable.createdAt,
+    })
     .from(notesTable)
-    .where(
-      and(eq(notesTable.authorId, userId), eq(notesTable.showCards, true)),
-    );
+    .where(and(eq(notesTable.authorId, userId), eq(notesTable.public, true)));
   return result;
 }
 

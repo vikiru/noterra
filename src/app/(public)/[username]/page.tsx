@@ -1,3 +1,4 @@
+import { auth } from '@clerk/nextjs/server';
 import { notFound } from 'next/navigation';
 import { ProfileHeader } from '@/features/user/components/ProfileHeader';
 import { ProfileTabs } from '@/features/user/components/ProfileTabs';
@@ -31,6 +32,9 @@ export default async function ProfilePage({
     return notFound();
   }
 
+  const { userId } = await auth();
+  const isOwnProfile = userId === user.clerkId;
+
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
       <div className="flex flex-col lg:flex-row gap-8">
@@ -41,7 +45,9 @@ export default async function ProfilePage({
         <ProfileTabs
           activity={activityOverview}
           flashcards={publicCards}
+          isOwnProfile={isOwnProfile}
           notes={publicNotes}
+          username={username}
         />
       </div>
     </div>

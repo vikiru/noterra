@@ -4,14 +4,20 @@ import { FlashcardActions } from './FlashcardActions';
 
 type FlashcardPreviewCardProps = {
   card: Flashcard;
+  showUserActions?: boolean;
 };
 
-export function FlashcardPreviewCard({ card }: FlashcardPreviewCardProps) {
+export function FlashcardPreviewCard({
+  card,
+  showUserActions = true,
+}: FlashcardPreviewCardProps) {
   return (
     <Card className="group relative overflow-hidden transition-all hover:shadow-md border-border/50 h-full flex flex-col">
-      <div className="absolute right-2 top-2 opacity-0 transition-opacity group-hover:opacity-100 z-10">
-        <FlashcardActions card={card} />
-      </div>
+      {showUserActions && (
+        <div className="absolute right-2 top-2 opacity-0 transition-opacity group-hover:opacity-100 z-10">
+          <FlashcardActions card={card} />
+        </div>
+      )}
       <CardHeader className="pb-3 border-b bg-muted/30 flex-none">
         <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-2">
           Question
