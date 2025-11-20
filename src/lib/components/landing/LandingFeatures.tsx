@@ -9,16 +9,16 @@ const features = [
     icon: WandSparkles,
   },
   {
-    name: 'Export and Share',
-    description:
-      'Export your notes to multiple formats including Markdown, PDF, and plain text. Share your knowledge with others effortlessly.',
-    icon: Download,
-  },
-  {
     name: 'Powerful Editor',
     description:
       'Enjoy a seamless writing experience with our rich text editor powered by TipTap. Format, organize, and style your notes with ease.',
     icon: Pencil,
+  },
+  {
+    name: 'Export and Share',
+    description:
+      'Export your notes to multiple formats including Markdown, PDF, and plain text. Share your knowledge with others effortlessly.',
+    icon: Download,
   },
 ];
 
