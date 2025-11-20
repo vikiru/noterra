@@ -1,18 +1,26 @@
 import { BookOpen, Clock, FileText } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import type { FlashcardSet } from '@/features/cards/types/flashcardSet';
-import type { Note } from '@/features/notes/types/notes';
+import type { NoteMetadata } from '@/features/notes/types/noteMetadata';
 import { UserActivityFeed } from './UserActivityFeed';
 import { UserFlashcardsList } from './UserFlashcardsList';
 import { UserNotesList } from './UserNotesList';
 
 type ProfileTabsProps = {
-  notes: Note[];
+  notes: NoteMetadata[];
   flashcards: (FlashcardSet & { cardCount: number })[];
   activity: { date: string; notes: number; flashcards: number }[];
+  isOwnProfile: boolean;
+  username: string;
 };
 
-export function ProfileTabs({ notes, flashcards, activity }: ProfileTabsProps) {
+export function ProfileTabs({
+  notes,
+  flashcards,
+  activity,
+  isOwnProfile,
+  username,
+}: ProfileTabsProps) {
   return (
     <div className="flex-1">
       <Tabs className="w-full" defaultValue="notes">
@@ -29,15 +37,23 @@ export function ProfileTabs({ notes, flashcards, activity }: ProfileTabsProps) {
         </TabsList>
 
         <TabsContent value="notes">
-          <UserNotesList notes={notes} />
+          <UserNotesList
+            isOwnProfile={isOwnProfile}
+            notes={notes}
+            username={username}
+          />
         </TabsContent>
 
         <TabsContent value="flashcards">
-          <UserFlashcardsList flashcards={flashcards} />
+          <UserFlashcardsList
+            flashcards={flashcards}
+            isOwnProfile={isOwnProfile}
+            username={username}
+          />
         </TabsContent>
 
         <TabsContent value="activity">
-          <UserActivityFeed activity={activity} />
+          <UserActivityFeed activity={activity} isOwnProfile={isOwnProfile} />
         </TabsContent>
       </Tabs>
     </div>
