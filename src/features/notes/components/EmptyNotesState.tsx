@@ -1,4 +1,5 @@
 import { FileText, Plus } from 'lucide-react';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import {
   Empty,
@@ -26,10 +27,10 @@ export function EmptyNotesState() {
         </EmptyHeader>
         <EmptyContent>
           <Button asChild>
-            <a className="gap-2" href="/prompt">
+            <Link className="gap-2" href="/prompt">
               <Plus className="h-4 w-4" />
               New Note
-            </a>
+            </Link>
           </Button>
         </EmptyContent>
       </Empty>

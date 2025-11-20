@@ -1,5 +1,5 @@
 import { BookOpen, FileText } from 'lucide-react';
-
+import Link from 'next/link';
 import {
   Empty,
   EmptyContent,
@@ -23,13 +23,13 @@ export function EmptyFlashcardsState() {
           </EmptyDescription>
         </EmptyHeader>
         <EmptyContent>
-          <a
+          <Link
             className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
             href="/prompt"
           >
             <FileText className="mr-2 size-4" />
             Create Note
-          </a>
+          </Link>
         </EmptyContent>
       </Empty>
     </div>

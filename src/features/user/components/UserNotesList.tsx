@@ -1,6 +1,6 @@
 import { FileText, Plus } from 'lucide-react';
-import Link from 'next/link';
 import { DateTime } from 'luxon';
+import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -57,7 +57,7 @@ export function UserNotesList({
         </div>
       ) : (
         <ScrollArea className="h-[500px] pr-4">
-          <div className="space-y-3">
+          <div className="flex flex-col gap-3">
             {notes.map((note) => (
               <Link
                 href={`/${username}/notes/${note.id}`}

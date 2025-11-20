@@ -2,8 +2,8 @@ import { BookOpen } from 'lucide-react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
+import type { FlashcardSet } from '@/features/flashcards/types/flashcardSet';
 import { ScrollArea } from '@/lib/components/ui/scroll-area';
-import type { FlashcardSet } from '@/lib/db/schema';
 
 type UserFlashcardsListProps = {
   flashcards: (FlashcardSet & { cardCount: number })[];
@@ -45,7 +45,7 @@ export function UserFlashcardsList({
         </div>
       ) : (
         <ScrollArea className="h-[500px] pr-4">
-          <div className="space-y-3">
+          <div className="flex flex-col gap-3">
             {flashcards.map((set) => (
               <Link
                 href={`/${username}/notes/${set.id}/flashcards`}

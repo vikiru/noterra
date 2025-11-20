@@ -1,5 +1,6 @@
 import { Calendar, FileText } from 'lucide-react';
 import { DateTime } from 'luxon';
+import Link from 'next/link';
 import type { NoteMetadata } from '@/features/notes/types/noteMetadata';
 
 type RecentNoteItemProps = {
@@ -8,9 +9,10 @@ type RecentNoteItemProps = {
 
 export function RecentNoteItem({ note }: RecentNoteItemProps) {
   return (
-    <a
+    <Link
       className="flex items-center justify-between p-2 rounded-md hover:bg-muted/50 transition-colors group"
       href={`/notes/${note.id}`}
+      prefetch={false}
     >
       <div className="flex items-center gap-3 overflow-hidden">
         <div className="h-8 w-8 rounded bg-primary/10 flex items-center justify-center shrink-0 text-primary">
@@ -24,6 +26,6 @@ export function RecentNoteItem({ note }: RecentNoteItemProps) {
         <Calendar className="h-3 w-3" />
         {DateTime.fromJSDate(note.createdAt).toFormat('LLL d')}
       </div>
-    </a>
+    </Link>
   );
 }
