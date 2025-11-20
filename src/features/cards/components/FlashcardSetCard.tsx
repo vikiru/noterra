@@ -1,5 +1,6 @@
 import { ArrowRight, Clock } from 'lucide-react';
 import { DateTime } from 'luxon';
+import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
@@ -47,10 +48,10 @@ export function FlashcardSetCard({ set }: FlashcardSetCardProps) {
                 size="sm"
                 variant="outline"
               >
-                <a href={`/notes/${set.id}/flashcards`}>
+                <Link href={`/notes/${set.id}/flashcards`} prefetch={false}>
                   Study
                   <ArrowRight className="ml-1.5 size-3.5 transition-transform group-hover/button:translate-x-0.5" />
-                </a>
+                </Link>
               </Button>
             </div>
           </div>

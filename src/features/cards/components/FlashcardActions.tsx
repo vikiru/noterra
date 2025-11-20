@@ -10,7 +10,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { deleteFlashcard } from '@/features/cards/actions/flashcard';
 import type { Flashcard } from '@/features/cards/types/flashcard';
 
 type FlashcardActionsProps = {

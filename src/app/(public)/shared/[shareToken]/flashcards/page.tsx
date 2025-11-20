@@ -1,4 +1,5 @@
 import { ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 import { Button } from '@/components/ui/button';
@@ -38,10 +39,10 @@ export default async function SharedNoteFlashcardsPage({
             size="sm"
             variant="ghost"
           >
-            <a href={`/shared/${shareToken}`}>
+            <Link href={`/shared/${shareToken}`}>
               <ArrowLeft className="mr-2 size-4 transition-transform group-hover:-translate-x-1 " />
               Back to note
-            </a>
+            </Link>
           </Button>
 
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b pb-6">
