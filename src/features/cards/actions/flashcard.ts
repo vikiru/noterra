@@ -1,8 +1,11 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import type { Flashcard, FlashcardCreate } from '@/cards/types/flashcard';
+import { MAX_FLASHCARDS_PER_NOTE } from '@/features/cards/constants';
 import {
   findCardById,
+  findCardsByNoteId,
   insertCard,
   insertMultipleCards,
   modifyCard,
@@ -26,9 +29,18 @@ export async function createFlashcard(card: FlashcardCreate) {
       };
     }
 
+    const existingCards = await findCardsByNoteId(card.noteId);
+    if (existingCards.length >= MAX_FLASHCARDS_PER_NOTE) {
+      return {
+        success: false,
+        error: `Maximum limit of ${MAX_FLASHCARDS_PER_NOTE} flashcards per note reached.`,
+      };
+    }
+
     const result = validateData<FlashcardCreate>(card, insertFlashcardSchema);
     if (!result.success) return result;
     const newCard = await insertCard(result.data);
+    revalidatePath(`/notes/${card.noteId}/flashcards`);
     return { success: true, data: newCard };
   } catch (err) {
     console.error('Error creating flashcard:', err);
@@ -87,6 +99,7 @@ export async function updateFlashcard(updatedCard: Flashcard) {
     if (!result.success) return result;
 
     const saved = await modifyCard(result.data);
+    revalidatePath(`/notes/${updatedCard.noteId}/flashcards`);
     return { success: true, data: saved };
   } catch (err) {
     console.error('Error updating flashcard:', err);
@@ -110,6 +123,7 @@ export async function deleteFlashcard(flashcardId: string) {
     }
 
     const deleted = await removeCard(flashcardId);
+    revalidatePath(`/notes/${existing.noteId}/flashcards`);
     return { success: true, data: deleted };
   } catch (err) {
     console.error('Error deleting flashcard:', err);
