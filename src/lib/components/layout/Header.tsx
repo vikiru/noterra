@@ -2,6 +2,7 @@ import { SignedIn, SignedOut } from '@clerk/nextjs';
 import Link from 'next/link';
 import { Logo } from '@/lib/components/Logo';
 import { GetStartedButton } from '@/lib/components/landing/GetStartedButton';
+import { ThemeToggle } from '@/lib/components/ThemeToggle';
 import UserButton from '@/lib/components/UserButton';
 
 export async function Header() {
@@ -14,6 +15,7 @@ export async function Header() {
         <Logo containerSize="h-10 w-10" iconSize={24} textSize="text-xl" />
       </Link>
       <div className="flex items-center gap-4">
+        <ThemeToggle />
         <SignedIn>
           <UserButton />
         </SignedIn>
