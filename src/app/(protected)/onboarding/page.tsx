@@ -1,23 +1,15 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { redirect } from 'next/navigation';
 import { DASHBOARD_ROUTE } from '@/constants/route';
+import { findUserById } from '@/features/user/data-access/user';
+import { getCurrentUser } from '@/lib/auth';
 import { OnboardingForm } from '@/lib/components/onboarding/OnboardingForm';
-import { type UserState, useUserStore } from '@/user/store/userStore';
 
-export default function OnboardingPage() {
-  const user = useUserStore((state: UserState) => state.user);
-  const router = useRouter();
+export default async function OnboardingPage() {
+  const userId = await getCurrentUser();
+  const databaseUser = await findUserById(userId as string);
 
-  useEffect(() => {
-    if (user) {
-      router.push(DASHBOARD_ROUTE);
-    }
-  }, [user, router]);
-
-  if (user) {
-    return null;
+  if (databaseUser) {
+    redirect(DASHBOARD_ROUTE);
   }
 
   return <OnboardingForm />;

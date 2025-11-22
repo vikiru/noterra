@@ -20,8 +20,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { DASHBOARD_ROUTE } from '@/constants/route';
 import { createUser } from '@/features/user/actions/user';
 import { onboardingSchema } from '@/schema/onboardingSchema';
-import { useUserStore } from '@/user/store/userStore';
-import type { User, UserCreate } from '@/user/types/user';
+import type { UserCreate } from '@/user/types/user';
 
 export default function OnboardingForm() {
   const { user, isLoaded } = useUser();
@@ -29,7 +28,6 @@ export default function OnboardingForm() {
     resolver: zodResolver(onboardingSchema),
   });
   const router = useRouter();
-  const setUser = useUserStore((state) => state.setUser);
 
   async function onSubmit(values: z.infer<typeof onboardingSchema>) {
     try {
@@ -48,8 +46,6 @@ export default function OnboardingForm() {
         toast.error('Failed to create user. Please try again.');
         return;
       }
-
-      setUser(result.data as User);
 
       toast.success(
         'Successfully completed onboarding. Redirecting to dashboard.',
