@@ -1,8 +1,8 @@
 import { Logo } from '@/lib/components/layout/Logo';
 
-export function LandingFooter() {
+export function Footer() {
   return (
-    <footer className="bg-background border-t border-border">
+    <footer className="bg-background/25 border-t border-border">
       <div className="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
           <Logo />

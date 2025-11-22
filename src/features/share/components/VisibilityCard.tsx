@@ -13,6 +13,7 @@ type VisibilityCardProps = {
   onShowFlashcardsChange: (val: boolean) => void;
 };
 
+// TODO: Reduce the prop drilling
 export function VisibilityCard({
   isPublic,
   isShared,

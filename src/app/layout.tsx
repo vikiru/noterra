@@ -14,21 +14,29 @@ import ThemeProvider from '@/lib/components/providers/ThemeProvider';
 const fontHeading = Plus_Jakarta_Sans({
   subsets: ['latin'],
   variable: '--font-heading',
+  display: 'swap',
+  preload: true,
 });
 
 const fontBody = Inter({
   subsets: ['latin'],
   variable: '--font-body',
+  display: 'swap',
+  preload: true,
 });
 
 const fontMono = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-mono',
+  display: 'swap',
+  preload: true,
 });
 
 const fontLogo = Syne({
   subsets: ['latin'],
   variable: '--font-logo',
+  display: 'swap',
+  preload: true,
 });
 
 export const metadata: Metadata = {

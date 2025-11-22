@@ -1,6 +1,6 @@
 'use client';
 
-import type { Editor } from '@tiptap/react';
+import { type Editor, useEditorState } from '@tiptap/react';
 import {
   AlignCenter,
   AlignJustify,
@@ -27,7 +27,6 @@ import {
   Undo,
   Unlink,
 } from 'lucide-react';
-import { useEffect, useReducer } from 'react';
 import { Separator } from '@/components/ui/separator';
 import { Toggle } from '@/components/ui/toggle';
 import {
@@ -41,26 +40,29 @@ type TiptapToolbarProps = {
 };
 
 export function TiptapToolbar({ editor }: TiptapToolbarProps) {
-  // Force re-render on editor state changes to update button states
-  const [, forceUpdate] = useReducer((x) => x + 1, 0);
+  const editorState = useEditorState({
+    editor,
+    selector: (ctx) => ({
+      isBold: ctx.editor?.isActive('bold'),
+      isItalic: ctx.editor?.isActive('italic'),
+      isUnderline: ctx.editor?.isActive('underline'),
+      isStrike: ctx.editor?.isActive('strike'),
+      isCode: ctx.editor?.isActive('code'),
+      isLink: ctx.editor?.isActive('link'),
+      isHeading2: ctx.editor?.isActive('heading', { level: 2 }),
+      isHeading3: ctx.editor?.isActive('heading', { level: 3 }),
+      isHeading4: ctx.editor?.isActive('heading', { level: 4 }),
+      isAlignLeft: ctx.editor?.isActive({ textAlign: 'left' }),
+      isAlignCenter: ctx.editor?.isActive({ textAlign: 'center' }),
+      isAlignRight: ctx.editor?.isActive({ textAlign: 'right' }),
+      isAlignJustify: ctx.editor?.isActive({ textAlign: 'justify' }),
+      canUndo: ctx.editor?.can().undo(),
+      canRedo: ctx.editor?.can().redo(),
+      canUnsetLink: ctx.editor?.can().unsetLink(),
+    }),
+  });
 
-  useEffect(() => {
-    if (!editor) return;
-
-    const handleUpdate = () => forceUpdate();
-
-    editor.on('transaction', handleUpdate);
-    editor.on('selectionUpdate', handleUpdate);
-    editor.on('update', handleUpdate);
-
-    return () => {
-      editor.off('transaction', handleUpdate);
-      editor.off('selectionUpdate', handleUpdate);
-      editor.off('update', handleUpdate);
-    };
-  }, [editor]);
-
-  if (!editor) {
+  if (!editor || !editorState) {
     return null;
   }
 
@@ -68,18 +70,15 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
     const previousUrl = editor.getAttributes('link').href;
     const url = window.prompt('URL', previousUrl);
 
-    // cancelled
     if (url === null) {
       return;
     }
 
-    // empty
     if (url === '') {
       editor.chain().focus().extendMarkRange('link').unsetLink().run();
       return;
     }
 
-    // update
     editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
   };
 
@@ -94,7 +93,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
             onPressedChange={() =>
               editor.chain().focus().toggleHeading({ level: 2 }).run()
             }
-            pressed={editor.isActive('heading', { level: 2 })}
+            pressed={editorState.isHeading2}
             size="sm"
           >
             <Heading2 className="h-4 w-4" />
@@ -110,7 +109,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
             onPressedChange={() =>
               editor.chain().focus().toggleHeading({ level: 3 }).run()
             }
-            pressed={editor.isActive('heading', { level: 3 })}
+            pressed={editorState.isHeading3}
             size="sm"
           >
             <Heading3 className="h-4 w-4" />
@@ -126,7 +125,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
             onPressedChange={() =>
               editor.chain().focus().toggleHeading({ level: 4 }).run()
             }
-            pressed={editor.isActive('heading', { level: 4 })}
+            pressed={editorState.isHeading4}
             size="sm"
           >
             <Heading4 className="h-4 w-4" />
@@ -144,7 +143,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
             aria-label="Bold"
             className="shrink-0 data-[state=on]:bg-neutral-900 data-[state=on]:text-neutral-50 dark:data-[state=on]:bg-neutral-50 dark:data-[state=on]:text-neutral-900"
             onPressedChange={() => editor.chain().focus().toggleBold().run()}
-            pressed={editor.isActive('bold')}
+            pressed={editorState.isBold}
             size="sm"
           >
             <Bold className="h-4 w-4" />
@@ -158,7 +157,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
             aria-label="Italic"
             className="shrink-0 data-[state=on]:bg-neutral-900 data-[state=on]:text-neutral-50 dark:data-[state=on]:bg-neutral-50 dark:data-[state=on]:text-neutral-900"
             onPressedChange={() => editor.chain().focus().toggleItalic().run()}
-            pressed={editor.isActive('italic')}
+            pressed={editorState.isItalic}
             size="sm"
           >
             <Italic className="h-4 w-4" />
@@ -174,7 +173,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
             onPressedChange={() =>
               editor.chain().focus().toggleUnderline().run()
             }
-            pressed={editor.isActive('underline')}
+            pressed={editorState.isUnderline}
             size="sm"
           >
             <Underline className="h-4 w-4" />
@@ -188,7 +187,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
             aria-label="Strikethrough"
             className="shrink-0 data-[state=on]:bg-neutral-900 data-[state=on]:text-neutral-50 dark:data-[state=on]:bg-neutral-50 dark:data-[state=on]:text-neutral-900"
             onPressedChange={() => editor.chain().focus().toggleStrike().run()}
-            pressed={editor.isActive('strike')}
+            pressed={editorState.isStrike}
             size="sm"
           >
             <Strikethrough className="h-4 w-4" />
@@ -218,7 +217,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
             aria-label="Code"
             className="shrink-0 data-[state=on]:bg-neutral-900 data-[state=on]:text-neutral-50 dark:data-[state=on]:bg-neutral-50 dark:data-[state=on]:text-neutral-900"
             onPressedChange={() => editor.chain().focus().toggleCode().run()}
-            pressed={editor.isActive('code')}
+            pressed={editorState.isCode}
             size="sm"
           >
             <Code className="h-4 w-4" />
@@ -340,7 +339,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
             aria-label="Link"
             className="shrink-0 data-[state=on]:bg-neutral-900 data-[state=on]:text-neutral-50 dark:data-[state=on]:bg-neutral-50 dark:data-[state=on]:text-neutral-900"
             onPressedChange={setLink}
-            pressed={editor.isActive('link')}
+            pressed={editorState.isLink}
             size="sm"
           >
             <LinkIcon className="h-4 w-4" />
@@ -353,7 +352,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
           <Toggle
             aria-label="Unlink"
             className="shrink-0 data-[state=on]:bg-neutral-900 data-[state=on]:text-neutral-50 dark:data-[state=on]:bg-neutral-50 dark:data-[state=on]:text-neutral-900"
-            disabled={!editor.can().unsetLink()}
+            disabled={!editorState.canUnsetLink}
             onPressedChange={() => editor.chain().focus().unsetLink().run()}
             pressed={false}
             size="sm"
@@ -375,7 +374,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
             onPressedChange={() =>
               editor.chain().focus().setTextAlign('left').run()
             }
-            pressed={editor.isActive({ textAlign: 'left' })}
+            pressed={editorState.isAlignLeft}
             size="sm"
           >
             <AlignLeft className="h-4 w-4" />
@@ -391,7 +390,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
             onPressedChange={() =>
               editor.chain().focus().setTextAlign('center').run()
             }
-            pressed={editor.isActive({ textAlign: 'center' })}
+            pressed={editorState.isAlignCenter}
             size="sm"
           >
             <AlignCenter className="h-4 w-4" />
@@ -407,7 +406,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
             onPressedChange={() =>
               editor.chain().focus().setTextAlign('right').run()
             }
-            pressed={editor.isActive({ textAlign: 'right' })}
+            pressed={editorState.isAlignRight}
             size="sm"
           >
             <AlignRight className="h-4 w-4" />
@@ -423,7 +422,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
             onPressedChange={() =>
               editor.chain().focus().setTextAlign('justify').run()
             }
-            pressed={editor.isActive({ textAlign: 'justify' })}
+            pressed={editorState.isAlignJustify}
             size="sm"
           >
             <AlignJustify className="h-4 w-4" />
@@ -458,7 +457,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
           <Toggle
             aria-label="Undo"
             className="shrink-0 data-[state=on]:bg-neutral-900 data-[state=on]:text-neutral-50 dark:data-[state=on]:bg-neutral-50 dark:data-[state=on]:text-neutral-900"
-            disabled={!editor.can().undo()}
+            disabled={!editorState.canUndo}
             onPressedChange={() => editor.chain().focus().undo().run()}
             pressed={false}
             size="sm"
@@ -473,7 +472,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
           <Toggle
             aria-label="Redo"
             className="shrink-0 data-[state=on]:bg-neutral-900 data-[state=on]:text-neutral-50 dark:data-[state=on]:bg-neutral-50 dark:data-[state=on]:text-neutral-900"
-            disabled={!editor.can().redo()}
+            disabled={!editorState.canRedo}
             onPressedChange={() => editor.chain().focus().redo().run()}
             pressed={false}
             size="sm"

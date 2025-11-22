@@ -27,7 +27,7 @@ type ShareNoteDialogProps = {
   initialShared?: boolean;
   initialShowCards?: boolean;
 };
-
+// TODO: Reduce the prop drilling
 export function ShareNoteDialog({
   open,
   onOpenChange,

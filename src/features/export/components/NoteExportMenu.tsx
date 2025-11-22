@@ -29,6 +29,7 @@ type NoteExportMenuProps = {
   isStandalone?: boolean;
 };
 
+// TODO: Reduce the prop drilling
 export function NoteExportMenu({
   onExportMarkdown,
   onExportText,
