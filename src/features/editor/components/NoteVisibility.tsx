@@ -7,6 +7,7 @@ type NoteVisibilityProps = {
   visibility: ReturnType<typeof useEditVisibility>;
 };
 
+// TODO: Reduce the prop drilling
 export function NoteVisibility({ visibility }: NoteVisibilityProps) {
   return (
     <EditorVisibilityDialog

@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { LandingFeatures } from '@/lib/components/landing/LandingFeatures';
-import { LandingFooter } from '@/lib/components/landing/LandingFooter';
 import { LandingHero } from '@/lib/components/landing/LandingHero';
 
 export const metadata: Metadata = {
@@ -14,7 +13,6 @@ export default function Home() {
     <main className="min-h-screen bg-background">
       <LandingHero />
       <LandingFeatures />
-      <LandingFooter />
     </main>
   );
 }
