@@ -1,0 +1,1 @@
+export const MAX_FLASHCARDS_PER_NOTE = 20;

@@ -1,9 +1,11 @@
-import { ArrowLeft, Plus } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 import { Button } from '@/components/ui/button';
+import { AddFlashcardButton } from '@/features/cards/components/AddFlashcardButton';
 import { FlashcardListView } from '@/features/cards/components/FlashcardListView';
+import { findCardsByNoteId } from '@/features/cards/data-access/flashcard';
 import { findNoteTitleById } from '@/features/notes/data-access/notes';
 import { Spinner } from '@/lib/components/ui/spinner';
 
@@ -17,6 +19,8 @@ export default async function NoteFlashcardsPage({
   if (!noteTitle) {
     return notFound();
   }
+
+  const flashcards = await findCardsByNoteId(params.id);
 
   return (
     <div className="container max-w-full py-8 px-4 sm:px-6">
@@ -43,15 +47,10 @@ export default async function NoteFlashcardsPage({
                 Review and manage the flashcards generated from your note.
               </p>
             </div>
-            <Button asChild className="w-full sm:w-auto shadow-sm">
-              <Link
-                className="flex items-center justify-center"
-                href={`/notes/${params.id}/flashcards/new`}
-              >
-                <Plus className="mr-2 size-4" />
-                Add New Card
-              </Link>
-            </Button>
+            <AddFlashcardButton
+              currentCount={flashcards.length}
+              noteId={params.id}
+            />
           </div>
         </div>
 
