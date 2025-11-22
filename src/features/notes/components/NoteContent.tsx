@@ -13,7 +13,7 @@ export function NoteContent({ content, contentRef }: NoteContentProps) {
 
   return (
     <section
-      className="max-w-none prose bg-white px-6 pb-2 pt-1 dark:prose-invert rounded-lg"
+      className="max-w-none prose bg-background px-6 pb-2 pt-1 dark:prose-invert rounded-lg"
       dangerouslySetInnerHTML={{ __html: content }}
       id="note-content"
       ref={contentRef}

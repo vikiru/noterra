@@ -30,11 +30,7 @@ export function UserNotesList({
           </p>
         </div>
         {isOwnProfile && (
-          <Button
-            className="gap-1 h-8 text-black hover:text-black"
-            size="sm"
-            variant="outline"
-          >
+          <Button className="gap-1 h-8" size="sm" variant="outline">
             <Plus className="h-3.5 w-3.5" />
             <span>New Note</span>
           </Button>

@@ -1,4 +1,3 @@
-import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata } from 'next';
 
 import './globals.css';
@@ -9,7 +8,8 @@ import {
   Syne,
 } from 'next/font/google';
 import { Toaster } from 'sonner';
-import { TanstackProvider } from '@/lib/components/providers/TanstackProvider';
+import ClerkProvider from '@/lib/components/ClerkProvider';
+import ThemeProvider from '@/lib/components/ThemeProvider';
 
 const fontHeading = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -43,15 +43,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider afterSignOutUrl="/">
-      <html lang="en" suppressHydrationWarning>
-        <body
-          className={`debug-screens antialiased ${fontHeading.variable} ${fontBody.variable} ${fontMono.variable} ${fontLogo.variable} font-body`}
-        >
-          <Toaster position="top-right" richColors />
-          <TanstackProvider>{children}</TanstackProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`debug-screens antialiased ${fontHeading.variable} ${fontBody.variable} ${fontMono.variable} ${fontLogo.variable} font-body`}
+      >
+        <Toaster position="top-right" richColors />
+        <ClerkProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            disableTransitionOnChange
+            enableSystem
+          >
+            {children}
+          </ThemeProvider>
+        </ClerkProvider>
+      </body>
+    </html>
   );
 }
