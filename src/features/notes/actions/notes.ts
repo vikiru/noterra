@@ -1,12 +1,15 @@
 'use server';
+import DOMPurify from 'isomorphic-dompurify';
 
 import { revalidatePath } from 'next/cache';
+import type { NoteEditorData } from '@/features/editor/types/noteEditorData';
 import {
   findNoteById,
   findNoteWithAuthorById,
   insertNote,
   removeNote,
   updateNote,
+  updateNoteFromEditor,
   updateNoteVisibility,
 } from '@/features/notes/data-access/notes';
 import { insertNoteSchema } from '@/features/notes/schema/noteSchema';
@@ -114,6 +117,32 @@ export async function updateNoteVisibilityAction(
     return {
       success: false,
       error: 'Unexpected error occurred while updating visibility.',
+    };
+  }
+}
+
+export async function saveNoteChanges(data: NoteEditorData) {
+  try {
+    const existing = await findNoteById(data.id);
+    if (!existing) {
+      return { success: false, error: 'Note not found.' };
+    }
+    const isOwner = await checkOwnership(existing.authorId);
+    if (!isOwner) {
+      return { success: false, error: 'Access denied.' };
+    }
+
+    const sanitizedContent = DOMPurify.sanitize(data.content);
+    data.content = sanitizedContent;
+
+    await updateNoteFromEditor(data);
+    revalidatePath(`/notes/${data.id}`);
+    return { success: true };
+  } catch (error) {
+    console.error('Error saving note changes:', error);
+    return {
+      success: false,
+      error: 'Unexpected error occurred while saving changes.',
     };
   }
 }
