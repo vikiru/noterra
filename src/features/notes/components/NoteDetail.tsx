@@ -1,11 +1,11 @@
 'use client';
 
 import { useRef } from 'react';
+import { useNoteExport } from '@/features/export/hooks/useNoteExport';
 import { NoteActions } from '@/features/notes/components/NoteActions';
 import { NoteContent } from '@/features/notes/components/NoteContent';
 import { NoteHeader } from '@/features/notes/components/NoteHeader';
 import type { Note } from '@/features/notes/types/notes';
-import { useNoteExport } from '../hooks/useNoteExport';
 
 type NoteDetailProps = {
   note: Note & {

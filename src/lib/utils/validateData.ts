@@ -1,5 +1,5 @@
 import type { ZodType } from 'zod';
-import type { ResponseData } from '@/types/response';
+import type { ResponseData } from '@/lib/types/ResponseData';
 
 export function validateData<T>(
   rawData: unknown,

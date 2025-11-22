@@ -1,11 +1,11 @@
 import { auth } from '@clerk/nextjs/server';
 import { notFound } from 'next/navigation';
-import { ProfileHeader } from '@/features/user/components/ProfileHeader';
-import { ProfileTabs } from '@/features/user/components/ProfileTabs';
 import {
   findUserByUsername,
   getUserProfilePageData,
 } from '@/features/user/data-access/user';
+import { ProfileHeader } from '@/lib/components/profile/ProfileHeader';
+import { ProfileTabs } from '@/lib/components/profile/ProfileTabs';
 import type { User } from '@/user/types/user';
 
 export default async function ProfilePage({

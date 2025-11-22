@@ -1,5 +1,6 @@
 import z from 'zod';
 import '../../envConfig.ts';
+import { validateData } from '@/lib/utils/validateData.js';
 
 const envSchema = z.object({
   NODE_ENV: z
@@ -12,10 +13,10 @@ const envSchema = z.object({
   YOUTUBE_DATA_API_KEY: z.string().optional(),
 });
 
-const env = envSchema.safeParse(process.env);
+const env = validateData(process.env, envSchema);
 
-if (env.success === false) {
-  console.error('Invalid environment variables', z.prettifyError(env.error));
+if (!env.success) {
+  console.error('Invalid environment variables', env.error);
   throw new Error('Invalid environment variables');
 }
 
