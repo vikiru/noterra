@@ -25,6 +25,7 @@ type NoteActionsProps = {
   showCards: boolean;
 };
 
+// TODO: Fix prop drilling
 export function NoteActions({
   onExportMarkdown,
   onExportText,
