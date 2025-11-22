@@ -11,19 +11,21 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { DeleteFlashcardDialog } from '@/features/cards/components/DeleteFlashcardDialog';
 import { FlashcardFormDialog } from '@/features/cards/components/FlashcardFormDialog';
+import { useFlashcardDelete } from '@/features/cards/hooks/useFlashcardDelete';
 import type { Flashcard } from '@/features/cards/types/flashcard';
+import { DeleteDialog } from '@/lib/components/ui/DeleteDialog';
 
 export function FlashcardActions({ card }: { card: Flashcard }) {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const { isDeleteDialogOpen, setIsDeleteDialogOpen, onDelete, loading } =
+    useFlashcardDelete({ flashcardId: card.id });
 
   const handleEdit = () => {
     setIsEditDialogOpen(true);
   };
 
-  const handleDelete = () => {
+  const handleDeleteClick = () => {
     setIsDeleteDialogOpen(true);
   };
 
@@ -42,7 +44,7 @@ export function FlashcardActions({ card }: { card: Flashcard }) {
             <Pencil className="mr-2 h-4 w-4" />
             Edit
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={handleDelete} variant="destructive">
+          <DropdownMenuItem onClick={handleDeleteClick} variant="destructive">
             <Trash2 className="mr-2 h-4 w-4" />
             Delete
           </DropdownMenuItem>
@@ -56,10 +58,13 @@ export function FlashcardActions({ card }: { card: Flashcard }) {
         open={isEditDialogOpen}
       />
 
-      <DeleteFlashcardDialog
-        flashcard={card}
+      <DeleteDialog
+        description="Are you sure you want to delete this flashcard? This action cannot be undone."
+        loading={loading}
+        onConfirm={onDelete}
         onOpenChange={setIsDeleteDialogOpen}
         open={isDeleteDialogOpen}
+        title="Delete Flashcard"
       />
     </>
   );
