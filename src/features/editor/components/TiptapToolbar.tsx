@@ -27,6 +27,7 @@ import {
   Undo,
   Unlink,
 } from 'lucide-react';
+import { useState } from 'react';
 import { Separator } from '@/components/ui/separator';
 import { Toggle } from '@/components/ui/toggle';
 import {
@@ -34,12 +35,15 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { LinkDialog } from '@/features/editor/components/LinkDialog';
 
 type TiptapToolbarProps = {
   editor: Editor | null;
 };
 
 export function TiptapToolbar({ editor }: TiptapToolbarProps) {
+  const [isLinkDialogOpen, setIsLinkDialogOpen] = useState(false);
+
   const editorState = useEditorState({
     editor,
     selector: (ctx) => ({
@@ -66,20 +70,18 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
     return null;
   }
 
-  const setLink = () => {
-    const previousUrl = editor.getAttributes('link').href;
-    const url = window.prompt('URL', previousUrl);
+  const getLinkUrl = () => editor.getAttributes('link').href || '';
 
-    if (url === null) {
-      return;
-    }
+  const openLinkDialog = () => {
+    setIsLinkDialogOpen(true);
+  };
 
-    if (url === '') {
-      editor.chain().focus().extendMarkRange('link').unsetLink().run();
-      return;
-    }
-
+  const handleSetLink = (url: string) => {
     editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
+  };
+
+  const handleRemoveLink = () => {
+    editor.chain().focus().extendMarkRange('link').unsetLink().run();
   };
 
   return (
@@ -338,7 +340,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
           <Toggle
             aria-label="Link"
             className="shrink-0 data-[state=on]:bg-neutral-900 data-[state=on]:text-neutral-50 dark:data-[state=on]:bg-neutral-50 dark:data-[state=on]:text-neutral-900"
-            onPressedChange={setLink}
+            onPressedChange={openLinkDialog}
             pressed={editorState.isLink}
             size="sm"
           >
@@ -482,6 +484,14 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
         </TooltipTrigger>
         <TooltipContent>Redo</TooltipContent>
       </Tooltip>
+
+      <LinkDialog
+        initialUrl={getLinkUrl()}
+        onOpenChange={setIsLinkDialogOpen}
+        onRemove={handleRemoveLink}
+        onSubmit={handleSetLink}
+        open={isLinkDialogOpen}
+      />
     </div>
   );
 }
