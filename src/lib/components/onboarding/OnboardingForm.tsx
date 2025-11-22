@@ -13,12 +13,13 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useOnboarding } from '@/features/user/hooks/useOnboarding';
+import { Spinner } from '@/lib/components/ui/spinner';
 
 export function OnboardingForm() {
   const { form, onSubmit, isLoaded } = useOnboarding();
 
   if (!isLoaded) {
-    return <div>Loading...</div>;
+    return <Spinner className="h-12 w-12 place-content-center" />;
   }
 
   return (

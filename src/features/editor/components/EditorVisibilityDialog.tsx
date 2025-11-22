@@ -12,7 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { VisibilityCard } from '@/lib/components/share-dialog/VisibilityCard';
+import { VisibilityCard } from '@/features/share/components/VisibilityCard';
 
 type EditorVisibilityDialogProps = {
   open: boolean;

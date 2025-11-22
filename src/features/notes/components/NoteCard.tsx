@@ -9,10 +9,10 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import type { Note } from '@/features/notes/types/notes';
+import type { NoteMetadata } from '@/features/notes/types/noteMetadata';
 
 type NoteCardProps = {
-  note: Note;
+  note: NoteMetadata;
 };
 
 export function NoteCard({ note }: NoteCardProps) {

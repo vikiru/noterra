@@ -49,7 +49,7 @@ export function PromptForm() {
             type="submit"
           >
             {loading ? (
-              <span className="flex items-center gap-2">
+              <span className="flex items-center gap-2 dark:text-white">
                 <Loader2 className="h-4 w-4 animate-spin" />
                 Generating...
               </span>

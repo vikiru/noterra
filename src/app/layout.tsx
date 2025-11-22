@@ -8,8 +8,8 @@ import {
   Syne,
 } from 'next/font/google';
 import { Toaster } from 'sonner';
-import ClerkProvider from '@/lib/components/ClerkProvider';
-import ThemeProvider from '@/lib/components/ThemeProvider';
+import ClerkProvider from '@/lib/components/providers/ClerkProvider';
+import ThemeProvider from '@/lib/components/providers/ThemeProvider';
 
 const fontHeading = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -34,7 +34,7 @@ const fontLogo = Syne({
 export const metadata: Metadata = {
   title: 'Noterra | AI Learning Tool',
   description:
-    'Noterra is an AI-powered learning tool to generate comprehensive notes and flashcards for any user-given topic.',
+    'Noterra is an AI-powered learning tool that can generate comprehensive notes and flashcards for any user-given topic.',
 };
 
 export default function RootLayout({

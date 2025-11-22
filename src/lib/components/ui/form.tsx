@@ -137,7 +137,7 @@ function FormLabel({
       )}
       data-error={!!error}
       data-slot="form-label"
-      for={formItemId}
+      htmlFor={formItemId}
       {...props}
     />
   );
