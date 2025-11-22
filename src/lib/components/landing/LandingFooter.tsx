@@ -1,4 +1,4 @@
-import { Logo } from '@/lib/components/Logo';
+import { Logo } from '@/lib/components/layout/Logo';
 
 export function LandingFooter() {
   return (

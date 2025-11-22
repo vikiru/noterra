@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 import { cache } from 'react';
 import { SIGNIN_ROUTE } from '@/constants/route';
 import { findNoteWithCardsById } from '@/features/notes/data-access/notes';
-import type { AccessPrivilege } from '@/lib/types/accessPrivilege';
+import type { AccessPrivilege } from '@/lib/types/AccessPrivilege';
 
 export const getCurrentUser = cache(async function getCurrentUser() {
   try {

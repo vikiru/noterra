@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import { DASHBOARD_ROUTE } from '@/lib/constants/route';
 import { cn } from '@/lib/utils/cn';
 
 type GetStartedButtonProps = {
@@ -22,7 +23,7 @@ export function GetStartedButton({
         size === 'lg' ? 'px-8 py-6 text-base' : 'px-6 py-5 text-base',
         className,
       )}
-      onClick={() => router.push('/dashboard')}
+      onClick={() => router.push(DASHBOARD_ROUTE)}
       size={size}
     >
       Get Started

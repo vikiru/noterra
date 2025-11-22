@@ -1,9 +1,9 @@
 import { SignedIn, SignedOut } from '@clerk/nextjs';
 import Link from 'next/link';
-import { Logo } from '@/lib/components/Logo';
 import { GetStartedButton } from '@/lib/components/landing/GetStartedButton';
-import { ThemeToggle } from '@/lib/components/ThemeToggle';
-import UserButton from '@/lib/components/UserButton';
+import { Logo } from '@/lib/components/layout/Logo';
+import { ThemeToggle } from '@/lib/components/layout/ThemeToggle';
+import UserButton from '@/lib/components/layout/UserButton';
 
 export async function Header() {
   return (

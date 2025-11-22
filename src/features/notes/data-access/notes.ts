@@ -4,7 +4,7 @@ import { db } from '@/db/index';
 import { flashcardsTable, notesTable, usersTable } from '@/db/schema';
 import type { NoteEditorData } from '@/features/editor/types/NoteEditorData';
 import type { NoteMetadata } from '@/features/notes/types/noteMetadata';
-import type { NoteData } from '@/lib/types/noteData';
+import type { NoteData } from '@/lib/types/NoteData';
 import type { Note, NoteCreate } from '@/notes/types/notes';
 
 export async function insertNote(note: NoteCreate): Promise<Note> {

@@ -26,8 +26,12 @@ export function usePromptForm() {
       return;
     }
     setPrompt(e.target.value);
-    const result = promptSchema.safeParse({ prompt: e.target.value });
-    setValidationError(result.success ? '' : result.error.issues[0].message);
+    const result = validateData({ prompt: e.target.value }, promptSchema);
+    if (!result.success) {
+      setValidationError(result.error);
+      return;
+    }
+    setValidationError('');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

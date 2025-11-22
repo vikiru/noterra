@@ -4,6 +4,7 @@ import { useTransition } from 'react';
 import { toast } from 'sonner';
 import type { NoteEditorData } from '@/features/editor/types/NoteEditorData';
 import { saveNoteChanges } from '@/features/notes/actions/notes';
+import { NOTES_ROUTE } from '@/lib/constants/route';
 
 type UseNoteEditFormProps = {
   noteId: string;
@@ -53,7 +54,7 @@ export function useNoteEditForm({
       const result = await saveNoteChanges(updatedData);
       if (result.success) {
         toast.success('Note updated successfully');
-        router.push(`/notes/${noteId}`);
+        router.push(`${NOTES_ROUTE}/${noteId}`);
       } else {
         toast.error(result.error || 'Failed to update note');
       }
