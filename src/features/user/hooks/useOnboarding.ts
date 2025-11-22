@@ -10,8 +10,7 @@ import type z from 'zod';
 import { DASHBOARD_ROUTE } from '@/constants/route';
 import { createUser } from '@/features/user/actions/user';
 import { onboardingSchema } from '@/schema/onboardingSchema';
-import { useUserStore } from '@/user/store/userStore';
-import type { User, UserCreate } from '@/user/types/user';
+import type { UserCreate } from '@/user/types/user';
 
 export function useOnboarding() {
   const { user, isLoaded } = useUser();
@@ -19,7 +18,6 @@ export function useOnboarding() {
     resolver: zodResolver(onboardingSchema),
   });
   const router = useRouter();
-  const setUser = useUserStore((state) => state.setUser);
 
   async function onSubmit(values: z.infer<typeof onboardingSchema>) {
     try {
@@ -40,7 +38,6 @@ export function useOnboarding() {
         return;
       }
 
-      setUser(result.data as User);
       toast.success(
         'Successfully completed onboarding. Redirecting to dashboard.',
       );
