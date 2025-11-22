@@ -88,11 +88,7 @@ export function NoteExportMenu({
         {onDelete && (
           <>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
-              className="cursor-pointer text-destructive focus:text-destructive focus:bg-destructive/10"
-              onClick={onDelete}
-              variant="destructive"
-            >
+            <DropdownMenuItem onClick={onDelete} variant="destructive">
               <Trash2 className="mr-2 h-4 w-4" />
               <span>Delete Note</span>
             </DropdownMenuItem>

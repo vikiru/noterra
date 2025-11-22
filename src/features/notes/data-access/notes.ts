@@ -2,7 +2,7 @@ import { and, desc, eq, getTableColumns } from 'drizzle-orm';
 import type { Flashcard } from '@/cards/types/flashcard';
 import { db } from '@/db/index';
 import { flashcardsTable, notesTable, usersTable } from '@/db/schema';
-import type { NoteEditorData } from '@/features/editor/types/noteEditorData';
+import type { NoteEditorData } from '@/features/editor/types/NoteEditorData';
 import type { NoteMetadata } from '@/features/notes/types/noteMetadata';
 import type { NoteData } from '@/lib/types/noteData';
 import type { Note, NoteCreate } from '@/notes/types/notes';

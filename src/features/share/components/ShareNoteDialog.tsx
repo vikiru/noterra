@@ -1,8 +1,7 @@
 'use client';
 
 import { Loader2 } from 'lucide-react';
-import { useEffect, useState, useTransition } from 'react';
-import { toast } from 'sonner';
+import { useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -13,9 +12,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { updateNoteVisibilityAction } from '@/features/notes/actions/notes';
-import { ShareLink } from './ShareLink';
-import { VisibilityCard } from './VisibilityCard';
+import { useEditVisibility } from '@/features/editor/hooks/useEditVisibility';
+import { ShareLink } from '@/features/share/components/ShareLink';
+import { VisibilityCard } from '@/features/share/components/VisibilityCard';
+import { useShareNote } from '@/features/share/hooks/useShareNote';
 
 type ShareNoteDialogProps = {
   open: boolean;
@@ -23,8 +23,8 @@ type ShareNoteDialogProps = {
   noteId: string;
   shareToken: string;
   username: string;
-  initialIsPublic?: boolean;
-  initialIsShared?: boolean;
+  initialPublic?: boolean;
+  initialShared?: boolean;
   initialShowCards?: boolean;
 };
 
@@ -34,52 +34,48 @@ export function ShareNoteDialog({
   noteId,
   shareToken,
   username,
-  initialIsPublic = false,
-  initialIsShared = false,
+  initialPublic = false,
+  initialShared = false,
   initialShowCards = true,
 }: ShareNoteDialogProps) {
-  const [isPublic, setIsPublic] = useState(initialIsPublic);
-  const [isShared, setIsShared] = useState(initialIsShared);
-  const [showFlashcards, setShowFlashcards] = useState(initialShowCards);
-  const [isPending, startTransition] = useTransition();
+  const {
+    isPublic,
+    setIsPublic,
+    isShared,
+    setIsShared,
+    showCards,
+    setShowCards,
+  } = useEditVisibility({
+    initialPublic,
+    initialShared,
+    initialShowCards,
+  });
+
+  const { isPending, link, handleSave } = useShareNote({
+    noteId,
+    shareToken,
+    username,
+    isPublic,
+    isShared,
+    showCards,
+    onSuccess: () => onOpenChange(false),
+  });
 
   useEffect(() => {
     if (open) {
-      setIsPublic(initialIsPublic);
-      setIsShared(initialIsShared);
-      setShowFlashcards(initialShowCards);
+      setIsPublic(initialPublic);
+      setIsShared(initialShared);
+      setShowCards(initialShowCards);
     }
-  }, [open, initialIsPublic, initialIsShared, initialShowCards]);
-
-  const getShareLink = () => {
-    const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
-    if (isPublic) {
-      return `${baseUrl}/${username}/notes/${noteId}`;
-    }
-    if (isShared) {
-      return `${baseUrl}/shared/${shareToken}`;
-    }
-    return '';
-  };
-
-  const link = getShareLink();
-
-  const handleSave = () => {
-    startTransition(async () => {
-      const result = await updateNoteVisibilityAction(noteId, {
-        public: isPublic,
-        shared: isShared,
-        showCards: showFlashcards,
-      });
-
-      if (result.success) {
-        toast.success('Note visibility updated');
-        onOpenChange(false);
-      } else {
-        toast.error(result.error || 'Failed to update visibility');
-      }
-    });
-  };
+  }, [
+    open,
+    initialPublic,
+    initialShared,
+    initialShowCards,
+    setIsPublic,
+    setIsShared,
+    setShowCards,
+  ]);
 
   return (
     <Dialog onOpenChange={onOpenChange} open={open}>
@@ -99,8 +95,8 @@ export function ShareNoteDialog({
             isShared={isShared}
             onPublicChange={setIsPublic}
             onSharedChange={setIsShared}
-            onShowFlashcardsChange={setShowFlashcards}
-            showFlashcards={showFlashcards}
+            onShowFlashcardsChange={setShowCards}
+            showFlashcards={showCards}
           />
 
           {(isPublic || (isShared && !isPublic)) && (

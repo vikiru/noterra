@@ -1,7 +1,7 @@
 'use client';
 
 import type { RefObject } from 'react';
-import { useMermaidRender } from '../hooks/useMermaidRender';
+import { useMermaidRender } from '@/features/notes/hooks/useMermaidRender';
 
 type NoteContentProps = {
   content: string;
@@ -13,7 +13,7 @@ export function NoteContent({ content, contentRef }: NoteContentProps) {
 
   return (
     <section
-      className="max-w-none prose bg-background px-6 pb-2 pt-1 dark:prose-invert rounded-lg"
+      className="max-w-none prose prose-note bg-background px-6 pb-2 pt-1 dark:prose-invert rounded-lg print:text-black print:dark:text-black"
       dangerouslySetInnerHTML={{ __html: content }}
       id="note-content"
       ref={contentRef}

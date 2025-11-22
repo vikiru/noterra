@@ -3,11 +3,11 @@
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
-import { ShareNoteDialog } from '@/components/share-dialog/ShareNoteDialog';
 import { Button } from '@/components/ui/button';
-import { NoteEditButton } from './NoteEditButton';
-import { NoteExportMenu } from './NoteExportMenu';
-import { NoteShareButton } from './NoteShareButton';
+import { ShareNoteDialog } from '@/features/share/components/ShareNoteDialog';
+import { NoteEditButton } from '../../editor/components/NoteEditButton';
+import { NoteExportMenu } from '../../export/components/NoteExportMenu';
+import { NoteShareButton } from '../../share/components/NoteShareButton';
 
 type NoteActionsProps = {
   onExportMarkdown: () => void;
@@ -77,8 +77,8 @@ export function NoteActions({
 
       {showUserActions && (
         <ShareNoteDialog
-          initialIsPublic={isPublic}
-          initialIsShared={isShared}
+          initialPublic={isPublic}
+          initialShared={isShared}
           initialShowCards={showCards}
           noteId={noteId}
           onOpenChange={setIsShareDialogOpen}

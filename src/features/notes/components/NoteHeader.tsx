@@ -23,7 +23,7 @@ export function NoteHeader({ note }: NoteHeaderProps) {
 
       <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-3 font-body">
         <div>
-          <span className="font-medium text-foreground">{authorName}</span>
+          <span className="font-medium">{authorName}</span>
           <span className="mx-2">•</span>
           <time dateTime={note.createdAt.toISOString()}>
             {DateTime.fromJSDate(note.createdAt).toFormat('LLL dd, yyyy')}

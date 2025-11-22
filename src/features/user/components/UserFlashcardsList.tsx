@@ -2,7 +2,7 @@ import { BookOpen } from 'lucide-react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import type { FlashcardSet } from '@/features/flashcards/types/flashcardSet';
+import type { FlashcardSet } from '@/features/cards/types/flashcardSet';
 import { ScrollArea } from '@/lib/components/ui/scroll-area';
 
 type UserFlashcardsListProps = {

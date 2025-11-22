@@ -17,14 +17,16 @@ async function createRandomFlashcard(authorId: string, noteId: string) {
 }
 
 async function createRandomNote(authorId: string) {
-  const note = db
+  const note = await db
     .insert(notesTable)
     .values({
       authorId,
       title: faker.lorem.sentence(4).replace('.', ''),
       summary: faker.lorem.sentence(10),
-      keywords: faker.lorem.words(10).replace('.', ''),
+      keywords: faker.lorem.words(10).split(' '),
       content: generateFakeNoteHTML(),
+      createdAt: faker.date.past(),
+      updatedAt: faker.date.recent(),
     })
     .returning();
   return note;
@@ -41,6 +43,8 @@ async function createRandomUser() {
       lastName: faker.person.lastName(),
       bio: faker.person.bio(),
       country: faker.location.country(),
+      createdAt: faker.date.past(),
+      updatedAt: faker.date.recent(),
     })
     .returning();
   return user;

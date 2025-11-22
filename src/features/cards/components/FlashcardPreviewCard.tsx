@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { FlashcardActions } from '@/features/cards/components/FlashcardActions';
 import type { Flashcard } from '@/features/cards/types/flashcard';
-import { FlashcardActions } from './FlashcardActions';
 
 type FlashcardPreviewCardProps = {
   card: Flashcard;

@@ -96,7 +96,7 @@ export async function updateUser(user: UserUpdate) {
   const result = await db
     .update(usersTable)
     .set(user)
-    .where(eq(usersTable.clerkId, user.clerkId))
+    .where(eq(usersTable.clerkId, user.clerkId as string))
     .returning();
   return result[0];
 }

@@ -2,7 +2,7 @@
 import DOMPurify from 'isomorphic-dompurify';
 
 import { revalidatePath } from 'next/cache';
-import type { NoteEditorData } from '@/features/editor/types/noteEditorData';
+import type { NoteEditorData } from '@/features/editor/types/NoteEditorData';
 import {
   findNoteById,
   findNoteWithAuthorById,
