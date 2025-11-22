@@ -1,7 +1,8 @@
+import { EmptyNoteFlashcardsState } from '@/features/cards/components/EmptyNoteFlashcardsState';
+import { FlashcardPreviewCard } from '@/features/cards/components/FlashcardPreviewCard';
 import { findCardsByNoteId } from '@/features/cards/data-access/flashcard';
 import { ScrollArea } from '@/lib/components/ui/scroll-area';
-import { EmptyNoteFlashcardsState } from './EmptyNoteFlashcardsState';
-import { FlashcardPreviewCard } from './FlashcardPreviewCard';
+
 
 type FlashcardListViewProps = {
   noteId: string;

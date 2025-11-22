@@ -1,5 +1,5 @@
+import { GetStartedButton } from '@/lib/components/landing/GetStartedButton';
 import { Sparkles } from 'lucide-react';
-import { GetStartedButton } from './GetStartedButton';
 
 export function LandingHero() {
   return (

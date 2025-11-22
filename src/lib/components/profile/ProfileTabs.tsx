@@ -2,9 +2,10 @@ import { BookOpen, Clock, FileText } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import type { FlashcardSet } from '@/features/cards/types/flashcardSet';
 import type { NoteMetadata } from '@/features/notes/types/noteMetadata';
-import { UserActivityFeed } from './UserActivityFeed';
-import { UserFlashcardsList } from './UserFlashcardsList';
-import { UserNotesList } from './UserNotesList';
+import { UserActivityFeed } from '@/lib/components/profile/UserActivityFeed';
+import { UserFlashcardsList } from '@/lib/components/profile/UserFlashcardsList';
+import { UserNotesList } from '@/lib/components/profile/UserNotesList';
+
 
 type ProfileTabsProps = {
   notes: NoteMetadata[];

@@ -1,5 +1,5 @@
+import { FeatureCard } from '@/lib/components/landing/FeatureCard';
 import { Download, Pencil, WandSparkles } from 'lucide-react';
-import { FeatureCard } from './FeatureCard';
 
 const features = [
   {

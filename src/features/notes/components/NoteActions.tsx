@@ -7,9 +7,10 @@ import { Button } from '@/components/ui/button';
 import { useNoteDelete } from '@/features/notes/hooks/useNoteDelete';
 import { ShareNoteDialog } from '@/features/share/components/ShareNoteDialog';
 import { DeleteDialog } from '@/lib/components/ui/DeleteDialog';
-import { NoteEditButton } from '../../editor/components/NoteEditButton';
-import { NoteExportMenu } from '../../export/components/NoteExportMenu';
-import { NoteShareButton } from '../../share/components/NoteShareButton';
+import { NoteEditButton } from '@/features/editor/components/NoteEditButton';
+import { NoteExportMenu } from '@/features/export/components/NoteExportMenu';
+import { NoteShareButton } from '@/features/share/components/NoteShareButton';
+
 
 type NoteActionsProps = {
   onExportMarkdown: () => void;
