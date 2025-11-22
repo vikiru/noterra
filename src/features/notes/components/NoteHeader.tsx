@@ -17,11 +17,11 @@ export function NoteHeader({ note }: NoteHeaderProps) {
 
   return (
     <section className="mb-2 print:mt-2" id="note-header">
-      <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2 font-heading">
+      <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3 font-heading">
         {note.title}
       </h1>
 
-      <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-6 font-body">
+      <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-3 font-body">
         <div>
           <span className="font-medium text-foreground">{authorName}</span>
           <span className="mx-2">•</span>

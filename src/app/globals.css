@@ -1,9 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=JetBrains+Mono&family=Public+Sans&family=Syne&family=Sora&family=Lora&family=Fira+Code&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
+@import '@clerk/themes/shadcn.css';
 
 @custom-variant dark (&:is(.dark *));
 @plugin "@tailwindcss/typography";
@@ -139,35 +136,35 @@ body {
 
     /* Typography scale  */
     h1 {
-        font-size: clamp(2.25rem, 1.5rem + 3vw, 3.75rem);
+        @apply text-4xl md:text-5xl lg:text-6xl;
     }
 
     h2 {
-        font-size: clamp(2rem, 1.5rem + 2vw, 3rem);
+        @apply text-3xl md:text-4xl;
     }
 
     h3 {
-        font-size: clamp(1.75rem, 1vw + 1.2rem, 2.25rem);
+        @apply text-2xl md:text-3xl;
     }
 
     h4 {
-        font-size: clamp(1.5rem, 0.8vw + 1rem, 2rem);
+        @apply text-xl md:text-2xl;
     }
 
     h5 {
-        font-size: clamp(1.25rem, 0.6vw + 0.9rem, 1.5rem);
+        @apply text-lg md:text-xl;
     }
 
     h6 {
-        font-size: clamp(1.125rem, 0.5vw + 0.85rem, 1.25rem);
+        @apply text-base md:text-lg;
     }
 
     body {
-        font-size: clamp(1rem, 0.25vw + 0.9rem, 1.125rem);
+        @apply text-base;
     }
 
     small {
-        font-size: clamp(0.875rem, 0.1vw + 0.8rem, 0.95rem);
+        @apply text-sm font-medium leading-none;
     }
 
     html,
@@ -177,7 +174,7 @@ body {
 
     /* Override MermaidJS label for diagrams */
     pre[data-processed="true"] {
-        background-color: transparent !important;
+        background-color: var(--foreground) !important;
     }
 
 

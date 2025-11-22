@@ -142,19 +142,21 @@ Each object in "note_contents" must have three keys: "title" (a string), "headin
         *   CORRECT: \`D -- "Slope: (f(x+h)-f(x))/h" -- E\`
         *   INCORRECT: \`E[Function f(x)]\`
         *   CORRECT: \`E["Function f(x)"]\`
-    *   **MINDMAP SPECIAL CHARACTERS:** For mindmap diagrams specifically, ALL node text containing ANY special characters must be enclosed in double quotes. However, AVOID using parentheses within quoted text entirely. Instead, rephrase the text or use alternative notation like hyphens. This is especially important for mindmaps where the syntax is different from other diagrams. Examples:
+    *   **MINDMAP SPECIAL CHARACTERS:** For mindmap diagrams specifically, ALL node text containing ANY special characters must be enclosed in square brackets. This is especially important for mindmaps where the syntax is different from other diagrams. Examples:
         *   INCORRECT: \`Data Cache (fetch API)\`
-        *   CORRECT: \`Data Cache - fetch API\`
+        *   CORRECT: \`[Data Cache (fetch API)]\`
         *   INCORRECT: \`No Hooks (by design)\`
-        *   CORRECT: \`No Hooks - by design\`
+        *   CORRECT: \`[No Hooks (by design)]\`
         *   INCORRECT: \`Static Site Generation (SSG)\`
-        *   CORRECT: \`Static Site Generation - SSG\`
+        *   CORRECT: \`[Static Site Generation (SSG)]\`
         *   INCORRECT: \`Incremental Static Regeneration (ISR)\`
-        *   CORRECT: \`Incremental Static Regeneration - ISR\`
+        *   CORRECT: \`[Incremental Static Regeneration (ISR)]\`
         *   INCORRECT: \`No Hooks ("by design")\`
-        *   CORRECT: \`No Hooks - by design\`
+        *   CORRECT: \`[No Hooks - by design]\`
         *   INCORRECT: \`Revalidation ("on-demand", "time-based")\`
-        *   CORRECT: \`Revalidation - on-demand, time-based\`
+        *   CORRECT: \`[Revalidation - on-demand, time-based]\`
+        *   INCORRECT: \`"Styled: Less (CSS-in-JS)"\`
+        *   CORRECT: \`[Styled: Less (CSS-in-JS)]\`
     *   **SUBGRAPH NAMING:** Subgraph declaration names must NOT contain spaces or special characters. Use camelCase or underscores instead. However, you can add a custom label in quotes using the format \`subgraph NodeID["Label"]\`. The label can include spaces and special characters. Examples:
         *   INCORRECT: \`subgraph Queue (FIFO)\`
         *   CORRECT: \`subgraph Queue["Queue (FIFO)"]\`

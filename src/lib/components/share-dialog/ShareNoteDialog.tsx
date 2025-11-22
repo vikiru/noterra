@@ -85,7 +85,7 @@ export function ShareNoteDialog({
     <Dialog onOpenChange={onOpenChange} open={open}>
       <DialogContent className="sm:max-w-md p-0 gap-0 overflow-hidden border-neutral-200 dark:border-neutral-800">
         <DialogHeader className="px-6 pt-6 pb-4">
-          <DialogTitle className="text-xl font-semibold text-black">
+          <DialogTitle className="text-xl font-semibold">
             Share Note
           </DialogTitle>
           <DialogDescription className="text-neutral-500 dark:text-neutral-400">
@@ -110,7 +110,7 @@ export function ShareNoteDialog({
 
         <DialogFooter className="px-6 py-4 bg-neutral-50 dark:bg-neutral-900/50 border-t border-neutral-200 dark:border-neutral-800 gap-2">
           <Button
-            className="h-9 text-black"
+            className="h-9"
             onClick={() => onOpenChange(false)}
             variant="outline"
           >

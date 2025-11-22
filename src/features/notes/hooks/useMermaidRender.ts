@@ -7,36 +7,58 @@ export function useMermaidRender() {
       mermaid.initialize({
         startOnLoad: false,
         theme: 'base',
+        themeVariables: {
+          nodePadding: 8,
+          textMargin: 4,
+        },
       });
 
       const renderMermaidDiagrams = async () => {
-        const mermaidDivs = document.querySelectorAll(
-          'div[id*="diagram"], div#mindmap-overview-mindmap, div[id*="mindmap"], pre.mermaid',
+        const mermaidElements = document.querySelectorAll(
+          'div[id*="diagram"], div#mindmap-overview-mindmap, div[id*="mindmap"], pre.mermaid, pre',
         );
-        const mermaidDiagrams = [];
 
-        mermaidDivs.forEach((div) => {
-          if (div.getAttribute('data-processed')) return;
+        for (const element of mermaidElements) {
+          if (element.getAttribute('data-processed')) continue;
 
-          const pre = div.firstElementChild;
-          if (pre && pre.tagName === 'PRE') {
-            mermaidDiagrams.push(pre);
-          } else if (
-            div.tagName === 'PRE' &&
-            div.classList.contains('mermaid')
-          ) {
-            mermaidDiagrams.push(div);
+          let diagramElement = null;
+
+          // Handle case where element is pre with child element code (usually after note edit submissions)
+          if (element.tagName === 'PRE') {
+            const childElement = element.firstElementChild;
+            if (childElement && childElement.tagName === 'CODE') {
+              diagramElement = childElement;
+            }
+          } else {
+            // Handle case with div elements that have pre.code/pre.mermaid as child (raw gemini ai note generation case)
+            const childElement = element.firstElementChild;
+            if (childElement && childElement.tagName === 'PRE') {
+              diagramElement = childElement;
+            } else if (
+              element.tagName === 'PRE' &&
+              element.classList.contains('mermaid')
+            ) {
+              diagramElement = element;
+            }
           }
-        });
 
-        if (mermaidDiagrams.length > 0) {
+          if (!diagramElement) continue;
+
+          const code = diagramElement.textContent?.trim();
+          if (!code) continue;
+
+          // Validate the diagram syntax before rendering
           try {
+            await mermaid.parse(code);
+            // If valid, render it
             await mermaid.run({
-              nodes: mermaidDiagrams,
+              nodes: [diagramElement as HTMLElement],
               suppressErrors: true,
             });
           } catch (error) {
-            console.error('Mermaid rendering failed:', error);
+            // Invalid Mermaid syntax - leave it as a code block
+            console.log('Skipping invalid Mermaid diagram:', error);
+            diagramElement.setAttribute('data-processed', 'skipped');
           }
         }
       };

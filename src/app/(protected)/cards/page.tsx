@@ -4,7 +4,7 @@ import { Spinner } from '@/lib/components/ui/spinner';
 
 export default function AllCardsPage() {
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container max-w-full mx-auto px-3 sm:px-4 py-6 sm:py-8">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4 border-b pb-6">
         <div className="space-y-1">
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight font-heading text-foreground">

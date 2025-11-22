@@ -54,7 +54,7 @@ export function PromptForm() {
                 Generating...
               </span>
             ) : (
-              <span className="flex items-center gap-2 hover:cursor-pointer">
+              <span className="flex items-center gap-2 hover:cursor-pointer dark:text-white">
                 Generate Note
                 <WandSparkles className="h-5 w-5" />
               </span>
