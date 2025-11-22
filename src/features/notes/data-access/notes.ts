@@ -2,6 +2,7 @@ import { and, desc, eq, getTableColumns } from 'drizzle-orm';
 import type { Flashcard } from '@/cards/types/flashcard';
 import { db } from '@/db/index';
 import { flashcardsTable, notesTable, usersTable } from '@/db/schema';
+import type { NoteEditorData } from '@/features/editor/types/noteEditorData';
 import type { NoteMetadata } from '@/features/notes/types/noteMetadata';
 import type { NoteData } from '@/lib/types/noteData';
 import type { Note, NoteCreate } from '@/notes/types/notes';
@@ -260,4 +261,53 @@ export async function findNoteTitles(
     .from(notesTable)
     .where(eq(notesTable.authorId, userId));
   return result;
+}
+
+export async function findNoteForEditing(
+  noteId: string,
+): Promise<NoteEditorData | null> {
+  const result = await db
+    .select({
+      id: notesTable.id,
+      title: notesTable.title,
+      summary: notesTable.summary,
+      keywords: notesTable.keywords,
+      content: notesTable.content,
+      public: notesTable.public,
+      shared: notesTable.shared,
+      showCards: notesTable.showCards,
+    })
+    .from(notesTable)
+    .where(eq(notesTable.id, noteId))
+    .limit(1);
+
+  return result[0] ?? null;
+}
+
+export async function updateNoteFromEditor(
+  updatedNote: NoteEditorData,
+): Promise<NoteEditorData> {
+  const result = await db
+    .update(notesTable)
+    .set({
+      title: updatedNote.title,
+      summary: updatedNote.summary,
+      keywords: updatedNote.keywords,
+      content: updatedNote.content,
+      public: updatedNote.public,
+      shared: updatedNote.shared,
+      showCards: updatedNote.showCards,
+    })
+    .where(eq(notesTable.id, updatedNote.id))
+    .returning({
+      id: notesTable.id,
+      title: notesTable.title,
+      summary: notesTable.summary,
+      keywords: notesTable.keywords,
+      content: notesTable.content,
+      public: notesTable.public,
+      shared: notesTable.shared,
+      showCards: notesTable.showCards,
+    });
+  return result[0];
 }
