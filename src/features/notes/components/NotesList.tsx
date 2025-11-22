@@ -3,8 +3,9 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import type { NoteMetadata } from '@/features/notes/types/noteMetadata';
 import { ScrollArea } from '@/lib/components/ui/scroll-area';
-import { EmptyNotesState } from './EmptyNotesState';
-import { NoteCard } from './NoteCard';
+import { NoteCard } from '@/features/notes/components/NoteCard';
+import { EmptyNotesState } from '@/lib/components/dashboard/EmptyNotesState';
+
 
 type NotesListProps = {
   notes: NoteMetadata[];

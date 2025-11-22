@@ -1,8 +1,9 @@
+import { EmptyFlashcardsState } from '@/features/cards/components/EmptyFlashcardsState';
+import { FlashcardSetCard } from '@/features/cards/components/FlashcardSetCard';
 import { findCardSets } from '@/features/cards/data-access/flashcard';
 import { getCurrentUser } from '@/lib/auth';
 import { ScrollArea } from '@/lib/components/ui/scroll-area';
-import { EmptyFlashcardsState } from './EmptyFlashcardsState';
-import { FlashcardSetCard } from './FlashcardSetCard';
+
 
 export async function FlashcardSetList() {
   const userId = await getCurrentUser();

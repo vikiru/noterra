@@ -1,6 +1,6 @@
 import { Clock } from 'lucide-react';
 import { ScrollArea } from '@/lib/components/ui/scroll-area';
-import { ActivityCard } from './ActivityCard';
+import { ActivityCard } from '@/lib/components/profile/ActivityCard';
 
 type ActivityItem = {
   date: string;
