@@ -37,7 +37,6 @@ export function NoteDetail({
         isPublic={note.public}
         isShared={note.shared}
         noteId={note.id}
-        onDelete={() => {}}
         onExportMarkdown={convertToMarkdown}
         onExportPDF={convertToPDF}
         onExportText={convertToText}

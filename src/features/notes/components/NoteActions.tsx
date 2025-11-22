@@ -4,7 +4,9 @@ import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { useNoteDelete } from '@/features/notes/hooks/useNoteDelete';
 import { ShareNoteDialog } from '@/features/share/components/ShareNoteDialog';
+import { DeleteDialog } from '@/lib/components/ui/DeleteDialog';
 import { NoteEditButton } from '../../editor/components/NoteEditButton';
 import { NoteExportMenu } from '../../export/components/NoteExportMenu';
 import { NoteShareButton } from '../../share/components/NoteShareButton';
@@ -13,7 +15,6 @@ type NoteActionsProps = {
   onExportMarkdown: () => void;
   onExportText: () => void;
   onExportPDF: () => void;
-  onDelete: () => void;
   noteId: string;
   shareToken: string;
   username: string;
@@ -28,7 +29,6 @@ export function NoteActions({
   onExportMarkdown,
   onExportText,
   onExportPDF,
-  onDelete,
   noteId,
   shareToken,
   username,
@@ -39,6 +39,8 @@ export function NoteActions({
   showCards,
 }: NoteActionsProps) {
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
+  const { isDeleteDialogOpen, setIsDeleteDialogOpen, onDelete, loading } =
+    useNoteDelete({ noteId });
 
   return (
     <>
@@ -66,7 +68,9 @@ export function NoteActions({
           )}
           <NoteExportMenu
             isStandalone={!showUserActions}
-            onDelete={showUserActions ? onDelete : undefined}
+            onDelete={
+              showUserActions ? () => setIsDeleteDialogOpen(true) : undefined
+            }
             onExportMarkdown={onExportMarkdown}
             onExportPDF={onExportPDF}
             onExportText={onExportText}
@@ -76,16 +80,26 @@ export function NoteActions({
       </section>
 
       {showUserActions && (
-        <ShareNoteDialog
-          initialPublic={isPublic}
-          initialShared={isShared}
-          initialShowCards={showCards}
-          noteId={noteId}
-          onOpenChange={setIsShareDialogOpen}
-          open={isShareDialogOpen}
-          shareToken={shareToken}
-          username={username}
-        />
+        <>
+          <ShareNoteDialog
+            initialPublic={isPublic}
+            initialShared={isShared}
+            initialShowCards={showCards}
+            noteId={noteId}
+            onOpenChange={setIsShareDialogOpen}
+            open={isShareDialogOpen}
+            shareToken={shareToken}
+            username={username}
+          />
+          <DeleteDialog
+            description="Are you sure you want to delete this note? This action cannot be undone."
+            loading={loading}
+            onConfirm={onDelete}
+            onOpenChange={setIsDeleteDialogOpen}
+            open={isDeleteDialogOpen}
+            title="Delete Note"
+          />
+        </>
       )}
     </>
   );
