@@ -8,10 +8,10 @@ import { getCurrentUser } from '@/lib/auth';
 export default async function CardDetailsPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   await getCurrentUser();
-  const { id } = params;
+  const { id } = await params;
   const flashcard = await findCardById(id);
 
   if (!flashcard) {

@@ -11,9 +11,9 @@ import type { User } from '@/user/types/user';
 export default async function ProfilePage({
   params,
 }: {
-  params: { username: string };
+  params: Promise<{ username: string }>;
 }) {
-  const { username } = params;
+  const { username } = await params;
   const user: User | null = await findUserByUsername(username);
 
   if (!user) {

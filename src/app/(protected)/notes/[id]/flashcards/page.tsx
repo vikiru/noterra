@@ -12,15 +12,16 @@ import { Spinner } from '@/lib/components/ui/spinner';
 export default async function NoteFlashcardsPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const noteTitle = await findNoteTitleById(params.id);
+  const { id } = await params;
+  const noteTitle = await findNoteTitleById(id);
 
   if (!noteTitle) {
     return notFound();
   }
 
-  const flashcards = await findCardsByNoteId(params.id);
+  const flashcards = await findCardsByNoteId(id);
 
   return (
     <div className="container max-w-full py-8 px-4 sm:px-6">
@@ -32,7 +33,7 @@ export default async function NoteFlashcardsPage({
             size="sm"
             variant="ghost"
           >
-            <Link href={`/notes/${params.id}`}>
+            <Link href={`/notes/${id}`}>
               <ArrowLeft className="mr-2 size-4 transition-transform group-hover:-translate-x-1 " />
               Back to Note
             </Link>
@@ -47,10 +48,7 @@ export default async function NoteFlashcardsPage({
                 Review and manage the flashcards generated from your note.
               </p>
             </div>
-            <AddFlashcardButton
-              currentCount={flashcards.length}
-              noteId={params.id}
-            />
+            <AddFlashcardButton currentCount={flashcards.length} noteId={id} />
           </div>
         </div>
 
@@ -61,7 +59,7 @@ export default async function NoteFlashcardsPage({
             </div>
           }
         >
-          <FlashcardListView noteId={params.id} />
+          <FlashcardListView noteId={id} />
         </Suspense>
       </div>
     </div>
