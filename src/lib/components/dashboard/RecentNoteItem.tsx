@@ -4,7 +4,7 @@ import Link from 'next/link';
 import type { NoteMetadata } from '@/features/notes/types/noteMetadata';
 
 type RecentNoteItemProps = {
-  note: NoteMetadata;
+  note: Pick<NoteMetadata, 'id' | 'title' | 'createdAt'>;
 };
 
 export function RecentNoteItem({ note }: RecentNoteItemProps) {
@@ -14,7 +14,7 @@ export function RecentNoteItem({ note }: RecentNoteItemProps) {
       href={`/notes/${note.id}`}
       prefetch={false}
     >
-      <div className="flex items-center gap-3 overflow-hidden">
+      <div className="flex items-center gap-3 overflow-hidden max-w-3xs sm:max-w-md md:max-w-none">
         <div className="h-8 w-8 rounded bg-primary/10 flex items-center justify-center shrink-0 text-primary">
           <FileText className="h-4 w-4" />
         </div>

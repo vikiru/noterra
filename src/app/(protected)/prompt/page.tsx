@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function PromptPage() {
   return (
-    <div className="container mx-auto max-w-4xl px-4 py-12">
+    <div className="container mx-auto max-w-4xl px-4 ">
       {/* Header Content */}
       <div className="mb-10 space-y-3 text-center">
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl font-heading">

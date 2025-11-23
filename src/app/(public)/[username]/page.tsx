@@ -36,7 +36,7 @@ export default async function ProfilePage({
   const isOwnProfile = userId === user.clerkId;
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl">
+    <div className="container mx-auto px-4 py-8 w-full">
       <div className="flex flex-col lg:flex-row gap-8">
         <ProfileHeader
           totalCreations={totalCreations}

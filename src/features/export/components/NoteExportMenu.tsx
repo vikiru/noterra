@@ -29,7 +29,7 @@ type NoteExportMenuProps = {
   content: string;
   contentRef: RefObject<HTMLDivElement | null>;
   showFlashcardButton?: boolean;
-  isStandalone?: boolean;
+  showUserActions?: boolean;
 };
 
 export function NoteExportMenu({
@@ -37,8 +37,8 @@ export function NoteExportMenu({
   title,
   content,
   contentRef,
-  showFlashcardButton = true,
-  isStandalone = false,
+  showFlashcardButton = false,
+  showUserActions = false,
 }: NoteExportMenuProps) {
   const pathname = usePathname();
   const flashcardsLink = `${pathname}/flashcards`;
@@ -53,21 +53,19 @@ export function NoteExportMenu({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        {isStandalone ? (
-          <Button size="sm">
-            <FileDown className="h-4 w-4" />
-            Export
-            <Separator className="h-2 bg-black" orientation="vertical" />
-            <ChevronDown className="ml-2 h-4 w-4" />
-          </Button>
-        ) : (
-          <Button
-            className="gap-1.5 hover:bg-muted/50 text-muted-foreground hover:text-foreground"
-            size="sm"
-            variant="ghost"
-          >
+        {showUserActions ? (
+          <Button size="sm" variant={'ghost'}>
             <MoreVertical className="h-4 w-4" />
             <span className="sr-only">More actions</span>
+          </Button>
+        ) : (
+          <Button size="sm" variant={'outline'}>
+            <div className="px-2 flex items-center gap-2">
+              <FileDown className="h-4 w-4" />
+              Export
+            </div>
+            <Separator className="h-2 bg-black" orientation="vertical" />
+            <ChevronDown className="ml-2 h-4 w-4" />
           </Button>
         )}
       </DropdownMenuTrigger>
@@ -98,7 +96,7 @@ export function NoteExportMenu({
             </DropdownMenuItem>
           </>
         )}
-        {onDelete && (
+        {showUserActions && (
           <>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={onDelete} variant="destructive">

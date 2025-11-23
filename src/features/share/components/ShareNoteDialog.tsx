@@ -29,6 +29,7 @@ type ShareNoteDialogProps = {
     showCards: boolean;
   };
 };
+
 export function ShareNoteDialog({
   noteId,
   shareToken,
@@ -43,6 +44,18 @@ export function ShareNoteDialog({
     showCards,
     setShowCards,
   } = useEditVisibility({ visibility });
+
+  const visibilityState = {
+    isPublic,
+    isShared,
+    showCards,
+  };
+
+  const setVisibilityState = (newState: typeof visibilityState) => {
+    setIsPublic(newState.isPublic);
+    setIsShared(newState.isShared);
+    setShowCards(newState.showCards);
+  };
 
   const { isPending, link, handleSave } = useShareNote({
     noteId,
@@ -67,6 +80,7 @@ export function ShareNoteDialog({
           <span className="hidden sm:inline">Share</span>
         </Button>
       </DialogTrigger>
+
       <DialogContent className="sm:max-w-md p-0 gap-0 overflow-hidden border-neutral-200 dark:border-neutral-800">
         <DialogHeader className="px-6 pt-6 pb-4">
           <DialogTitle className="text-xl font-semibold">
@@ -79,16 +93,19 @@ export function ShareNoteDialog({
 
         <div className="px-6 py-2 space-y-6">
           <VisibilityCard
-            isPublic={isPublic}
-            isShared={isShared}
-            onPublicChange={setIsPublic}
-            onSharedChange={setIsShared}
-            onShowFlashcardsChange={setShowCards}
-            showFlashcards={showCards}
+            setState={setVisibilityState}
+            state={visibilityState}
           />
 
           {(isPublic || isShared) && (
-            <ShareLink isPublic={isPublic} link={link} />
+            <ShareLink
+              isPublic={isPublic}
+              link={
+                isPublic
+                  ? `${typeof window !== 'undefined' ? window.location.origin : ''}/${username}/notes/${noteId}`
+                  : `${typeof window !== 'undefined' ? window.location.origin : ''}/shared/${shareToken}`
+              }
+            />
           )}
         </div>
 
@@ -98,6 +115,7 @@ export function ShareNoteDialog({
               Cancel
             </Button>
           </DialogClose>
+
           <Button
             className="h-9"
             disabled={isPending}

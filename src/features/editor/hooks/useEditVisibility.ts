@@ -2,15 +2,15 @@ import { useState } from 'react';
 
 type UseEditVisibilityProps = {
   visibility: {
-    public: boolean;
-    shared: boolean;
+    isPublic: boolean;
+    isShared: boolean;
     showCards: boolean;
   };
 };
 
 export function useEditVisibility({ visibility }: UseEditVisibilityProps) {
-  const [isPublic, setIsPublic] = useState(visibility.public);
-  const [isShared, setIsShared] = useState(visibility.shared);
+  const [isPublic, setIsPublic] = useState(visibility.isPublic);
+  const [isShared, setIsShared] = useState(visibility.isShared);
   const [showCards, setShowCards] = useState(visibility.showCards);
 
   return {

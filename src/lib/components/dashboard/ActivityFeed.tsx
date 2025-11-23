@@ -12,7 +12,7 @@ type ActivityFeedProps = {
   activityOverview: ActivityItem[];
 };
 
-export function ActivityFeed({ activityOverview }: ActivityFeedProps) {
+export async function ActivityFeed({ activityOverview }: ActivityFeedProps) {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center space-y-0 pb-2">
@@ -25,7 +25,7 @@ export function ActivityFeed({ activityOverview }: ActivityFeedProps) {
           {activityOverview.length === 0 ? (
             <EmptyActivityState />
           ) : (
-            activityOverview.map((item) => (
+            activityOverview.map((item: ActivityItem) => (
               <ActivityFeedItem item={item} key={item.date} />
             ))
           )}

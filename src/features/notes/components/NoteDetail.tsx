@@ -36,38 +36,57 @@ export function NoteDetail({
       className="container max-w-6xl mx-auto px-3 sm:px-4 py-6 sm:py-8"
       id="note-ctr"
     >
-      {showUserActions && (
-        <section className="flex justify-between items-center mb-6">
-          <Button
-            asChild
-            className="-ml-3 text-muted-foreground hover:text-black w-fit"
-            size="sm"
-            variant="ghost"
-          >
-            <Link href={`/notes`}>
-              <ArrowLeft className="mr-2 size-4 transition-transform group-hover:-translate-x-1 " />
-              Back to Notes
-            </Link>
-          </Button>
+      <section
+        className="flex justify-between items-center mb-6 -my-4"
+        id="actions"
+      >
+        {showUserActions ? (
+          <>
+            <div className="flex items-center gap-2">
+              <Button
+                asChild
+                className="-ml-3 text-muted-foreground hover:text-black w-fit"
+                size="sm"
+                variant="ghost"
+              >
+                <Link href={`/notes`}>
+                  <ArrowLeft className="mr-2 size-4 transition-transform group-hover:-translate-x-1" />
+                  Back to Notes
+                </Link>
+              </Button>
+            </div>
 
-          <section className="flex items-center gap-1.5" id="actions">
-            <NoteEditButton />
-            <ShareNoteDialog
-              noteId={note.id}
-              shareToken={note.shareToken}
-              username={note.author.username}
-              visibility={visibility}
-            />
+            <div className="flex items-center gap-1.5">
+              <NoteEditButton />
+              <ShareNoteDialog
+                noteId={note.id}
+                shareToken={note.shareToken}
+                username={note.author.username}
+                visibility={visibility}
+              />
+              <NoteExportMenu
+                content={note.content}
+                contentRef={contentRef}
+                noteId={note.id}
+                showFlashcardButton={showFlashcardButton}
+                showUserActions={showUserActions}
+                title={note.title}
+              />
+            </div>
+          </>
+        ) : (
+          <section className="ml-auto" id="actions">
             <NoteExportMenu
               content={note.content}
               contentRef={contentRef}
               noteId={note.id}
               showFlashcardButton={showFlashcardButton}
+              showUserActions={showUserActions}
               title={note.title}
             />
           </section>
-        </section>
-      )}
+        )}
+      </section>
 
       <section id="note">
         <NoteHeader note={note} />
