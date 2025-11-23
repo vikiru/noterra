@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { DASHBOARD_ROUTE } from '@/lib/constants/route';
 import { cn } from '@/lib/utils/cn';
@@ -14,20 +14,21 @@ export function GetStartedButton({
   size = 'lg',
   className,
 }: GetStartedButtonProps) {
-  const router = useRouter();
-
   return (
-    <Button
-      className={cn(
-        'font-semibold shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all hover:-translate-y-0.5 hover:cursor-pointer',
-        size === 'lg' ? 'px-8 py-6 text-base' : 'px-6 py-5 text-base',
-        className,
-      )}
-      onClick={() => router.push(DASHBOARD_ROUTE)}
-      size={size}
-    >
-      Get Started
-      <span className="ml-2">→</span>
-    </Button>
+    <Link className="inline-block group" href={DASHBOARD_ROUTE}>
+      <Button
+        className={cn(
+          'font-semibold shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/50 transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:cursor-pointer',
+          size === 'lg' ? 'px-8 py-6 text-base' : 'px-6 py-5 text-base',
+          className,
+        )}
+        size={size}
+      >
+        Get Started{' '}
+        <span className="ml-2 inline-block group-hover:translate-x-1 transition-transform">
+          →
+        </span>
+      </Button>
+    </Link>
   );
 }

@@ -1,5 +1,5 @@
-import { FeatureCard } from '@/lib/components/landing/FeatureCard';
 import { Download, Pencil, WandSparkles } from 'lucide-react';
+import { FeatureCard } from '@/lib/components/landing/FeatureCard';
 
 const features = [
   {
@@ -24,10 +24,13 @@ const features = [
 
 export function LandingFeatures() {
   return (
-    <section className="py-24 sm:py-28 bg-muted/30" id="features">
+    <section
+      className="relative py-24 sm:py-28 bg-linear-to-b from-muted/30 to-background"
+      id="features"
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center mb-16">
-          <h2 className="mt-2 text-4xl font-bold tracking-tighter text-foreground sm:text-5xl font-heading text-balance">
+          <h2 className="text-balance mt-2 text-4xl font-bold tracking-tighter text-foreground sm:text-5xl font-heading">
             Powerful Features for Effective Learning
           </h2>
           <p className="mt-6 text-xl leading-relaxed text-muted-foreground font-body text-pretty">
@@ -36,14 +39,15 @@ export function LandingFeatures() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3 max-w-6xl mx-auto">
           {features.map((feature) => (
-            <FeatureCard
-              description={feature.description}
-              icon={feature.icon}
-              key={feature.name}
-              title={feature.name}
-            />
+            <div key={feature.name}>
+              <FeatureCard
+                description={feature.description}
+                icon={feature.icon}
+                title={feature.name}
+              />
+            </div>
           ))}
         </div>
       </div>

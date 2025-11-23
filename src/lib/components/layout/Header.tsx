@@ -5,7 +5,7 @@ import { Logo } from '@/lib/components/layout/Logo';
 import { ThemeToggle } from '@/lib/components/layout/ThemeToggle';
 import UserButton from '@/lib/components/layout/UserButton';
 
-export async function Header() {
+export function Header() {
   return (
     <header className="flex h-16 items-center justify-between px-6 bg-background/95">
       <Link

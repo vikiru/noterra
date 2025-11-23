@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import type { RefObject } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -18,28 +19,36 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useNoteExport } from '@/features/export/hooks/useNoteExport';
+import { useNoteDelete } from '@/features/notes/hooks/useNoteDelete';
 import { Separator } from '@/lib/components/ui/separator';
 
 type NoteExportMenuProps = {
-  onExportMarkdown: () => void;
-  onExportText: () => void;
-  onExportPDF: () => void;
-  onDelete?: () => void;
+  noteId: string;
+  title: string;
+  content: string;
+  contentRef: RefObject<HTMLDivElement | null>;
   showFlashcardButton?: boolean;
   isStandalone?: boolean;
 };
 
-// TODO: Reduce the prop drilling
 export function NoteExportMenu({
-  onExportMarkdown,
-  onExportText,
-  onExportPDF,
-  onDelete,
+  noteId,
+  title,
+  content,
+  contentRef,
   showFlashcardButton = true,
   isStandalone = false,
 }: NoteExportMenuProps) {
   const pathname = usePathname();
   const flashcardsLink = `${pathname}/flashcards`;
+
+  const { convertToMarkdown, convertToText, convertToPDF } = useNoteExport({
+    title,
+    content,
+    contentRef,
+  });
+  const { onDelete } = useNoteDelete({ noteId });
 
   return (
     <DropdownMenu>
@@ -63,15 +72,18 @@ export function NoteExportMenu({
         )}
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem className="cursor-pointer" onClick={onExportMarkdown}>
+        <DropdownMenuItem
+          className="cursor-pointer"
+          onClick={convertToMarkdown}
+        >
           <FileDown className="mr-2 h-4 w-4" />
           <span>Export as Markdown</span>
         </DropdownMenuItem>
-        <DropdownMenuItem className="cursor-pointer" onClick={onExportText}>
+        <DropdownMenuItem className="cursor-pointer" onClick={convertToText}>
           <FileText className="mr-2 h-4 w-4" />
           <span>Export as Text</span>
         </DropdownMenuItem>
-        <DropdownMenuItem className="cursor-pointer" onClick={onExportPDF}>
+        <DropdownMenuItem className="cursor-pointer" onClick={convertToPDF}>
           <FileText className="mr-2 h-4 w-4" />
           <span>Export as PDF</span>
         </DropdownMenuItem>

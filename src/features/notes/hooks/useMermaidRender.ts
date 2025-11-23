@@ -57,7 +57,6 @@ export function useMermaidRender() {
             });
           } catch (error) {
             // Invalid Mermaid syntax - leave it as a code block
-            console.log('Skipping invalid Mermaid diagram:', error);
             diagramElement.setAttribute('data-processed', 'skipped');
           }
         }

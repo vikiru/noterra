@@ -52,7 +52,7 @@ export function UserFlashcardsList({
                 key={set.id}
                 prefetch={false}
               >
-                <Card className="hover:bg-accent/10 transition-colors cursor-pointer border-border/50">
+                <Card className="hover:bg-accent/10 transition-colors cursor-pointer border-border/50 hover:bg-foreground/5 dark:hover:bg-foreground/10">
                   <CardContent className="p-3">
                     <div className="flex items-start gap-3">
                       <div className="p-2 rounded-full bg-primary/10 text-primary mt-0.5 shrink-0">

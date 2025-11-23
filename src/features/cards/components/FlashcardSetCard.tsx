@@ -11,7 +11,7 @@ type FlashcardSetCardProps = {
 
 export function FlashcardSetCard({ set }: FlashcardSetCardProps) {
   return (
-    <Card className="group hover:shadow-md transition-all duration-200 flex flex-col h-full w-full">
+    <Card className="group transition-all duration-200 flex flex-col h-full w-full hover:bg-foreground/5 dark:hover:bg-foreground/10">
       <Link
         className="flex flex-col flex-1 p-6"
         href={`/notes/${set.id}/flashcards`}

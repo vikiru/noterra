@@ -17,7 +17,7 @@ type NoteCardProps = {
 
 export function NoteCard({ note }: NoteCardProps) {
   return (
-    <Card className="group hover:shadow-md transition-all duration-200 flex flex-col h-full w-full">
+    <Card className="group hover:shadow-md transition-all duration-200 flex flex-col h-full w-full hover:bg-foreground/5 dark:hover:bg-foreground/10">
       <Link className="flex flex-col grow" href={`/notes/${note.id}`}>
         <CardHeader className="pb-4">
           <div className="flex items-center">
@@ -45,9 +45,9 @@ export function NoteCard({ note }: NoteCardProps) {
 
         <CardContent className="grow py-1 sm:py-2 px-4 sm:px-6">
           <div className="flex flex-wrap gap-1.5 mb-2 -ml-1.5 -mt-1.5">
-            {note.keywords.map((kw: string) => (
+            {note.keywords.slice(0, 5).map((kw: string) => (
               <Badge
-                className="text-xs font-normal whitespace-nowrap overflow-hidden text-ellipsis max-w-[calc(100%-0.75rem)]"
+                className="text-xs capitalize font-normal whitespace-nowrap overflow-hidden text-ellipsis max-w-[calc(100%-0.75rem)]"
                 key={kw.trim()}
                 variant="secondary"
               >
@@ -63,7 +63,8 @@ export function NoteCard({ note }: NoteCardProps) {
               {DateTime.fromJSDate(note.createdAt).toFormat('LLL dd, yyyy')}
             </time>
             <span className="inline-flex items-center text-primary font-medium group-hover:underline">
-              View <ArrowRight className="ml-1 h-3.5 w-3.5" />
+              View{' '}
+              <ArrowRight className="ml-1 h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
             </span>
           </div>
         </CardFooter>

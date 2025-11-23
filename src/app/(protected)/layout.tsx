@@ -1,4 +1,3 @@
-import { Footer } from '@/lib/components/layout/Footer';
 import { Header } from '@/lib/components/layout/Header';
 
 export default function ProtectedLayout({
@@ -7,10 +6,9 @@ export default function ProtectedLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-1">{children}</main>
-      <Footer />
+      <main className="flex-1 flex flex-col">{children}</main>
     </div>
   );
 }

@@ -13,8 +13,7 @@ export function useEditMetadata({
 }: UseEditMetadataProps) {
   const [title, setTitle] = useState(initialTitle);
   const [summary, setSummary] = useState(initialSummary);
-  const [keywords, setKeywords] = useState(initialKeywords.join(', '));
-  const [metadataOpen, setMetadataOpen] = useState(false);
+  const [keywords, setKeywords] = useState(initialKeywords);
 
   return {
     title,
@@ -23,7 +22,5 @@ export function useEditMetadata({
     setSummary,
     keywords,
     setKeywords,
-    metadataOpen,
-    setMetadataOpen,
   };
 }
