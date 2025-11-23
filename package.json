@@ -84,7 +84,7 @@
     "flexsearch": "^0.8.212",
     "html-react-parser": "^5.2.10",
     "immer": "^10.2.0",
-    "isomorphic-dompurify": "^2.32.0",
+    "isomorphic-dompurify": "^2.33.0",
     "jsdom": "^27.2.0",
     "lucide-react": "^0.552.0",
     "luxon": "^3.7.2",
