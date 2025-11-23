@@ -18,18 +18,10 @@ export default async function SharedNotePage({
   }
 
   return (
-    <Suspense
-      fallback={
-        <div className="flex items-center justify-center min-h-screen">
-          <Loader2 className="animate-spin" />
-        </div>
-      }
-    >
-      <NoteDetail
-        note={note}
-        showFlashcardButton={note.showCards}
-        showUserActions={false}
-      />
-    </Suspense>
+    <NoteDetail
+      note={note}
+      showFlashcardButton={note.showCards}
+      showUserActions={false}
+    />
   );
 }

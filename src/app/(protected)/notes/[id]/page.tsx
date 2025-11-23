@@ -17,12 +17,10 @@ export default async function NoteDetailsPage({
   }
 
   return (
-    <Suspense fallback={<Loader />}>
-      <NoteDetail
-        note={note}
-        showFlashcardButton={true}
-        showUserActions={true}
-      />
-    </Suspense>
+    <NoteDetail
+      note={note}
+      showFlashcardButton={true}
+      showUserActions={true}
+    />
   );
 }

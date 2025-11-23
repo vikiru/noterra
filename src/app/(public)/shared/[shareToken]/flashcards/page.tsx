@@ -57,15 +57,7 @@ export default async function SharedNoteFlashcardsPage({
           </div>
         </div>
 
-        <Suspense
-          fallback={
-            <div className="flex justify-center p-12">
-              <Spinner />
-            </div>
-          }
-        >
-          <FlashcardListView noteId={note.id} showUserActions={false} />
-        </Suspense>
+        <FlashcardListView noteId={note.id} showUserActions={false} />
       </div>
     </div>
   );
