@@ -1,6 +1,8 @@
-import { Loader2 } from 'lucide-react';
+import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
-import { NoteDetailWrapper } from '@/features/notes/components/NoteDetailWrapper';
+import { NoteDetail } from '@/features/notes/components/NoteDetail';
+import { findNoteWithAuthorById } from '@/features/notes/data-access/notes';
+import Loader from '@/lib/components/layout/Loader';
 
 export default async function NoteDetailsPage({
   params,
@@ -8,15 +10,19 @@ export default async function NoteDetailsPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const note = await findNoteWithAuthorById(id as string);
+
+  if (!note) {
+    return notFound();
+  }
+
   return (
-    <Suspense
-      fallback={
-        <div className="flex items-center justify-center min-h-screen">
-          <Loader2 className="animate-spin" />
-        </div>
-      }
-    >
-      <NoteDetailWrapper noteId={id as string} />
+    <Suspense fallback={<Loader />}>
+      <NoteDetail
+        note={note}
+        showFlashcardButton={true}
+        showUserActions={true}
+      />
     </Suspense>
   );
 }

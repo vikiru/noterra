@@ -3,7 +3,6 @@ import { FlashcardPreviewCard } from '@/features/cards/components/FlashcardPrevi
 import { findCardsByNoteId } from '@/features/cards/data-access/flashcard';
 import { ScrollArea } from '@/lib/components/ui/scroll-area';
 
-
 type FlashcardListViewProps = {
   noteId: string;
   showUserActions?: boolean;

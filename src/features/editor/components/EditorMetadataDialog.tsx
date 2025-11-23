@@ -1,10 +1,10 @@
 'use client';
 
-import { Settings } from 'lucide-react';
-
+import { Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -15,71 +15,93 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { useEditorMetadataDialog } from '@/features/editor/hooks/useEditorMetadataDialog';
 
 type EditorMetadataDialogProps = {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
   title: string;
-  setTitle: (title: string) => void;
   summary: string;
-  setSummary: (summary: string) => void;
-  keywords: string;
-  setKeywords: (keywords: string) => void;
+  keywords: string[];
+  setTitle: (t: string) => void;
+  setSummary: (s: string) => void;
+  setKeywords: (k: string[]) => void;
 };
 
 export function EditorMetadataDialog({
-  open,
-  onOpenChange,
   title,
-  setTitle,
   summary,
-  setSummary,
   keywords,
+  setTitle,
+  setSummary,
   setKeywords,
 }: EditorMetadataDialogProps) {
+  const {
+    open,
+    setOpen,
+    localTitle,
+    setLocalTitle,
+    localSummary,
+    setLocalSummary,
+    localKeywords,
+    setLocalKeywords,
+    handleSave,
+  } = useEditorMetadataDialog({
+    title,
+    summary,
+    keywords,
+    setTitle,
+    setSummary,
+    setKeywords,
+  });
+
   return (
-    <Dialog onOpenChange={onOpenChange} open={open}>
+    <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger asChild>
         <Button size="sm" variant="outline">
-          <Settings className="w-4 h-4 mr-2" />
+          <Info className="w-4 h-4" />
           Metadata
         </Button>
       </DialogTrigger>
+
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Edit Metadata</DialogTitle>
           <DialogDescription>
-            Update the title, summary, and keywords for this note.
+            Manage metadata for your note (title, summary, keywords).
           </DialogDescription>
         </DialogHeader>
+
         <div className="grid gap-4 py-4">
           <div className="grid gap-2">
-            <Label htmlFor="title">Title</Label>
+            <Label>Title</Label>
             <Input
-              id="title"
-              onChange={(e) => setTitle(e.target.value)}
-              value={title}
+              onChange={(e) => setLocalTitle(e.target.value)}
+              value={localTitle}
             />
           </div>
+
           <div className="grid gap-2">
-            <Label htmlFor="summary">Summary</Label>
+            <Label>Summary</Label>
             <Textarea
-              id="summary"
-              onChange={(e) => setSummary(e.target.value)}
-              value={summary}
+              onChange={(e) => setLocalSummary(e.target.value)}
+              style={{ resize: 'none' }}
+              value={localSummary}
             />
           </div>
+
           <div className="grid gap-2">
-            <Label htmlFor="keywords">Keywords (comma-separated)</Label>
+            <Label>Keywords (comma-separated)</Label>
             <Input
-              id="keywords"
-              onChange={(e) => setKeywords(e.target.value)}
-              value={keywords}
+              onChange={(e) => setLocalKeywords(e.target.value)}
+              value={localKeywords}
             />
           </div>
         </div>
+
         <DialogFooter>
-          <Button onClick={() => onOpenChange(false)}>Done</Button>
+          <DialogClose asChild>
+            <Button variant="outline">Cancel</Button>
+          </DialogClose>
+          <Button onClick={handleSave}>Done</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

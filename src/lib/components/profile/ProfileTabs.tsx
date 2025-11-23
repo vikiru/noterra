@@ -6,7 +6,6 @@ import { UserActivityFeed } from '@/lib/components/profile/UserActivityFeed';
 import { UserFlashcardsList } from '@/lib/components/profile/UserFlashcardsList';
 import { UserNotesList } from '@/lib/components/profile/UserNotesList';
 
-
 type ProfileTabsProps = {
   notes: NoteMetadata[];
   flashcards: (FlashcardSet & { cardCount: number })[];
@@ -27,13 +26,22 @@ export function ProfileTabs({
       <Tabs className="w-full" defaultValue="notes">
         <TabsList className="grid w-full grid-cols-3 mb-6">
           <TabsTrigger value="notes">
-            <FileText className="h-4 w-4 mr-2" /> Notes
+            <div className="flex items-center gap-2 group-hover:text-neutral-50 transition-colors">
+              <FileText className="h-4 w-4 mr-2 " />
+              <span>Notes</span>
+            </div>
           </TabsTrigger>
           <TabsTrigger value="flashcards">
-            <BookOpen className="h-4 w-4 mr-2" /> Flashcards
+            <div className="flex items-center gap-2 group-hover:text-neutral-50 transition-colors">
+              <BookOpen className="h-4 w-4 mr-2" />
+              <span>Flashcards</span>
+            </div>
           </TabsTrigger>
           <TabsTrigger value="activity">
-            <Clock className="h-4 w-4 mr-2" /> Activity
+            <div className="flex items-center gap-2 group-hover:text-neutral-50 transition-colors">
+              <Clock className="h-4 w-4 mr-2" />
+              <span>Activity</span>
+            </div>
           </TabsTrigger>
         </TabsList>
 

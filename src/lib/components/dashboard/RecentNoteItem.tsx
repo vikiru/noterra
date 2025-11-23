@@ -10,7 +10,7 @@ type RecentNoteItemProps = {
 export function RecentNoteItem({ note }: RecentNoteItemProps) {
   return (
     <Link
-      className="flex items-center justify-between p-2 rounded-md hover:bg-muted/50 transition-colors group"
+      className="flex items-center justify-between p-2 rounded-md hover:bg-foreground/5 transition-colors group"
       href={`/notes/${note.id}`}
       prefetch={false}
     >

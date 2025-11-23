@@ -1,3 +1,5 @@
+'use client';
+
 import type { Editor } from '@tiptap/react';
 import { useRouter } from 'next/navigation';
 import { useTransition } from 'react';
@@ -7,25 +9,25 @@ import { saveNoteChanges } from '@/features/notes/actions/notes';
 import { NOTES_ROUTE } from '@/lib/constants/route';
 
 type UseNoteEditFormProps = {
-  noteId: string;
   editor: Editor | null;
-  title: string;
-  summary: string;
-  keywords: string;
-  isPublic: boolean;
-  isShared: boolean;
-  showCards: boolean;
+  metadata: {
+    noteId: string;
+    title: string;
+    content: string;
+    summary: string;
+    keywords: string[];
+  };
+  visibility: {
+    isPublic: boolean;
+    isShared: boolean;
+    showCards: boolean;
+  };
 };
 
 export function useNoteEditForm({
-  noteId,
   editor,
-  title,
-  summary,
-  keywords,
-  isPublic,
-  isShared,
-  showCards,
+  metadata,
+  visibility,
 }: UseNoteEditFormProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -34,35 +36,29 @@ export function useNoteEditForm({
     if (!editor) return;
 
     const htmlContent = editor.getHTML();
-    const keywordArray = keywords
-      .split(',')
-      .map((k) => k.trim())
-      .filter((k) => k !== '');
 
     const updatedData: NoteEditorData = {
-      id: noteId,
-      title,
-      summary,
-      keywords: keywordArray,
+      id: metadata.noteId,
+      title: metadata.title,
+      summary: metadata.summary,
+      keywords: metadata.keywords.map((k) => k.trim()).filter(Boolean),
       content: htmlContent,
-      public: isPublic,
-      shared: isShared,
-      showCards,
+      public: visibility.isPublic,
+      shared: visibility.isShared,
+      showCards: visibility.showCards,
     };
 
     startTransition(async () => {
       const result = await saveNoteChanges(updatedData);
+
       if (result.success) {
         toast.success('Note updated successfully');
-        router.push(`${NOTES_ROUTE}/${noteId}`);
+        router.push(`${NOTES_ROUTE}/${metadata.noteId}`);
       } else {
         toast.error(result.error || 'Failed to update note');
       }
     });
   };
 
-  return {
-    isPending,
-    handleSubmit,
-  };
+  return { isPending, handleSubmit };
 }

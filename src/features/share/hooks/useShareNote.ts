@@ -9,7 +9,6 @@ type UseShareNoteProps = {
   isPublic: boolean;
   isShared: boolean;
   showCards: boolean;
-  onSuccess: () => void;
 };
 
 export function useShareNote({
@@ -19,24 +18,19 @@ export function useShareNote({
   isPublic,
   isShared,
   showCards,
-  onSuccess,
 }: UseShareNoteProps) {
   const [isPending, startTransition] = useTransition();
 
   const getShareLink = () => {
     const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
-    if (isPublic) {
-      return `${baseUrl}/${username}/notes/${noteId}`;
-    }
-    if (isShared) {
-      return `${baseUrl}/shared/${shareToken}`;
-    }
+    if (isPublic) return `${baseUrl}/${username}/notes/${noteId}`;
+    if (isShared) return `${baseUrl}/shared/${shareToken}`;
     return '';
   };
 
   const link = getShareLink();
 
-  const handleSave = () => {
+  const handleSave = async () => {
     startTransition(async () => {
       const result = await updateNoteVisibilityAction(noteId, {
         public: isPublic,
@@ -46,7 +40,6 @@ export function useShareNote({
 
       if (result.success) {
         toast.success('Note visibility updated');
-        onSuccess();
       } else {
         toast.error(result.error || 'Failed to update visibility');
       }

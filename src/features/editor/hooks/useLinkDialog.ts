@@ -17,7 +17,6 @@ export function useLinkDialog({
 }: UseLinkDialogProps) {
   const [url, setUrl] = useState(initialUrl);
 
-  // Sync url state when initialUrl prop changes
   useEffect(() => {
     setUrl(initialUrl);
   }, [initialUrl]);

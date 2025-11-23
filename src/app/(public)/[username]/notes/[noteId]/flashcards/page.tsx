@@ -41,7 +41,7 @@ export default async function PublicNoteFlashcardsPage({
           >
             <Link href={`/${note.author.username}/notes/${noteId}`}>
               <ArrowLeft className="mr-2 size-4 transition-transform group-hover:-translate-x-1 " />
-              Back to note
+              Back to Note
             </Link>
           </Button>
 

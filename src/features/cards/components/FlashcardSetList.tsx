@@ -4,7 +4,6 @@ import { findCardSets } from '@/features/cards/data-access/flashcard';
 import { getCurrentUser } from '@/lib/auth';
 import { ScrollArea } from '@/lib/components/ui/scroll-area';
 
-
 export async function FlashcardSetList() {
   const userId = await getCurrentUser();
   if (!userId) return null;

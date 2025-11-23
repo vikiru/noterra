@@ -1,11 +1,10 @@
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import type { NoteMetadata } from '@/features/notes/types/noteMetadata';
-import { ScrollArea } from '@/lib/components/ui/scroll-area';
 import { NoteCard } from '@/features/notes/components/NoteCard';
+import type { NoteMetadata } from '@/features/notes/types/noteMetadata';
 import { EmptyNotesState } from '@/lib/components/dashboard/EmptyNotesState';
-
+import { ScrollArea } from '@/lib/components/ui/scroll-area';
 
 type NotesListProps = {
   notes: NoteMetadata[];

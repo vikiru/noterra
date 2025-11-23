@@ -1,11 +1,15 @@
 'use client';
 
+import { ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
 import { useRef } from 'react';
-import { useNoteExport } from '@/features/export/hooks/useNoteExport';
-import { NoteActions } from '@/features/notes/components/NoteActions';
+import { NoteEditButton } from '@/features/editor/components/NoteEditButton';
+import { NoteExportMenu } from '@/features/export/components/NoteExportMenu';
 import { NoteContent } from '@/features/notes/components/NoteContent';
 import { NoteHeader } from '@/features/notes/components/NoteHeader';
 import type { Note } from '@/features/notes/types/notes';
+import { ShareNoteDialog } from '@/features/share/components/ShareNoteDialog';
+import { Button } from '@/lib/components/ui/button';
 
 type NoteDetailProps = {
   note: Note & {
@@ -17,35 +21,53 @@ type NoteDetailProps = {
 
 export function NoteDetail({
   note,
-  showUserActions = true,
-  showFlashcardButton = true,
+  showUserActions,
+  showFlashcardButton,
 }: NoteDetailProps) {
   const contentRef = useRef<HTMLDivElement>(null);
-
-  const { convertToMarkdown, convertToText, convertToPDF } = useNoteExport({
-    title: note.title,
-    content: note.content,
-    contentRef,
-  });
+  const visibility = {
+    isPublic: note.public,
+    isShared: note.shared,
+    showCards: note.showCards,
+  };
 
   return (
     <section
       className="container max-w-6xl mx-auto px-3 sm:px-4 py-6 sm:py-8"
       id="note-ctr"
     >
-      <NoteActions
-        isPublic={note.public}
-        isShared={note.shared}
-        noteId={note.id}
-        onExportMarkdown={convertToMarkdown}
-        onExportPDF={convertToPDF}
-        onExportText={convertToText}
-        shareToken={note.shareToken}
-        showCards={note.showCards}
-        showFlashcardButton={showFlashcardButton}
-        showUserActions={showUserActions}
-        username={note.author.username}
-      />
+      {showUserActions && (
+        <section className="flex justify-between items-center mb-6">
+          <Button
+            asChild
+            className="-ml-3 text-muted-foreground hover:text-black w-fit"
+            size="sm"
+            variant="ghost"
+          >
+            <Link href={`/notes`}>
+              <ArrowLeft className="mr-2 size-4 transition-transform group-hover:-translate-x-1 " />
+              Back to Notes
+            </Link>
+          </Button>
+
+          <section className="flex items-center gap-1.5" id="actions">
+            <NoteEditButton />
+            <ShareNoteDialog
+              noteId={note.id}
+              shareToken={note.shareToken}
+              username={note.author.username}
+              visibility={visibility}
+            />
+            <NoteExportMenu
+              content={note.content}
+              contentRef={contentRef}
+              noteId={note.id}
+              showFlashcardButton={showFlashcardButton}
+              title={note.title}
+            />
+          </section>
+        </section>
+      )}
 
       <section id="note">
         <NoteHeader note={note} />

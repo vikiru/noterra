@@ -1,16 +1,18 @@
 'use client';
 
-import { Loader2 } from 'lucide-react';
-import { useEffect } from 'react';
+import { Loader2, Share2 } from 'lucide-react';
+import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from '@/components/ui/dialog';
 import { useEditVisibility } from '@/features/editor/hooks/useEditVisibility';
 import { ShareLink } from '@/features/share/components/ShareLink';
@@ -18,25 +20,20 @@ import { VisibilityCard } from '@/features/share/components/VisibilityCard';
 import { useShareNote } from '@/features/share/hooks/useShareNote';
 
 type ShareNoteDialogProps = {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
   noteId: string;
   shareToken: string;
   username: string;
-  initialPublic?: boolean;
-  initialShared?: boolean;
-  initialShowCards?: boolean;
+  visibility: {
+    isPublic: boolean;
+    isShared: boolean;
+    showCards: boolean;
+  };
 };
-// TODO: Reduce the prop drilling
 export function ShareNoteDialog({
-  open,
-  onOpenChange,
   noteId,
   shareToken,
   username,
-  initialPublic = false,
-  initialShared = false,
-  initialShowCards = true,
+  visibility,
 }: ShareNoteDialogProps) {
   const {
     isPublic,
@@ -45,11 +42,7 @@ export function ShareNoteDialog({
     setIsShared,
     showCards,
     setShowCards,
-  } = useEditVisibility({
-    initialPublic,
-    initialShared,
-    initialShowCards,
-  });
+  } = useEditVisibility({ visibility });
 
   const { isPending, link, handleSave } = useShareNote({
     noteId,
@@ -58,27 +51,22 @@ export function ShareNoteDialog({
     isPublic,
     isShared,
     showCards,
-    onSuccess: () => onOpenChange(false),
   });
 
-  useEffect(() => {
-    if (open) {
-      setIsPublic(initialPublic);
-      setIsShared(initialShared);
-      setShowCards(initialShowCards);
-    }
-  }, [
-    open,
-    initialPublic,
-    initialShared,
-    initialShowCards,
-    setIsPublic,
-    setIsShared,
-    setShowCards,
-  ]);
+  const [open, setOpen] = useState(false);
 
   return (
-    <Dialog onOpenChange={onOpenChange} open={open}>
+    <Dialog onOpenChange={setOpen} open={open}>
+      <DialogTrigger asChild>
+        <Button
+          className="gap-1.5 hover:bg-muted/50 text-muted-foreground hover:text-foreground"
+          size="sm"
+          variant="ghost"
+        >
+          <Share2 className="h-4 w-4" />
+          <span className="hidden sm:inline">Share</span>
+        </Button>
+      </DialogTrigger>
       <DialogContent className="sm:max-w-md p-0 gap-0 overflow-hidden border-neutral-200 dark:border-neutral-800">
         <DialogHeader className="px-6 pt-6 pb-4">
           <DialogTitle className="text-xl font-semibold">
@@ -99,20 +87,25 @@ export function ShareNoteDialog({
             showFlashcards={showCards}
           />
 
-          {(isPublic || (isShared && !isPublic)) && (
+          {(isPublic || isShared) && (
             <ShareLink isPublic={isPublic} link={link} />
           )}
         </div>
 
         <DialogFooter className="px-6 py-4 bg-neutral-50 dark:bg-neutral-900/50 border-t border-neutral-200 dark:border-neutral-800 gap-2">
+          <DialogClose asChild>
+            <Button className="h-9" variant="outline">
+              Cancel
+            </Button>
+          </DialogClose>
           <Button
             className="h-9"
-            onClick={() => onOpenChange(false)}
-            variant="outline"
+            disabled={isPending}
+            onClick={async () => {
+              await handleSave();
+              setOpen(false);
+            }}
           >
-            Cancel
-          </Button>
-          <Button className="h-9" disabled={isPending} onClick={handleSave}>
             {isPending ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />

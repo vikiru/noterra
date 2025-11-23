@@ -1,12 +1,10 @@
 import { currentUser } from '@clerk/nextjs/server';
 import { notFound, redirect } from 'next/navigation';
-
+import { Suspense } from 'react';
 import { EditNoteForm } from '@/features/editor/components/EditNoteForm';
-import {
-  findNoteById,
-  findNoteForEditing,
-} from '@/features/notes/data-access/notes';
-import { checkOwnership } from '@/lib/auth';
+import { findNoteForEditing } from '@/features/notes/data-access/notes';
+import Loader from '@/lib/components/layout/Loader';
+import { SIGNIN_ROUTE } from '@/lib/constants/route';
 
 type EditNotePageProps = {
   params: Promise<{ id: string }>;
@@ -17,7 +15,7 @@ export default async function EditNotePage({ params }: EditNotePageProps) {
   const user = await currentUser();
 
   if (!user) {
-    redirect('/sign-in');
+    redirect(SIGNIN_ROUTE);
   }
 
   const note = await findNoteForEditing(id);
@@ -26,17 +24,23 @@ export default async function EditNotePage({ params }: EditNotePageProps) {
     notFound();
   }
 
-  const ownershipCheck = await findNoteById(id);
-  if (!ownershipCheck) notFound();
+  const metadata = {
+    noteId: note.id,
+    title: note.title,
+    content: note.content,
+    summary: note.summary,
+    keywords: note.keywords,
+  };
 
-  const isOwner = await checkOwnership(ownershipCheck.authorId);
-  if (!isOwner) {
-    redirect('/notes');
-  }
+  const visibility = {
+    initialPublic: note.public,
+    initialShared: note.shared,
+    initialShowCards: note.showCards,
+  };
 
   return (
-    <div className="container mx-auto py-6 max-w-7xl h-[calc(100vh-4rem)]">
-      <EditNoteForm initialData={note} />
-    </div>
+    <Suspense fallback={<Loader />}>
+      <EditNoteForm metadata={metadata} visibility={visibility} />
+    </Suspense>
   );
 }

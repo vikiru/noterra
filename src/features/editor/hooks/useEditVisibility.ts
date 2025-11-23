@@ -1,20 +1,17 @@
 import { useState } from 'react';
 
 type UseEditVisibilityProps = {
-  initialPublic: boolean;
-  initialShared: boolean;
-  initialShowCards: boolean;
+  visibility: {
+    public: boolean;
+    shared: boolean;
+    showCards: boolean;
+  };
 };
 
-export function useEditVisibility({
-  initialPublic,
-  initialShared,
-  initialShowCards,
-}: UseEditVisibilityProps) {
-  const [isPublic, setIsPublic] = useState(initialPublic);
-  const [isShared, setIsShared] = useState(initialShared);
-  const [showCards, setShowCards] = useState(initialShowCards);
-  const [visibilityOpen, setVisibilityOpen] = useState(false);
+export function useEditVisibility({ visibility }: UseEditVisibilityProps) {
+  const [isPublic, setIsPublic] = useState(visibility.public);
+  const [isShared, setIsShared] = useState(visibility.shared);
+  const [showCards, setShowCards] = useState(visibility.showCards);
 
   return {
     isPublic,
@@ -23,7 +20,5 @@ export function useEditVisibility({
     setIsShared,
     showCards,
     setShowCards,
-    visibilityOpen,
-    setVisibilityOpen,
   };
 }

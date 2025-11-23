@@ -15,7 +15,7 @@ export function Logo({
   containerSize = 'h-8 w-8',
 }: LogoProps) {
   return (
-    <div className={cn('flex items-center gap-2', className)}>
+    <div className={cn('flex items-center', className)}>
       <div
         className={cn(
           'rounded-lg bg-primary flex items-center justify-center shrink-0',

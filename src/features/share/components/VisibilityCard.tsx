@@ -1,38 +1,34 @@
+'use client';
+
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { cn } from '@/lib/utils/cn';
 
-type VisibilityCardProps = {
+type VisibilityState = {
   isPublic: boolean;
   isShared: boolean;
-  showFlashcards: boolean;
-  onPublicChange: (val: boolean) => void;
-  onSharedChange: (val: boolean) => void;
-  onShowFlashcardsChange: (val: boolean) => void;
+  showCards: boolean;
 };
 
-// TODO: Reduce the prop drilling
-export function VisibilityCard({
-  isPublic,
-  isShared,
-  showFlashcards,
-  onPublicChange,
-  onSharedChange,
-  onShowFlashcardsChange,
-}: VisibilityCardProps) {
+type VisibilityCardProps = {
+  state: VisibilityState;
+  setState: (state: VisibilityState) => void;
+};
+
+export function VisibilityCard({ state, setState }: VisibilityCardProps) {
+  const { isPublic, isShared, showCards } = state;
+
   const getPublicDescription = () => {
-    if (isPublic) {
-      return `Anyone can view your note${showFlashcards ? ' and flashcards' : ''}`;
-    }
+    if (isPublic)
+      return `Anyone can view your note${showCards ? ' and flashcards' : ''}`;
     return 'Only you can view your note and flashcards';
   };
 
   const getSharedDescription = () => {
-    if (isShared) {
-      return `Specific people can view your note${showFlashcards ? ' and flashcards' : ''}`;
-    }
+    if (isShared)
+      return `Specific people can view your note${showCards ? ' and flashcards' : ''}`;
     return 'Allow specific people to view via link';
   };
 
@@ -54,7 +50,7 @@ export function VisibilityCard({
           <Switch
             checked={isPublic}
             id="public-mode"
-            onCheckedChange={onPublicChange}
+            onCheckedChange={(val) => setState({ ...state, isPublic: val })}
           />
         </div>
 
@@ -81,7 +77,7 @@ export function VisibilityCard({
             checked={isShared}
             disabled={isPublic}
             id="share-mode"
-            onCheckedChange={onSharedChange}
+            onCheckedChange={(val) => setState({ ...state, isShared: val })}
           />
         </div>
 
@@ -101,9 +97,11 @@ export function VisibilityCard({
                 </span>
               </div>
               <Switch
-                checked={showFlashcards}
+                checked={showCards}
                 id="flashcard-mode"
-                onCheckedChange={onShowFlashcardsChange}
+                onCheckedChange={(val) =>
+                  setState({ ...state, showCards: val })
+                }
               />
             </div>
           </>
