@@ -1,4 +1,4 @@
-import { eq, sql } from 'drizzle-orm';
+import { desc, eq, sql } from 'drizzle-orm';
 import { db } from '@/db/index';
 import { findCardSets } from '@/features/cards/data-access/flashcard';
 import {
@@ -202,4 +202,34 @@ export async function getUserProfilePageData(userId: string) {
     publicCards,
     activityOverview,
   };
+}
+
+export async function getUserStats(userId: string) {
+  const [notes, flashcards] = await Promise.all([
+    db
+      .select({ count: sql<number>`COUNT(*)` })
+      .from(notesTable)
+      .where(eq(notesTable.authorId, userId)),
+    db
+      .select({ count: sql<number>`COUNT(*)` })
+      .from(flashcardsTable)
+      .where(eq(flashcardsTable.authorId, userId)),
+  ]);
+  return {
+    notes: notes[0]?.count ?? 0,
+    flashcards: flashcards[0]?.count ?? 0,
+  };
+}
+
+export async function getRecentNotes(userId: string) {
+  return db
+    .select({
+      id: notesTable.id,
+      title: notesTable.title,
+      createdAt: notesTable.createdAt,
+    })
+    .from(notesTable)
+    .where(eq(notesTable.authorId, userId))
+    .orderBy(desc(notesTable.createdAt))
+    .limit(10);
 }

@@ -6,7 +6,7 @@ type DashboardStatsProps = {
   totalCreations: TotalCreations;
 };
 
-export function DashboardStats({ totalCreations }: DashboardStatsProps) {
+export async function DashboardStats({ totalCreations }: DashboardStatsProps) {
   return (
     <div className="grid gap-4 md:grid-cols-2">
       <StatsCard

@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { EditorMetadataDialog } from '@/features/editor/components/EditorMetadataDialog';
 import { EditorVisibilityDialog } from '@/features/editor/components/EditorVisibilityDialog';
 import { TiptapToolbar } from '@/features/editor/components/TiptapToolbar';
+import { useEditMetadata } from '@/features/editor/hooks/useEditMetadata';
 import { useNoteEditForm } from '@/features/editor/hooks/useNoteEditForm';
 import { useTiptapEditor } from '@/features/editor/hooks/useTiptapEditor';
 
@@ -35,9 +36,12 @@ type VisibilityState = {
 export function EditNoteForm({ metadata, visibility }: EditNoteFormProps) {
   const editor = useTiptapEditor(metadata.content);
 
-  const [title, setTitle] = useState(metadata.title);
-  const [summary, setSummary] = useState(metadata.summary);
-  const [keywords, setKeywords] = useState(metadata.keywords);
+  const { title, setTitle, summary, setSummary, keywords, setKeywords } =
+    useEditMetadata({
+      initialTitle: metadata.title,
+      initialSummary: metadata.summary,
+      initialKeywords: metadata.keywords,
+    });
 
   const [visibilityState, setVisibilityState] = useState<VisibilityState>({
     isPublic: visibility.isPublic,

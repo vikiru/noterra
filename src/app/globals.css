@@ -170,6 +170,11 @@ body {
             display: none !important;
         }
 
+        /* keep light mode color scheme for printing */
+        html {
+            color-scheme: light;
+        }
+
         /* body */
         body {
             font-size: 12pt;
@@ -344,7 +349,7 @@ body {
     --tw-prose-headings: var(--text-foreground);
     --tw-prose-lead: var(--muted-foreground);
     --tw-prose-links: var(--primary);
-    --tw-prose-bold: var(--primary-foreground);
+    --tw-prose-bold: var(--foreground);
     --tw-prose-counters: var(--secondary-foreground);
     --tw-prose-bullets: var(--secondary-foreground);
     --tw-prose-hr: var(--border);
@@ -362,7 +367,7 @@ body {
     --tw-prose-invert-headings: var(--text-foreground);
     --tw-prose-invert-lead: var(--muted-foreground);
     --tw-prose-invert-links: var(--primary);
-    --tw-prose-invert-bold: var(--primary-foreground);
+    --tw-prose-invert-bold: var(--foreground);
     --tw-prose-invert-counters: var(--secondary-foreground);
     --tw-prose-invert-bullets: var(--secondary-foreground);
     --tw-prose-invert-hr: var(--border);

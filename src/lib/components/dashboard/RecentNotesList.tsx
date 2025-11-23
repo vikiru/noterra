@@ -7,10 +7,10 @@ import { RecentNoteItem } from '@/lib/components/dashboard/RecentNoteItem';
 import { Button } from '@/lib/components/ui/button';
 
 type RecentNotesListProps = {
-  recentNotes: NoteMetadata[];
+  recentNotes: Pick<NoteMetadata, 'id' | 'title' | 'createdAt'>[];
 };
 
-export function RecentNotesList({ recentNotes }: RecentNotesListProps) {
+export async function RecentNotesList({ recentNotes }: RecentNotesListProps) {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -26,9 +26,11 @@ export function RecentNotesList({ recentNotes }: RecentNotesListProps) {
           <EmptyNotesState />
         ) : (
           <div className="space-y-1">
-            {recentNotes.map((note) => (
-              <RecentNoteItem key={note.id} note={note} />
-            ))}
+            {recentNotes.map(
+              (note: Pick<NoteMetadata, 'id' | 'title' | 'createdAt'>) => (
+                <RecentNoteItem key={note.id} note={note} />
+              ),
+            )}
           </div>
         )}
       </CardContent>
