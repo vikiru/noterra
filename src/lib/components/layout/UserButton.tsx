@@ -7,7 +7,6 @@ import {
   Notebook,
   PlusCircle,
 } from 'lucide-react';
-import { Spinner } from '@/lib/components/ui/spinner';
 
 export default function UserButton() {
   const { user } = useUser();

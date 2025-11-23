@@ -2,9 +2,9 @@
 
 import { useUser } from '@clerk/nextjs';
 import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
 import { GetStartedButton } from '@/lib/components/landing/GetStartedButton';
 import { Spinner } from '@/lib/components/ui/spinner';
-import { useEffect, useState } from 'react';
 
 const UserButton = dynamic(() => import('@/lib/components/layout/UserButton'), {
   ssr: false,

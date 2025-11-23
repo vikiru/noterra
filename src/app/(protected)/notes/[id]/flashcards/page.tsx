@@ -1,13 +1,11 @@
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Suspense } from 'react';
 import { Button } from '@/components/ui/button';
 import { AddFlashcardButton } from '@/features/cards/components/AddFlashcardButton';
 import { FlashcardListView } from '@/features/cards/components/FlashcardListView';
 import { findCardsByNoteId } from '@/features/cards/data-access/flashcard';
 import { findNoteTitleById } from '@/features/notes/data-access/notes';
-import { Spinner } from '@/lib/components/ui/spinner';
 
 export default async function NoteFlashcardsPage({
   params,
