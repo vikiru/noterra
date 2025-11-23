@@ -1,9 +1,9 @@
-import { SignedIn, SignedOut } from '@clerk/nextjs';
+'use client';
+
 import Link from 'next/link';
-import { GetStartedButton } from '@/lib/components/landing/GetStartedButton';
 import { Logo } from '@/lib/components/layout/Logo';
 import { ThemeToggle } from '@/lib/components/layout/ThemeToggle';
-import UserButton from '@/lib/components/layout/UserButton';
+import { UserButtonWrapper } from '@/lib/components/layout/UserButtonWrapper';
 
 export function Header() {
   return (
@@ -16,12 +16,9 @@ export function Header() {
       </Link>
       <div className="flex items-center gap-4">
         <ThemeToggle />
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
-        <SignedOut>
-          <GetStartedButton size="sm" />
-        </SignedOut>
+        <div className="w-8">
+          <UserButtonWrapper />
+        </div>
       </div>
     </header>
   );
