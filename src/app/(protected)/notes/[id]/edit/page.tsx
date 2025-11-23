@@ -1,9 +1,7 @@
 import { currentUser } from '@clerk/nextjs/server';
 import { notFound, redirect } from 'next/navigation';
-import { Suspense } from 'react';
 import { EditNoteForm } from '@/features/editor/components/EditNoteForm';
 import { findNoteForEditing } from '@/features/notes/data-access/notes';
-import Loader from '@/lib/components/layout/Loader';
 import { SIGNIN_ROUTE } from '@/lib/constants/route';
 
 type EditNotePageProps = {
@@ -38,7 +36,5 @@ export default async function EditNotePage({ params }: EditNotePageProps) {
     showCards: note.showCards,
   };
 
-  return (
-    <EditNoteForm metadata={metadata} visibility={visibility} />
-  );
+  return <EditNoteForm metadata={metadata} visibility={visibility} />;
 }

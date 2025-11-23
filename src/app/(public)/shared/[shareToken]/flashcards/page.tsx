@@ -1,14 +1,12 @@
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Suspense } from 'react';
 import { Button } from '@/components/ui/button';
 import { FlashcardListView } from '@/features/cards/components/FlashcardListView';
 import {
   findNoteByShareToken,
   findPublicCardsByNoteId,
 } from '@/features/notes/data-access/notes';
-import { Spinner } from '@/lib/components/ui/spinner';
 
 export default async function SharedNoteFlashcardsPage({
   params,
