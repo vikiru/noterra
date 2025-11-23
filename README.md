@@ -1,7 +1,10 @@
 <div align="center">
-  <img width="512" height="140" alt="logo" src="https://github.com/user-attachments/assets/5e71c298-63e3-4e83-ac77-d10103415a06" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/5e71c298-63e3-4e83-ac77-d10103415a06">
+    <source media="(prefers-color-scheme: light)" srcset="https://github.com/user-attachments/assets/268787b6-8ee4-4611-9a50-32d9f8df0123">
+    <img alt="logo" width="512" height="140" src="https://github.com/user-attachments/assets/1c92025c-65eb-4bfe-84b2-92ab883771b2">
+  </picture>
 </div>
-
 
 <div align="center" id="badges">
   <a href="https://github.com/vikiru//blob/main/LICENSE">
