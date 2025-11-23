@@ -39,7 +39,10 @@
 - Mermaid.js diagram rendering via [Mermaid](https://mermaid.dev)
 - Powerful note editing functionality (including undo/redo) powered by [TipTap Editor](https://tiptap.dev)
 - User authentication and authorization powered by [Clerk](https://clerk.com/)
-- Control the visibility of notes and flashcards, marking them as public or private, with optional flashcard visibility or share via link
+- Manage the visibility of notes and flashcards:
+  - Mark notes as public or private
+  - Control the visibility of flashcards (public and shared notes can have private flashcards)
+  - Share private notes with others via link
 - Export notes as various file formats including TXT, Markdown, and PDF
 
 ## 🛠️ Tech Stack
@@ -74,7 +77,7 @@ pnpm install
 
 3. Setup Clerk and Google Gemini
 
-   - Create a Clerk account and obtain the necessary API keys.
+   - Create a [Clerk account](https://clerk.com/) and obtain the necessary API keys.
 
    ```bash
    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
@@ -189,4 +192,4 @@ pnpm prepare
 
 The contents of this repository are licensed under the [MIT License](https://choosealicense.com/licenses/mit/).
 
-[MIT](https://choosealicense.com/licenses/mit/) &copy; 2025-present Visakan Kirubakaran.
+[MIT](LICENSE) &copy; 2025-present Visakan Kirubakaran.
