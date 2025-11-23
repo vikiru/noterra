@@ -57,15 +57,7 @@ export default async function PublicNoteFlashcardsPage({
           </div>
         </div>
 
-        <Suspense
-          fallback={
-            <div className="flex justify-center p-12">
-              <Spinner />
-            </div>
-          }
-        >
-          <FlashcardListView noteId={noteId} showUserActions={false} />
-        </Suspense>
+        <FlashcardListView noteId={noteId} showUserActions={false} />
       </div>
     </div>
   );

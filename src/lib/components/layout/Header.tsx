@@ -16,9 +16,7 @@ export function Header() {
       </Link>
       <div className="flex items-center gap-4">
         <ThemeToggle />
-        <div className="w-8">
-          <UserButtonWrapper />
-        </div>
+        <UserButtonWrapper />
       </div>
     </header>
   );

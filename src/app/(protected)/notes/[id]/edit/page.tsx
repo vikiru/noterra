@@ -33,14 +33,12 @@ export default async function EditNotePage({ params }: EditNotePageProps) {
   };
 
   const visibility = {
-    initialPublic: note.public,
-    initialShared: note.shared,
-    initialShowCards: note.showCards,
+    isPublic: note.public,
+    isShared: note.shared,
+    showCards: note.showCards,
   };
 
   return (
-    <Suspense fallback={<Loader />}>
-      <EditNoteForm metadata={metadata} visibility={visibility} />
-    </Suspense>
+    <EditNoteForm metadata={metadata} visibility={visibility} />
   );
 }

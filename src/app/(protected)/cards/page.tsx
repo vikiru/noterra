@@ -1,6 +1,4 @@
-import { Suspense } from 'react';
 import { FlashcardSetList } from '@/features/cards/components/FlashcardSetList';
-import { Spinner } from '@/lib/components/ui/spinner';
 
 export default function AllCardsPage() {
   return (
@@ -16,15 +14,7 @@ export default function AllCardsPage() {
         </div>
       </div>
 
-      <Suspense
-        fallback={
-          <div className="flex justify-center p-12">
-            <Spinner />
-          </div>
-        }
-      >
-        <FlashcardSetList />
-      </Suspense>
+      <FlashcardSetList />
     </div>
   );
 }
