@@ -10,11 +10,7 @@ import {
 import { Spinner } from '@/lib/components/ui/spinner';
 
 export default function UserButton() {
-  const { user, isLoaded } = useUser();
-
-  if (!isLoaded) {
-    return <Spinner />;
-  }
+  const { user } = useUser();
 
   return (
     <ClerkButton>
