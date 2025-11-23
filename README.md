@@ -1,4 +1,7 @@
-<h1 align="center">Noterra</h1>
+<div align="center">
+  <img width="512" height="140" alt="logo" src="https://github.com/user-attachments/assets/5e71c298-63e3-4e83-ac77-d10103415a06" />
+</div>
+
 
 <div align="center" id="badges">
   <a href="https://github.com/vikiru//blob/main/LICENSE">
