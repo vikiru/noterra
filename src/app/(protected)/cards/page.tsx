@@ -1,4 +1,10 @@
 import { FlashcardSetList } from '@/features/cards/components/FlashcardSetList';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'All Flashcards | Noterra',
+  description: 'Review and manage all your flashcard sets',
+};
 
 export default function AllCardsPage() {
   return (
