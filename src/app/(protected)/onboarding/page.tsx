@@ -3,6 +3,12 @@ import { DASHBOARD_ROUTE } from '@/constants/route';
 import { findUserById } from '@/features/user/data-access/user';
 import { getCurrentUser } from '@/lib/auth';
 import { OnboardingForm } from '@/lib/components/onboarding/OnboardingForm';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Onboarding | Noterra',
+  description: 'Complete your onboarding to get started with Noterra.',
+};
 
 export default async function OnboardingPage() {
   const userId = await getCurrentUser();
