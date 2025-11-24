@@ -1,13 +1,14 @@
+import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { NotesList } from '@/features/notes/components/NotesList';
 import { findNoteMetadata } from '@/features/notes/data-access/notes';
 import { getCurrentUser } from '@/lib/auth';
 import { SIGNIN_ROUTE } from '@/lib/constants/route';
-import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'My Notes | Noterra',
-  description: 'Manage and view all your AI-generated notes and flashcards in one place.',
+  description:
+    'Manage and view all your AI-generated notes and flashcards in one place.',
 };
 
 export default async function NotesPage() {

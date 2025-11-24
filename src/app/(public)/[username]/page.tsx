@@ -8,7 +8,6 @@ import { ProfileHeader } from '@/lib/components/profile/ProfileHeader';
 import { ProfileTabs } from '@/lib/components/profile/ProfileTabs';
 import type { User } from '@/user/types/user';
 
-
 export default async function ProfilePage({
   params,
 }: {
