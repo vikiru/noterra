@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { getUserDashboardData } from '@/features/user/data-access/user';
 import { getCurrentUser } from '@/lib/auth';
@@ -6,12 +7,11 @@ import { DashboardStats } from '@/lib/components/dashboard/DashboardStats';
 import { RecentNotesList } from '@/lib/components/dashboard/RecentNotesList';
 import WelcomeSection from '@/lib/components/dashboard/WelcomeSection';
 import { SIGNIN_ROUTE } from '@/lib/constants/route';
-import type { Metadata } from 'next';
-
 
 export const metadata: Metadata = {
   title: 'Dashboard | Noterra',
-  description: 'View your learning progress, recent notes, and activity overview on your Noterra dashboard.',
+  description:
+    'View your learning progress, recent notes, and activity overview on your Noterra dashboard.',
 };
 
 export default async function DashboardPage() {

@@ -1,5 +1,5 @@
-import { FlashcardSetList } from '@/features/cards/components/FlashcardSetList';
 import type { Metadata } from 'next';
+import { FlashcardSetList } from '@/features/cards/components/FlashcardSetList';
 
 export const metadata: Metadata = {
   title: 'My Flashcards | Noterra',
