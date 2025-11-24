@@ -7,7 +7,7 @@
 </div>
 
 <div align="center" id="badges">
-  <a href="https://github.com/vikiru//blob/main/LICENSE">
+  <a href="https://github.com/vikiru/noterra/blob/main/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-aqua" alt="MIT License Badge"/>
   </a>
   <a href="https://biomejs.dev">
