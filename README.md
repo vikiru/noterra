@@ -193,6 +193,7 @@ pnpm prepare
 - [Faker.js](https://github.com/faker-js/faker)
 - [Shields Badges](https://github.com/badges/shields)
 - [Semantic Release](https://github.com/semantic-release/semantic-release)
+- [Favicon Generator](https://favicon.io/favicon-generator/)
 
 ## ©️ License
 
