@@ -27,7 +27,7 @@ jobs:
         with:
           version: 10
       - name: Install dependencies
-        run: pnpm install
+        run: HUSKY=0 pnpm install --frozen-lockfile # Skip Husky, install from frozen lockfile
       - name: Format files
         run: pnpm run format
       - name: Check for changes
