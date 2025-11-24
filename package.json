@@ -1,7 +1,7 @@
 {
   "name": "noterra",
   "description": "An AI-powered learning tool to breakdown complex topics into easy-to-understand and remember notes/flashcards.",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "license": "MIT",
   "author": "Visakan Kirubakaran",
