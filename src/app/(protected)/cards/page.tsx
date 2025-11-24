@@ -2,7 +2,7 @@ import { FlashcardSetList } from '@/features/cards/components/FlashcardSetList';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'All Flashcards | Noterra',
+  title: 'My Flashcards | Noterra',
   description: 'Review and manage all your flashcard sets',
 };
 

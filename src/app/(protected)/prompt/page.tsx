@@ -3,7 +3,7 @@ import { PromptForm } from '@/features/gemini/components/PromptForm';
 import { PromptTips } from '@/features/gemini/components/PromptTips';
 
 export const metadata: Metadata = {
-  title: 'Noterra | Generate Notes',
+  title: 'Generate Notes & Cards | Noterra ',
   description: 'Generate AI-powered notes and flashcards for any topic.',
 };
 
