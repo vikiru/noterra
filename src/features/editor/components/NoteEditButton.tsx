@@ -10,11 +10,7 @@ export function NoteEditButton() {
 
   return (
     <Link href={`${pathname}/edit`}>
-      <Button
-        className="gap-1.5 hover:bg-muted/50 text-muted-foreground hover:text-foreground"
-        size="sm"
-        variant="ghost"
-      >
+      <Button className="gap-1.5" size="sm" variant="ghost">
         <Edit className="h-4 w-4" />
         <span className="hidden sm:inline">Edit</span>
       </Button>

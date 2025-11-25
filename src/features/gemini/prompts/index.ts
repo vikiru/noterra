@@ -142,6 +142,18 @@ Each object in "note_contents" must have three keys: "title" (a string), "headin
         *   CORRECT: \`D -- "Slope: (f(x+h)-f(x))/h" -- E\`
         *   INCORRECT: \`E[Function f(x)]\`
         *   CORRECT: \`E["Function f(x)"]\`
+        *   **PARENTHESES IN NODES (EXCLUDING MINDMAPS):** For all Mermaid diagrams EXCEPT mindmaps, any node containing parentheses MUST have its text enclosed in double quotes. This is a strict requirement to ensure proper rendering.
+            *   INCORRECT: \`C --> D[LLM (Generate Response)]\`
+            *   CORRECT: \`C --> D["LLM (Generate Response)"]\`
+            *   INCORRECT: \`A[User Authentication (Login)]\`
+            *   CORRECT: \`A["User Authentication (Login)"]\`
+            *   INCORRECT: \`B[API Request (POST /users)]\`
+            *   CORRECT: \`B["API Request (POST /users)"]\`
+        *   **ALTERNATIVE APPROACH:** To avoid the need for quotes, consider simplifying node names by removing parentheses when possible:
+            *   INSTEAD OF: \`C --> D["LLM (Generate Response)"]\`
+            *   CONSIDER: \`C --> D[LLM Generate Response]\`
+            *   INSTEAD OF: \`A["User Authentication (Login)"]\`
+            *   CONSIDER: \`A[User Authentication Login]\`
     *   **MINDMAP SPECIAL CHARACTERS:** For mindmap diagrams specifically, ALL node text containing ANY special characters must be enclosed in square brackets. AVOID using quotes or parentheses within brackets entirely. Instead, rephrase the text or use alternative notation like hyphens. This is especially important for mindmaps where the syntax is different from other diagrams. Examples:
         *   INCORRECT: \`["use client" directive]\`
         *   CORRECT: [use client directive]
