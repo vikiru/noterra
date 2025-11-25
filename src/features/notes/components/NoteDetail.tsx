@@ -43,12 +43,7 @@ export function NoteDetail({
         {showUserActions ? (
           <>
             <div className="flex items-center gap-2">
-              <Button
-                asChild
-                className="-ml-3"
-                size="sm"
-                variant="ghost"
-              >
+              <Button asChild className="-ml-3" size="sm" variant="ghost">
                 <Link href={`/notes`}>
                   <ArrowLeft className="mr-2 size-4 transition-transform group-hover:-translate-x-1" />
                   Back to Notes
