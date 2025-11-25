@@ -135,7 +135,7 @@ body {
 
     /* Override MermaidJS label for diagrams */
     pre[data-processed="true"] {
-        background-color: var(--foreground) !important;
+        background-color: transparent !important;
     }
 
 

@@ -45,7 +45,7 @@ export function NoteDetail({
             <div className="flex items-center gap-2">
               <Button
                 asChild
-                className="-ml-3 text-muted-foreground hover:text-black w-fit"
+                className="-ml-3"
                 size="sm"
                 variant="ghost"
               >
@@ -75,7 +75,7 @@ export function NoteDetail({
             </div>
           </>
         ) : (
-          <section className="ml-auto" id="actions">
+          <section className="ml-auto">
             <NoteExportMenu
               content={note.content}
               contentRef={contentRef}

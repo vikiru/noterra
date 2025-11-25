@@ -83,7 +83,7 @@ export async function findCardSets(
     .leftJoin(flashcardsTable, eq(flashcardsTable.noteId, notesTable.id))
     .where(
       publicOnly
-        ? and(eq(notesTable.authorId, userId), eq(notesTable.public, true))
+        ? and(eq(notesTable.authorId, userId), eq(notesTable.public, true), eq(notesTable.showCards, true))
         : eq(notesTable.authorId, userId),
     )
     .groupBy(
