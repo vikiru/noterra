@@ -14,7 +14,7 @@ import {
 import { FlashcardFormDialog } from '@/features/cards/components/FlashcardFormDialog';
 import { useFlashcardDelete } from '@/features/cards/hooks/useFlashcardDelete';
 import type { Flashcard } from '@/features/cards/types/flashcard';
-import { DeleteDialog } from '@/lib/components/ui/DeleteDialog';
+import { DeleteDialog } from '@/lib/components/dialog/DeleteDialog';
 
 export function FlashcardActions({ card }: { card: Flashcard }) {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
