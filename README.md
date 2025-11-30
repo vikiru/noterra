@@ -53,9 +53,9 @@
 
 ## 🛠️ Tech Stack
 
-- Frontend: [TypeScript](https://www.typescriptlang.org/), [Next.js](https://nextjs.org/), [React](https://reactjs.org/), [shadcn/ui](https://ui.shadcn.com/), [Lucide React Icons](https://lucide.dev/), [Tailwind CSS](https://tailwindcss.com/), [Mermaid](https://mermaid.dev), [TipTap](https://tiptap.dev)
+- Frontend: [TypeScript](https://www.typescriptlang.org/), [Next.js](https://nextjs.org/), [React](https://reactjs.org/), [shadcn/ui](https://ui.shadcn.com/), [Lucide React Icons](https://lucide.dev/), [Tailwind CSS](https://tailwindcss.com/), [Mermaid](https://mermaid.js.org/), [TipTap](https://tiptap.dev)
 
-- Backend: [Node.js](https://nodejs.org/), [Drizzle ORM](https://drizzleorm.com/), [PostgreSQL](https://www.postgresql.org/), [Zod](https://zod.dev/), [Clerk](https://clerk.com/), [Google Gemini](https://cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/2-5-flash)
+- Backend: [Node.js](https://nodejs.org/), [Drizzle ORM](https://orm.drizzle.team/), [PostgreSQL](https://www.postgresql.org/), [Zod](https://zod.dev/), [Clerk](https://clerk.com/), [Google Gemini](https://cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/2-5-flash)
 
 ## 📝 Prerequisites
 
@@ -64,7 +64,7 @@ Ensure that the following prerequisites are installed on your system by followin
 - [Node.js](https://nodejs.org/)
 - [PostgreSQL](https://www.postgresql.org/)
 - [Clerk](https://clerk.com/)
-- Google Gemini API Key (via [AI Studio](https://aistudio.google.com/))
+- Google Gemini API Key (via [Google AI Studio](https://aistudio.google.com/))
 
 ## ⚡ Setup Instructions
 
@@ -112,7 +112,7 @@ NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL=/dashboard
 NEXT_PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL=/onboarding
 ```
 
-5. Perform database migrations using [Drizzle](https://drizzleorm.com/).
+5. Perform database migrations using [Drizzle](https://orm.drizzle.team/).
 
 ```bash
 npx drizzle-kit push
@@ -150,7 +150,7 @@ pnpm build
 pnpm start
 ```
 
-4. Launch [Drizzle Studio](https://drizzleorm.com/studio) for managing the database.
+4. Launch [Drizzle Studio](https://orm.drizzle.team/studio) for managing the database.
 
 ```bash
 pnpm studio
@@ -185,7 +185,7 @@ pnpm prepare
 - [tailwindcss-typography](https://github.com/tailwindlabs/tailwindcss-typography)
 - [tailwind-debug-screens](https://github.com/jorenvanhee/tailwindcss-debug-screens)
 - [turndown](https://github.com/mixmark-io/turndown)
-- [html-react-parser](https://github.com/remarkable/react-markdown)
+- [html-react-parser](https://github.com/remarkablemark/html-react-parser)
 - [isomorphic-dompurify](https://github.com/kkomelin/isomorphic-dompurify)
 - [JSDOM](https://github.com/jsdom/jsdom)
 - [Profanity](https://github.com/2Toad/Profanity)
