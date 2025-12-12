@@ -9,3 +9,4 @@ onlyBuiltDependencies:
 overrides:
   esbuild@<=0.24.2: '>=0.25.0'
   next@>=15.4.0-canary.0 <15.4.8: '>=15.4.8'
+  next@>=15.5.1-canary.0 <15.5.8: '>=15.5.8'
