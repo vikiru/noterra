@@ -7,5 +7,4 @@ export default {
     '@semantic-release/git',
     '@semantic-release/github',
   ],
-
 };
