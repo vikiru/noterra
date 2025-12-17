@@ -174,12 +174,6 @@ pnpm format
 pnpm typecheck
 ```
 
-1. Prepare Git hooks via [Husky](https://typicode.github.io/husky/#/).
-
-```bash
-pnpm prepare
-```
-
 1. Check unused dependencies and files with [Knip](https://github.com/webpro-nl/knip)
 
 ```bash
@@ -194,6 +188,7 @@ pnpm unused
 - [html-react-parser](https://github.com/remarkablemark/html-react-parser)
 - [isomorphic-dompurify](https://github.com/kkomelin/isomorphic-dompurify)
 - [JSDOM](https://github.com/jsdom/jsdom)
+- [Lefthook](https://github.com/evilmartians/lefthook)
 - [Profanity](https://github.com/2Toad/Profanity)
 - [Luxon](https://github.com/moment/luxon)
 - [Faker.js](https://github.com/faker-js/faker)
