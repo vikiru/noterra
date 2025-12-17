@@ -75,13 +75,13 @@ git clone https://github.com/vikiru/noterra.git
 cd noterra
 ```
 
-1. Install dependencies.
+2. Install dependencies.
 
 ```bash
 pnpm install
 ```
 
-1. Setup Clerk and Google Gemini
+3. Setup Clerk and Google Gemini
 
    - Create a [Clerk account](https://clerk.com/) and obtain the necessary API keys.
 
@@ -96,7 +96,7 @@ pnpm install
    GEMINI_API_KEY=
    ```
 
-2. Set up environment variables by creating an `.env` file in the root directory of the project.
+4. Set up environment variables by creating an `.env` file in the root directory of the project.
 
 ```bash
 GEMINI_API_KEY=
@@ -112,13 +112,13 @@ NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL=/dashboard
 NEXT_PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL=/onboarding
 ```
 
-1. Perform database migrations using [Drizzle](https://orm.drizzle.team/).
+5. Perform database migrations using [Drizzle](https://orm.drizzle.team/).
 
 ```bash
 npx drizzle-kit push
 ```
 
-1. Start the development server.
+6. Start the development server.
 
 ```bash
 pnpm dev
@@ -138,43 +138,43 @@ http://localhost:3000
 pnpm dev
 ```
 
-1. Build the production version of the application.
+2. Build the production version of the application.
 
 ```bash
 pnpm build
 ```
 
-1. Start the production server after building.
+3. Start the production server after building.
 
 ```bash
 pnpm start
 ```
 
-1. Launch [Drizzle Studio](https://orm.drizzle.team/drizzle-studio/overview) for managing the database.
+4. Launch [Drizzle Studio](https://orm.drizzle.team/drizzle-studio/overview) for managing the database.
 
 ```bash
 pnpm studio
 ```
 
-1. Lint files using [Biome](https://biomejs.dev).
+5. Lint files using [Biome](https://biomejs.dev).
 
 ```bash
 pnpm lint
 ```
 
-1. Format files using [Biome](https://biomejs.dev).
+6. Format files using [Biome](https://biomejs.dev).
 
 ```bash
 pnpm format
 ```
 
-1. Run TypeScript type checks without emitting files.
+7. Run TypeScript type checks without emitting files.
 
 ```bash
 pnpm typecheck
 ```
 
-1. Check unused dependencies and files with [Knip](https://github.com/webpro-nl/knip)
+8. Check unused dependencies and files with [Knip](https://github.com/webpro-nl/knip)
 
 ```bash
 pnpm unused
