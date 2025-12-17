@@ -7,7 +7,7 @@ pre-commit:
   jobs:
     - name: Lint files with Biome.js
       glob: "*.{js,mjs,cjs,ts,jsx,tsx}"
-      run: pnpm lint
+      run: pnpm lint --colors=off {staged_files}
 
 commit-msg:
   jobs:
