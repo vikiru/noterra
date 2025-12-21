@@ -12,7 +12,7 @@
     "lint": "biome lint",
     "format": "biome check --write",
     "studio": "drizzle-kit studio",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsgo --noEmit",
     "unused": "knip"
   },
   "overrides": {
@@ -107,6 +107,7 @@
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@types/turndown": "^5.0.6",
+    "@typescript/native-preview": "7.0.0-dev.20251220.1",
     "drizzle-kit": "^0.31.8",
     "knip": "^5.76.1",
     "lefthook": "^2.0.12",
@@ -116,7 +117,6 @@
     "tailwindcss-debug-screens": "^3.0.1",
     "tailwindcss-scrollbar": "^0.1.0",
     "tsx": "^4.21.0",
-    "typescript": "5.9.3",
     "zod": "^4.2.1"
   }
 }

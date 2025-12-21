@@ -11,7 +11,7 @@ export default async function PublicNotePage({
 
   const note = await findNoteWithAuthorById(noteId);
 
-  if (!note || !note.public) {
+  if (!(note && note.public)) {
     return notFound();
   }
 
