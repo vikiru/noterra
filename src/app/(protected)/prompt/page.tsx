@@ -12,12 +12,9 @@ export default function PromptPage() {
     <div className="container mx-auto max-w-4xl px-4 ">
       {/* Header Content */}
       <div className="mb-10 space-y-3 text-center">
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl font-heading">
-          Generate AI-Powered Notes
-        </h1>
+        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl font-heading">Generate AI-Powered Notes</h1>
         <p className="mx-auto max-w-2xl text-muted-foreground font-body">
-          Enter any topic and let our AI create comprehensive,
-          easy-to-understand notes for you.
+          Enter any topic and let our AI create comprehensive, easy-to-understand notes for you.
         </p>
       </div>
 

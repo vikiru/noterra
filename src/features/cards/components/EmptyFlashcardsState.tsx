@@ -1,13 +1,6 @@
 import { BookOpen, FileText } from 'lucide-react';
 import Link from 'next/link';
-import {
-  Empty,
-  EmptyContent,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-} from '@/lib/components/ui/empty';
+import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '@/lib/components/ui/empty';
 
 export function EmptyFlashcardsState() {
   return (
@@ -18,9 +11,7 @@ export function EmptyFlashcardsState() {
         </EmptyMedia>
         <EmptyHeader>
           <EmptyTitle>No flashcard sets found</EmptyTitle>
-          <EmptyDescription>
-            Get started by creating flashcards from your notes.
-          </EmptyDescription>
+          <EmptyDescription>Get started by creating flashcards from your notes.</EmptyDescription>
         </EmptyHeader>
         <EmptyContent>
           <Link

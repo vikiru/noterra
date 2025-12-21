@@ -7,10 +7,7 @@ type FlashcardPreviewCardProps = {
   showUserActions?: boolean;
 };
 
-export function FlashcardPreviewCard({
-  card,
-  showUserActions = true,
-}: FlashcardPreviewCardProps) {
+export function FlashcardPreviewCard({ card, showUserActions = true }: FlashcardPreviewCardProps) {
   return (
     <Card className="group relative overflow-hidden transition-all hover:shadow-md border-border/50 h-full flex flex-col">
       {showUserActions && (
@@ -22,17 +19,11 @@ export function FlashcardPreviewCard({
         <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-2">
           Question
         </span>
-        <CardTitle className="font-heading text-base font-medium leading-relaxed mt-1">
-          {card.question}
-        </CardTitle>
+        <CardTitle className="font-heading text-base font-medium leading-relaxed mt-1">{card.question}</CardTitle>
       </CardHeader>
       <CardContent className="pt-4 grow flex flex-col">
-        <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider block mb-2">
-          Answer
-        </span>
-        <p className="font-body text-muted-foreground leading-relaxed grow">
-          {card.answer}
-        </p>
+        <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider block mb-2">Answer</span>
+        <p className="font-body text-muted-foreground leading-relaxed grow">{card.answer}</p>
       </CardContent>
     </Card>
   );

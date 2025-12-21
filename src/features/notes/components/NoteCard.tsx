@@ -2,13 +2,7 @@ import { ArrowRight, Globe, Lock } from 'lucide-react';
 import { DateTime } from 'luxon';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import type { NoteMetadata } from '@/features/notes/types/noteMetadata';
 
 type NoteCardProps = {
@@ -63,8 +57,7 @@ export function NoteCard({ note }: NoteCardProps) {
               {DateTime.fromJSDate(note.createdAt).toFormat('LLL dd, yyyy')}
             </time>
             <span className="inline-flex items-center text-primary font-medium group-hover:underline">
-              View{' '}
-              <ArrowRight className="ml-1 h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+              View <ArrowRight className="ml-1 h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
             </span>
           </div>
         </CardFooter>

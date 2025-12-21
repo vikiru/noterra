@@ -54,13 +54,8 @@ export function usePromptForm() {
         return;
       }
       const newNote = noteCreationResult.data as Note;
-      const flashcards = constructCards(
-        geminiResponseData.data.flashcards,
-        newNote.authorId,
-        newNote.id,
-      );
-      const flashcardsCreationResult =
-        await createMultipleFlashcards(flashcards);
+      const flashcards = constructCards(geminiResponseData.data.flashcards, newNote.authorId, newNote.id);
+      const flashcardsCreationResult = await createMultipleFlashcards(flashcards);
       if (!flashcardsCreationResult.success) {
         toast.error(flashcardsCreationResult.error);
         setLoading(false);

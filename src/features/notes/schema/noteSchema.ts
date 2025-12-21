@@ -1,8 +1,4 @@
-import {
-  createInsertSchema,
-  createSelectSchema,
-  createUpdateSchema,
-} from 'drizzle-zod';
+import { createInsertSchema, createSelectSchema, createUpdateSchema } from 'drizzle-zod';
 import { notesTable } from '@/lib/db/schema';
 
 export const selectNoteSchema = createSelectSchema(notesTable);

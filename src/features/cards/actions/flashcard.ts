@@ -66,10 +66,7 @@ export async function createMultipleFlashcards(cards: FlashcardCreate[]) {
       };
     }
 
-    const result = validateData<FlashcardCreate[]>(
-      cards,
-      insertFlashcardArraySchema,
-    );
+    const result = validateData<FlashcardCreate[]>(cards, insertFlashcardArraySchema);
     if (!result.success) return result;
 
     const created = await insertMultipleCards(result.data);

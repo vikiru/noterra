@@ -30,20 +30,8 @@ type ShareNoteDialogProps = {
   };
 };
 
-export function ShareNoteDialog({
-  noteId,
-  shareToken,
-  username,
-  visibility,
-}: ShareNoteDialogProps) {
-  const {
-    isPublic,
-    setIsPublic,
-    isShared,
-    setIsShared,
-    showCards,
-    setShowCards,
-  } = useEditVisibility({ visibility });
+export function ShareNoteDialog({ noteId, shareToken, username, visibility }: ShareNoteDialogProps) {
+  const { isPublic, setIsPublic, isShared, setIsShared, showCards, setShowCards } = useEditVisibility({ visibility });
 
   const visibilityState = {
     isPublic,
@@ -79,19 +67,14 @@ export function ShareNoteDialog({
 
       <DialogContent className="sm:max-w-md p-0 gap-0 overflow-hidden border-neutral-200 dark:border-neutral-800">
         <DialogHeader className="px-6 pt-6 pb-4">
-          <DialogTitle className="text-xl font-semibold">
-            Share Note
-          </DialogTitle>
+          <DialogTitle className="text-xl font-semibold">Share Note</DialogTitle>
           <DialogDescription className="text-neutral-500 dark:text-neutral-400">
             Manage access and visibility settings for this note.
           </DialogDescription>
         </DialogHeader>
 
         <div className="px-6 py-2 space-y-6">
-          <VisibilityCard
-            setState={setVisibilityState}
-            state={visibilityState}
-          />
+          <VisibilityCard setState={setVisibilityState} state={visibilityState} />
 
           {(isPublic || isShared) && (
             <ShareLink

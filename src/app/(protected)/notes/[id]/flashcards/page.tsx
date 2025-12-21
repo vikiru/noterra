@@ -7,11 +7,7 @@ import { FlashcardListView } from '@/features/cards/components/FlashcardListView
 import { findCardsByNoteId } from '@/features/cards/data-access/flashcard';
 import { findNoteTitleById } from '@/features/notes/data-access/notes';
 
-export default async function NoteFlashcardsPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default async function NoteFlashcardsPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const noteTitle = await findNoteTitleById(id);
 
@@ -25,12 +21,7 @@ export default async function NoteFlashcardsPage({
     <div className="container max-w-full py-8 px-4 sm:px-6">
       <div className="space-y-8">
         <div className="space-y-4">
-          <Button
-            asChild
-            className="-ml-3 text-muted-foreground hover:text-black w-fit"
-            size="sm"
-            variant="ghost"
-          >
+          <Button asChild className="-ml-3 text-muted-foreground hover:text-black w-fit" size="sm" variant="ghost">
             <Link href={`/notes/${id}`}>
               <ArrowLeft className="mr-2 size-4 transition-transform group-hover:-translate-x-1 " />
               Back to Note

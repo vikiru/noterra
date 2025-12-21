@@ -25,9 +25,7 @@ export async function ActivityFeed({ activityOverview }: ActivityFeedProps) {
           {activityOverview.length === 0 ? (
             <EmptyActivityState />
           ) : (
-            activityOverview.map((item: ActivityItem) => (
-              <ActivityFeedItem item={item} key={item.date} />
-            ))
+            activityOverview.map((item: ActivityItem) => <ActivityFeedItem item={item} key={item.date} />)
           )}
         </div>
       </CardContent>

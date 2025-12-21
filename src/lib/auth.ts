@@ -19,16 +19,12 @@ export const getCurrentUser = cache(async function getCurrentUser() {
   }
 });
 
-export async function checkOwnership(
-  resourceOwnerId: string,
-): Promise<boolean> {
+export async function checkOwnership(resourceOwnerId: string): Promise<boolean> {
   const userId = await getCurrentUser();
   return userId === resourceOwnerId;
 }
 
-export async function checkAccessPrivileges(
-  noteId: string,
-): Promise<AccessPrivilege> {
+export async function checkAccessPrivileges(noteId: string): Promise<AccessPrivilege> {
   const { note, flashcards } = await findNoteWithCardsById(noteId);
   if (!note) {
     return {

@@ -65,18 +65,13 @@ export function EditorMetadataDialog({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Edit Metadata</DialogTitle>
-          <DialogDescription>
-            Manage metadata for your note (title, summary, keywords).
-          </DialogDescription>
+          <DialogDescription>Manage metadata for your note (title, summary, keywords).</DialogDescription>
         </DialogHeader>
 
         <div className="grid gap-4 py-4">
           <div className="grid gap-2">
             <Label>Title</Label>
-            <Input
-              onChange={(e) => setLocalTitle(e.target.value)}
-              value={localTitle}
-            />
+            <Input onChange={(e) => setLocalTitle(e.target.value)} value={localTitle} />
           </div>
 
           <div className="grid gap-2">
@@ -90,10 +85,7 @@ export function EditorMetadataDialog({
 
           <div className="grid gap-2">
             <Label>Keywords (comma-separated)</Label>
-            <Input
-              onChange={(e) => setLocalKeywords(e.target.value)}
-              value={localKeywords}
-            />
+            <Input onChange={(e) => setLocalKeywords(e.target.value)} value={localKeywords} />
           </div>
         </div>
 

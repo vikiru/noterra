@@ -11,14 +11,7 @@ type UseShareNoteProps = {
   showCards: boolean;
 };
 
-export function useShareNote({
-  noteId,
-  shareToken,
-  username,
-  isPublic,
-  isShared,
-  showCards,
-}: UseShareNoteProps) {
+export function useShareNote({ noteId, shareToken, username, isPublic, isShared, showCards }: UseShareNoteProps) {
   const [isPending, startTransition] = useTransition();
 
   const getShareLink = () => {

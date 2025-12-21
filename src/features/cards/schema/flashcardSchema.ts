@@ -1,8 +1,4 @@
-import {
-  createInsertSchema,
-  createSelectSchema,
-  createUpdateSchema,
-} from 'drizzle-zod';
+import { createInsertSchema, createSelectSchema, createUpdateSchema } from 'drizzle-zod';
 import { flashcardsTable } from '@/lib/db/schema';
 
 export const selectFlashcardSchema = createSelectSchema(flashcardsTable);

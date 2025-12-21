@@ -8,10 +8,7 @@ type FlashcardListViewProps = {
   showUserActions?: boolean;
 };
 
-export async function FlashcardListView({
-  noteId,
-  showUserActions = true,
-}: FlashcardListViewProps) {
+export async function FlashcardListView({ noteId, showUserActions = true }: FlashcardListViewProps) {
   const cards = await findCardsByNoteId(noteId);
 
   if (cards.length === 0) {
@@ -22,11 +19,7 @@ export async function FlashcardListView({
     <ScrollArea className="h-[calc(100vh-20rem)] pr-4">
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 pb-4">
         {cards.map((card) => (
-          <FlashcardPreviewCard
-            card={card}
-            key={card.id}
-            showUserActions={showUserActions}
-          />
+          <FlashcardPreviewCard card={card} key={card.id} showUserActions={showUserActions} />
         ))}
       </div>
     </ScrollArea>

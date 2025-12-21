@@ -1,13 +1,6 @@
 'use client';
 
-import {
-  ChevronDown,
-  Eye,
-  FileDown,
-  FileText,
-  MoreVertical,
-  Trash2,
-} from 'lucide-react';
+import { ChevronDown, Eye, FileDown, FileText, MoreVertical, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { RefObject } from 'react';
@@ -70,10 +63,7 @@ export function NoteExportMenu({
         )}
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem
-          className="cursor-pointer"
-          onClick={convertToMarkdown}
-        >
+        <DropdownMenuItem className="cursor-pointer" onClick={convertToMarkdown}>
           <FileDown className="mr-2 h-4 w-4" />
           <span>Export as Markdown</span>
         </DropdownMenuItem>

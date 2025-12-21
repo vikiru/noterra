@@ -13,8 +13,7 @@ import { SIGNIN_ROUTE } from '@/lib/constants/route';
 
 export const metadata: Metadata = {
   title: 'Dashboard | Noterra',
-  description:
-    'View your learning progress, recent notes, and activity overview on your Noterra dashboard.',
+  description: 'View your learning progress, recent notes, and activity overview on your Noterra dashboard.',
 };
 
 export default async function DashboardPage() {
@@ -22,8 +21,7 @@ export default async function DashboardPage() {
   if (!userId) {
     redirect(SIGNIN_ROUTE);
   }
-  const { firstName, recentNotes, totalCreations, activityOverview } =
-    await getUserDashboardData(userId);
+  const { firstName, recentNotes, totalCreations, activityOverview } = await getUserDashboardData(userId);
 
   return (
     <div className="w-full mx-auto px-4 py-8 space-y-8">

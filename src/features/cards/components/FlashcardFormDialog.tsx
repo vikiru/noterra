@@ -22,38 +22,21 @@ type FlashcardFormDialogProps = {
   initialData?: Flashcard;
 };
 
-export function FlashcardFormDialog({
-  open,
-  onOpenChange,
-  noteId,
-  initialData,
-}: FlashcardFormDialogProps) {
-  const {
-    question,
-    setQuestion,
-    answer,
-    setAnswer,
-    loading,
-    validationError,
-    handleSubmit,
-    isEditMode,
-  } = useFlashcardForm({
-    noteId,
-    initialData,
-    onSuccess: () => onOpenChange(false),
-  });
+export function FlashcardFormDialog({ open, onOpenChange, noteId, initialData }: FlashcardFormDialogProps) {
+  const { question, setQuestion, answer, setAnswer, loading, validationError, handleSubmit, isEditMode } =
+    useFlashcardForm({
+      noteId,
+      initialData,
+      onSuccess: () => onOpenChange(false),
+    });
 
   return (
     <Dialog onOpenChange={onOpenChange} open={open}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>
-            {isEditMode ? 'Edit Flashcard' : 'Create New Flashcard'}
-          </DialogTitle>
+          <DialogTitle>{isEditMode ? 'Edit Flashcard' : 'Create New Flashcard'}</DialogTitle>
           <DialogDescription>
-            {isEditMode
-              ? 'Update the question and answer for this flashcard.'
-              : 'Add a new flashcard to your note.'}
+            {isEditMode ? 'Update the question and answer for this flashcard.' : 'Add a new flashcard to your note.'}
           </DialogDescription>
         </DialogHeader>
 
@@ -83,17 +66,11 @@ export function FlashcardFormDialog({
               />
             </div>
 
-            {validationError && (
-              <p className="text-sm text-red-500">{validationError}</p>
-            )}
+            {validationError && <p className="text-sm text-red-500">{validationError}</p>}
           </div>
 
           <DialogFooter>
-            <Button
-              onClick={() => onOpenChange(false)}
-              type="button"
-              variant="outline"
-            >
+            <Button onClick={() => onOpenChange(false)} type="button" variant="outline">
               Cancel
             </Button>
             <Button disabled={loading} type="submit">

@@ -6,28 +6,17 @@ import { flashcardsTable, notesTable } from '@/db/schema';
 import type { FlashcardSet } from '@/features/cards/types/flashcardSet';
 
 export async function insertCard(card: FlashcardCreate): Promise<Flashcard> {
-  const result: Flashcard[] = await db
-    .insert(flashcardsTable)
-    .values(card)
-    .returning();
+  const result: Flashcard[] = await db.insert(flashcardsTable).values(card).returning();
   return result[0];
 }
 
-export async function insertMultipleCards(
-  cards: FlashcardCreate[],
-): Promise<Flashcard[]> {
-  const result: Flashcard[] = await db
-    .insert(flashcardsTable)
-    .values(cards)
-    .returning();
+export async function insertMultipleCards(cards: FlashcardCreate[]): Promise<Flashcard[]> {
+  const result: Flashcard[] = await db.insert(flashcardsTable).values(cards).returning();
   return result;
 }
 
 export async function removeCard(flashcardId: string): Promise<Flashcard> {
-  const result: Flashcard[] = await db
-    .delete(flashcardsTable)
-    .where(eq(flashcardsTable.id, flashcardId))
-    .returning();
+  const result: Flashcard[] = await db.delete(flashcardsTable).where(eq(flashcardsTable.id, flashcardId)).returning();
   return result[0];
 }
 
@@ -41,18 +30,12 @@ export async function findCardById(flashcardId: string): Promise<Flashcard> {
 }
 
 export async function findCardsByNoteId(noteId: string): Promise<Flashcard[]> {
-  const result: Flashcard[] = await db
-    .select()
-    .from(flashcardsTable)
-    .where(eq(flashcardsTable.noteId, noteId));
+  const result: Flashcard[] = await db.select().from(flashcardsTable).where(eq(flashcardsTable.noteId, noteId));
   return result;
 }
 
 export async function findCardsByUserId(userId: string): Promise<Flashcard[]> {
-  const result: Flashcard[] = await db
-    .select()
-    .from(flashcardsTable)
-    .where(eq(flashcardsTable.authorId, userId));
+  const result: Flashcard[] = await db.select().from(flashcardsTable).where(eq(flashcardsTable.authorId, userId));
   return result;
 }
 
@@ -65,10 +48,7 @@ export async function modifyCard(flashcard: Flashcard): Promise<Flashcard> {
   return result[0];
 }
 
-export async function findCardSets(
-  userId: string,
-  publicOnly = false,
-): Promise<FlashcardSet[]> {
+export async function findCardSets(userId: string, publicOnly = false): Promise<FlashcardSet[]> {
   const result = await db
     .select({
       id: notesTable.id,
@@ -83,11 +63,7 @@ export async function findCardSets(
     .leftJoin(flashcardsTable, eq(flashcardsTable.noteId, notesTable.id))
     .where(
       publicOnly
-        ? and(
-            eq(notesTable.authorId, userId),
-            eq(notesTable.public, true),
-            eq(notesTable.showCards, true),
-          )
+        ? and(eq(notesTable.authorId, userId), eq(notesTable.public, true), eq(notesTable.showCards, true))
         : eq(notesTable.authorId, userId),
     )
     .groupBy(

@@ -11,9 +11,7 @@ export function PromptTips() {
         </li>
         <li className="flex items-start gap-2">
           <Lightbulb className="mt-0.5 h-4 w-4 shrink-0 text-yellow-500" />
-          <span>
-            Try adding "for beginners" or "advanced" to adjust difficulty
-          </span>
+          <span>Try adding "for beginners" or "advanced" to adjust difficulty</span>
         </li>
       </ul>
     </div>

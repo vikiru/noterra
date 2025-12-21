@@ -20,14 +20,7 @@ type DeleteDialogProps = {
   description: string;
 };
 
-export function DeleteDialog({
-  open,
-  onOpenChange,
-  onConfirm,
-  loading,
-  title,
-  description,
-}: DeleteDialogProps) {
+export function DeleteDialog({ open, onOpenChange, onConfirm, loading, title, description }: DeleteDialogProps) {
   return (
     <AlertDialog onOpenChange={onOpenChange} open={open}>
       <AlertDialogContent>
@@ -37,11 +30,7 @@ export function DeleteDialog({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel disabled={loading}>Cancel</AlertDialogCancel>
-          <AlertDialogAction
-            className="bg-red-600 hover:bg-red-700"
-            disabled={loading}
-            onClick={onConfirm}
-          >
+          <AlertDialogAction className="bg-red-600 hover:bg-red-700" disabled={loading} onClick={onConfirm}>
             {loading ? 'Deleting...' : 'Delete'}
           </AlertDialogAction>
         </AlertDialogFooter>

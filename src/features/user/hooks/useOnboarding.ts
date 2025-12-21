@@ -38,9 +38,7 @@ export function useOnboarding() {
         return;
       }
 
-      toast.success(
-        'Successfully completed onboarding. Redirecting to dashboard.',
-      );
+      toast.success('Successfully completed onboarding. Redirecting to dashboard.');
       router.push(DASHBOARD_ROUTE);
     } catch (error) {
       console.error('Form submission error', error);

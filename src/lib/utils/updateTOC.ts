@@ -10,9 +10,7 @@ export async function updateTOC(htmlString: string): Promise<string> {
   let toc = '';
 
   sections.forEach((section) => {
-    const headings = Array.from(
-      section.querySelectorAll('h1, h2, h3, h4, h5, h6'),
-    );
+    const headings = Array.from(section.querySelectorAll('h1, h2, h3, h4, h5, h6'));
     headings.sort((a, b) => {
       const levelA = parseInt(a.tagName[1], 10);
       const levelB = parseInt(b.tagName[1], 10);
@@ -20,10 +18,7 @@ export async function updateTOC(htmlString: string): Promise<string> {
     });
 
     const topLevelHeading = headings[0];
-    const headingText = topLevelHeading.textContent
-      ?.trim()
-      .toLowerCase()
-      .replace(/\s+/g, '-');
+    const headingText = topLevelHeading.textContent?.trim().toLowerCase().replace(/\s+/g, '-');
 
     if (headingText) {
       topLevelHeading.id = headingText;
@@ -32,10 +27,7 @@ export async function updateTOC(htmlString: string): Promise<string> {
     }
 
     headings.slice(1).forEach((heading) => {
-      const headingText = heading.textContent
-        ?.trim()
-        .toLowerCase()
-        .replace(/\s+/g, '-');
+      const headingText = heading.textContent?.trim().toLowerCase().replace(/\s+/g, '-');
       if (headingText) {
         heading.id = headingText;
         toc += `<li><a href="#${headingText}">${heading.textContent}</a></li>`;

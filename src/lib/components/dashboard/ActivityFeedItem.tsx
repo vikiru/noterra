@@ -26,8 +26,7 @@ export function ActivityFeedItem({ item }: ActivityFeedItemProps) {
         )}
         {item.notes > 0 || item.flashcards > 0 ? (
           <span className="font-medium truncate text-sm group-hover:text-primary transition-colors">
-            Created {item.notes} note{item.notes !== 1 ? 's' : ''} and{' '}
-            {item.flashcards} flashcard
+            Created {item.notes} note{item.notes !== 1 ? 's' : ''} and {item.flashcards} flashcard
             {item.flashcards !== 1 ? 's' : ''}
           </span>
         ) : (

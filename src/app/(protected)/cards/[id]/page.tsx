@@ -5,11 +5,7 @@ import { Separator } from '@/components/ui/separator';
 import { findCardById } from '@/features/cards/data-access/flashcard';
 import { getCurrentUser } from '@/lib/auth';
 
-export default async function CardDetailsPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default async function CardDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   await getCurrentUser();
   const { id } = await params;
   const flashcard = await findCardById(id);
@@ -30,24 +26,18 @@ export default async function CardDetailsPage({
 
         <CardContent className="space-y-4">
           <div>
-            <h3 className="font-semibold text-zinc-800 dark:text-zinc-100">
-              Question
-            </h3>
+            <h3 className="font-semibold text-zinc-800 dark:text-zinc-100">Question</h3>
             <p className="text-muted-foreground">{flashcard.question}</p>
           </div>
 
           <div>
-            <h3 className="font-semibold text-zinc-800 dark:text-zinc-100">
-              Answer
-            </h3>
+            <h3 className="font-semibold text-zinc-800 dark:text-zinc-100">Answer</h3>
             <p className="text-muted-foreground">{flashcard.answer}</p>
           </div>
 
           <div className="flex items-center gap-2">
             <Badge variant="secondary">Note ID</Badge>
-            <span className="text-sm text-muted-foreground">
-              {flashcard.noteId}
-            </span>
+            <span className="text-sm text-muted-foreground">{flashcard.noteId}</span>
           </div>
 
           <Separator />

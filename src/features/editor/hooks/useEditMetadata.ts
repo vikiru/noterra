@@ -6,11 +6,7 @@ type UseEditMetadataProps = {
   initialKeywords: string[];
 };
 
-export function useEditMetadata({
-  initialTitle,
-  initialSummary,
-  initialKeywords,
-}: UseEditMetadataProps) {
+export function useEditMetadata({ initialTitle, initialSummary, initialKeywords }: UseEditMetadataProps) {
   const [title, setTitle] = useState(initialTitle);
   const [summary, setSummary] = useState(initialSummary);
   const [keywords, setKeywords] = useState(initialKeywords);

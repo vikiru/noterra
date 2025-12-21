@@ -4,9 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-type DeleteAction = (
-  id: string,
-) => Promise<{ success: boolean; error?: string }>;
+type DeleteAction = (id: string) => Promise<{ success: boolean; error?: string }>;
 
 type UseDeleteProps = {
   deleteAction: DeleteAction;

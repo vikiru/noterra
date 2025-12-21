@@ -4,15 +4,9 @@ import { useAuth } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import {
-  createFlashcard,
-  updateFlashcard,
-} from '@/features/cards/actions/flashcard';
+import { createFlashcard, updateFlashcard } from '@/features/cards/actions/flashcard';
 import { insertFlashcardSchema } from '@/features/cards/schema/flashcardSchema';
-import type {
-  Flashcard,
-  FlashcardCreate,
-} from '@/features/cards/types/flashcard';
+import type { Flashcard, FlashcardCreate } from '@/features/cards/types/flashcard';
 import { validateData } from '@/lib/utils/validateData';
 
 type UseFlashcardFormProps = {
@@ -21,11 +15,7 @@ type UseFlashcardFormProps = {
   onSuccess?: () => void;
 };
 
-export function useFlashcardForm({
-  noteId,
-  initialData,
-  onSuccess,
-}: UseFlashcardFormProps) {
+export function useFlashcardForm({ noteId, initialData, onSuccess }: UseFlashcardFormProps) {
   const { userId } = useAuth();
   const router = useRouter();
   const [question, setQuestion] = useState(initialData?.question || '');
@@ -61,10 +51,7 @@ export function useFlashcardForm({
       answer: answer.trim(),
     };
 
-    const result = validateData<FlashcardCreate>(
-      cardData,
-      insertFlashcardSchema,
-    );
+    const result = validateData<FlashcardCreate>(cardData, insertFlashcardSchema);
     if (!result.success) {
       setValidationError(result.error);
       return;

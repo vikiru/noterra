@@ -17,9 +17,7 @@ export function NoteHeader({ note }: NoteHeaderProps) {
 
   return (
     <section className="mb-2 print:mt-2" id="note-header">
-      <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3 font-heading">
-        {note.title}
-      </h1>
+      <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3 font-heading">{note.title}</h1>
 
       <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-3 font-body">
         <div>
@@ -30,11 +28,7 @@ export function NoteHeader({ note }: NoteHeaderProps) {
           </time>
         </div>
         <div className="flex items-center gap-1.5">
-          {note.public ? (
-            <Globe className="h-3.5 w-3.5" />
-          ) : (
-            <Lock className="h-3.5 w-3.5" />
-          )}
+          {note.public ? <Globe className="h-3.5 w-3.5" /> : <Lock className="h-3.5 w-3.5" />}
           <span>{note.public ? 'Public' : 'Private'}</span>
         </div>
       </div>

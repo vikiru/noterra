@@ -8,25 +8,13 @@ type LogoProps = {
   containerSize?: string;
 };
 
-export function Logo({
-  className,
-  iconSize = 20,
-  textSize = 'text-lg',
-  containerSize = 'h-8 w-8',
-}: LogoProps) {
+export function Logo({ className, iconSize = 20, textSize = 'text-lg', containerSize = 'h-8 w-8' }: LogoProps) {
   return (
     <div className={cn('flex items-center', className)}>
-      <div
-        className={cn(
-          'rounded-lg bg-primary flex items-center justify-center shrink-0',
-          containerSize,
-        )}
-      >
+      <div className={cn('rounded-lg bg-primary flex items-center justify-center shrink-0', containerSize)}>
         <Library className="text-primary-foreground" size={iconSize} />
       </div>
-      <h2 className={cn('font-bold tracking-tight font-logo', textSize)}>
-        Noterra
-      </h2>
+      <h2 className={cn('font-bold tracking-tight font-logo', textSize)}>Noterra</h2>
     </div>
   );
 }

@@ -30,11 +30,7 @@ import {
 import { useState } from 'react';
 import { Separator } from '@/components/ui/separator';
 import { Toggle } from '@/components/ui/toggle';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { LinkDialog } from '@/features/editor/components/LinkDialog';
 
 type TiptapToolbarProps = {
@@ -92,9 +88,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
           <Toggle
             aria-label="Heading 2"
             className="shrink-0 data-[state=on]:bg-neutral-900 data-[state=on]:text-neutral-50 dark:data-[state=on]:bg-neutral-50 dark:data-[state=on]:text-neutral-900"
-            onPressedChange={() =>
-              editor.chain().focus().toggleHeading({ level: 2 }).run()
-            }
+            onPressedChange={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
             pressed={editorState.isHeading2}
             size="sm"
           >
@@ -108,9 +102,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
           <Toggle
             aria-label="Heading 3"
             className="shrink-0 data-[state=on]:bg-neutral-900 data-[state=on]:text-neutral-50 dark:data-[state=on]:bg-neutral-50 dark:data-[state=on]:text-neutral-900"
-            onPressedChange={() =>
-              editor.chain().focus().toggleHeading({ level: 3 }).run()
-            }
+            onPressedChange={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
             pressed={editorState.isHeading3}
             size="sm"
           >
@@ -124,9 +116,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
           <Toggle
             aria-label="Heading 4"
             className="shrink-0 data-[state=on]:bg-neutral-900 data-[state=on]:text-neutral-50 dark:data-[state=on]:bg-neutral-50 dark:data-[state=on]:text-neutral-900"
-            onPressedChange={() =>
-              editor.chain().focus().toggleHeading({ level: 4 }).run()
-            }
+            onPressedChange={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
             pressed={editorState.isHeading4}
             size="sm"
           >
@@ -172,9 +162,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
           <Toggle
             aria-label="Underline"
             className="shrink-0 data-[state=on]:bg-neutral-900 data-[state=on]:text-neutral-50 dark:data-[state=on]:bg-neutral-50 dark:data-[state=on]:text-neutral-900"
-            onPressedChange={() =>
-              editor.chain().focus().toggleUnderline().run()
-            }
+            onPressedChange={() => editor.chain().focus().toggleUnderline().run()}
             pressed={editorState.isUnderline}
             size="sm"
           >
@@ -202,9 +190,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
           <Toggle
             aria-label="Highlight"
             className="shrink-0 data-[state=on]:bg-neutral-900 data-[state=on]:text-neutral-50 dark:data-[state=on]:bg-neutral-50 dark:data-[state=on]:text-neutral-900"
-            onPressedChange={() =>
-              editor.chain().focus().toggleHighlight().run()
-            }
+            onPressedChange={() => editor.chain().focus().toggleHighlight().run()}
             pressed={editor.isActive('highlight')}
             size="sm"
           >
@@ -236,9 +222,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
           <Toggle
             aria-label="Bullet List"
             className="shrink-0 data-[state=on]:bg-neutral-900 data-[state=on]:text-neutral-50 dark:data-[state=on]:bg-neutral-50 dark:data-[state=on]:text-neutral-900"
-            onPressedChange={() =>
-              editor.chain().focus().toggleBulletList().run()
-            }
+            onPressedChange={() => editor.chain().focus().toggleBulletList().run()}
             pressed={editor.isActive('bulletList')}
             size="sm"
           >
@@ -252,9 +236,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
           <Toggle
             aria-label="Ordered List"
             className="shrink-0 data-[state=on]:bg-neutral-900 data-[state=on]:text-neutral-50 dark:data-[state=on]:bg-neutral-50 dark:data-[state=on]:text-neutral-900"
-            onPressedChange={() =>
-              editor.chain().focus().toggleOrderedList().run()
-            }
+            onPressedChange={() => editor.chain().focus().toggleOrderedList().run()}
             pressed={editor.isActive('orderedList')}
             size="sm"
           >
@@ -268,9 +250,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
           <Toggle
             aria-label="Blockquote"
             className="shrink-0 data-[state=on]:bg-neutral-900 data-[state=on]:text-neutral-50 dark:data-[state=on]:bg-neutral-50 dark:data-[state=on]:text-neutral-900"
-            onPressedChange={() =>
-              editor.chain().focus().toggleBlockquote().run()
-            }
+            onPressedChange={() => editor.chain().focus().toggleBlockquote().run()}
             pressed={editor.isActive('blockquote')}
             size="sm"
           >
@@ -284,9 +264,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
           <Toggle
             aria-label="Horizontal Rule"
             className="shrink-0 data-[state=on]:bg-neutral-900 data-[state=on]:text-neutral-50 dark:data-[state=on]:bg-neutral-50 dark:data-[state=on]:text-neutral-900"
-            onPressedChange={() =>
-              editor.chain().focus().setHorizontalRule().run()
-            }
+            onPressedChange={() => editor.chain().focus().setHorizontalRule().run()}
             pressed={false}
             size="sm"
           >
@@ -304,9 +282,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
           <Toggle
             aria-label="Subscript"
             className="shrink-0 data-[state=on]:bg-neutral-900 data-[state=on]:text-neutral-50 dark:data-[state=on]:bg-neutral-50 dark:data-[state=on]:text-neutral-900"
-            onPressedChange={() =>
-              editor.chain().focus().toggleSubscript().run()
-            }
+            onPressedChange={() => editor.chain().focus().toggleSubscript().run()}
             pressed={editor.isActive('subscript')}
             size="sm"
           >
@@ -320,9 +296,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
           <Toggle
             aria-label="Superscript"
             className="shrink-0 data-[state=on]:bg-neutral-900 data-[state=on]:text-neutral-50 dark:data-[state=on]:bg-neutral-50 dark:data-[state=on]:text-neutral-900"
-            onPressedChange={() =>
-              editor.chain().focus().toggleSuperscript().run()
-            }
+            onPressedChange={() => editor.chain().focus().toggleSuperscript().run()}
             pressed={editor.isActive('superscript')}
             size="sm"
           >
@@ -373,9 +347,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
           <Toggle
             aria-label="Align Left"
             className="shrink-0 data-[state=on]:bg-neutral-900 data-[state=on]:text-neutral-50 dark:data-[state=on]:bg-neutral-50 dark:data-[state=on]:text-neutral-900"
-            onPressedChange={() =>
-              editor.chain().focus().setTextAlign('left').run()
-            }
+            onPressedChange={() => editor.chain().focus().setTextAlign('left').run()}
             pressed={editorState.isAlignLeft}
             size="sm"
           >
@@ -389,9 +361,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
           <Toggle
             aria-label="Align Center"
             className="shrink-0 data-[state=on]:bg-neutral-900 data-[state=on]:text-neutral-50 dark:data-[state=on]:bg-neutral-50 dark:data-[state=on]:text-neutral-900"
-            onPressedChange={() =>
-              editor.chain().focus().setTextAlign('center').run()
-            }
+            onPressedChange={() => editor.chain().focus().setTextAlign('center').run()}
             pressed={editorState.isAlignCenter}
             size="sm"
           >
@@ -405,9 +375,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
           <Toggle
             aria-label="Align Right"
             className="shrink-0 data-[state=on]:bg-neutral-900 data-[state=on]:text-neutral-50 dark:data-[state=on]:bg-neutral-50 dark:data-[state=on]:text-neutral-900"
-            onPressedChange={() =>
-              editor.chain().focus().setTextAlign('right').run()
-            }
+            onPressedChange={() => editor.chain().focus().setTextAlign('right').run()}
             pressed={editorState.isAlignRight}
             size="sm"
           >
@@ -421,9 +389,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
           <Toggle
             aria-label="Align Justify"
             className="shrink-0 data-[state=on]:bg-neutral-900 data-[state=on]:text-neutral-50 dark:data-[state=on]:bg-neutral-50 dark:data-[state=on]:text-neutral-900"
-            onPressedChange={() =>
-              editor.chain().focus().setTextAlign('justify').run()
-            }
+            onPressedChange={() => editor.chain().focus().setTextAlign('justify').run()}
             pressed={editorState.isAlignJustify}
             size="sm"
           >
@@ -441,9 +407,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
           <Toggle
             aria-label="Clear Formatting"
             className="shrink-0 data-[state=on]:bg-neutral-900 data-[state=on]:text-neutral-50 dark:data-[state=on]:bg-neutral-50 dark:data-[state=on]:text-neutral-900"
-            onPressedChange={() =>
-              editor.chain().focus().unsetAllMarks().clearNodes().run()
-            }
+            onPressedChange={() => editor.chain().focus().unsetAllMarks().clearNodes().run()}
             pressed={false}
             size="sm"
           >

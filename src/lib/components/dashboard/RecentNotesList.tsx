@@ -26,11 +26,9 @@ export async function RecentNotesList({ recentNotes }: RecentNotesListProps) {
           <EmptyNotesState />
         ) : (
           <div className="space-y-1">
-            {recentNotes.map(
-              (note: Pick<NoteMetadata, 'id' | 'title' | 'createdAt'>) => (
-                <RecentNoteItem key={note.id} note={note} />
-              ),
-            )}
+            {recentNotes.map((note: Pick<NoteMetadata, 'id' | 'title' | 'createdAt'>) => (
+              <RecentNoteItem key={note.id} note={note} />
+            ))}
           </div>
         )}
       </CardContent>

@@ -18,8 +18,7 @@ import { DeleteDialog } from '@/lib/components/dialog/DeleteDialog';
 
 export function FlashcardActions({ card }: { card: Flashcard }) {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
-  const { isDeleteDialogOpen, setIsDeleteDialogOpen, onDelete, loading } =
-    useFlashcardDelete({ flashcardId: card.id });
+  const { isDeleteDialogOpen, setIsDeleteDialogOpen, onDelete, loading } = useFlashcardDelete({ flashcardId: card.id });
 
   const handleEdit = () => {
     setIsEditDialogOpen(true);

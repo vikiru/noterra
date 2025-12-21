@@ -1,13 +1,6 @@
 import { FileText } from 'lucide-react';
 import Link from 'next/link';
-import {
-  Empty,
-  EmptyContent,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-} from '@/lib/components/ui/empty';
+import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '@/lib/components/ui/empty';
 
 export function EmptyNotesState() {
   return (
@@ -18,15 +11,10 @@ export function EmptyNotesState() {
         </EmptyMedia>
         <EmptyHeader>
           <EmptyTitle>No notes yet</EmptyTitle>
-          <EmptyDescription>
-            Get started by creating your first AI-generated note.
-          </EmptyDescription>
+          <EmptyDescription>Get started by creating your first AI-generated note.</EmptyDescription>
         </EmptyHeader>
         <EmptyContent>
-          <Link
-            className="text-primary hover:underline font-medium"
-            href="/prompt"
-          >
+          <Link className="text-primary hover:underline font-medium" href="/prompt">
             Create Note
           </Link>
         </EmptyContent>

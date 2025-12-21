@@ -15,9 +15,7 @@ export function LandingHero() {
           <div className="mb-8 flex justify-center">
             <div className="inline-flex items-center rounded-full border border-primary/20 bg-background/95 text-foreground px-3 py-1 text-sm font-medium backdrop-blur-sm hover:border-primary/40 hover:bg-primary/15 dark:hover:border-primary/40 dark:bg-background/95 dark:text-foreground">
               <Sparkles className="mr-2 h-4 w-4" />
-              <span className="font-body tracking-wide uppercase text-xs">
-                AI-Powered Learning
-              </span>
+              <span className="font-body tracking-wide uppercase text-xs">AI-Powered Learning</span>
             </div>
           </div>
 
@@ -29,9 +27,8 @@ export function LandingHero() {
           </h1>
 
           <p className="text-pretty mx-auto mt-6 -mb-3 leading-relaxed text-muted-foreground font-body max-w-3xl text-lg">
-            Choose any topic and let AI break it down into simple,
-            easy-to-understand insights. Gain clarity, master complex ideas, and
-            discover practical ways to apply your new knowledge.
+            Choose any topic and let AI break it down into simple, easy-to-understand insights. Gain clarity, master
+            complex ideas, and discover practical ways to apply your new knowledge.
           </p>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
