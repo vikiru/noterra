@@ -17,7 +17,7 @@ export default async function PublicNoteFlashcardsPage({
 
   const note = await findNoteWithAuthorById(noteId);
 
-  if (!note || !note.public || !note.showCards) {
+  if (!(note && note.public && note.showCards)) {
     return notFound();
   }
 

@@ -17,54 +17,55 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": "./",
+    "removeComments": true,
+    "verbatimModuleSyntax": true,
     "paths": {
       "@/*": [
-        "src/*"
+        "./src/*"
       ],
       "@/config/*": [
-        "src/config/*"
+        "./src/config/*"
       ],
       "@/features/*": [
-        "src/features/*"
+        "./src/features/*"
       ],
       "@/cards/*": [
-        "src/features/cards/*"
+        "./src/features/cards/*"
       ],
       "@/gemini/*": [
-        "src/features/gemini/*"
+        "./src/features/gemini/*"
       ],
       "@/notes/*": [
-        "src/features/notes/*"
+        "./src/features/notes/*"
       ],
       "@/user/*": [
-        "src/features/user/*"
+        "./src/features/user/*"
       ],
       "@/types/*": [
-        "src/lib/types/*"
+        "./src/lib/types/*"
       ],
       "@/utils/*": [
-        "src/lib/utils/*"
+        "./src/lib/utils/*"
       ],
       "@/components/*": [
-        "src/lib/components/*"
+        "./src/lib/components/*"
       ],
       "@/constants/*": [
-        "src/lib/constants/*"
+        "./src/lib/constants/*"
       ],
       "@/hooks/*": [
-        "src/lib/hooks/*"
+        "./src/lib/hooks/*"
       ],
       "@/db/*": [
-        "src/lib/db/*"
+        "./src/lib/db/*"
       ],
       "@/schema/*": [
-        "src/lib/schema/*"
+        "./src/lib/schema/*"
       ],
       "@/store/*": [
-        "src/lib/store/*"
+        "./src/lib/store/*"
       ]
     },
     "plugins": [
@@ -82,24 +83,7 @@
   ],
   "exclude": [
     "node_modules",
-    "**.*/",
     ".next",
     ".git",
-    ".github",
-    "public",
-    "dist",
-    "build",
-    "out",
-    ".vercel",
-    ".vscode",
-    ".clerk",
-    ".turbo",
-    ".wrangler",
-    "*.json",
-    "*.md",
-    "*.mdx",
-    "*.lock",
-    "*.yaml",
-    "*.yml"
-  ]
-}
+    "dist"
+  ]}

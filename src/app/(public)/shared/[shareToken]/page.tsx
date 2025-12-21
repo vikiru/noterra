@@ -11,7 +11,7 @@ export default async function SharedNotePage({
 
   const note = await findNoteByShareToken(shareToken);
 
-  if (!note || !note.shared) {
+  if (!(note && note.shared)) {
     return notFound();
   }
 

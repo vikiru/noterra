@@ -17,7 +17,7 @@ export default async function SharedNoteFlashcardsPage({
 
   const note = await findNoteByShareToken(shareToken);
 
-  if (!note || !note.shared || !note.showCards) {
+  if (!(note && note.shared && note.showCards)) {
     return notFound();
   }
 

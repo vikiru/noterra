@@ -66,7 +66,7 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
     }),
   });
 
-  if (!editor || !editorState) {
+  if (!(editor && editorState)) {
     return null;
   }
 
