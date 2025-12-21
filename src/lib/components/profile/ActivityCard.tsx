@@ -42,9 +42,7 @@ export function ActivityCard({ activity }: ActivityCardProps) {
             </p>
 
             {activity.notes === 0 && activity.flashcards === 0 && (
-              <p className="text-sm font-medium leading-none">
-                No activity recorded on this day
-              </p>
+              <p className="text-sm font-medium leading-none">No activity recorded on this day</p>
             )}
 
             <p className="text-xs text-muted-foreground mt-1">

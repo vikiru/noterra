@@ -22,13 +22,7 @@ type LinkDialogProps = {
   onRemove: () => void;
 };
 
-export function LinkDialog({
-  open,
-  onOpenChange,
-  initialUrl = '',
-  onSubmit,
-  onRemove,
-}: LinkDialogProps) {
+export function LinkDialog({ open, onOpenChange, initialUrl = '', onSubmit, onRemove }: LinkDialogProps) {
   const { url, setUrl, handleSubmit, handleRemove } = useLinkDialog({
     initialUrl,
     onSubmit,
@@ -45,9 +39,7 @@ export function LinkDialog({
             {initialUrl ? 'Edit Link' : 'Insert Link'}
           </DialogTitle>
           <DialogDescription>
-            {initialUrl
-              ? 'Update the URL for this link or remove it.'
-              : 'Enter a URL to create a hyperlink.'}
+            {initialUrl ? 'Update the URL for this link or remove it.' : 'Enter a URL to create a hyperlink.'}
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
@@ -66,11 +58,7 @@ export function LinkDialog({
           </div>
           <DialogFooter className="gap-2">
             {initialUrl && (
-              <Button
-                onClick={handleRemove}
-                type="button"
-                variant="destructive"
-              >
+              <Button onClick={handleRemove} type="button" variant="destructive">
                 Remove Link
               </Button>
             )}

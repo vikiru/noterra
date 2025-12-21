@@ -5,8 +5,7 @@ import { Footer } from '@/lib/components/layout/Footer';
 
 export const metadata: Metadata = {
   title: 'Noterra | Home',
-  description:
-    'AI-powered learning tool for creating and reviewing notes and flashcards.',
+  description: 'AI-powered learning tool for creating and reviewing notes and flashcards.',
 };
 
 export default function Home() {

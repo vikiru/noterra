@@ -13,20 +13,14 @@ type UserNotesListProps = {
   username: string;
 };
 
-export function UserNotesList({
-  notes,
-  isOwnProfile,
-  username,
-}: UserNotesListProps) {
+export function UserNotesList({ notes, isOwnProfile, username }: UserNotesListProps) {
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between mb-4">
         <div>
           <h3 className="text-lg font-semibold text-foreground">Notes</h3>
           <p className="text-sm text-muted-foreground">
-            {isOwnProfile
-              ? 'Collection of public notes and study materials'
-              : 'Collection of public notes'}
+            {isOwnProfile ? 'Collection of public notes and study materials' : 'Collection of public notes'}
           </p>
         </div>
         {isOwnProfile && (
@@ -42,9 +36,7 @@ export function UserNotesList({
           <div className="p-3 rounded-full bg-muted mb-3">
             <FileText className="h-6 w-6 text-muted-foreground" />
           </div>
-          <h3 className="text-sm font-medium text-foreground">
-            {isOwnProfile ? 'No notes yet' : 'No public notes'}
-          </h3>
+          <h3 className="text-sm font-medium text-foreground">{isOwnProfile ? 'No notes yet' : 'No public notes'}</h3>
           <p className="text-xs text-muted-foreground mt-1 max-w-xs">
             {isOwnProfile
               ? 'Create your first note to start building your knowledge base.'
@@ -55,11 +47,7 @@ export function UserNotesList({
         <ScrollArea className="h-[500px] pr-4">
           <div className="flex flex-col gap-3">
             {notes.map((note) => (
-              <Link
-                href={`/${username}/notes/${note.id}`}
-                key={note.id}
-                prefetch={false}
-              >
+              <Link href={`/${username}/notes/${note.id}`} key={note.id} prefetch={false}>
                 <Card className="hover:bg-accent/10 transition-colors cursor-pointer border-border/50 p-3 hover:bg-foreground/5 dark:hover:bg-foreground/10">
                   <CardContent className="p-3">
                     <div className="flex items-start gap-3">
@@ -68,18 +56,12 @@ export function UserNotesList({
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-                          <h4 className="text-sm font-medium text-black dark:text-white leading-tight">
-                            {note.title}
-                          </h4>
+                          <h4 className="text-sm font-medium text-black dark:text-white leading-tight">{note.title}</h4>
                           <span className="text-xs text-muted-foreground whitespace-nowrap">
-                            {DateTime.fromJSDate(note.createdAt).toFormat(
-                              'LLL dd, yyyy',
-                            )}
+                            {DateTime.fromJSDate(note.createdAt).toFormat('LLL dd, yyyy')}
                           </span>
                         </div>
-                        <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
-                          {note.summary}
-                        </p>
+                        <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{note.summary}</p>
                         <div className="flex flex-wrap gap-1.5 mt-2">
                           {note.keywords.map((keyword) => (
                             <Badge

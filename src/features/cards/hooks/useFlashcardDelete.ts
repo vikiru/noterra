@@ -9,10 +9,7 @@ type UseFlashcardDeleteProps = {
   onSuccess?: () => void;
 };
 
-export function useFlashcardDelete({
-  flashcardId,
-  onSuccess,
-}: UseFlashcardDeleteProps) {
+export function useFlashcardDelete({ flashcardId, onSuccess }: UseFlashcardDeleteProps) {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   const { handleDelete, loading } = useDelete({

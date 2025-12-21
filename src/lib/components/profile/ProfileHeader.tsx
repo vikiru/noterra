@@ -17,39 +17,26 @@ type ProfileHeaderProps = {
   totalCreations: TotalCreations;
 };
 
-export function ProfileHeader({
-  userProfile,
-  totalCreations,
-}: ProfileHeaderProps) {
-  const initials =
-    `${userProfile.firstName?.[0] || ''}${userProfile.lastName?.[0] || ''}`.toUpperCase() ||
-    'U';
-  const memberSince = DateTime.fromJSDate(userProfile.createdAt).toLocaleString(
-    {
-      year: 'numeric',
-      month: 'long',
-    },
-  );
+export function ProfileHeader({ userProfile, totalCreations }: ProfileHeaderProps) {
+  const initials = `${userProfile.firstName?.[0] || ''}${userProfile.lastName?.[0] || ''}`.toUpperCase() || 'U';
+  const memberSince = DateTime.fromJSDate(userProfile.createdAt).toLocaleString({
+    year: 'numeric',
+    month: 'long',
+  });
 
   return (
     <div className="w-full lg:w-80 shrink-0">
       <Card className="sticky top-8">
         <div className="p-6 text-center">
           <Avatar className="h-24 w-24 mx-auto mb-4 border-2 border-black dark:border-white">
-            <AvatarFallback className="text-2xl bg-primary/10">
-              {initials}
-            </AvatarFallback>
+            <AvatarFallback className="text-2xl bg-primary/10">{initials}</AvatarFallback>
           </Avatar>
           <h2 className="text-xl font-bold">
             {userProfile.firstName} {userProfile.lastName}
           </h2>
           <p className="text-muted-foreground">@{userProfile.username}</p>
 
-          {userProfile.bio && (
-            <p className="mt-4 text-sm text-muted-foreground">
-              {userProfile.bio}
-            </p>
-          )}
+          {userProfile.bio && <p className="mt-4 text-sm text-muted-foreground">{userProfile.bio}</p>}
 
           <div className="mt-6 space-y-3 text-left">
             {userProfile.country && (

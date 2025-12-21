@@ -9,11 +9,13 @@
     "build": "next build",
     "dev": "next dev --turbopack",
     "start": "next start",
+    "analyze": "ANALYZE=true next build",
     "lint": "biome lint",
     "format": "biome check --write",
     "studio": "drizzle-kit studio",
     "typecheck": "tsgo --noEmit",
-    "unused": "knip"
+    "unused": "knip",
+    "postinstall": "lefthook install"
   },
   "overrides": {
     "esbuild": "0.25.12"
@@ -97,6 +99,7 @@
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@faker-js/faker": "^10.1.0",
+    "@next/bundle-analyzer": "^16.1.0",
     "@semantic-release/git": "^10.0.1",
     "@tailwindcss/postcss": "^4.1.18",
     "@tailwindcss/typography": "^0.5.19",

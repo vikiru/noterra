@@ -31,11 +31,7 @@ export function ShareLink({ link, isPublic }: ShareLinkProps) {
             readOnly
           />
           <div className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400">
-            {isPublic ? (
-              <Globe className="h-3.5 w-3.5" />
-            ) : (
-              <Lock className="h-3.5 w-3.5" />
-            )}
+            {isPublic ? <Globe className="h-3.5 w-3.5" /> : <Lock className="h-3.5 w-3.5" />}
           </div>
         </div>
         <Button
@@ -43,11 +39,7 @@ export function ShareLink({ link, isPublic }: ShareLinkProps) {
           onClick={copy}
           size="sm"
         >
-          {copied ? (
-            <Check className="h-3.5 w-3.5" />
-          ) : (
-            <Copy className="h-3.5 w-3.5" />
-          )}
+          {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
           <span className="sr-only">Copy link</span>
         </Button>
       </div>

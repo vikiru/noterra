@@ -9,12 +9,7 @@ type UseLinkDialogProps = {
   onOpenChange: (open: boolean) => void;
 };
 
-export function useLinkDialog({
-  initialUrl = '',
-  onSubmit,
-  onRemove,
-  onOpenChange,
-}: UseLinkDialogProps) {
+export function useLinkDialog({ initialUrl = '', onSubmit, onRemove, onOpenChange }: UseLinkDialogProps) {
   const [url, setUrl] = useState(initialUrl);
 
   useEffect(() => {

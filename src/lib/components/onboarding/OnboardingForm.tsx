@@ -1,15 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useOnboarding } from '@/features/user/hooks/useOnboarding';
@@ -27,12 +19,8 @@ export function OnboardingForm() {
       <Form {...form}>
         <div className="w-full max-w-lg space-y-8">
           <div className="space-y-2 text-center">
-            <h1 className="text-3xl font-bold tracking-tight font-heading">
-              Complete your profile
-            </h1>
-            <p className="text-muted-foreground font-body">
-              Help us personalize your learning experience
-            </p>
+            <h1 className="text-3xl font-bold tracking-tight font-heading">Complete your profile</h1>
+            <p className="text-muted-foreground font-body">Help us personalize your learning experience</p>
           </div>
 
           <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
@@ -43,15 +31,9 @@ export function OnboardingForm() {
                 name="firstName"
                 render={({ field }) => (
                   <FormItem className="space-y-1.5">
-                    <FormLabel className="text-sm font-medium font-heading">
-                      First Name
-                    </FormLabel>
+                    <FormLabel className="text-sm font-medium font-heading">First Name</FormLabel>
                     <FormControl>
-                      <Input
-                        className="h-11"
-                        placeholder="e.g., John"
-                        {...field}
-                      />
+                      <Input className="h-11" placeholder="e.g., John" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -64,15 +46,9 @@ export function OnboardingForm() {
                 name="lastName"
                 render={({ field }) => (
                   <FormItem className="space-y-1.5">
-                    <FormLabel className="text-sm font-medium font-heading">
-                      Last Name
-                    </FormLabel>
+                    <FormLabel className="text-sm font-medium font-heading">Last Name</FormLabel>
                     <FormControl>
-                      <Input
-                        className="h-11"
-                        placeholder="e.g., Doe"
-                        {...field}
-                      />
+                      <Input className="h-11" placeholder="e.g., Doe" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -86,9 +62,7 @@ export function OnboardingForm() {
               name="bio"
               render={({ field }) => (
                 <FormItem className="space-y-1.5">
-                  <FormLabel className="text-sm font-medium font-heading">
-                    About You
-                  </FormLabel>
+                  <FormLabel className="text-sm font-medium font-heading">About You</FormLabel>
                   <FormDescription className="text-xs font-body">
                     A short bio to help personalize your experience
                   </FormDescription>
@@ -110,25 +84,16 @@ export function OnboardingForm() {
               name="country"
               render={({ field }) => (
                 <FormItem className="space-y-1.5">
-                  <FormLabel className="text-sm font-medium font-heading">
-                    Country
-                  </FormLabel>
+                  <FormLabel className="text-sm font-medium font-heading">Country</FormLabel>
                   <FormControl>
-                    <Input
-                      className="h-11"
-                      placeholder="e.g., Canada"
-                      {...field}
-                    />
+                    <Input className="h-11" placeholder="e.g., Canada" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
-            <Button
-              className="w-full h-11 text-base font-semibold hover:cursor-pointer"
-              type="submit"
-            >
+            <Button className="w-full h-11 text-base font-semibold hover:cursor-pointer" type="submit">
               Complete Setup
             </Button>
           </form>

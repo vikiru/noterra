@@ -21,14 +21,12 @@ export function VisibilityCard({ state, setState }: VisibilityCardProps) {
   const { isPublic, isShared, showCards } = state;
 
   const getPublicDescription = () => {
-    if (isPublic)
-      return `Anyone can view your note${showCards ? ' and flashcards' : ''}`;
+    if (isPublic) return `Anyone can view your note${showCards ? ' and flashcards' : ''}`;
     return 'Only you can view your note and flashcards';
   };
 
   const getSharedDescription = () => {
-    if (isShared)
-      return `Specific people can view your note${showCards ? ' and flashcards' : ''}`;
+    if (isShared) return `Specific people can view your note${showCards ? ' and flashcards' : ''}`;
     return 'Allow specific people to view via link';
   };
 
@@ -37,15 +35,10 @@ export function VisibilityCard({ state, setState }: VisibilityCardProps) {
       <CardContent className="grid gap-4 pt-4">
         <div className="flex items-center justify-between space-x-2">
           <div className="flex flex-col gap-1">
-            <Label
-              className="text-sm font-medium text-neutral-700 dark:text-neutral-300"
-              htmlFor="public-mode"
-            >
+            <Label className="text-sm font-medium text-neutral-700 dark:text-neutral-300" htmlFor="public-mode">
               Public Access
             </Label>
-            <span className="text-[0.8rem] text-neutral-500 dark:text-neutral-400">
-              {getPublicDescription()}
-            </span>
+            <span className="text-[0.8rem] text-neutral-500 dark:text-neutral-400">{getPublicDescription()}</span>
           </div>
           <Switch
             checked={isPublic}
@@ -63,15 +56,10 @@ export function VisibilityCard({ state, setState }: VisibilityCardProps) {
           )}
         >
           <div className="flex flex-col gap-1">
-            <Label
-              className="text-sm font-medium text-neutral-700 dark:text-neutral-300"
-              htmlFor="share-mode"
-            >
+            <Label className="text-sm font-medium text-neutral-700 dark:text-neutral-300" htmlFor="share-mode">
               Enable Sharing
             </Label>
-            <span className="text-[0.8rem] text-neutral-500 dark:text-neutral-400">
-              {getSharedDescription()}
-            </span>
+            <span className="text-[0.8rem] text-neutral-500 dark:text-neutral-400">{getSharedDescription()}</span>
           </div>
           <Switch
             checked={isShared}
@@ -86,10 +74,7 @@ export function VisibilityCard({ state, setState }: VisibilityCardProps) {
             <Separator className="bg-neutral-100 dark:bg-neutral-800" />
             <div className="flex items-center justify-between space-x-2">
               <div className="flex flex-col gap-1">
-                <Label
-                  className="text-sm font-medium text-neutral-700 dark:text-neutral-300"
-                  htmlFor="flashcard-mode"
-                >
+                <Label className="text-sm font-medium text-neutral-700 dark:text-neutral-300" htmlFor="flashcard-mode">
                   Show Flashcards
                 </Label>
                 <span className="text-[0.8rem] text-neutral-500 dark:text-neutral-400">
@@ -99,9 +84,7 @@ export function VisibilityCard({ state, setState }: VisibilityCardProps) {
               <Switch
                 checked={showCards}
                 id="flashcard-mode"
-                onCheckedChange={(val) =>
-                  setState({ ...state, showCards: val })
-                }
+                onCheckedChange={(val) => setState({ ...state, showCards: val })}
               />
             </div>
           </>

@@ -1,9 +1,5 @@
 import type z from 'zod';
-import type {
-  insertNoteSchema,
-  selectNoteSchema,
-  updateNoteSchema,
-} from '@/features/notes/schema/noteSchema';
+import type { insertNoteSchema, selectNoteSchema, updateNoteSchema } from '@/features/notes/schema/noteSchema';
 
 export type Note = z.infer<typeof selectNoteSchema>;
 export type NoteCreate = z.infer<typeof insertNoteSchema>;

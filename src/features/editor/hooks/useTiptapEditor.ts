@@ -13,8 +13,7 @@ export const useTiptapEditor = (content: string) => {
       StarterKit.configure({
         code: {
           HTMLAttributes: {
-            class:
-              'bg-neutral-100 dark:bg-neutral-800 rounded px-1 py-0.5 font-mono text-sm',
+            class: 'bg-neutral-100 dark:bg-neutral-800 rounded px-1 py-0.5 font-mono text-sm',
           },
         },
         heading: {
@@ -39,8 +38,7 @@ export const useTiptapEditor = (content: string) => {
     content,
     editorProps: {
       attributes: {
-        class:
-          'prose dark:prose-invert max-w-none focus:outline-none min-h-[300px] px-4 py-2',
+        class: 'prose dark:prose-invert max-w-none focus:outline-none min-h-[300px] px-4 py-2',
       },
     },
   });

@@ -14,13 +14,7 @@ type ProfileTabsProps = {
   username: string;
 };
 
-export function ProfileTabs({
-  notes,
-  flashcards,
-  activity,
-  isOwnProfile,
-  username,
-}: ProfileTabsProps) {
+export function ProfileTabs({ notes, flashcards, activity, isOwnProfile, username }: ProfileTabsProps) {
   return (
     <div className="flex-1">
       <Tabs className="w-full" defaultValue="notes">
@@ -46,19 +40,11 @@ export function ProfileTabs({
         </TabsList>
 
         <TabsContent value="notes">
-          <UserNotesList
-            isOwnProfile={isOwnProfile}
-            notes={notes}
-            username={username}
-          />
+          <UserNotesList isOwnProfile={isOwnProfile} notes={notes} username={username} />
         </TabsContent>
 
         <TabsContent value="flashcards">
-          <UserFlashcardsList
-            flashcards={flashcards}
-            isOwnProfile={isOwnProfile}
-            username={username}
-          />
+          <UserFlashcardsList flashcards={flashcards} isOwnProfile={isOwnProfile} username={username} />
         </TabsContent>
 
         <TabsContent value="activity">

@@ -11,10 +11,7 @@ type UseEditorVisibilityDialogProps = {
   onSave: (state: VisibilityState) => void;
 };
 
-export function useEditorVisibilityDialog({
-  initialState,
-  onSave,
-}: UseEditorVisibilityDialogProps) {
+export function useEditorVisibilityDialog({ initialState, onSave }: UseEditorVisibilityDialogProps) {
   const [open, setOpen] = useState(false);
   const [localState, setLocalState] = useState(initialState);
 

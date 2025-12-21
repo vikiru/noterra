@@ -36,12 +36,11 @@ type VisibilityState = {
 export function EditNoteForm({ metadata, visibility }: EditNoteFormProps) {
   const editor = useTiptapEditor(metadata.content);
 
-  const { title, setTitle, summary, setSummary, keywords, setKeywords } =
-    useEditMetadata({
-      initialTitle: metadata.title,
-      initialSummary: metadata.summary,
-      initialKeywords: metadata.keywords,
-    });
+  const { title, setTitle, summary, setSummary, keywords, setKeywords } = useEditMetadata({
+    initialTitle: metadata.title,
+    initialSummary: metadata.summary,
+    initialKeywords: metadata.keywords,
+  });
 
   const [visibilityState, setVisibilityState] = useState<VisibilityState>({
     isPublic: visibility.isPublic,
@@ -56,18 +55,10 @@ export function EditNoteForm({ metadata, visibility }: EditNoteFormProps) {
   });
 
   return (
-    <section
-      className="container mx-auto py-6 max-w-7xl h-[calc(100vh-4rem)]"
-      id="note-edit"
-    >
+    <section className="container mx-auto py-6 max-w-7xl h-[calc(100vh-4rem)]" id="note-edit">
       <div className="flex flex-col h-full gap-4">
         <div>
-          <Button
-            asChild
-            className="w-fit -ml-2 mb-2 text-muted-foreground"
-            size="sm"
-            variant="ghost"
-          >
+          <Button asChild className="w-fit -ml-2 mb-2 text-muted-foreground" size="sm" variant="ghost">
             <Link href={`/notes/${metadata.noteId}`}>
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Note
@@ -78,11 +69,7 @@ export function EditNoteForm({ metadata, visibility }: EditNoteFormProps) {
 
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
             <div className="flex items-center gap-1.5">
-              {visibilityState.isPublic ? (
-                <Globe className="w-3.5 h-3.5" />
-              ) : (
-                <Lock className="w-3.5 h-3.5" />
-              )}
+              {visibilityState.isPublic ? <Globe className="w-3.5 h-3.5" /> : <Lock className="w-3.5 h-3.5" />}
               <span>{visibilityState.isPublic ? 'Public' : 'Private'}</span>
             </div>
 
@@ -95,9 +82,7 @@ export function EditNoteForm({ metadata, visibility }: EditNoteFormProps) {
 
             <div className="flex items-center gap-1.5">
               <Book className="w-3.5 h-3.5" />
-              <span>
-                Flashcards: {visibilityState.showCards ? 'Visible' : 'Hidden'}
-              </span>
+              <span>Flashcards: {visibilityState.showCards ? 'Visible' : 'Hidden'}</span>
             </div>
           </div>
         </div>
@@ -112,10 +97,7 @@ export function EditNoteForm({ metadata, visibility }: EditNoteFormProps) {
               summary={summary}
               title={title}
             />
-            <EditorVisibilityDialog
-              initialState={visibilityState}
-              onSave={(state) => setVisibilityState(state)}
-            />
+            <EditorVisibilityDialog initialState={visibilityState} onSave={(state) => setVisibilityState(state)} />
           </div>
 
           <Button disabled={isPending} onClick={handleSubmit} variant="default">

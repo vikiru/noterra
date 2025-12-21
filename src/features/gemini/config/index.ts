@@ -1,9 +1,4 @@
-import {
-  GoogleGenAI,
-  HarmBlockThreshold,
-  HarmCategory,
-  Type,
-} from '@google/genai';
+import { GoogleGenAI, HarmBlockThreshold, HarmCategory, Type } from '@google/genai';
 
 import { geminiApiKey } from '@/config';
 import { geminiPrompt } from '@/gemini/prompts/';

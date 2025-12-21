@@ -7,11 +7,7 @@ type UseNoteExportProps = {
   contentRef: RefObject<HTMLDivElement | null>;
 };
 
-export function useNoteExport({
-  title,
-  content,
-  contentRef,
-}: UseNoteExportProps) {
+export function useNoteExport({ title, content, contentRef }: UseNoteExportProps) {
   const convertToMarkdown = useCallback(() => {
     if (contentRef?.current) {
       const turnDownService = new TurnDown();

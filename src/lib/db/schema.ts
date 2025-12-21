@@ -1,13 +1,5 @@
 import { relations, sql } from 'drizzle-orm';
-import {
-  boolean,
-  index,
-  pgTable,
-  text,
-  timestamp,
-  unique,
-  uuid,
-} from 'drizzle-orm/pg-core';
+import { boolean, index, pgTable, text, timestamp, unique, uuid } from 'drizzle-orm/pg-core';
 
 export const usersTable = pgTable('users', {
   clerkId: text('clerk_id').primaryKey(),
@@ -17,12 +9,8 @@ export const usersTable = pgTable('users', {
   lastName: text('last_name').notNull(),
   bio: text('bio').notNull().default(''),
   country: text('country').notNull().default(''),
-  createdAt: timestamp('created_at', { withTimezone: true })
-    .notNull()
-    .defaultNow(),
-  updatedAt: timestamp('updated_at', { withTimezone: true })
-    .notNull()
-    .defaultNow(),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 });
 
 export const notesTable = pgTable(
@@ -40,12 +28,8 @@ export const notesTable = pgTable(
     public: boolean('public').notNull().default(false),
     showCards: boolean('show_cards').notNull().default(false),
     shareToken: uuid('share_token').notNull().defaultRandom().unique(),
-    createdAt: timestamp('created_at', { withTimezone: true })
-      .notNull()
-      .defaultNow(),
-    updatedAt: timestamp('updated_at', { withTimezone: true })
-      .notNull()
-      .defaultNow(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
   },
   (table) => [
     unique('author_title_unique').on(table.authorId, table.title),
@@ -67,17 +51,10 @@ export const flashcardsTable = pgTable(
       .references(() => notesTable.id, { onDelete: 'cascade' }),
     question: text('question').notNull(),
     answer: text('answer').notNull(),
-    createdAt: timestamp('created_at', { withTimezone: true })
-      .notNull()
-      .defaultNow(),
-    updatedAt: timestamp('updated_at', { withTimezone: true })
-      .notNull()
-      .defaultNow(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
   },
-  (table) => [
-    index('author_note_index').on(table.authorId, table.noteId),
-    index('note_card_index').on(table.noteId),
-  ],
+  (table) => [index('author_note_index').on(table.authorId, table.noteId), index('note_card_index').on(table.noteId)],
 );
 
 export const userRelations = relations(usersTable, ({ many }) => ({

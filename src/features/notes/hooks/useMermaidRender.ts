@@ -34,10 +34,7 @@ export function useMermaidRender() {
             const childElement = element.firstElementChild;
             if (childElement && childElement.tagName === 'PRE') {
               diagramElement = childElement;
-            } else if (
-              element.tagName === 'PRE' &&
-              element.classList.contains('mermaid')
-            ) {
+            } else if (element.tagName === 'PRE' && element.classList.contains('mermaid')) {
               diagramElement = element;
             }
           }

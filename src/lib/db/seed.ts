@@ -1,8 +1,4 @@
-import {
-  createRandomFlashcard,
-  createRandomNote,
-  createRandomUser,
-} from '@/db/seedUtils';
+import { createRandomFlashcard, createRandomNote, createRandomUser } from '@/db/seedUtils';
 
 async function seedData() {
   for (let i = 0; i < 10; i++) {

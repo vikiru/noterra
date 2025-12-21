@@ -19,22 +19,14 @@ type EditorVisibilityDialogProps = {
     isShared: boolean;
     showCards: boolean;
   };
-  onSave: (state: {
-    isPublic: boolean;
-    isShared: boolean;
-    showCards: boolean;
-  }) => void;
+  onSave: (state: { isPublic: boolean; isShared: boolean; showCards: boolean }) => void;
 };
 
-export function EditorVisibilityDialog({
-  initialState,
-  onSave,
-}: EditorVisibilityDialogProps) {
-  const { open, setOpen, localState, setLocalState, handleSave } =
-    useEditorVisibilityDialog({
-      initialState,
-      onSave,
-    });
+export function EditorVisibilityDialog({ initialState, onSave }: EditorVisibilityDialogProps) {
+  const { open, setOpen, localState, setLocalState, handleSave } = useEditorVisibilityDialog({
+    initialState,
+    onSave,
+  });
 
   return (
     <Dialog onOpenChange={setOpen} open={open}>
@@ -48,9 +40,7 @@ export function EditorVisibilityDialog({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Edit Visibility</DialogTitle>
-          <DialogDescription>
-            Manage access and visibility settings.
-          </DialogDescription>
+          <DialogDescription>Manage access and visibility settings.</DialogDescription>
         </DialogHeader>
 
         <div className="py-4">

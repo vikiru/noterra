@@ -55,15 +55,9 @@ function generateFakeNoteHTML() {
   const intro = `<p>${faker.lorem.paragraph()}</p>`;
   const subheading = `<h2>${faker.lorem.words(3)}</h2>`;
 
-  const paragraphs = Array.from(
-    { length: 3 },
-    () => `<p>${faker.lorem.paragraph()}</p>`,
-  ).join('\n');
+  const paragraphs = Array.from({ length: 3 }, () => `<p>${faker.lorem.paragraph()}</p>`).join('\n');
 
-  const bulletPoints = Array.from(
-    { length: 5 },
-    () => `<li>${faker.lorem.sentence()}</li>`,
-  ).join('\n');
+  const bulletPoints = Array.from({ length: 5 }, () => `<li>${faker.lorem.sentence()}</li>`).join('\n');
   const list = `<ul>${bulletPoints}</ul>`;
   const outro = `<p>${faker.lorem.paragraph()}</p>`;
   return `

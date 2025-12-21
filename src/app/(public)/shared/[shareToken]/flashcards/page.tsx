@@ -3,16 +3,9 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { FlashcardListView } from '@/features/cards/components/FlashcardListView';
-import {
-  findNoteByShareToken,
-  findPublicCardsByNoteId,
-} from '@/features/notes/data-access/notes';
+import { findNoteByShareToken, findPublicCardsByNoteId } from '@/features/notes/data-access/notes';
 
-export default async function SharedNoteFlashcardsPage({
-  params,
-}: {
-  params: Promise<{ shareToken: string }>;
-}) {
+export default async function SharedNoteFlashcardsPage({ params }: { params: Promise<{ shareToken: string }> }) {
   const { shareToken } = await params;
 
   const note = await findNoteByShareToken(shareToken);
@@ -31,12 +24,7 @@ export default async function SharedNoteFlashcardsPage({
     <div className="container max-w-full py-8 px-4 sm:px-6">
       <div className="space-y-8">
         <div className="space-y-4">
-          <Button
-            asChild
-            className="-ml-3 text-muted-foreground hover:text-black w-fit"
-            size="sm"
-            variant="ghost"
-          >
+          <Button asChild className="-ml-3 text-muted-foreground hover:text-black w-fit" size="sm" variant="ghost">
             <Link href={`/shared/${shareToken}`}>
               <ArrowLeft className="mr-2 size-4 transition-transform group-hover:-translate-x-1 " />
               Back to Note
@@ -48,9 +36,7 @@ export default async function SharedNoteFlashcardsPage({
               <h1 className="text-3xl sm:text-4xl font-bold tracking-tight font-heading text-foreground">
                 {note.title}
               </h1>
-              <p className="text-muted-foreground font-body text-lg max-w-2xl">
-                Review the flashcards from this note.
-              </p>
+              <p className="text-muted-foreground font-body text-lg max-w-2xl">Review the flashcards from this note.</p>
             </div>
           </div>
         </div>

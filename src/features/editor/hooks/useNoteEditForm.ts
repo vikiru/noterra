@@ -24,11 +24,7 @@ type UseNoteEditFormProps = {
   };
 };
 
-export function useNoteEditForm({
-  editor,
-  metadata,
-  visibility,
-}: UseNoteEditFormProps) {
+export function useNoteEditForm({ editor, metadata, visibility }: UseNoteEditFormProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 

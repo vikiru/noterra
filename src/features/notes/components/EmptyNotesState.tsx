@@ -1,14 +1,7 @@
 import { FileText, Plus } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import {
-  Empty,
-  EmptyContent,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-} from '@/lib/components/ui/empty';
+import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '@/lib/components/ui/empty';
 
 export function EmptyNotesState() {
   return (
@@ -21,9 +14,7 @@ export function EmptyNotesState() {
         </EmptyMedia>
         <EmptyHeader>
           <EmptyTitle>No notes yet</EmptyTitle>
-          <EmptyDescription>
-            Get started by creating your first note
-          </EmptyDescription>
+          <EmptyDescription>Get started by creating your first note</EmptyDescription>
         </EmptyHeader>
         <EmptyContent>
           <Button asChild>

@@ -20,24 +20,24 @@
       "src/**/*.jsx",
       "src/**/*.cjs",
       "src/**/*.mjs",
+      "!src/lib/db/migrations/*",
       "**/*.mjs",
       "**/*.cjs",
       "*.config.mjs",
       "*.config.cjs",
       "*.config.ts",
       "*.config.js",
+      "**/*.json",
+      "**/*.css",
       "!**/.wrangler",
       "!/**/.next",
       "!/**/node_modules",
-      "!/**/dist",
-      "!/**/build",
+      "!!**/dist",
+      "!!**/build",
       "!/**/public",
       "!/**/out",
       "!/**/.git",
       "!/**/.github",
-      "!/**/*.css",
-      "!/**/*.html",
-      "!/**/*.json",
       "!/**/*.md",
       "!/**/*.mdx"
     ]
@@ -52,7 +52,7 @@
     "indentStyle": "space",
     "indentWidth": 2,
     "lineEnding": "lf",
-    "lineWidth": 80,
+    "lineWidth": 120,
     "useEditorconfig": true
   },
   "javascript": {
@@ -68,6 +68,30 @@
     },
     "jsxRuntime": "transparent"
   },
+  "json": {
+    "parser": {
+      "allowComments": false,
+      "allowTrailingCommas": false
+    },
+    "formatter": {
+      "enabled": true
+    },
+    "linter": {
+      "enabled": true
+    }
+  },
+  "css": {
+    "parser": {
+      "cssModules": false,
+      "tailwindDirectives": true
+    },
+    "formatter": {
+      "enabled": true
+    },
+    "linter": {
+      "enabled": true
+    }
+  },
   "linter": {
     "domains": {
       "next": "recommended",
@@ -78,7 +102,7 @@
     "rules": {
       "recommended": true,
       "a11y": "info",
-      "complexity": "info",
+      "complexity": "off",
       "performance": "info",
       "nursery": "off",
       "style": {
@@ -87,7 +111,8 @@
       },
       "suspicious": {
         "noConsole": "off",
-        "noReactSpecificProps": "off"
+        "noReactSpecificProps": "off",
+        "noShorthandPropertyOverrides": "off"
       },
       "security": {
         "noDangerouslySetInnerHtml": "off"

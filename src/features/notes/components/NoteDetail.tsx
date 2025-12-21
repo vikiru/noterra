@@ -19,11 +19,7 @@ type NoteDetailProps = {
   showFlashcardButton?: boolean;
 };
 
-export function NoteDetail({
-  note,
-  showUserActions,
-  showFlashcardButton,
-}: NoteDetailProps) {
+export function NoteDetail({ note, showUserActions, showFlashcardButton }: NoteDetailProps) {
   const contentRef = useRef<HTMLDivElement>(null);
   const visibility = {
     isPublic: note.public,
@@ -32,14 +28,8 @@ export function NoteDetail({
   };
 
   return (
-    <section
-      className="container max-w-6xl mx-auto px-3 sm:px-4 py-6 sm:py-8"
-      id="note-ctr"
-    >
-      <section
-        className="flex justify-between items-center mb-6 -my-4"
-        id="actions"
-      >
+    <section className="container max-w-6xl mx-auto px-3 sm:px-4 py-6 sm:py-8" id="note-ctr">
+      <section className="flex justify-between items-center mb-6 -my-4" id="actions">
         {showUserActions ? (
           <>
             <div className="flex items-center gap-2">

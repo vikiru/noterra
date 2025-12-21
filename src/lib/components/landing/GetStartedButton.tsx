@@ -10,10 +10,7 @@ type GetStartedButtonProps = {
   className?: string;
 };
 
-export function GetStartedButton({
-  size = 'lg',
-  className,
-}: GetStartedButtonProps) {
+export function GetStartedButton({ size = 'lg', className }: GetStartedButtonProps) {
   return (
     <Link className="inline-block group" href={DASHBOARD_ROUTE}>
       <Button
@@ -24,10 +21,7 @@ export function GetStartedButton({
         )}
         size={size}
       >
-        Get Started{' '}
-        <span className="ml-2 inline-block group-hover:translate-x-1 transition-transform">
-          →
-        </span>
+        Get Started <span className="ml-2 inline-block group-hover:translate-x-1 transition-transform">→</span>
       </Button>
     </Link>
   );

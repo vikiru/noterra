@@ -97,12 +97,8 @@
           "name": "flashcards_author_id_users_clerk_id_fk",
           "tableFrom": "flashcards",
           "tableTo": "users",
-          "columnsFrom": [
-            "author_id"
-          ],
-          "columnsTo": [
-            "clerk_id"
-          ],
+          "columnsFrom": ["author_id"],
+          "columnsTo": ["clerk_id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -110,12 +106,8 @@
           "name": "flashcards_note_id_notes_id_fk",
           "tableFrom": "flashcards",
           "tableTo": "notes",
-          "columnsFrom": [
-            "note_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["note_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -281,12 +273,8 @@
           "name": "notes_author_id_users_clerk_id_fk",
           "tableFrom": "notes",
           "tableTo": "users",
-          "columnsFrom": [
-            "author_id"
-          ],
-          "columnsTo": [
-            "clerk_id"
-          ],
+          "columnsFrom": ["author_id"],
+          "columnsTo": ["clerk_id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -296,17 +284,12 @@
         "notes_share_token_unique": {
           "name": "notes_share_token_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "share_token"
-          ]
+          "columns": ["share_token"]
         },
         "author_title_unique": {
           "name": "author_title_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "author_id",
-            "title"
-          ]
+          "columns": ["author_id", "title"]
         }
       },
       "policies": {},
@@ -383,16 +366,12 @@
         "users_username_unique": {
           "name": "users_username_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "username"
-          ]
+          "columns": ["username"]
         },
         "users_email_unique": {
           "name": "users_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       },
       "policies": {},

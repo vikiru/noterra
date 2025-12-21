@@ -7,9 +7,7 @@ import { getCurrentUser } from '@/lib/auth';
 import type { ResponseData } from '@/lib/types/ResponseData';
 import { validateData } from '@/lib/utils/validateData';
 
-export async function generateGeminiNote(
-  prompt: string,
-): Promise<ResponseData<GeminiResponse>> {
+export async function generateGeminiNote(prompt: string): Promise<ResponseData<GeminiResponse>> {
   await getCurrentUser();
 
   const promptResult = validateData({ prompt }, promptSchema);
@@ -34,8 +32,7 @@ export async function generateGeminiNote(
   if (!geminiResult) {
     return {
       success: false,
-      error:
-        'Failed to generate gemini note. No response from Gemini, try again later.',
+      error: 'Failed to generate gemini note. No response from Gemini, try again later.',
     };
   }
 

@@ -13,25 +13,16 @@ export async function insertNote(note: NoteCreate): Promise<Note> {
 }
 
 export async function removeNote(noteId: string): Promise<Note> {
-  const result: Note[] = await db
-    .delete(notesTable)
-    .where(eq(notesTable.id, noteId))
-    .returning();
+  const result: Note[] = await db.delete(notesTable).where(eq(notesTable.id, noteId)).returning();
   return result[0];
 }
 
 export async function findNoteById(noteId: string): Promise<Note | null> {
-  const result: Note[] = await db
-    .select()
-    .from(notesTable)
-    .where(eq(notesTable.id, noteId))
-    .limit(1);
+  const result: Note[] = await db.select().from(notesTable).where(eq(notesTable.id, noteId)).limit(1);
   return result[0] ?? null;
 }
 
-export async function findNoteTitleById(
-  noteId: string,
-): Promise<{ title: string } | null> {
+export async function findNoteTitleById(noteId: string): Promise<{ title: string } | null> {
   const result = await db
     .select({ title: notesTable.title })
     .from(notesTable)
@@ -60,8 +51,7 @@ export async function findNoteWithAuthorById(noteId: string): Promise<
 
   if (!result[0]) return null;
 
-  const { authorUsername, authorFirstName, authorLastName, ...noteData } =
-    result[0];
+  const { authorUsername, authorFirstName, authorLastName, ...noteData } = result[0];
   return {
     ...noteData,
     author: {
@@ -73,10 +63,7 @@ export async function findNoteWithAuthorById(noteId: string): Promise<
 }
 
 export async function findNoteWithCardsById(noteId: string): Promise<NoteData> {
-  const result = await db
-    .select()
-    .from(notesTable)
-    .where(eq(notesTable.id, noteId));
+  const result = await db.select().from(notesTable).where(eq(notesTable.id, noteId));
   const note = result[0] ?? null;
   if (!note) {
     return {
@@ -84,10 +71,7 @@ export async function findNoteWithCardsById(noteId: string): Promise<NoteData> {
       flashcards: [],
     };
   }
-  const flashcards = await db
-    .select()
-    .from(flashcardsTable)
-    .where(eq(flashcardsTable.noteId, noteId));
+  const flashcards = await db.select().from(flashcardsTable).where(eq(flashcardsTable.noteId, noteId));
 
   return {
     note,
@@ -96,10 +80,7 @@ export async function findNoteWithCardsById(noteId: string): Promise<NoteData> {
 }
 
 export async function findNotesByUserId(userId: string): Promise<Note[]> {
-  const result: Note[] = await db
-    .select()
-    .from(notesTable)
-    .where(eq(notesTable.authorId, userId));
+  const result: Note[] = await db.select().from(notesTable).where(eq(notesTable.authorId, userId));
   return result;
 }
 
@@ -123,8 +104,7 @@ export async function findNoteByShareToken(shareToken: string): Promise<
 
   if (!result[0]) return null;
 
-  const { authorUsername, authorFirstName, authorLastName, ...noteData } =
-    result[0];
+  const { authorUsername, authorFirstName, authorLastName, ...noteData } = result[0];
   return {
     ...noteData,
     author: {
@@ -135,9 +115,7 @@ export async function findNoteByShareToken(shareToken: string): Promise<
   };
 }
 
-export async function findPublicCardsByNoteId(
-  noteId: string,
-): Promise<Flashcard[]> {
+export async function findPublicCardsByNoteId(noteId: string): Promise<Flashcard[]> {
   const result: Flashcard[] = await db
     .select({
       id: flashcardsTable.id,
@@ -155,9 +133,7 @@ export async function findPublicCardsByNoteId(
   return result;
 }
 
-export async function findPublicNotesByUserId(
-  userId: string,
-): Promise<NoteMetadata[]> {
+export async function findPublicNotesByUserId(userId: string): Promise<NoteMetadata[]> {
   const result: NoteMetadata[] = await db
     .select({
       id: notesTable.id,
@@ -207,9 +183,7 @@ export async function updateNoteVisibility(
   return result[0];
 }
 
-export async function findRecentUserNotes(
-  userId: string,
-): Promise<NoteMetadata[]> {
+export async function findRecentUserNotes(userId: string): Promise<NoteMetadata[]> {
   const result: NoteMetadata[] = await db
     .select({
       id: notesTable.id,
@@ -228,9 +202,7 @@ export async function findRecentUserNotes(
   return result;
 }
 
-export async function findNoteMetadata(
-  userId: string,
-): Promise<NoteMetadata[]> {
+export async function findNoteMetadata(userId: string): Promise<NoteMetadata[]> {
   const result: NoteMetadata[] = await db
     .select({
       id: notesTable.id,
@@ -250,9 +222,7 @@ export async function findNoteMetadata(
   return result;
 }
 
-export async function findNoteTitles(
-  userId: string,
-): Promise<{ id: string; title: string }[]> {
+export async function findNoteTitles(userId: string): Promise<{ id: string; title: string }[]> {
   const result = await db
     .select({
       id: notesTable.id,
@@ -263,9 +233,7 @@ export async function findNoteTitles(
   return result;
 }
 
-export async function findNoteForEditing(
-  noteId: string,
-): Promise<NoteEditorData | null> {
+export async function findNoteForEditing(noteId: string): Promise<NoteEditorData | null> {
   const result = await db
     .select({
       id: notesTable.id,
@@ -284,9 +252,7 @@ export async function findNoteForEditing(
   return result[0] ?? null;
 }
 
-export async function updateNoteFromEditor(
-  updatedNote: NoteEditorData,
-): Promise<NoteEditorData> {
+export async function updateNoteFromEditor(updatedNote: NoteEditorData): Promise<NoteEditorData> {
   const result = await db
     .update(notesTable)
     .set({

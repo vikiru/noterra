@@ -1,382 +1,376 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import '@clerk/themes/shadcn.css';
+@import "@clerk/themes/shadcn.css";
 
 @custom-variant dark (&:is(.dark *));
 @plugin "@tailwindcss/typography";
 
 /* Debug Screen Sizes during development (add `debug-screens` to the html tag) */
 @plugin "tailwindcss-debug-screens" {
-    classname: "debug-screens";
-    position: "bottom, left";
-    prefix: "screen: ";
+  classname: "debug-screens";
+  position: "bottom, left";
+  prefix: "screen: ";
 }
 
 :root {
-    --radius: 0.65rem;
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.141 0.005 285.823);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.141 0.005 285.823);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.141 0.005 285.823);
-    --primary: oklch(0.488 0.243 264.376);
-    --primary-foreground: oklch(0.97 0.014 254.604);
-    --secondary: oklch(0.967 0.001 286.375);
-    --secondary-foreground: oklch(0.21 0.006 285.885);
-    --muted: oklch(0.967 0.001 286.375);
-    --muted-foreground: oklch(0.552 0.016 285.938);
-    --accent: oklch(0.967 0.001 286.375);
-    --accent-foreground: oklch(0.21 0.006 285.885);
-    --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.92 0.004 286.32);
-    --input: oklch(0.92 0.004 286.32);
-    --ring: oklch(0.708 0 0);
-    --chart-1: oklch(0.809 0.105 251.813);
-    --chart-2: oklch(0.623 0.214 259.815);
-    --chart-3: oklch(0.546 0.245 262.881);
-    --chart-4: oklch(0.488 0.243 264.376);
-    --chart-5: oklch(0.424 0.199 265.638);
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.141 0.005 285.823);
-    --sidebar-primary: oklch(0.546 0.245 262.881);
-    --sidebar-primary-foreground: oklch(0.97 0.014 254.604);
-    --sidebar-accent: oklch(0.967 0.001 286.375);
-    --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
-    --sidebar-border: oklch(0.92 0.004 286.32);
-    --sidebar-ring: oklch(0.708 0 0);
+  --radius: 0.65rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.141 0.005 285.823);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.141 0.005 285.823);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.141 0.005 285.823);
+  --primary: oklch(0.488 0.243 264.376);
+  --primary-foreground: oklch(0.97 0.014 254.604);
+  --secondary: oklch(0.967 0.001 286.375);
+  --secondary-foreground: oklch(0.21 0.006 285.885);
+  --muted: oklch(0.967 0.001 286.375);
+  --muted-foreground: oklch(0.552 0.016 285.938);
+  --accent: oklch(0.967 0.001 286.375);
+  --accent-foreground: oklch(0.21 0.006 285.885);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.92 0.004 286.32);
+  --input: oklch(0.92 0.004 286.32);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.809 0.105 251.813);
+  --chart-2: oklch(0.623 0.214 259.815);
+  --chart-3: oklch(0.546 0.245 262.881);
+  --chart-4: oklch(0.488 0.243 264.376);
+  --chart-5: oklch(0.424 0.199 265.638);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.141 0.005 285.823);
+  --sidebar-primary: oklch(0.546 0.245 262.881);
+  --sidebar-primary-foreground: oklch(0.97 0.014 254.604);
+  --sidebar-accent: oklch(0.967 0.001 286.375);
+  --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
+  --sidebar-border: oklch(0.92 0.004 286.32);
+  --sidebar-ring: oklch(0.708 0 0);
 }
 
 .dark {
-    --background: oklch(0.141 0.005 285.823);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.21 0.006 285.885);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.21 0.006 285.885);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.488 0.243 264.376);
-    --primary-foreground: oklch(0.97 0.014 254.604);
-    --secondary: oklch(0.274 0.006 286.033);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.274 0.006 286.033);
-    --muted-foreground: oklch(0.705 0.015 286.067);
-    --accent: oklch(0.274 0.006 286.033);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
-    --chart-1: oklch(0.809 0.105 251.813);
-    --chart-2: oklch(0.623 0.214 259.815);
-    --chart-3: oklch(0.546 0.245 262.881);
-    --chart-4: oklch(0.488 0.243 264.376);
-    --chart-5: oklch(0.424 0.199 265.638);
-    --sidebar: oklch(0.21 0.006 285.885);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.623 0.214 259.815);
-    --sidebar-primary-foreground: oklch(0.97 0.014 254.604);
-    --sidebar-accent: oklch(0.274 0.006 286.033);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.439 0 0);
+  --background: oklch(0.141 0.005 285.823);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.21 0.006 285.885);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.21 0.006 285.885);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.488 0.243 264.376);
+  --primary-foreground: oklch(0.97 0.014 254.604);
+  --secondary: oklch(0.274 0.006 286.033);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.274 0.006 286.033);
+  --muted-foreground: oklch(0.705 0.015 286.067);
+  --accent: oklch(0.274 0.006 286.033);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.809 0.105 251.813);
+  --chart-2: oklch(0.623 0.214 259.815);
+  --chart-3: oklch(0.546 0.245 262.881);
+  --chart-4: oklch(0.488 0.243 264.376);
+  --chart-5: oklch(0.424 0.199 265.638);
+  --sidebar: oklch(0.21 0.006 285.885);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.623 0.214 259.815);
+  --sidebar-primary-foreground: oklch(0.97 0.014 254.604);
+  --sidebar-accent: oklch(0.274 0.006 286.033);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.439 0 0);
 }
 
 @theme inline {
-    --color-background: var(--background);
-    --color-foreground: var(--foreground);
-    --font-sans: var(--font--sans);
-    --font-mono: var(--font-mono);
-    --color-sidebar-ring: var(--sidebar-ring);
-    --color-sidebar-border: var(--sidebar-border);
-    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-    --color-sidebar-accent: var(--sidebar-accent);
-    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-    --color-sidebar-primary: var(--sidebar-primary);
-    --color-sidebar-foreground: var(--sidebar-foreground);
-    --color-sidebar: var(--sidebar);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font--sans);
+  --font-mono: var(--font-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
 }
 
 .logo {
-    font-family: var(--font-logo), sans-serif;
+  font-family: var(--font-logo), sans-serif;
 }
 
 body {
-    background: var(--background);
-    color: var(--foreground);
-    scroll-behavior: smooth;
+  background: var(--background);
+  color: var(--foreground);
+  scroll-behavior: smooth;
 }
 
-
 @layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading), sans-serif;
+  }
 
+  body {
+    font-family: var(--font-body), sans-serif;
+  }
+
+  code,
+  pre {
+    font-family: var(--font-mono), monospace;
+  }
+
+  html,
+  body {
+    min-height: 100vh;
+  }
+
+  /* Override MermaidJS label for diagrams */
+  pre[data-processed="true"] {
+    background-color: transparent !important;
+  }
+
+  /* hide mermaid errors */
+  div[id^="dmermaid-"]:has(svg[aria-roledescription="error"]) {
+    display: none !important;
+  }
+
+  svg[aria-roledescription="error"] {
+    display: none !important;
+  }
+
+  /* node label color */
+  .nodeLabel p {
+    color: black;
+  }
+
+  /* Hide the cluster rect */
+  [id^="mermaid-"] .cluster rect {
+    display: none;
+  }
+
+  @media print {
+    /* hide UI */
+    #note-ctr #actions,
+    #note-ctr #dropdown-menu,
+    #note-ctr #dropdown-menu *,
+    header,
+    div[id^="dmermaid-"]:has(svg[aria-roledescription="error"]),
+    svg[aria-roledescription="error"] {
+      display: none !important;
+    }
+
+    /* keep light mode color scheme for printing */
+    html {
+      color-scheme: light;
+    }
+
+    /* body */
+    body {
+      font-size: 12pt;
+      line-height: 1.45;
+      color: #000 !important;
+      background: #fff !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      margin: 0 !important;
+      padding: 0 !important;
+      height: auto !important;
+    }
+
+    /* dark mode reset */
+    *[class*="dark:"],
+    :root.dark & {
+      color: #000 !important;
+      background: none !important;
+    }
+
+    /* containers */
+    #note-ctr,
+    #note {
+      width: 100% !important;
+      max-width: 100% !important;
+      height: auto !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+
+    /* headings/text */
+    #note h1 {
+      margin-bottom: 0.5rem !important;
+      font-size: 20pt !important;
+    }
+
+    #note time,
+    #note .text-muted-foreground,
+    #note .text-sm {
+      font-size: 10pt !important;
+      color: #000 !important;
+    }
+
+    /* badges */
+    #note .badge,
+    #note .Badge,
+    #note .keyword {
+      padding: 2px 6px !important;
+      font-size: 9pt !important;
+      color: #000 !important;
+      background: #eee !important;
+      border: 1px solid #444 !important;
+      border-radius: 4px !important;
+    }
+
+    /* content */
+    #note-content {
+      padding: 0 !important;
+      background: #fff !important;
+      color: #000 !important;
+      max-width: 100% !important;
+      page-break-inside: auto;
+    }
+
+    #note-content,
+    #note-content * {
+      box-sizing: border-box !important;
+      max-width: 100% !important;
+      word-break: break-word !important;
+      overflow-wrap: break-word !important;
+      white-space: normal !important;
+    }
+
+    /* tables */
+    #note-content table {
+      width: 100% !important;
+      border-collapse: collapse !important;
+    }
+
+    #note-content th,
+    #note-content td {
+      padding: 4px 6px !important;
+      border: 1px solid #000 !important;
+    }
+
+    /* code */
+    #note-content pre,
+    #note-content code {
+      font-size: 10pt !important;
+      font-family: monospace !important;
+      background: #f4f4f4 !important;
+      color: #000 !important;
+      border: 1px solid #ddd !important;
+      padding: 8px !important;
+      white-space: pre-wrap !important;
+      word-wrap: break-word !important;
+      overflow-x: auto !important;
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+    }
+
+    /* images/figures/svg/tables */
+    #note-content img,
+    #note-content svg,
+    #note-content table,
+    #note-content figure {
+      max-width: 100% !important;
+      width: auto !important;
+      height: auto !important;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    /* headings page-break rules */
     h1,
     h2,
     h3,
     h4,
     h5,
     h6 {
-        font-family: var(--font-heading), sans-serif;
+      page-break-after: avoid;
+      page-break-inside: avoid;
+      break-after: avoid;
+      break-inside: avoid;
     }
 
-    body {
-        font-family: var(--font-body), sans-serif;
-    }
-
-    code,
-    pre {
-        font-family: var(--font-mono), monospace;
-    }
-
-
-    html,
-    body {
-        min-height: 100vh;
-    }
-
-    /* Override MermaidJS label for diagrams */
-    pre[data-processed="true"] {
-        background-color: transparent !important;
-    }
-
-
-    /* hide mermaid errors */
-    div[id^="dmermaid-"]:has(svg[aria-roledescription="error"]) {
-        display: none !important;
-    }
-
-    svg[aria-roledescription="error"] {
-        display: none !important;
-    }
-
-    /* node label color */
+    /* mermaid */
     .nodeLabel p {
-        color: black;
+      color: #000 !important;
     }
 
-    /* Hide the cluster rect */
     [id^="mermaid-"] .cluster rect {
-        display: none;
+      display: none !important;
     }
 
-    @media print {
-
-        /* hide UI */
-        #note-ctr #actions,
-        #note-ctr #dropdown-menu,
-        #note-ctr #dropdown-menu *,
-        header,
-        div[id^="dmermaid-"]:has(svg[aria-roledescription="error"]),
-        svg[aria-roledescription="error"] {
-            display: none !important;
-        }
-
-        /* keep light mode color scheme for printing */
-        html {
-            color-scheme: light;
-        }
-
-        /* body */
-        body {
-            font-size: 12pt;
-            line-height: 1.45;
-            color: #000 !important;
-            background: #fff !important;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-            margin: 0 !important;
-            padding: 0 !important;
-            height: auto !important;
-        }
-
-        /* dark mode reset */
-        *[class*="dark:"],
-        :root.dark & {
-            background: none !important;
-            color: #000 !important;
-        }
-
-        /* containers */
-        #note-ctr,
-        #note {
-            padding: 0 !important;
-            margin: 0 !important;
-            max-width: 100% !important;
-            height: auto !important;
-            width: 100% !important;
-        }
-
-        /* headings/text */
-        #note h1 {
-            font-size: 20pt !important;
-            margin-bottom: 0.5rem !important;
-        }
-
-        #note time,
-        #note .text-muted-foreground,
-        #note .text-sm {
-            font-size: 10pt !important;
-            color: #000 !important;
-        }
-
-        /* badges */
-        #note .badge,
-        #note .Badge,
-        #note .keyword {
-            border: 1px solid #444 !important;
-            background: #eee !important;
-            color: #000 !important;
-            padding: 2px 6px !important;
-            border-radius: 4px !important;
-            font-size: 9pt !important;
-        }
-
-        /* content */
-        #note-content {
-            padding: 0 !important;
-            background: #fff !important;
-            color: #000 !important;
-            max-width: 100% !important;
-            page-break-inside: auto;
-        }
-
-        #note-content,
-        #note-content * {
-            overflow-wrap: break-word !important;
-            word-break: break-word !important;
-            white-space: normal !important;
-            max-width: 100% !important;
-            box-sizing: border-box !important;
-        }
-
-        /* tables */
-        #note-content table {
-            width: 100% !important;
-            border-collapse: collapse !important;
-        }
-
-        #note-content th,
-        #note-content td {
-            border: 1px solid #000 !important;
-            padding: 4px 6px !important;
-        }
-
-        /* code */
-        #note-content pre,
-        #note-content code {
-            font-size: 10pt !important;
-            font-family: monospace !important;
-            background: #f4f4f4 !important;
-            color: #000 !important;
-            border: 1px solid #ddd !important;
-            padding: 8px !important;
-            white-space: pre-wrap !important;
-            word-wrap: break-word !important;
-            overflow-x: auto !important;
-            page-break-inside: avoid !important;
-            break-inside: avoid !important;
-        }
-
-        /* images/figures/svg/tables */
-        #note-content img,
-        #note-content svg,
-        #note-content table,
-        #note-content figure {
-            max-width: 100% !important;
-            width: auto !important;
-            height: auto !important;
-            break-inside: avoid;
-            page-break-inside: avoid;
-        }
-
-        /* headings page-break rules */
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-            page-break-after: avoid;
-            page-break-inside: avoid;
-            break-after: avoid;
-            break-inside: avoid;
-        }
-
-        /* mermaid */
-        .nodeLabel p {
-            color: #000 !important;
-        }
-
-        [id^="mermaid-"] .cluster rect {
-            display: none !important;
-        }
-
-        /* lists */
-        ol {
-            list-style-type: decimal !important;
-            color: #000 !important;
-        }
-
-        dl,
-        dl>dt,
-        dl>dd {
-            page-break-inside: avoid;
-            break-inside: avoid;
-            margin: 0;
-            padding: 0;
-        }
-
-        dt {
-            font-weight: bold;
-            page-break-after: avoid;
-        }
-
-        dd {
-            margin-left: 1em;
-            page-break-before: avoid;
-        }
-
-        @page {
-            margin: 1cm;
-        }
+    /* lists */
+    ol {
+      color: #000 !important;
+      list-style-type: decimal !important;
     }
 
+    dl,
+    dl > dt,
+    dl > dd {
+      page-break-inside: avoid;
+      break-inside: avoid;
+      margin: 0;
+      padding: 0;
+    }
+
+    dt {
+      font-weight: bold;
+      page-break-after: avoid;
+    }
+
+    dd {
+      margin-left: 1em;
+      page-break-before: avoid;
+    }
+
+    @page {
+      margin: 1cm;
+    }
+  }
 }
 
 /* Custom Prose Styling for Note Content Display */
 @utility prose-note {
-    /* Light mode */
-    --tw-prose-body: var(--foreground);
-    --tw-prose-headings: var(--text-foreground);
-    --tw-prose-lead: var(--muted-foreground);
-    --tw-prose-links: var(--primary);
-    --tw-prose-bold: var(--foreground);
-    --tw-prose-counters: var(--secondary-foreground);
-    --tw-prose-bullets: var(--secondary-foreground);
-    --tw-prose-hr: var(--border);
-    --tw-prose-quotes: var(--secondary);
-    --tw-prose-quote-borders: var(--border);
-    --tw-prose-captions: var(--muted-foreground);
-    --tw-prose-code: var(--text-foreground);
-    --tw-prose-pre-code: var(--foreground);
-    --tw-prose-pre-bg: var(--card);
-    --tw-prose-th-borders: var(--border);
-    --tw-prose-td-borders: var(--border);
+  /* Light mode */
+  --tw-prose-body: var(--foreground);
+  --tw-prose-headings: var(--text-foreground);
+  --tw-prose-lead: var(--muted-foreground);
+  --tw-prose-links: var(--primary);
+  --tw-prose-bold: var(--foreground);
+  --tw-prose-counters: var(--secondary-foreground);
+  --tw-prose-bullets: var(--secondary-foreground);
+  --tw-prose-hr: var(--border);
+  --tw-prose-quotes: var(--secondary);
+  --tw-prose-quote-borders: var(--border);
+  --tw-prose-captions: var(--muted-foreground);
+  --tw-prose-code: var(--text-foreground);
+  --tw-prose-pre-code: var(--foreground);
+  --tw-prose-pre-bg: var(--card);
+  --tw-prose-th-borders: var(--border);
+  --tw-prose-td-borders: var(--border);
 
-    /* Dark mode */
-    --tw-prose-invert-body: var(--foreground);
-    --tw-prose-invert-headings: var(--text-foreground);
-    --tw-prose-invert-lead: var(--muted-foreground);
-    --tw-prose-invert-links: var(--primary);
-    --tw-prose-invert-bold: var(--foreground);
-    --tw-prose-invert-counters: var(--secondary-foreground);
-    --tw-prose-invert-bullets: var(--secondary-foreground);
-    --tw-prose-invert-hr: var(--border);
-    --tw-prose-invert-quotes: var(--secondary-foreground);
-    --tw-prose-invert-quote-borders: var(--border);
-    --tw-prose-invert-captions: var(--muted-foreground);
-    --tw-prose-invert-code: var(--accent-foreground);
-    --tw-prose-invert-pre-code: var(--foreground);
-    --tw-prose-invert-pre-bg: var(--card);
-    --tw-prose-invert-th-borders: var(--border);
-    --tw-prose-invert-td-borders: var(--border);
+  /* Dark mode */
+  --tw-prose-invert-body: var(--foreground);
+  --tw-prose-invert-headings: var(--text-foreground);
+  --tw-prose-invert-lead: var(--muted-foreground);
+  --tw-prose-invert-links: var(--primary);
+  --tw-prose-invert-bold: var(--foreground);
+  --tw-prose-invert-counters: var(--secondary-foreground);
+  --tw-prose-invert-bullets: var(--secondary-foreground);
+  --tw-prose-invert-hr: var(--border);
+  --tw-prose-invert-quotes: var(--secondary-foreground);
+  --tw-prose-invert-quote-borders: var(--border);
+  --tw-prose-invert-captions: var(--muted-foreground);
+  --tw-prose-invert-code: var(--accent-foreground);
+  --tw-prose-invert-pre-code: var(--foreground);
+  --tw-prose-invert-pre-bg: var(--card);
+  --tw-prose-invert-th-borders: var(--border);
+  --tw-prose-invert-td-borders: var(--border);
 }

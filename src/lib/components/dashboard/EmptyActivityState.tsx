@@ -1,11 +1,5 @@
 import { History } from 'lucide-react';
-import {
-  Empty,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-} from '@/lib/components/ui/empty';
+import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '@/lib/components/ui/empty';
 
 export function EmptyActivityState() {
   return (
@@ -16,9 +10,7 @@ export function EmptyActivityState() {
         </EmptyMedia>
         <EmptyHeader>
           <EmptyTitle>No recent activity</EmptyTitle>
-          <EmptyDescription>
-            Your learning activity for the last 7 days will show up here.
-          </EmptyDescription>
+          <EmptyDescription>Your learning activity for the last 7 days will show up here.</EmptyDescription>
         </EmptyHeader>
       </Empty>
     </div>
