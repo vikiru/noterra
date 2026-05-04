@@ -93,4 +93,4 @@ const generationConfig = {
   ],
 };
 
-export { genAI, generationConfig, geminiModel as model };
+export { geminiModel as model, genAI, generationConfig };

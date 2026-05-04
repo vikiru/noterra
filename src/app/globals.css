@@ -172,15 +172,15 @@ body {
 
     /* body */
     body {
+      height: auto !important;
+      padding: 0 !important;
+      margin: 0 !important;
       font-size: 12pt;
       line-height: 1.45;
       color: #000 !important;
-      background: #fff !important;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
-      margin: 0 !important;
-      padding: 0 !important;
-      height: auto !important;
+      background: #fff !important;
     }
 
     /* dark mode reset */
